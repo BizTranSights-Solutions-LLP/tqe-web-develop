@@ -1,0 +1,157 @@
+
+
+<div id="scrollId" class="main-article_post" [ngStyle]="{'height':loader === true ? '100vh' : 'auto' }">
+	<div class="loading" *ngIf="loader">
+		<img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+	</div>
+	<div class="" *ngIf="allData?.images">
+		<div class="feature-img">
+
+			<div class="article_banner" *ngIf="allData.images.length > 0">
+				<img [src]="allData.images[0].file_path" class="img-fluid" alt="{{allData?.images[0]?.alt_text}}" title="{{allData?.images[0]?.title}}"  >
+			</div>
+			<img *ngIf="!allData.images.length"  class="img-fluid" src="../../../../assets/images/placeholder.png" style="width: auto;">
+
+			<div class="bg"></div>
+			<!-- [style.background-image]="'url('+allData.images[0].file_path+')'" -->
+			<div class="caption">
+				<h1>{{allData.title}}</h1>
+				<div class="author">
+					<div class="author_avatar" *ngIf="allData.author.file_path !== ''">
+						<img [src]="allData.author.file_path" class="img-fluid" alt="{{allData.author.first_name}}">
+					</div>
+					<img *ngIf="allData.author.file_path == ''"  class="img-fluid" src="../../../../assets/images/placeholder.png">
+
+					<div class="by">
+						By:
+						<span>{{allData.author.first_name}}</span>
+						<span [innerHTML]="">{{allData.created_at | dateTimeFormatFilter : "MMM DD, YYYY"}}</span>
+						Posted In: <span>{{allData.sports_tags[0].name}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+     	<div class="row">
+        	<div class="col">
+
+				<div class="para" [ngClass]="{'notAllowed' : !allData.is_allowed}">
+					<!-- [ngClass]="{'notAllowed' : allData.is_allowed == 0}" -->
+					<div [innerHTML]="allData.content | safe: 'html'" *ngIf="allData.is_allowed">     </div>
+					<!-- <div class="locked-content" [innerHTML]="(allData.content?.length>300)? (allData.content | slice:0:300)+'...':(allData.content) " *ngIf="!allData.is_allowed"></div> -->
+
+
+					<div class="locked-content alert alert-warning" [innerHTML]="allData.membership_plan " *ngIf="!allData.is_allowed && LoggedIn"></div>
+
+					<div class="locked-content" [innerHTML]="getInnerHTMLValue(allData.content | limitTo : '1600')" *ngIf="!allData.is_allowed"></div>
+
+					<div class="author-info" *ngIf="allData.is_allowed">
+						<div class="row align-items-center justify-content-center">
+							<div class="col-auto">
+								<div class="img-holder">
+									<span class="author_avatar" *ngIf="allData.author.file_path !== ''">
+										<img [src]="allData.author.file_path" class="img-fluid" alt="{{allData.author.first_name}}">
+									</span>
+									<img *ngIf="allData.author.file_path == ''"  class="img-fluid" src="../../../../assets/images/placeholder.png">
+								</div>
+							</div>
+							<div class="col">
+								<div class="decs">
+									<h4>
+										{{allData.author.first_name}} {{allData.author.last_name}}
+										<!-- <span>{{allData.author.email}}</span> -->
+									</h4>
+									<div [innerHTML]="allData.author.biographical_info"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="share" *ngIf="allData.is_allowed">
+						Share Article:
+
+						<ul class="socialinks">
+							<li><button class="fb" (click)="share()"><i class="fa fa-facebook"></i></button></li>
+							<!-- <li><button class="twitter"><i class="fa fa-twitter"></i></button></li>
+							<li><button class="mail"><i class="fa fa-envelope"></i></button></li> -->
+						</ul>
+
+					</div>
+
+					<div class="unlockArticle" *ngIf="!allData.is_allowed">
+						<div>
+							<strong class="free-title">UNLOCK  THE  FULL  ARTICLE  &  100s  MORE  <span>FREE!</span></strong>
+							<button (click)="tryItFree()" class="btnFreeArticle">Unlock All Articles For FREE!</button>
+							<p>Already a Member? <a (click)="showOverlay()">Log In</a></p>
+						</div>
+					</div>
+					<div class="unlockArticle" *ngIf="allData.remaining_free_article_count === 0">
+						<div class="expireTrial">
+							<div class="row">
+								<div class="col-lg-4">
+								<img src="https://api.thequantedge.com/uploads/2018/07/logo.png" alt="The Quantedge-">
+								</div>
+								<div class="col-lg-4">
+									<h4>We Hoped You Enjoyed Your Free Article. <br class="d-none d-md-block d-lg-none"> You Should Consider Subscribing to TQE.</h4>
+								</div>
+								<div class="col-lg-4">
+									<a [routerLink]="['/membership-plan']" class="_links btn">Try Our Trial Package</a>
+									<a [routerLink]="['/membership-plan']" class="_links btn">Betting Monthly</a>
+									<a [routerLink]="['/membership-plan']" class="_links btn">DFS Monthly</a>
+									<a [routerLink]="['/membership-plan']" class="_links btn">Site Wide Access</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="unlockArticle" *ngIf="!allData.is_allowed && LoggedIn && allData.remaining_free_article_count">
+						<div>
+							<button class="btnFreeArticle" (click)="getFreeArticle(allData.id)">
+								Use One of Your
+								<span
+									[innerHTML]="getConvertedNumber(allData.remaining_free_article_count)"
+								></span>
+								Free  Articles This Month
+							</button>
+						</div>
+					</div>
+				</div>
+        	</div>
+        	<div class="col-auto" *ngIf="LoggedIn">
+        		<aside class="sidebar">
+					<h3>Related Tools</h3>
+					<strong class="no-tool" *ngIf="relatedTool.length == 0">{{related_tool_server_message}}</strong>
+					<div class="related-tools" *ngIf="relatedTool.length > 0">
+        				<div class="tool" *ngFor="let tool of relatedTool">
+							<div *ngIf="tool.images.length > 0">
+								<img [src]="tool.images[0].file_path" class="img-fluid" alt="{{tool.images[0].title}}" >
+							</div>
+							<img *ngIf="!tool.images.length"  class="img-fluid" src="../../../../assets/images/placeholder.png">
+    						<a [routerLink]="['/tool/', tool.url]" class="title">
+			                    <strong>{{tool.title}}</strong>
+			                    {{tool.short_description}}
+			                </a>
+        				</div>
+        			</div>
+        			<h3>Recent Articles</h3>
+        			<div class="trending-articles">
+        				<ul>
+        					<li *ngFor="let data of trendingArticles" (click)="trendingArticle(data.url)">
+								<div *ngIf="data.images.length > 0">
+									<img [src]="data.images[0].file_path" class="img-fluid" alt="{{data.images[0].title}}" >
+								</div>
+								<img *ngIf="!data.images.length"  class="img-fluid" src="../../../../assets/images/placeholder.png">
+
+        						<div class="title">
+									 {{data.title}}
+									<!-- [routerLink]="['/article/',data.url]" -->
+        						</div>
+        					</li>
+        				</ul>
+        			</div>
+        		</aside>
+        	</div>
+        </div>
+    </div>
+</div>

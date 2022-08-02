@@ -1,0 +1,214 @@
+<div class="tools">
+  <h2>MY <span>GO-TO</span> TOOLS…</h2>
+  <div class="container">
+    <div class="loading" *ngIf="allTools.length == 0"></div>
+    <owl-carousel
+      *ngIf="allTools.length !== 0"
+      [options]="toolsOpt"
+      [items]="Tools"
+      [carouselClasses]="['owl-theme', 'row', 'sliding']">
+      <div class="item" *ngFor="let data of allTools | slice:0:8; let i=index">
+          <div class="thumbnail-image tool-img-holder" [ngStyle]="{'z-index': '9'}">
+            <!-- <img src={{tool.img}}> -->
+            <strong>
+              <a [routerLink]="['/tool/', data.url]" >{{data.title}}</a>
+              <span>{{data.short_description}}</span>
+            </strong>
+          </div>
+      </div>
+    </owl-carousel>
+    <div class="row">
+      <div class="col">
+        <a [routerLink]="['/tools-list']" class="bTN_view">View All Tools</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="all-tools">
+    <h2>
+      TQE’s Best Bets of the Day
+      <strong>GET IN ON THE ACTION!</strong>
+    </h2>
+    <div class="tabbable container">
+      <ul class="nav nav-tabs resp-tabs-list justify-content-center justify-content-around">
+        <li><a class="nav-item nav-link active" id="nav-nfl-tab" data-toggle="tab" href="#nav-nfl" role="tab" aria-controls="nav-nfl" aria-selected="true">NFL</a></li>
+        <li><a class="nav-item nav-link" id="nav-nba-tab" data-toggle="tab" href="#nav-nba" role="tab" aria-controls="nav-nba" aria-selected="false">NBA</a></li>
+        <li><a class="nav-item nav-link" id="nav-mlb-tab" data-toggle="tab" href="#nav-mlb" role="tab" aria-controls="nav-mlb" aria-selected="false">MLB</a></li>
+      </ul>
+  
+      <div class="tab-content resp-tabs-container">
+        <div class="tab-pane fade show active" id="nav-nfl" role="tabpanel" aria-labelledby="nav-nfl-tab">
+          <div class="container">
+            <div class="loading" *ngIf="nfl_best_bets.length == 0"></div>
+            <owl-carousel
+              *ngIf="nfl_best_bets?.length"
+              [options]="toolslistOpt"
+              [items]="nfl_best_bets"
+              [carouselClasses]="['owl-theme', 'row', 'sliding']">
+              <div class="item" *ngFor="let data of nfl_best_bets;let i = index">
+                  <div class="thumbnail-image " [ngStyle]="{'z-index': '9'}">
+                    <div class="tool-img-holder">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                          <div class="row img-holder left-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/nfl/' + data.opp + '.png'" alt={{data.opp}}>
+                            </div>  
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <strong>
+                            VS.
+                          </strong>
+                        </div>
+                        <div class="col-5">
+                          <div class="row img-holder right-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/nfl/' + data.team + '.png'" alt={{data.team}}>
+                            </div>  
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </owl-carousel>
+            
+            <div class="row">
+              <div class="col">
+                  <a [routerLink]="['/membership-plan']" *ngIf="membership?.length === 0" class="bTN_view">Get Your NFL TQE Picks!</a>
+                  <a [routerLink]="['/tool/nfl-best-bets/']" *ngIf="membership?.length !== 0" class="bTN_view">Get Your NFL TQE Picks!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-nba" role="tabpanel" aria-labelledby="nav-nba-tab">
+            <div class="loading" *ngIf="nba_best_bets.length == 0"></div>
+            <owl-carousel
+              *ngIf="nba_best_bets?.length"
+              [options]="toolslistOpt"
+              [items]="nba_best_bets"
+              [carouselClasses]="['owl-theme', 'row', 'sliding']">
+              <div class="item" *ngFor="let data of nba_best_bets;let i = index">
+                  <div class="thumbnail-image " [ngStyle]="{'z-index': '9'}">
+                    <div class="tool-img-holder">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                          <div class="row img-holder left-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/nba/' + data.opponent + '.jpg'" alt={{data.opponent}}>
+                            </div>  
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <strong>
+                            VS.
+                          </strong>
+                        </div>
+                        <div class="col-5">
+                          <div class="row img-holder right-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/nba/' + data.team + '.jpg'" alt={{data.team}}>
+                            </div>  
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </owl-carousel>
+            <div class="row">
+              <div class="col">
+                  <a [routerLink]="['/membership-plan']" *ngIf="membership?.length === 0" class="bTN_view">Get Your NBA TQE Picks!</a>
+                  <a [routerLink]="['/tool/nba-best-bets/']" *ngIf="membership?.length !== 0" class="bTN_view">Get Your NBA TQE Picks!</a>
+              </div>
+            </div>
+					</div>
+					<div class="tab-pane fade" id="nav-mlb" role="tabpanel" aria-labelledby="nav-mlb-tab">
+              <div class="loading" *ngIf="mlb_best_bets.length == 0"></div>
+            <owl-carousel
+              *ngIf="mlb_best_bets?.length"
+              [options]="toolslistOpt"
+              [items]="mlb_best_bets"
+              [carouselClasses]="['owl-theme', 'row', 'sliding']">
+              <div class="item" *ngFor="let data of mlb_best_bets;let i = index">
+                  <div class="thumbnail-image " [ngStyle]="{'z-index': '9'}">
+                    <div class="tool-img-holder">
+                      <div class="row align-items-center justify-content-between">
+                        <div class="col-5">
+                          <div class="row img-holder left-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/mlb/' + data.opp + '.jpg'" alt={{data.opp}}>
+                            </div>  
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <strong>
+                            VS.
+                          </strong>
+                        </div>
+                        <div class="col-5">
+                          <div class="row img-holder right-align-img align-items-center">
+                            <div class="col">
+                              <img [src]="'https://api.thequantedge.com/public/uploads/team_logos/mlb/' + data.team + '.jpg'" alt={{data.team}}>
+                            </div>  
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </owl-carousel>
+              <div class="row">
+                <div class="col">
+                  <a [routerLink]="['/membership-plan']" *ngIf="membership?.length === 0" class="bTN_view">Get Your MLB TQE Picks!</a>
+                  <a [routerLink]="['/tool/mlb-best-bets/']" *ngIf="membership?.length !== 0" class="bTN_view">Get Your MLB TQE Picks!</a>
+                </div>
+              </div>
+					</div>
+      </div>
+    </div>
+    
+  </div>
+<div class="Feature-Articles">
+  <h2>Featured Articles</h2>
+  <div class="tabbable container">
+    <ul class="nav nav-tabs resp-tabs-list justify-content-center justify-content-around">
+        <li routerLinkActive="active"><a routerLink="all">All Articles</a></li>
+        <li routerLinkActive="active"><a routerLink="betting">Betting</a></li>
+        <li routerLinkActive="active"><a routerLink="nfl">NFL</a></li>
+        <li routerLinkActive="active"><a routerLink="nba">NBA</a></li>
+        <li routerLinkActive="active"><a routerLink="cbb">CBB</a></li>
+        <li routerLinkActive="active"><a routerLink="ufc">UFC</a></li>
+        <li routerLinkActive="active"><a routerLink="mlb">MLB</a></li>
+    </ul>
+
+    <div class="tab-content resp-tabs-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<section id="conversation">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2>Talk With Us</h2>
+        <p>We are always striving to improve your experience so please let us know what you like, don’t like, or would love to have! Or enjory 24/7 DFS Chats with our experts and members of our community and talk plays, strategies, and sports to improve your game!</p>
+        <a [routerLink]="['/chat']" class="bTN_view">Join The Conversation!</a>
+        
+        <!-- <button type="button" class="btn green-border-btn" data-toggle="modal" data-target="#player-pool" (click)="playerPool.show()"><i class="fas fa-users"></i>
+          Player Pool</button> -->
+      </div>
+    </div>
+  </div>
+</section>
+<div class="theme-modal modal fade" id="player-pool" bsModal #tourGuide="bs-modal">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+
+          <div class="modal-body text-center">
+              <h1>model</h1>
+          </div>
+      </div>
+  </div>
+</div>

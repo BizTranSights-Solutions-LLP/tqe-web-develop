@@ -1,0 +1,15 @@
+.promo_discount_levels {
+    border: 1px solid #CCC;
+}
+
+.promo_discount_levels > div.holder {
+    padding: 5px;
+    border: 1px solid #CCC;
+}
+
+.promo_discount_levels_pricing {
+    margin-top: 5px;
+    background: #F5F5F5;
+    padding: 5px;
+    border: 1px solid #CCC;
+}

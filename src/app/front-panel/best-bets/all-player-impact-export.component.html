@@ -1,0 +1,35 @@
+<div *ngIf="isAuthorized" id="nba-best-bets" class="container best-bets">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-lg mt-3 mb-5">
+        <div class="card-header">
+          <h5>Pick your sport To see player impact tools</h5>
+          <span class="right">
+                        <button class="button" [style.background-color]="sport=='NBA' ? '#4CAF50' : 'white'"
+                                (click)="onClickNBA()">NBA </button>
+                        <button class="button" [style.background-color]="sport=='NFL' ? '#4CAF50' : 'white'"
+                                (click)="onClickNFL()">NFL </button>
+
+                        <button class="button" [style.background-color]="sport=='SOCCER' ? '#4CAF50' : 'white'"
+                                (click)="onClickSOCCER()">Soccer </button>
+                        <button class="button" [style.background-color]="sport=='MLB' ? '#4CAF50' : 'white'"
+                                (click)="onClickMLB()">MLB </button>
+                    </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="nba">
+    <tqe-nba-player-impact-export></tqe-nba-player-impact-export>
+  </div>
+  <div *ngIf="nfl">
+    <tqe-nfl-player-impact-export></tqe-nfl-player-impact-export>
+  </div>
+  <div *ngIf="mlb">
+    <tqe-mlb-player-impact-export></tqe-mlb-player-impact-export>
+  </div>
+  <div *ngIf="soccer">
+    <tqe-soccer-player-impact-export></tqe-soccer-player-impact-export>
+  </div>
+</div>

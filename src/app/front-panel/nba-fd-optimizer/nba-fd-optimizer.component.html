@@ -1,0 +1,427 @@
+<div id="todays-best-bets" class="container best-bets">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading mb-2">Coming Soon!</h4>
+        <p>This tool is not available yet because our engineers are hard at work updating it for the upcoming season.
+        </p>
+        <hr>
+        <p class="mb-0">Check back soon, for updates to this great tool!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nba-optimizer" *ngIf="false">
+  <div class="container-fluid" *ngIf="loaded">
+    <div class="row">
+      <div id="sidebar" class="col-lg-3 shadow">
+        <h5 class="mb-2">NBA FanDuel Optimizer</h5>
+        <select *ngIf="objectKeys(slates).length > 1" class="form-control form-control-sm" (change)="handleSlateChange($event.target.value)">
+          <option *ngFor="let s of objectKeys(slates)">{{s}}</option>
+        </select>
+        <hr>
+        <ng-container *ngIf="currentTab === 'pools'">
+          <h6 class="text-muted">My Lineup</h6>
+          <div class="table-responsive">
+            <table id="my-lineup" class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">POS</th>
+                  <th scope="col">PLAYER</th>
+                  <th scope="col">PROJ</th>
+                  <th scope="col">SALARY</th>
+                  <th scope="col">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of rosterPositions" [ngClass]="slate.optimalLineup[p.lineupKey] ? '' : 'placeholder'" class="position">
+                  <ng-container *ngIf="slate.optimalLineup[p.lineupKey]; else rosterPlaceholder">
+                    <td>{{p.displayPos}}</td>
+                    <td class="text-smaller">
+                      <div class="player">
+                        <div class="team">
+                          <img src="../../../assets/images/logos/nba/{{slate.optimalLineup[p.lineupKey].team}}.png" [alt]="slate.optimalLineup[p.lineupKey].team">
+                        </div>
+                        <div class="player-data">
+                          <b>{{slate.optimalLineup[p.lineupKey].first_name.substr(0,1)}}. {{slate.optimalLineup[p.lineupKey].last_name}}</b><br>
+                          <small><b>{{slate.optimalLineup[p.lineupKey].team}}</b> vs <span class="text-muted">{{slate.optimalLineup[p.lineupKey].OPP}}</span></small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-smaller">
+                      <span *ngIf="isAuthorized">{{slate.optimalLineup[p.lineupKey].projected_pts}}</span>
+                      <img *ngIf="!isAuthorized" class="locked-icon" src="../../../assets/images/tqe_logo_black.png">
+                    </td>
+                    <td class="text-smaller">${{slate.optimalLineup[p.lineupKey].salary_display}}</td>
+                    <td class="actions">
+                      <div class="btn-group" role="group">
+                        <button type="button" *ngIf="slate.optimalLineup[p.lineupKey].locked" (click)="unlockPlayer({playerId: slate.optimalLineup[p.lineupKey].id})" class="btn btn-sm btn-dark"><i class="fas fa-lock text-white"></i></button>
+                        <button type="button" *ngIf="!slate.optimalLineup[p.lineupKey].locked" (click)="lockPlayer({playerId: slate.optimalLineup[p.lineupKey].id})" class="btn btn-sm btn-outline-dark"><i class="fas fa-unlock text-muted"></i></button>
+                        <button type="button" *ngIf="!slate.optimalLineup[p.lineupKey].excluded" (click)="slate.exclude(slate.optimalLineup[p.lineupKey].id)" class="btn btn-sm btn-outline-dark"><i class="fas fa-times text-danger"></i></button>
+                      </div>
+                    </td>
+                  </ng-container>
+                  <ng-template #rosterPlaceholder>
+                    <td>{{p.displayPos}}</td>
+                    <td class="text-smaller">&nbsp;</td>
+                    <td class="text-smaller">&nbsp;</td>
+                    <td class="text-smaller">&nbsp;</td>
+                    <td class="actions">
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm disabled"><i class="fas fa-unlock"></i></button>
+                        <button type="button" class="btn btn-sm disabled"><i class="fas fa-times"></i></button>
+                      </div>
+                    </td>
+                  </ng-template>
+                </tr>
+                <tr class="summary table-info">
+                  <th class="text-center">TOTAL</th>
+                  <th>&nbsp;</th>
+                  <th class="text-center text-smaller">{{slate.optimalLineupPoints}}</th>
+                  <th class="text-center text-smaller">${{slate.optimalLineupSalary}}</th>
+                  <th>&nbsp;</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-block btn-success" (click)="optimize()"><i class="fas fa-bolt"></i> Optimize</button>
+        </ng-container>
+        <ng-container *ngIf="currentTab === 'lineups'">
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>No. of Lineups</b></label>
+                  <input type="numeric" class="form-control form-control-sm text-right" #lineupNum (change)="setLineupNum(lineupNum.value)" min="1" max="150" (change)="setLineupNum(lineupNum.value)" [value]="slate.lineup_options.lineup_num">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>No. Unique Players</b></label>
+                  <select class="custom-select custom-select-sm" #numUnique (change)="handleUniquePlayerChange(numUnique.value)" [value]="slate.lineup_options.unique_player">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Min Salary</b></label>
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm text-right" #minSalary (change)="handleMinSalChange(minSalary.value)" [value]="slate.lineup_options.cap_min">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Max Salary</b></label>
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm text-right" #maxSalary (change)="handleMaxSalChange(maxSalary.value)" [value]="slate.lineup_options.cap_max">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <button class="btn btn-block btn-success" (click)="build()"><i class="fas fa-bolt"></i> Build</button>
+              </div>
+            </div>
+            <hr>
+            <button type="button" class="btn btn-block btn-primary" (click)="slate.toCsv()" [disabled]="objectValues(slate.myLineups).length === 0">
+              <i class="fas fa-download"></i> Download Lineups
+            </button>
+          </form>
+        </ng-container>
+      </div>
+      <div id="main" class="col-lg-9">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="maintablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="pills-player-pools-tab" data-toggle="pill" href="#pills-player-pools" role="tab" aria-controls="pills-player-pools" aria-selected="true" (click)="currentTab = 'pools'">Player Pools</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-lineups-tab" data-toggle="pill" href="#pills-lineups" role="tab" aria-controls="pills-lineups" aria-selected="false" (click)="currentTab = 'lineups'">My Lineups</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Actions</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" (click)="saveSlate({quiet:false})"><i class="fas fa-save"></i> Save Data</a>
+              <a class="dropdown-item" (click)="slate.exportProjections()"><i class="fas fa-file-export"></i> Export Projections</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-danger" (click)="resetSlate()"><i class="fas fa-trash"></i> Reset All</a>
+            </div>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-maintabContent">
+          <div id="pills-player-pools" role="tabpanel" aria-labelledby="player-pools-tab" class="tab-pane fade card mt-3 show active">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs" id="playerTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#included" aria-selected="true" id="included-tab" role="tab" data-toggle="tab"><i class="fas fa-check-circle"></i> Included Players</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#excluded" aria-selected="false" id="excludeluded-tab" role="tab" data-toggle="tab"><i class="fas fa-times-circle"></i> Excluded Players</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#stacks" aria-selected="false" id="stacks-tab" role="tab" data-toggle="tab"><i class="fas fa-layer-group"></i> Stacks</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#teams" aria-selected="false" id="teams-tab" role="tab" data-toggle="tab"><i class="fas fa-basketball-ball"></i> Teams</a>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content card-body" id="playerTabContent">
+              <div class="tab-pane fade show active" id="included" role="tabpanel" aria-labelledby="included-tab">
+                <tqe-fd-player-pool [slate]="slate" [isAuthorized]="isAuthorized" [filterArgs]="{excluded: false}" (lock)="lockPlayer($event)" (unlock)="unlockPlayer($event)"></tqe-fd-player-pool>
+              </div>
+              <div class="tab-pane fade" id="excluded" role="tabpanel" aria-labelledby="excluded-tab">
+                <tqe-fd-player-pool [slate]="slate" [isAuthorized]="isAuthorized" [filterArgs]="{excluded: true}" (lock)="lockPlayer($event)" (unlock)="unlockPlayer($event)"></tqe-fd-player-pool>
+              </div>
+              <div class="tab-pane fade" id="stacks" role="tabpanel" aria-labelledby="stacks-tab">
+                <div class="row">
+                  <div class="col-lg-3 border-right">
+                    <h6>Create a Stack</h6>
+                    <form class="mb-4 mt-2">
+                      <input class="form-control" name="searchText" type="text" placeholder="Search player" [(ngModel)]="searchText" autocomplete="off">
+                    </form>
+                    <ul class="list-group" *ngIf="searchText">
+                      <li class="list-group-item" *ngFor="let player of slate.playerPool | textsearch: searchText" (click)="createStack(player.id)">
+                        <div class="player">
+                          <div class="team">
+                            <img src="../../../assets/images/logos/nba/{{player.team}}.png" [alt]="player.team">
+                          </div>
+                          <div class="player-data">
+                            <b>{{player.name}}</b> <span class="badge badge-secondary ml-1">{{player.pos1}}</span><br>
+                            <small><b>{{player.team}}</b> vs <span class="text-muted">{{player.OPP}}</span></small>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-9">
+                    <div class="col-lg-8">
+                      <ng-container *ngIf="slate.groups.length > 0">
+                        <div class="card player-stack mb-3" *ngFor="let stack of slate.groups; let stackId = index">
+                          <div class="card-header">
+                            <h6>Stack #{{stackId + 1}}</h6>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                              <div class="player">
+                                <div class="team">
+                                  <img src="../../../assets/images/logos/nba/{{stack.basePlayer.team}}.png" [alt]="stack.basePlayer.team">
+                                </div>
+                                <div class="player-data">
+                                  <b>{{stack.basePlayer.name}}</b> <span class="badge badge-secondary ml-1">{{stack.basePlayer.pos1}}</span><br>
+                                  <small><b>{{stack.basePlayer.team}}</b> vs <span class="text-muted">{{stack.basePlayer.OPP}}</span></small>
+                                </div>
+                                <div class="action">
+                                  <button type="button" class="btn btn-danger btn-block btn-sm" (click)="deleteStack(stackId)"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item list-group-item-secondary" *ngIf="stack.players.length > 1">With</li>
+
+                            <li class="list-group-item" *ngFor="let player of stack.players.slice(1)">
+                              <div class="player">
+                                <div class="team">
+                                  <img src="../../../assets/images/logos/nba/{{player.team}}.png" [alt]="player.team">
+                                </div>
+                                <div class="player-data">
+                                  <b>{{player.name}}</b> <span class="badge badge-secondary ml-1">{{player.pos1}}</span><br>
+                                  <small><b>{{player.team}}</b> vs <span class="text-muted">{{player.OPP}}</span></small>
+                                </div>
+                                <div class="action">
+                                  <button type="button" class="btn btn-outline-warning btn-block btn-sm" (click)="removePlayerFromStack(player.id, stackId)"><i class="fas fa-minus-circle"></i></button>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="list-group-item list-group-item-success" *ngIf="stack.players.length < 5">
+                              <a class="text-success" data-toggle="modal" [attr.data-target]="'#playerSelectModal-' + stackId">Add a Player...</a>
+                            </li>
+                          </ul>
+                          <div class="card-footer text-muted">
+                            <form>
+                              <div class="form-row align-items-center">
+                                <div class="col-sm-6 my-1">
+                                  <label>Min Exposure</label>
+                                  <input type="text" class="form-control form-control-sm" [value]="stack.min_exp" (change)="updateMinExposure($event.target.value, stackId)">
+                                </div>
+                                <div class="col-sm-6 my-1">
+                                  <label>Max Exposure</label>
+                                  <input type="text" class="form-control form-control-sm" [value]="stack.max_exp" (change)="updateMaxExposure($event.target.value, stackId)">
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                          <tqe-player-select [slate]="slate" [stackId]="stackId" (selectedPlayer)="addPlayerToStack($event, stackId)"></tqe-player-select>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="slate.groups.length === 0">
+                        <div class="stack-instructions">
+                          <h2 class="mt-1 mb-3">Stacks</h2>
+                          <p class="lead">To get started creating a stack, begin typing the name of a player in the text box ont he left.</p>
+                          <ol class="mt-2">
+                            <li>Add more players to your stack by clicking the Add Player link. (You can add up to 3 players to a stack)</li>
+                            <li>Set the minimum and maximum exposure for your stack.</li>
+                          </ol>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade container-fluid" id="teams" role="tabpanel" aria-labelledby="teams-tab">
+                <div class="col-md-8 offset-md-2">
+                  <tqe-team-filter [slate]="slate"></tqe-team-filter>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="pills-lineups" role="tabpanel" aria-labelledby="lineups-tab" class="tab-pane fade card mt-3">
+            <div class="card-header">
+              <h6 *ngIf="!slate.myLineups.length > 0">My Lineups</h6>
+              <div class="row" *ngIf="slate.myLineups.length > 0">
+                <div class="col-lg-3 border-right">
+                  <h6>Exposure Summary</h6>
+                </div>
+                <div class="col-lg-9">
+                  <h6>Lineups</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row" *ngIf="loading">
+                <div class="col-md-12">
+                  <main role="main" class="loading"></main>
+                </div>
+              </div>
+              <div class="row" *ngIf="!loading && slate.myLineups.length > 0">
+                <div class="col-lg-3 border-right">
+                  <table id="group-exposure" class="table table-sm" *ngIf="slate.groupSummary.length > 0">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col" colspan="2">Stack Summary</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let p of slate.groupSummary">
+                        <td class="text-left">{{ p.Group }}</td>
+                        <td class="text-right">{{ (p.Percentage * 100 ).toFixed(1) }} %</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="table table-sm" *ngFor="let position of objectKeys(slate.lineupSummary)">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th class="text-left" scope="col" colspan="3">{{position}} Exposure Summary</th>
+                      </tr>
+                    </thead>
+                    <thead>
+                      <tr>
+                        <th class="text-left" scope="col">Player</th>
+                        <th class="text-right">Exposure</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let p of slate.lineupSummary[position]">
+                        <td class="text-left">{{ p.name }}</td>
+                        <td class="text-right">{{ p.total_exp }}%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-9">
+                  <div class="row">
+                    <div class="col-md-6 table-responsive" *ngFor="let lineup of objectValues(slate.myLineups)">
+                      <table class="optimized-lineup table table-sm">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">POS</th>
+                            <th scope="col">PLAYER</th>
+                            <th scope="col" class="text-right">PROJ</th>
+                            <th scope="col" class="text-right">SALARY</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let player of objectValues(lineup.roster)" class="position">
+                            <td>{{player.pos1}}</td>
+                            <td class="text-smaller">
+                              <div class="player">
+                                <div class="team">
+                                  <img src="../../../assets/images/logos/nba/{{player.team}}.png" [alt]="player.team">
+                                </div>
+                                <div class="player-data">
+                                  <b>{{player.first_name.substr(0,1)}}. {{player.last_name}}</b><br>
+                                  <small><b>{{player.team}}</b> vs <span class="text-muted">{{player.OPP}}</span></small>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="text-right">{{player.projected_pts}}</td>
+                            <td class="text-right">${{player.salary_display}}</td>
+                          </tr>
+                          <tr class="table-active">
+                            <th class="pt-2 pb-2 text-left" colspan="2">TEAM TOTAL</th>
+                            <th class="pt-2 pb-2 text-right">{{lineup.TotalPoints}}</th>
+                            <th class="pt-2 pb-2 text-right">${{lineup.TeamSalary}}</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="!loading && !slate.myLineups.length > 0">
+                <div class="col-md-8 offset-md-2">
+                  <main role="main" class="inner cover text-center">
+                    <h2 class="cover-heading">Create Multiple Lineups</h2>
+                    <p class="lead mb-3">Finalize your configuration settings and click the Optimize button below or on the left. </p>
+                    <p class="lead">
+                      <button class="btn btn-lg btn-success" (click)="build()">Build My Lineups</button>
+                    </p>
+                  </main>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Angular-Bootstrap-Toasts-Container [Width]="'25vw'" [Placement]="{position: 'bottomLeft'}"></Angular-Bootstrap-Toasts-Container>
+
+  <div id="signupModal" bsModal #signupModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-auto-name" class="modal-title pull-left">Sign Up for a Fantasy Plan Today!</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info text-center" role="alert">
+            <b>Looks like you do not yet have full access to use this tool!</b>
+          </div>
+          <p>Use the power of quantitative analytics, machine learning, and advanced algorithms to set optimal NBA Daily Fantasy Lineups every Day! Take TQE’s top of the line projections and make 150 NBA lineups in minutes. Get an edge on your draftkings competition with TQE’s Draftkings NBA lineup optimizer.</p>
+          <div class="mt-3">
+            <a routerLink="/membership-plan" class="btn btn-lg btn-block btn-success"><b>Join Now</b></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

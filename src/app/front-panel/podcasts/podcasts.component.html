@@ -1,0 +1,31 @@
+<div class="loading" *ngIf="loader"></div>
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>All Podcasts</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<strong *ngIf="serverErr !== ''" style="display: block;text-align: center;color: red;font-size: 15px;padding: 90px 0;">{{serverErr}}</strong>
+<div class="pod_cats_list" *ngIf="Podcasts.length > 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let pod of Podcasts">
+        <div class="podcast-holder" id="{{pod.id}}">
+          <div class="article_banner" *ngIf="pod.image_url.length != ''">
+            <img [src]="pod?.image_url" class="img-fluid" alt="{{pod.name}}" >
+          </div>
+          <img *ngIf="pod.image_url.length == ''"  class="no-img" src="../../../assets/images/placeholder.png">
+          <div class="flip-x">
+            <span class="cat_type">{{pod.name}}</span> 
+            <div class="cat_des"> 
+              <a routerLink="{{pod.page_url}}"> <p>{{pod.short_description}}</p></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

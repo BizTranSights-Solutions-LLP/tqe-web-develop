@@ -1,0 +1,46 @@
+<!-- NBA Articles -->
+<div>
+  <div class="Betting_article-tab">
+    <div class="container">
+      <h2>Recent MLB Articles</h2>
+      <div class="loading" *ngIf="mlbData.length === 0">
+        <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+      </div>
+      <div class="row" *ngIf="mlbData.length !== 0">
+        <div class="col-lg-3 col-md-4 col-sm-6" id="{{data.id}}" *ngFor="let data of mlbData;let i = index">
+            <div class="arTilce">
+              <div class="loading image_ph_{{i}}"></div>              
+              <div *ngIf="data.images.length > 0">
+                <img [src]="data.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+              </div>
+              <img *ngIf="!data.images.length > 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+
+              <a [routerLink]="['/article/',data.url]" class="title">{{data.title}}</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="Betting_article-tab">
+    <div class="container">
+      <h2>Previous MLB Articles</h2>
+      <div class="loading" *ngIf="oldArticles.length === 0">
+        <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+      </div>
+      <div class="row" *ngIf="oldArticles.length !== 0">
+        <div class="col-lg-3 col-md-4 col-sm-6" id="{{data.id}}" *ngFor="let data of oldArticles; let i = index">
+          <div class="arTilce">
+              <div class="loading image_ph_{{i}}"></div>              
+              <div *ngIf="data.images.length > 0">
+                <img [src]="data.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+              </div>
+              <img *ngIf="!data.images.length > 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+              <a [routerLink]="['/article/',data.url]" class="title">{{data.title}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="loading" *ngIf="Loader"> </div>
+      <button type="button" class="bTN_view" (click)="loadMore()" *ngIf="!hideLoadMore">LOAD MORE</button>
+    </div>
+  </div>
+</div>

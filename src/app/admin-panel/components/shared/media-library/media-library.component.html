@@ -1,0 +1,121 @@
+<!-- Modal -->
+<div class="modal fade" bsModal #gallery="bs-modal" (onShow)="download_images()" (onHide)="resetFile()">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Media library</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="gallery.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link" href="#upload" role="tab" data-toggle="tab" aria-selected="true">Upload</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#browse" role="tab" data-toggle="tab">Gallery</a>
+                </li>
+              </ul>
+              
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" id="upload">
+                  <div *ngIf="imageLoading" class="prepare">Preparing image library.....</div>
+                  <div class="alert alert-danger" *ngIf="message">{{message}}</div>
+                  <div *ngIf="!imageLoading" class="browse-img" [class.img-loaded]="imgURL?.length">
+                    
+                    <input type="file" id="fileupload" #file (change)="preview(file.files)" accept="{{mediaType === 'file' ? 'audio' : mediaType}}/*">
+                    <div class="preview-img">
+                      <div class="img-holder" *ngIf="!loadingPreview">
+                        <img [src]="imgURL" class="img-fluid" *ngIf="imgURL?.length" >
+                        <div *ngIf="uploadResponse.status === 'progress'">
+                          <div class="progress m-1">
+                            <div class="progress-bar" role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{uploadResponse.message}}%</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="loading" *ngIf="loadingPreview"></div>
+                      <div *ngIf="imgURL" [style.text-align]="'left'" class="media-img-upload">
+                        <ng-container>
+                          <div class="form-group">
+                            <label>Title: </label>
+                            <input name="title" class="form-control" #imgTitle>
+                          </div>
+                          <div class="form-group">
+                            <label>Caption: </label>
+                            <textarea name="caption" class="form-control" #imgCaption></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label>Alt Text: </label>
+                            <input name="alt_text" class="form-control" #imgAltText>
+                          </div>
+                          <div class="form-group">
+                            <label>Description: </label>
+                            <textarea name="description" class="form-control" #imgDescription></textarea>
+                          </div>
+                          <button type="button" (click)="upload(file.files, {'title': imgTitle.value, 'caption': imgCaption.value, 'alt_text': imgAltText.value, 'description': imgDescription.value})" *ngIf="imgURL" class="btn-upload bTN_view" [disabled]="uploadResponse.status === 'progress'">Upload</button>
+                        </ng-container>
+                      </div>
+                      
+                    </div>                      
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane active image-gallery-panel" id="browse" >
+                  <div class="media-img-list" [class.editMode]="editLibraryImage" (scroll)="onWindowScroll($event)">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="imgSuccessMsg">
+                      <strong>{{ imgSuccessMsg }}</strong>
+                      <button type="button" class="close" (click)="imgSuccessMsg = ''">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="imgErrorMsg">
+                      <strong>{{ imgErrorMsg }}</strong>
+                      <button type="button" class="close" (click)="imgErrorMsg = ''">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="loading" *ngIf="imageLoading"></div>
+                    <div class="row media-list">
+                      <div class="col-md-3" *ngFor="let image of media;let i = index;">
+                        <div class="file" [ngStyle]="image?.style" [ngClass]="image?.class">
+                          <div class="img-holder" >
+                            <img class="img-fluid" (click)="selectLibraryImage(i, image)" [src]="mediaType !== 'file' ? image?.file_path : fileIcon" >
+                          </div>
+                          <button type="button" class="edit-img" (click)="editImageOfLibrary(i, image)"><i class="fa fa-pencil"></i> </button>
+                          <span class="title">{{ image.title }} </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="editLibraryImage" class="media-img-edit">
+                    <ng-container >
+                        <div class="form-group">
+                          <label>Title: </label>
+                          <input name="title" class="form-control" #imgTitleU>
+                        </div>
+                        <div class="form-group">
+                          <label>Caption: </label>
+                          <textarea name="caption" class="form-control" #imgCaptionU></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label>Alt Text: </label>
+                          <input name="alt_text" class="form-control" #imgAltTextU>
+                        </div>
+                        <div class="form-group">
+                          <label>Description: </label>
+                          <textarea name="description" class="form-control" #imgDescriptionU></textarea>
+                        </div>
+                        <p *ngIf="imgUpdateLoader">Processing....</p>
+                        <button type="button" class="btn btn-success" [disabled]="imgUpdateLoader" (click)="updateImgOfLibrary({'title': imgTitleU.value, 'caption': imgCaptionU.value, 'alt_text': imgAltTextU.value, 'description': imgDescriptionU.value})">Update</button>                        
+                        <button type="button" class="btn btn-default close-btn" (click)="editLibraryImage = false">Close</button>
+                    </ng-container>
+                  </div>
+                </div>
+                
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

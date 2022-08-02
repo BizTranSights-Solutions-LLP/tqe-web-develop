@@ -1,0 +1,118 @@
+.page-title h1 {
+  display: block;
+  text-align: center;
+}
+.bouns {
+  padding: 50px 0;
+  text-align: center;
+  font-size: 20px;
+  line-height: 25px;
+}
+.bouns /deep/ p {
+  font-size: 15px;
+  padding: 20px 0 0;
+}
+.bouns /deep/ span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.bouns /deep/ strong {
+  font-size: 30px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.promoTitles {
+  height: 116px;
+  background-color: #F1F1F1;
+  text-align: center;
+  color: #000000;
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 116px;
+  margin: 0;
+}
+.actionBtns .more {
+  width: 114px;
+  border: 2px solid #ECECEC;
+  border-radius: 3px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  color: #18B219;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.09px;
+  line-height: 36px;
+  margin-bottom: 10px;
+}
+.actionBtns {      
+  text-align: center;
+}
+.actionBtns * {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
+  height: 40px;
+  line-height: 40px;
+}
+.actionBtns .join {
+  width: 112px;
+  border-radius: 3px;
+  background-color: #000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: -0.09px;
+}
+.actionBtns .join:hover {
+  background: #ccc;
+  color: #000;
+  text-decoration: none;
+}
+.actionBtns .more:hover {
+  background-color: #18B219;
+  color: #fff;
+  text-decoration: none;
+  border-color: #18B219;
+}
+.promos .img-holder {
+  text-align: center;
+  width: 150px;
+  margin: 0 auto;
+}
+.tips {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #efefef;
+  margin-top: 50px;
+}
+.tips ul {
+  list-style: disc;
+  padding: 0 0 20px 20px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.tips h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+.tips p {
+  margin: 0 0 20px;
+}
+.tips h3 {
+  font-size: 23px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+@media only screen and (max-width:767px) {
+  .promoTitles { display: none; }
+  .promos .col {
+    width: auto;
+    flex-basis: 100%;
+  }
+  .promos .img-holder {
+    text-align: center;
+    padding: 80px 0 0;
+  }
+  .bouns { padding: 20px 0; }
+}

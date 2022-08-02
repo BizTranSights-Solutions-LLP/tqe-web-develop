@@ -1,0 +1,50 @@
+<!-- If not authorized -->
+<div class="row justify-content-center" *ngIf="!isAuthorized && !auth_loading">
+  <div class="col-md-6">
+    <div class="alert alert-info" style="margin: 100px 0 0;text-align: center;font-size: 14px;padding: 10px 50px;">
+      <strong style="display: block;"> Your not authorized for this. </strong><br>
+      Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" [routerLink]="['/login']">Log
+          In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);"
+          [routerLink]="['/membership-plan']">Sign Up</a></strong>
+    </div>
+  </div>
+</div>
+<!-- If authorized -->
+<div class="container-fluid p1-text" *ngIf="isAuthorized && !auth_loading">
+  <div class="tab-pane Player_compare" data-value="" title="">
+    <div class="row">
+      <div class="col-sm-12" align="left" style="margin-top: 50px;">
+        <h2></h2>
+      </div>
+    </div>
+    <br />
+    <h6 class="mainHeading headline text-center"><span>SELECT TOOLS</span></h6>
+    <br />
+    <div class="row flex-center">
+      <div class="form-group shiny-input-container text-center">
+        <br>
+        <mat-form-field class="dropdown" appearance="fill">
+          <mat-label>Select a tool</mat-label>
+          <mat-select [(value)]="selected_tool" [disabled]="tool_data_loading">
+            <!-- <mat-option *ngFor="let tool of this.tools" [value]="tool" (click)="onClickToolSel()">{{tool}}</mat-option> -->
+            <mat-option value="NFL Picks" (click)="onClickToolSel()">NFL Picks</mat-option>
+            <mat-option value="NFL Best Bets" (click)="onClickToolSel()">NFL Best Bets</mat-option>
+            <mat-option value="NCAAF Picks" (click)="onClickToolSel()">NCAAF Picks</mat-option>
+            <mat-option value="NCAAF Best Bets" (click)="onClickToolSel()">NCAAF Best Bets</mat-option>
+            <mat-option value="NBA Picks" (click)="onClickToolSel()">NBA Picks</mat-option>
+            <mat-option value="NBA Best Bets" (click)="onClickToolSel()">NBA Best Bets</mat-option>
+            <mat-option value="NCAAB Picks" (click)="onClickToolSel()">NCAAB Picks</mat-option>
+            <mat-option value="NCAAB Best Bets" (click)="onClickToolSel()">NCAAB Best Bets</mat-option>
+            <mat-option value="MLB Picks" (click)="onClickToolSel()"> MLB Picks</mat-option>
+            <mat-option value="MLB Best Bets" (click)="onClickToolSel()">MLB Best Bets</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr style="border:1px dashed #eee;">
+    <br />
+  </div>
+  <div *ngIf="selected_tool==='NFL Picks'">
+    <tqe-nfl-picks-history></tqe-nfl-picks-history>
+</div>
+</div>

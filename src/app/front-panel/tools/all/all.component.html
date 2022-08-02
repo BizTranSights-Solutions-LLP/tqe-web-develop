@@ -1,0 +1,486 @@
+<section class="logos-sections">
+    <div class="full-container">
+        <div class="logos-wrap">
+            <ul>
+                <li *ngFor="let tl of teamLogos;let i = index;">
+                    <a (click)="excludeTeam(tl.logo)">
+                        <img class="{{tl.logo}}" src="../../../../assets/images/{{tl.logo}}.png" alt="{{tl.logo}}" [ngStyle]="tl.status">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-8 col-xl-9" id="content-area-bg">
+              <div class="content-area px-0">
+                  <div class="content-area-header">
+                        <div class="d-block d-sm-flex align-items-center">
+                            <form class="mb-3 mb-sm-0 mr-0 mr-sm-4" (ngSubmit)="findPlayerSubmit(searchPlayer.value, $event)">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Find Player"        #searchPlayer
+                                    (keyup)="findPlayerKeyup(searchPlayer.value, $event);">
+                                    <div class="input-group-append">
+                                        <button class="btn input-green-btn" type="submit"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="logo- fanshare">
+                                <img class="img-fluid" src="../../../../assets/images/BuzzScoreFanshare.png" alt="BuzzScoreFanshare">
+                            </div>
+                            <div class="s_filter_wrap">
+                                <div class="filter-button-wrap" *ngIf="showRangeFilter">
+                                    <a href="javascript:void(0);" class="btn green-border-btn d-block" (click)="filterPlayers = !filterPlayers"><i
+                                            class="fas fa-filter"></i>
+                                        Filter Players</a>
+                                </div>
+                                <div class="s_filter_process" [hidden]="!filterPlayers">
+                                        <button type="button" class="close" style="margin: 6% 3%" data-dismiss="modal" (click)="filterPlayers = !filterPlayers"><i class="fas fa-times"></i></button>
+                                    <div class="player_range_filter_btn">
+                                        <button class="btn black-btn" type="button" (click)="resetPlayersFilter()">Reset</button>
+                                        <button class="btn theme-btn pull-right" type="button" (click)="filter_players()">Apply</button>
+                                    </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="s_slide_filter">
+                                                <label>Projection Score</label>
+                                                <input type="text" class="js-range-slider_13 proj_range" name="my_range"
+                                                    value=""/>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="s_slide_filter">
+                                                <label>Salary</label>
+                                                <input type="text" class="js-range-slider_13 salary_range" name="my_range"
+                                                    value="" />
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="s_slide_filter">
+                                                <label [tooltip]="getTooltipContent('PPD')">PPD</label>
+                                                <input type="text" class="js-range-slider_13 ppd_range" name="my_range"
+                                                    value="" />
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="s_slide_filter">
+                                                <label [tooltip]="getTooltipContent('Dev vs Pos')">Defense vs Pos</label>
+                                                <input type="text" class="js-range-slider_13 defvspos_range" name="my_range"
+                                                    value="" />
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="s_slide_filter">
+                                                <label [tooltip]="getTooltipContent('Con')">Consistency</label>
+                                                <input type="text" class="js-range-slider_13 consistency_range" name="my_range"
+                                                    value="" />
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                  </div>
+
+                  <div class="table-outer s_table_adjust">
+                      <div class="table-inner" [hidden]="hideTable">
+                          <table class="tools-table first_table" id="first_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                              <thead>
+                                  <tr>
+                                        <th>
+                                            <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Pos')" >Pos</span>
+                                        </th>
+                                        <th class="name-column">
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Name</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Action')">Action</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Team</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Opp</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Salary</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Dev vs Pos')">Def vs Pos</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('TT')">TT</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Con')">Con</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">FP Avg</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Own</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('PPD')">PPD</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Proj.</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Floor</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('')">Ceiling</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Min')">Min%</span>
+                                        </th>
+                                        <th>
+                                                <span class="popover-container" data-toggle="popover" data-placement="bottom" data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('Max')">Max%</span>
+                                        </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <ng-container *ngFor="let data of listData;let i = index;">
+                                    <tr class="row_{{i}} {{data.team}}">
+                                        <td>{{ data.pos1 }}</td>
+                                        <td class="player_pool_name" (click)="setPlayerPopup(data,i)">{{ data.name }}</td>
+                                        <td>
+                                            <span class="table-lock" style="cursor: pointer" (click)="addToLineup(data)"><i class="fas fa-lock"></i></span>
+                                            <span class="table-cross" style="cursor: pointer" (click)="removeFromPlayerAndLineupList(i,data)"><i class="fas fa-times"></i></span>
+                                        </td>
+                                        <td>{{ data.team }}</td>
+                                        <td>{{ data.OPP }}</td>
+                                        <td>{{ data.salary }}</td>
+                                        <td [ngStyle]="{background: data.def_vs_pos_color, color: data.def_vs_pos_color === 'red' || data.def_vs_pos_color === 'green' ? 'white' : ''}">{{ data['Def vs Pos'] }}</td>
+                                        <td>{{ data.TT }}</td>
+                                        <td>{{ data.Con }}</td>
+                                        <td class="fp_avg_{{i}}">{{ data['FP Avg'] }}</td>
+                                        <td>{{ data?.Own }}</td>
+                                        <td class="ppd_{{i}}" [ngStyle]="{background: data.ppd_color, color: data.ppd_color === 'red' || data.ppd_color === 'green' ? 'white' : ''}">{{ data.PPD }}</td>
+                                        <td class="proj_col_{{i}}" (dblclick)="enable_edit(i)">
+                                            <span class="proj_{{i}}">{{ data.projected_pts }}</span>
+                                            <input type="text" class="proj_input edit_{{i}} table-input" [value]="data.projected_pts" (change)="disable_edit(i)" (blur)="disable_edit(i)">
+                                        </td>
+                                        <td>{{ data.floor }}</td>
+                                        <td>{{ data.ceiling }}</td>
+                                        <td class="min_col_{{i}}">
+                                            <span class="proj_input">{{data.min}}</span>
+                                            <input type="number" min="0" max="100" class="table-input min_input_{{i}}" (change)="updateInputValue($event,'min',i)" (blur)="updateInputValue($event,'min',i)"  [value]="data.min">
+                                        </td>
+                                        <td class="max_col_{{i}}">
+                                            <span class="proj_input">{{data.max}}</span>
+                                            <input type="number" min="0" max="100" class="table-input max_input_{{i}}" (change)="updateInputValue($event,'max',i)" (blur)="updateInputValue($event,'max',i)" [value]="data.max">
+                                        </td>
+                                    </tr>
+                                  </ng-container>
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="loading" *ngIf="hideTable"></div>
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="col-lg-4 col-xl-3" id="sidebar-bg">
+              <div class="sidebar-area">
+                    <div class="sidebar-heading d-flex align-items-center my-4">
+                        <h2 class="mr-auto">My Lineup</h2>
+                        <div class="flex-grow-2">
+                            <button type="button" class="btn theme-btn" (click)="buildRules()">Stack and Groups</button>
+                        </div>
+                    </div>
+                  <div class="sidebar-table-wrap">
+                      <div class="sidebar-theader">
+                          <div class="row">
+                              <div class="col">
+                                  <span class="label">Remaining: </span>
+                                  <span class="value">{{ remaining }}</span>
+                              </div>
+                              <div class="col">
+                                  <span class="label">Rem. Avg: </span>
+                                  <span class="value">{{ remainingAvg | number:'1.0-0' }}</span>
+                              </div>
+                          </div>
+                      </div>
+                     
+                      <div class="sidebar-table">
+                          <div class="table-inner">
+                              <table class="tools-table second-table" id="second_table" datatable [dtOptions]="dtOptions2" [dtTrigger]="dtTrigger2" style="width: 100%;">
+                                  <thead>
+                                      <tr>
+                                          <th>Pos</th>
+                                          <th>Name</th>
+                                          <th>Sal.</th>
+                                          <th> {{ showLineupCol | titlecase }}{{ showLineupCol == 'proj' ? '.' : '' }}</th>
+                                          <th>Act.</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let lu of lineupData;let i = index;">
+                                          <td>{{ lu.pos1 }}</td>
+                                          <td>{{ lu.name }}</td>
+                                          <td>{{ lu.salary }}</td>
+                                          <td *ngIf="showLineupCol == 'proj'">{{ lu.projected_pts }}</td>
+                                          <td *ngIf="showLineupCol == 'floor'">{{ lu.floor }}</td>
+                                          <td *ngIf="showLineupCol == 'ceiling'">{{ lu.ceiling }}</td>
+                                          <td>
+                                            <span class="table-lock" *ngIf="lu.name" (click)="removeFromSlate(i)"><i class="fas fa-unlock"></i></span>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+
+                      <div class="sidebar-form">
+                          <form>
+                              <div class="row no-gutters align-items-center">
+                                  <div class="col-md mt-2">
+                                      <div class="sidebar-radio-btns">
+                                          <label class="radio-container">
+                                              <input type="radio" name="lineup-radio" value="projection" checked (click)="setLineupCol('proj')">
+                                              <span class="radio-label">Projection</span>
+                                              <span class="checkmark"></span>
+                                          </label>
+                                          <label class="radio-container">
+                                              <input type="radio" name="lineup-radio" value="floor" (click)="setLineupCol('floor')">
+                                              <span class="radio-label">Floor</span>
+                                              <span class="checkmark"></span>
+                                          </label>
+                                          <label class="radio-container">
+                                              <input type="radio" name="lineup-radio" value="Ceiling" (click)="setLineupCol('ceiling')">
+                                              <span class="radio-label">Ceiling</span>
+                                              <span class="checkmark"></span>
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-auto ml-auto mt-2">
+                                      <div class="points-wrap">
+                                          <label class="points-lable">Proj Points:</label>
+                                          <span class="points-tag"><i class="fas fa-crown"></i> {{ projected_points | number:'1.0-0'}}</span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="sidebar-form-buttons">
+                                <div class="loading" *ngIf="optimizeInProcess"></div>
+                                <div class="d-block d-md-flex align-items-center">    
+                                    <div class="s_optimize_btn">
+                                        <button type="button" class="btn theme-btn" (click)="optimizeLineup()" [disabled]="optimizeInProcess">Optimize</button>
+                                        <button type="button" class="btn black-btn" (click)="resetSlate()">Reset</button>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <button type="button" class="btn theme-btn d-block w-sm-100" (click)="downloadSlate()"><i class="fas fa-download"></i>
+                                            Download Slate</button>
+                                    </div>
+                                </div>
+                              </div>
+
+                              <div class="sidebar-upload-wrap">
+                                  <label class="upload-label">Upload your slate (.csv file)</label>
+                                  <div class="row">
+                                      <div class="col-12">
+                                          <div class="input-group mb-2">
+                                              <div class="custom-file">
+                                                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="onFileSelect($event)" #file>
+                                                  <label class="custom-file-label" for="inputGroupFile01">{{ inputFieldText }}</label>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-12">
+                                          <div class="sidebar-save-btns d-flex">
+                                              <button type="button" class="btn green-border-btn" (click)="init_savePlayerpool()">
+                                                  <i class="fas fa-save"></i>Save
+                                                </button>
+                                              <button type="button" class="btn green-border-btn" (click)="init_playerpool()"><i class="fas fa-users"></i>
+                                                  Player Pool</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+
+<div class="theme-modal modal fade" bsModal #playerPool="bs-modal" (onShow)="fetchPlayerpool()">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+          <div class="modal-header">
+              <div class="row">
+                  <div class="col-md">
+                      <h2 class="modal-title">Load Player Pool</h2>
+                  </div>
+              </div>
+              <button type="button" class="close" data-dismiss="modal" (click)="playerPool.hide()"><i class="fas fa-times"></i></button>
+          </div>
+  
+          <div class="modal-body">
+              <div class="modal-table">
+                  <table class="loadPlayerPool-table">
+                      <thead>
+                          <tr *ngIf="!savePoolLoader">
+                              <th>Save Name</th>
+                              <th style="width: 55%;">Last Saved</th>
+                              <th style="width: 20%;">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngIf="savePoolLoader">
+                              <td colspan="3">
+                                <div class="loading" ></div>        
+                              </td>
+                          </tr>
+                          
+                          <tr *ngFor="let sp of savedPool">
+                                <td>{{ sp.name }}</td>  
+                                <td>{{ sp.created_at | date:'short' }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success mr-2" (click)="saveSelectedPool(sp.tool_log_id, sp.name)">Select</button>
+                                    <button type="button" class="btn btn-danger" (click)="deleteSelectedPool(sp.tool_log_id)">Delete</button>
+                                </td>
+                          </tr>
+                        </tbody>
+                  </table>
+                  <h5 class="text-center m-auto" *ngIf="savedPool.length === 0 && savePoolLoader === false">No record found!</h5>
+              </div>
+
+              <div class="modal-bottom loadPlayerpool-search" *ngIf="!savePoolLoader">
+                  <div class="row justify-content-between">
+                      <div class="col-md-6">
+                          <div class="file-input">
+                              <label class="inline-label">Selected: <b>{{ selected_player_pool ? selected_player_pool : 'No Player Pool Selected' }}</b></label>
+                              <div class="custom-file">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-auto">
+                          <button type="button" class="btn theme-btn" (click)="load_selected_pool()">Load Player Pool</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  </div>
+</div>
+
+<div class="theme-modal modal fade" id="player-pool" bsModal #emptyLineupError="bs-modal">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-body text-center">
+                <h1>{{ errorMessage }}</h1>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+<div class="theme-modal modal fade" id="player-pool" bsModal #initSavePool="bs-modal" (onHide)="successMessage = '';savePoolErrMsg = ''">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-body text-center">
+                <h1>Enter name to save player pool</h1>
+                <div class="alert alert-success alert-dismissible fade show col-md-4" style="margin: 10px auto;" role="alert" *ngIf="successMessage">
+                    {{ successMessage }}
+                    <button class="pull-right" type="button" (click)="successMessage = ''">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="loading" *ngIf="savePoolLoader"></div>
+                <input type="text" class="form-control col-md-4" placeholder="Player Pool Name" #poolName style="margin: 10px auto;"/>
+                <div class="alert alert-danger alert-dismissible fade show col-md-4" style="margin: 10px auto;" role="alert" *ngIf="savePoolErrMsg">
+                    {{ savePoolErrMsg }}
+                    <button class="pull-right" type="button" (click)="savePoolErrMsg = ''">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <button type="button" class="btn green-border-btn" (click)="savePlayerpool()">
+                    <i class="fas fa-save"></i>Save
+                </button>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+<div class="modal fade s_player_det_modal player_modal_box" id="myModal" role="dialog" bsModal #playerPopup="bs-modal" (onShow)="filterPlayers = false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header flex-column flex-xl-row align-items-center">
+                <div class="s_profile_player d-flex align-items-center mb-lg-0 mb-3">
+                    <img src="images/icon-1.png" alt="">
+                    <h3>{{ playerName }} - <span class="clr-green">${{ playerSalary }}</span></h3>
+                    <button type="button" class="btn red-btn ml-3" (click)="removeFromPlayerAndLineupList(selectedPlayerIndex,selectedPlayer);playerPopup.hide();">Remove from my pool</button>
+                </div>
+                <button type="button" class="clr-green close" data-dismiss="modal" (click)="playerPopup.hide()">&times;</button>
+            </div>
+            <div class="modal-body d-flex flex-column flex-xl-row p-0">
+                <!-- <div class="s_body-sidebar">
+                    <div class="s_player_description">
+                        <h3>The standard Lorem Ipsum passage, used since the 1500s</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                            sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                            est laborum.
+                            2019. Jan 20 - 11:03 PM</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                            sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                            est laborum.
+                            2019. Jan 20 - 11:03 PM</p>
+                    </div>
+                    <div class="s_player_actions d-flex align-items-center justify-content-between">
+                        <h4>News Source</h4>
+                        <div class="s_actions">
+                            <img src="images/icon-profile.png" alt="">
+                            <a href="#"><img src="images/icon-undo.png" alt=""></a>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="s_detail_wrap">
+                    <div class="table-outer">
+                        <div class="table-inner">
+                            <div id="first_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="table_wrap">
+                                    <h5 class="text-center mt-5" *ngIf="playerLog.length === 0 && !gameLogLoader"> No record found!</h5>
+                                    <div *ngIf="gameLogLoader"></div>
+                                    <table class="tools-table dataTable no-footer" id="first_table" role="grid" *ngIf="playerLog.length > 0">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            <tr role="row">
+                                                <td>#</td>
+                                                <td *ngFor="let heading of playerLog[0]?.head;">{{ heading | titlecase }}</td>
+                                            </tr>
+                                            <tr *ngFor="let pl of playerLog[0]?.body;let i = index;">
+                                                <td>{{ i+1 }}</td>
+                                                <td *ngFor="let heading of playerLog[0]?.orig_head;">{{ pl[heading] }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

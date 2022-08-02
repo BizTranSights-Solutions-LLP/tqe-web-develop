@@ -1,0 +1,396 @@
+input[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: 0 100px 100px #ccc inset !important;
+}
+span.steps {
+    height: 30px;
+    width: 164px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    display: block;
+    margin-right: -40px;
+    padding: 0 20px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+}
+.intForm {
+    background: linear-gradient(0deg, #E5FAFF 0%, #FFFFFF 100%);
+    box-shadow: inset 0 -1px 4px 0 #BAF0FF;
+    height: 80%;
+    padding: 100px 0;
+}
+.intForm h2 {
+    margin: 0 0 33px;
+    color: #0B0B0B;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 38px;
+    text-align: center;
+}
+.intForm h2 span {
+    color: #0B0B0B;
+    font-size: 30px;
+    line-height: 38px;
+    text-align: center;
+    font-weight: 400;
+}
+.info {
+    padding: 10px 5px 0;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+.info .ico {
+    background: url('../../../../assets/images/ico-info.png') no-repeat;
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    vertical-align: top;
+}
+.info:hover .ico {background-position: 0 -26px;}
+.info .dropdown strong {
+    color: #000000;	
+    font-size: 14px;	
+    font-weight: bold;	
+    line-height: 18px;
+    display: block;
+    padding: 0 0 10px;
+}
+.info p {
+    color: #6E6E6E;	
+    font-size: 12px;	
+    line-height: 14px;    
+    font-weight: 400;
+    text-align: left;
+    padding: 0 10px;
+}
+.info p + p {margin-top: 10px;}
+.info .dropdown {
+    position: absolute;
+    bottom: 30px;
+    z-index: 99;
+    left: 50%;
+    min-width: 588px;
+    padding: 0;
+    border: 1px solid #CECECE;	
+    border-radius: 12px;	
+    background-color: #FFFFFF;	
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.11);
+    text-align: center;
+    display: none;
+    transform: translateX(-50%);
+    margin-bottom: 10px;
+}
+.info:hover .dropdown {display: block;}
+.info .dropdown::after {
+    background: url('../../../../assets/images/ico-dropdown.png') no-repeat;
+    width: 13px;
+    height: 10px;
+    bottom: 0;
+    right: 50%;
+    margin-right: -6px;
+    position: absolute;
+    content: '';
+    margin-bottom: -10px;
+}
+.info .dropdown .headTitle {
+    border-radius: 11px 11px 0 0;
+    height: 67px;
+    background: linear-gradient(180deg, #6C7B89 0%, #48545F 100%);
+    color: #fff;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    overflow: hidden;
+    padding: 14px 0;
+}
+.info .dropdown .headTitle strong {
+    color: #fff;
+    padding: 0 0 10px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 15px;
+    text-align: center;
+}
+.info .headTitle p {
+    font-size: 13px;
+    line-height: 16px;
+    color: #fff;
+    text-align: center;
+    margin: -5px 0;
+}
+/* .info .headTitle p::first-letter { color: #29b81f; } */
+.info .headTitle p span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #29b81f;
+}
+.headTitle span {
+    color: #18b219;
+}
+.dropdown ul {
+    color: #000000;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 25px;
+    text-align: left;
+    padding: 10px 40px;
+    white-space: nowrap;
+}
+.dropdown ul /deep/ li {
+    padding: 0 0;
+    position: relative;
+}
+.dropdown ul  /deep/ li::after {
+    content: '';
+    background-color: #65c644;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 10px;
+    left: -15px;
+    border-radius: 100%;
+}
+.register-form {
+    max-width: 492px;
+    margin: 0 auto;
+}
+.register-form strong {
+    color: #000000;
+    padding: 0 0 15px;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 19px;
+    display: block;
+}
+.register-form label {
+    color: #000000;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500 !important;
+    line-height: 15px;
+}
+.register-form .form-control {
+    padding: 5px 6px;
+    height: 40px;
+    border: 0.75px solid #B8B8B8;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 4px 3px 0 #DEE7EF;
+    position: relative;
+}
+.register-form .form-group {
+    margin: 0;
+    position: relative;
+}
+.register-form .form-group + .form-group {margin-top: 17px;}
+.register-form .form-control input {
+    color: #989595;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    border: none;
+    outline: none;
+    box-shadow: 0 100px 100px #fff inset;
+    height: 100%;
+}
+
+.register-form button.actionButton {
+    cursor: pointer;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
+    font-size: 15px;	
+    font-weight: bold;	
+    line-height: 21px;	
+    text-align: center;
+    float: right;
+    width: 249px;
+    margin-top: 20px;
+}
+.register-form button.actionButton[disabled] {
+    background: lightgray;
+    cursor: not-allowed;
+    color: #fff;
+}
+.register-form .form-check label{
+    color: #37414B;	
+    font-size: 15px;	
+    font-weight: 500;	
+    line-height: 15px;
+    position: relative;
+}
+.register-form p.ngPass {
+    color: #007AFF;
+    font-size: 11px;
+    letter-spacing: -0.09px;
+    line-height: 14px;
+    text-align: right;
+    padding: 7px 0 0;
+}
+.register-form .form-check {padding: 30px 0 25px;}
+.register-form .form-check b {padding: 0 0 0 10px;}
+.register-form .form-check label::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    height: 15.71px;
+    width: 15.71px;
+    border: 0.75px solid #B8B8B8;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 4px 3px 0 #DEE7EF;
+}
+.register-form .showMe {
+    opacity: 0.99;
+    color: #7A8897;
+    font-family: 'proxima_nova_altsemibold';
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    cursor: pointer;
+}
+.register-form .showMe:hover span { color: #1BB31C; }
+.login a {
+    color: #18B219;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+}
+.login {
+    color: #8F9091;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+    text-align: right;
+    padding: 10px 20px 0;
+}
+.error {
+    position: absolute;
+    top: 0;
+    width: 329px;
+    border: 2px solid #FFFFFF;
+    background-color: #D0021B;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
+    color: #fff;
+    right: -360px;
+    z-index: 99;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 19px;
+    padding: 7px 15px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.error::after {
+    content: '';
+    background: url('../../../../assets/images/ico-dropdown-top-arrow.png') no-repeat;
+    position: absolute;
+    top: 7px;
+    left: -25px;
+    width: 34px;
+    height: 18px;
+    margin-left: 0;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+@-webkit-keyframes scale-up-center {
+    0% {
+        opacity: 1;
+        z-index: 9;
+    }
+    50% {
+        opacity: 1;
+        z-index: 9;
+    }
+    80% {
+        opacity: 1;
+        z-index: 9;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes scale-up-center {
+    0% {
+        opacity: 1;
+        z-index: 9;
+    }
+    50% {
+        opacity: 1;
+        z-index: 9;
+    }
+    80% {
+        opacity: 1;
+        z-index: 9;
+    }
+    100% {
+        opacity: 0;
+
+    }
+}
+
+@media only screen and (max-width:991px) {
+    .info .dropdown {
+        right: -10px;
+        width: 300px;
+        left: auto;
+        min-width: auto;
+        top: -170px;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    .info .dropdown::after {
+        right: 27px;
+    }
+    .dropdown ul {
+        height: 100px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        white-space: normal;
+    }
+    .page-title h1 { text-align: center; display: block;padding: 0 0 20px;}
+    span.steps {
+        top: auto;
+        bottom: 0;
+        right: 50%;
+        margin-right: -82px;
+        text-align: center;
+        border-radius: 15px 15px 0 0;
+    }
+    .steps strong { padding: 0 5px; }
+}
+@media only screen and (max-width: 767px)  {
+    .error {
+        top: -29px;
+        right: 0;
+        padding: 2px;
+        border: none;
+        width: auto;
+        font-size: 10px;
+    }
+    .error::after {
+        top: 4px;
+        left: -16px;
+        height: 15px;
+        width: 24px;
+        background-size: 100%;
+    }
+}

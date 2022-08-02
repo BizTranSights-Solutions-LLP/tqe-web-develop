@@ -1,0 +1,251 @@
+<div class="loading" *ngIf="loader">
+  <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+</div>
+<div class="page-title" *ngIf="!billingSuccess">
+  <span *ngIf="!billingSuccess" class="steps">
+      Step
+      <strong [innerHtml]="prev"></strong>
+      of
+      <strong [innerHtml]="curr"></strong>
+  </span>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>Membership Plans <span> | Enter Billing Information</span></h1>
+        <!-- <h1 style="display: block;text-align:center;" *ngIf="billingSuccess">{{serverResponse}}</h1> -->
+      </div>
+      <div class="col-auto">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="intForm congrats" *ngIf="billingSuccess">
+  <div class="container pb-5 pt-5">
+    <div class="row">
+      <div class="col text-center">
+        <h1>{{billingMessage}} <span> | {{membershipName}}</span></h1>
+        <span>Start improving your game and winning now!</span> (<a [routerLink]="['/']">Home Page</a>)
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="intForm" *ngIf="!billingSuccess">
+  <div class="container">
+    <!--  coupon and title    -->
+    <div class="row">
+      <div class="col">
+        <h1>Last Step Before Winning!</h1>
+        <div class="promo">
+          <div class="haveYou">
+            <span class="ico-promo"></span>
+            <span *ngIf="promoCode !== ''">
+                Discount Code
+                <strong>{{promoCode}}</strong>
+                Applied.
+              </span>
+            <span *ngIf="promoCode == ''">
+                <strong [innerHTML]="showPromo ? 'Enter Coupon' : 'Have a Coupon?'"></strong>
+
+              </span>
+            <button [innerHTML]="showPromo ? 'Cancel' : 'Add'" (click)="button_show_promo()"></button>
+
+          </div>
+
+
+
+          <div class="pormoCode" *ngIf="showPromo">
+            <div class="form-control">
+              <input type="text" placeholder="Enter Coupon Code" #promoCode>
+            </div>
+            <button class="actionButton" type="button" (click)="applyPromoCode(promoCode.value)">
+              <div class="loading loading-inner" *ngIf="disablePromo"></div>
+              Apply
+            </button>
+            <div class="row">
+              <div class="col ">
+                <div class="alert" [ngClass]="{
+                    'alert-danger': promoError == 'No Coupon code found.',
+                    'alert-success': promoError == 'Coupon Code Applied.'
+
+                  }" *ngIf="promoError">{{ promoError }}</div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <h2>
+          Set Up Your Credit or Debit Card
+          <div class="info">
+            <span class="ico"></span>
+            <div class="dropdown">
+              <strong>Why Do I Need A Credit Card?</strong>
+              <p>
+                A valid credit card is required to ensure
+                you are a real person and to help
+                mitigate piracy during Trial Periods.
+              </p>
+              <p> Your card will not be charged as long as you cancel during your Trial Period. </p>
+            </div>
+          </div>
+
+          <div class="cardAcc">
+            We accept:
+            <img src="../../../../assets/images/img-cards.png">
+          </div>
+
+
+        </h2>
+      </div>
+    </div>
+
+    <!--  payment form    -->
+    <div class="row">
+      <div class="col">
+        <div class="register-form">
+
+          <!--  payment form    -->
+          <form autocomplete="off" (ngSubmit)="createToken()" [formGroup]="paymentForm">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="psw"><b>Name on Card</b></label>
+                  <div class="form-control">
+                    <input type="text" placeholder="Enter Name Exactly" formControlName="name" minlength="2"
+                           maxlength="50">
+                    <div class="error" *ngIf="paymentForm.get('name').touched && paymentForm.get('name').invalid">Name
+                      is invalid
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="psw"><b>Zip/Postal Code</b></label>
+                  <div class="form-control">
+                    <input type="text" placeholder="Ex: 90210" formControlName="address_zip" minlength="5">
+
+                    <div class="error"
+                         *ngIf="paymentForm.get('address_zip').touched && paymentForm.get('address_zip').invalid">
+                      Zip/Postal Code is invalid
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="psw"><b>Card Number</b></label>
+                  <div class="form-control">
+                    <input [type]="showPassword ? 'text' : 'password'" placeholder="xxxx-xxxx-xxxx-xxxx"
+                           formControlName="number" minlength="13" maxlength="19">
+                    <span class="showMe"
+                          (click)="button_show_password()">
+                        <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i> &nbsp;<span
+                      [innerHTML]="showPassword ? 'Hide' : 'Show'"></span>
+                      </span>
+                    <div class="error" *ngIf="paymentForm.get('number').touched && paymentForm.get('number').invalid">
+                      Card Number is invalid
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group card-info">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label><b>Expiration Date</b></label>
+                      <div class="form-control day">
+                        <input type="text" placeholder="MM" formControlName="exp_month" minlength="2" maxlength="2">
+                        <div class="error"
+                             *ngIf="paymentForm.get('exp_month').touched && paymentForm.get('exp_month').invalid">Expiry
+                          Month is invalid
+                        </div>
+                      </div>
+                      <div class="form-control month">
+                        <input type="text" placeholder="YYYY" formControlName="exp_year" minlength="4" maxlength="4">
+                        <div class="error"
+                             *ngIf="paymentForm.get('exp_year').touched && paymentForm.get('exp_year').invalid">Expiry
+                          Year is invalid
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label><b>CVC</b></label>
+                      <div class="form-control">
+                        <input type="text" placeholder="Ex: 210" formControlName="cvc" minlength="3" maxlength="4">
+                        <div class="info cvv">
+                          <span class="ico"></span>
+                          <div class="dropdown">
+                            <strong>CVC Security Code Locations</strong>
+                            <div class="row">
+                              <div class="col">
+                                <strong>Visa/Mastercard</strong>
+                                <p>3 digit number on the back of your credit card typically on the right.</p>
+                              </div>
+                              <div class="col-auto">
+                                <img src="../../../../assets/images/img-card-back.png" alt="">
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <strong>American Express</strong>
+                                <p>4 digit number on the front of your card above right of your number.</p>
+                              </div>
+                              <div class="col-auto">
+                                <img src="../../../../assets/images/img-card-cvv.png" alt="">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="error" *ngIf="paymentForm.get('cvc').touched && paymentForm.get('cvc').invalid">CVC
+                          is invalid
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-danger">
+                <div *ngIf="serverError">{{ serverError }}</div>
+              </div>
+
+              <div class="col text-success" *ngIf="serverResponse">
+                {{ serverResponse }}
+              </div>
+            </div>
+            <div *ngIf="disablePay" class="loading"></div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <button class="actionButton" type="submit"
+                          [disabled]="paymentForm.invalid || disablePay">{{ billingButtonText }}</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+          <strong class="desclaim alert alert-success"
+                  *ngIf="membershipDesclaimerText?.length > 0">{{membershipDesclaimerText}}</strong>
+          <p class="note">By clicking XXXX, you agree to our <a [routerLink]="['/terms-and-condition']">terms of use</a>
+            and <a [routerLink]="['/privacy-policy']">privacy policy</a>. You agree that your subscription will begin
+            immediately and that you will not have a statutory right to cancel and receive a refund – this will not
+            affect your xxxxxx free trial period and you can still cancel at any time by logging into “My Account” and
+            following the cancellation process. You agree that when your free trial ends on [Date], the [TQE] will
+            automatically continue your membership and charge the membership fee (currently S[TBC]) to your payment
+            method on a monthly basis until you cancel. Cancellation will be effective at the end of each billing
+            period. No refunds or credits are given for partially used periods”.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

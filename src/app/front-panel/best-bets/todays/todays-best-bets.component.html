@@ -1,0 +1,109 @@
+<div id="todays-best-bets" class="container best-bets">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading mb-2">Coming Soon!</h4>
+        <p>This tool is not available yet because our engineers are hard at work updating it for the upcoming season.
+        </p>
+        <hr>
+        <p class="mb-0">Check back soon, for updates to this great tool!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- suspended for now -->
+<div id="todays-best-bets" class="container best-bets" *ngIf="false">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-lg mt-3 mb-5">
+        <div class="card-header">
+          <h5>Today's Best Bets - All Sports <small>{{ gameDate }}</small></h5>
+        </div>
+        <table id="best-bets-table" class="table table-borderless mb-0">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" class="sortable" colspan="2" (click)="sortByStartTime()">
+                Matchup
+                <i *ngIf="sortBy === 'time'" class="fas fa-caret-down"></i>
+              </th>
+              <th scope="col" class="text-center">Consensus Line</th>
+              <th scope="col" class="text-center">TQE Pick</th>
+              <th scope="col" class="sortable text-center" (click)="sortByRating()">
+                Pick Rating
+                <i *ngIf="sortBy === 'rating'" class="fas fa-caret-down"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let game of games">
+              <tr class="team away">
+                <td class="border-bottom align-middle" rowspan="2"><span class="badge badge-danger"
+                    *ngIf="game.started">Started</span> <span
+                    class="badge badge-secondary">{{game.sports}}</span><br><b>{{ game.local_start_time }}</b></td>
+                <td class="name">
+                  <div class="d-block d-sm-none">
+                    <!-- Visible only on xs -->
+                    <b class="h6">{{game.away_team}}</b>
+                  </div>
+                  <div class="d-none d-sm-block">
+                    <!-- Hidden only on xs -->
+                    {{game.away_team_first_name}}<br />
+                    <b class="h6">{{game.away_team_last_name}}</b>
+                  </div>
+                </td>
+                <td class="align-middle digits">
+                  <small *ngIf="game.type === 'Total'" class="text-muted">OVER<br></small>
+                  <span *ngIf="game.type === 'Spread' && (game.away_final_vegas > 0)">+</span>{{game.away_final_vegas}}
+                </td>
+                <td *ngIf="isAuthorized" class="border-bottom align-middle digits" rowspan="2">
+                  <div class="tqe-best-bet">
+                    <ng-container *ngIf="game.type === 'Total'">
+                      <span *ngIf="game.home_final_tqe > game.home_final_vegas" class="text-muted">OVER<br></span>
+                      <span *ngIf="game.home_final_tqe < game.home_final_vegas" class="text-muted">UNDER<br></span>
+                      <h5>{{game.away_final_vegas}}</h5>
+                    </ng-container>
+                    <ng-container *ngIf="game.type === 'Spread'">
+                      <span class="text-muted">{{game.final_pick}}<br></span>
+                      <h5 *ngIf="game.final_pick === game.home_team"><span
+                          *ngIf="game.home_final_vegas > 0">+</span>{{game.home_final_vegas.toFixed(1)}}</h5>
+                      <h5 *ngIf="game.final_pick === game.away_team"><span
+                          *ngIf="game.away_final_vegas > 0">+</span>{{game.away_final_vegas.toFixed(1)}}</h5>
+                    </ng-container>
+                  </div>
+                </td>
+                <td *ngIf="!isAuthorized" class="border-bottom align-middle digits" rowspan="2">
+                  <a [routerLink]="'/membership-plan'" class="btn btn-dark btn-sm"><i class="fas fa-lock"></i>
+                    Unlock</a>
+                </td>
+                <td *ngIf="isAuthorized" class="border-bottom align-middle digits" rowspan="2">
+
+                  <p>{{game.final_prob}}</p>
+                </td>
+                <td *ngIf="!isAuthorized" class="border-bottom align-middle digits" rowspan="2">
+                  <a [routerLink]="'/membership-plan'" class="btn btn-dark btn-sm"><i class="fas fa-lock"></i>
+                    Unlock</a>
+                </td>
+              </tr>
+              <tr class="team home">
+                <td class="border-bottom name">
+                  <div class="d-block d-sm-none">
+                    <!-- Visible only on xs -->
+                    <b class="h6">{{game.home_team}}</b>
+                  </div>
+                  <div class="d-none d-sm-block">
+                    <!-- Hidden only on xs -->
+                    {{game.home_team_first_name}}<br />
+                    <b class="h6">{{game.home_team_last_name}}</b>
+                  </div>
+                </td>
+                <td class="border-bottom align-middle digits"><small *ngIf="game.type === 'Total'"
+                    class="text-muted">UNDER<br></small> {{game.home_final_vegas}}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

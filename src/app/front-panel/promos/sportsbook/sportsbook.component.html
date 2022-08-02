@@ -1,0 +1,88 @@
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>Sports Books <span> | New Jersey</span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="promoTitles">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <strong>Sportsbook</strong>
+      </div>
+      <div class="col">
+        <strong>Welcome Bonus</strong>
+      </div>
+      <div class="col">
+        <strong>Take Action!</strong>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="promos">
+  <div class="container">
+    <div class="row align-items-center" *ngFor="let promo of Promos">
+      <div class="col">
+        <div class="img-holder">
+          <img class="img-fluid" src="../../../assets/images/{{promo.logo}}" alt="">
+        </div>
+      </div>
+      <div class="col">
+        <div class="bouns" [innerHTML]="promo.bouns"></div>
+      </div>
+      <div class="col">
+        <div class="actionBtns">
+          <a [routerLink]="['/', promo.readmore]" *ngIf="promo.readmore !== ''" class="more">Learn More</a>
+          <a href="{{promo.App_ios}}" *ngIf="promo.App_ios !== ''" class="join"><i class="fa fa-apple"></i> <span>iOS App</span></a>
+          <a href="{{promo.App_android}}" *ngIf="promo.App_android !== ''" class="join"><i class="fa fa-android"></i> <span>Android App</span></a>
+          <a href="{{promo.active_link}}" class="join" target="_blank">Activate Bonus</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div class="tips">
+  <div class="container">
+    <div class="row">
+      <div class="wpb_wrapper">
+        <h4>If you are completely new to betting you should read our how to guide <a [routerLink]="['/betting-101/']" target="_blank" rel="noopener noreferrer">here</a>.</h4>
+        <p>This will explain everything you need to know to get started on betting. What a line is, the difference between a straight bet and teaser, how to bet a parlay, and what a prop bet is. By the time you are done reading <a [routerLink]="['/betting-101/']" target="_blank">this article</a><b style="font-size: 13px;">,</b> you will be a betting expert.</p>
+        <h3><b>Why are multiple Sportsbooks important to have?</b></h3>
+        <p>Line shopping is incredibly important to a sports bettor’s success and R.O.I. Not all books will have the same line on a game. Half points cause -10 of juice and to save that money on bets time and time again will help you grow your bankroll. One book may have the Patriots as -7, while another book may have the Patriots as -6.5. That half point can be the difference between you cashing your ticket and you pushing your bet.</p>
+        <p>Not only will different books have different lines on games, but they will also have different odds on games. The standard odds on a bet is -110. With this juice, you need to hit 52.4% to be profitable as a sports bettor. Some books may have the line juiced to -115 or even -120 while another book could have the line at -105. What this means is that on one book you may need to risk $120 to win $100 while on another book you only need to risk $105. This is important for money lines as well as getting a team at +220 instead of +200 makes a huge difference as well. Better odds apply to all bets beyond straight bets and money lines, futures are important as well. Whenever you are going to tie your money up for a long term bet, you want to make sure you maximize your potential return. Often sportsbook differentials in lines are biggest on futures where a team might be 10-1 on one site, but 15-1 on another. That’s a difference of 500 dollars on a one hundred dollar bet!</p>
+        <p>Having multiple sportsbooks is critical to your chances to be profitable long term as a bettor. Of course, another way to be a profitable long-term bettor is to sign up at TQE, where across all NFL games we covered the spread 59.6% of the time and 68% on our best bets!</p>
+        <p>A new, fun thing that sportsbooks are introducing is ‘Daily Odds Boost.’ This gives you a boost in the odds on different events of the night across multiples sports. If you wanted to bet that Joel Embiid would score over 20 points on DraftKings, but Sugarhouse has it as an odds boost play and you get 2-1 instead of even money, it’s important that you have an account at multiple books. The more sports books the better, but three should be the minimum a serious sports bettor has.</p>
+        <h3><b>What to Look for in a Sportsbook</b></h3>
+        <p>While we have established that having multiple sportsbooks is important, how do you establish which ones are the best? With gambling becoming legal in the United States, people are moving from old school bookies to new age legal gambling. Each person is unique and it is important that you choose the best sportsbook for you, but there are many things to keep an eye out for. You want a clean look and feel, with great customer service, fair odds, and easy payouts. Here is our list of the most important things.</p>
+        <ul>
+          <li>Best odds</li>
+          <li>Deposit Options</li>
+          <li>Mobile App</li>
+          <li>Easy Withdrawal</li>
+          <li>Customer Service</li>
+          <li>Daily Odds Boost</li>
+          <li>Look and Feel</li>
+          <li>Deposit Bonus</li>
+          <li>Free Plays</li>
+          <li>Promotions and Bonuses</li>
+        </ul>
+        <h3><b>Most Important Features of a Good Online Sportsbook</b></h3>
+        <p><b>Best Odds –</b> The less juice you have to pay the better. As discussed earlier, recognizing the best value in lines helps a bettor’s long-term margins significantly. The difference between -108 and -110 may seem like just two dollars on a single bet, but over the course of a year that could add up to hundreds or even thousands of dollars. More and more sportsbooks are lowering the rake to compete and gain market share. -108 and -105 lines can be found on sportsbooks such as <a href="https://wlsugarhouseaffiliates.adsrv.eacdn.com/C.ashx?btag=a_564b_305c_&amp;affid=241&amp;siteid=564&amp;adid=305&amp;c=" target="_blank" rel="noopener noreferrer">Sugarhouse</a> and should be taken advantage of as frequently as possible.</p>
+        <p><b>Deposit Options</b> – Gambling is legal, but many credit card companies will block deposits unless you call to the let them know what you are going to do. With <a href="https://www.draftkings.com/gateway?s=883078627" target="_blank" rel="noopener noreferrer">DraftKings </a>well established in the United States, credit card transactions are the smoothest of all the available sportsbooks. You only have to do this once, but who wants to have to call a credit card company. Additional options should always be provided for easy, seamless deposits using PayPal or E-Wallets.</p>
+        <p><b>Mobile App</b> – A good sportsbook app is a major key for the customer experience. With so much of sports betting done on the go, an easy to use, fast mobile app is a must. Customers need to be able to find the game they want to bet on with ease and make a bet quickly. With laws being so strict about location, the ease of a sportsbook app has in finding your location is very important. <a href="https://www.draftkings.com/gateway?s=883078627" target="_blank" rel="noopener noreferrer">DraftKings </a>consistently finds users quickly and has you logged in and ready to bet in seconds.</p>
+        <p><b>Easy Withdrawal</b> – Nothing worse than hitting a big parlay and having to wait days to get your money. Having multiple, easy ways to get money out quickly is crucial for a sportsbook. <a href="https://wlcaesarsinteractive.adsrv.eacdn.com/C.ashx?btag=a_987655446b_854c_&amp;affid=817&amp;siteid=987655446&amp;adid=854&amp;c=" target="_blank" rel="noopener noreferrer">Caesars</a> offers easy PayPal withdrawals while <a href="https://wlsugarhouseaffiliates.adsrv.eacdn.com/C.ashx?btag=a_564b_305c_&amp;affid=241&amp;siteid=564&amp;adid=305&amp;c=" target="_blank" rel="noopener noreferrer">Sugarhouse</a> allows you to connect your bank account and have direct deposits.</p>
+        <p><b>Customer Service</b> – Questions will arise and you will want to talk to someone. It could be a simple question on a deposit bonus or if things go wrong, you want to be able to talk to someone. Sports betting involves big money and you want to be able to talk to someone if you have an issue, not wait a day for a response to an email. A good sportsbook will have an easy way to get in touch with someone without having to wait long for a response. <a href="https://wlcaesarsinteractive.adsrv.eacdn.com/C.ashx?btag=a_987655446b_854c_&amp;affid=817&amp;siteid=987655446&amp;adid=854&amp;c=" target="_blank" rel="noopener noreferrer">Caesars </a>and <a href="https://wlsugarhouseaffiliates.adsrv.eacdn.com/C.ashx?btag=a_564b_305c_&amp;affid=241&amp;siteid=564&amp;adid=305&amp;c=" target="_blank" rel="noopener noreferrer">Sugarhouse</a> have a chat that pops up and is available 24 hours a day, where a customer service representative will help you with your issues, while <a href="https://www.draftkings.com/gateway?s=883078627">DraftKings</a> has a phone number you can call.</p>
+        <p><b>Daily Odds Boost </b>– The more options the better! Daily Odds Boosts can be simple or extreme odds boosts. Some sportsbooks will increase odds from +120 to +140, but other times they will change something from +200 to +500 and big money can be won. Sportsbook often set limits on these bets between 50-100 dollars. <a href="https://wlsugarhouseaffiliates.adsrv.eacdn.com/C.ashx?btag=a_564b_305c_&amp;affid=241&amp;siteid=564&amp;adid=305&amp;c=">Sugarhouse</a> also sends push notifications when they release odds boosts, which is an excellent feature, so you never miss out on the best odds.</p>
+        <p><b>Look and Feel</b> – The ability to navigate a website and mobile app is key for user experience of a sportsbook. No one wants to have to go searching for the bet they want to make, struggle to find the game they are looking for, or the player props available. <a href="https://www.betstarsnj.com/?af_prt=thequantedge&amp;af_sub4=16133134&amp;c=BS-US-MOB-FDB-Affiliates-thequantedge-Direct-OpenMarket-ROS-All-All-FDB-500-LP-1x1-P-X&amp;pid=Affiliate&amp;utm_campaign=BS-US-MOB-FDB-Affiliates-thequantedge-Direct-OpenMarket-ROS-All-All-FDB-500-LP-1x1-P-X&amp;utm_medium=affiliates">BetStars</a> offers a fantastic layout that is easy to navigate. The sports, the options, the live betting is all there and can be found in seconds.</p>
+        <p><b>Deposit Bonus </b>– No good Sportsbook is going to leave a new customer without an incentive to join. Understanding what the bonuses mean, and figuring out which one is best for you is very important. The two most standard forms of deposit bonuses are free bets and deposit match. A free bet is whatever the amount of your first bet on the website is, typically capped between 300-500 dollars. It is important to note, you can only use that bet once. If you have a free bet of up to $500 in  <a href="https://www.betstarsnj.com/?af_prt=thequantedge&amp;af_sub4=16133134&amp;c=BS-US-MOB-FDB-Affiliates-thequantedge-Direct-OpenMarket-ROS-All-All-FDB-500-LP-1x1-P-X&amp;pid=Affiliate&amp;utm_campaign=BS-US-MOB-FDB-Affiliates-thequantedge-Direct-OpenMarket-ROS-All-All-FDB-500-LP-1x1-P-X&amp;utm_medium=affiliates" target="_blank" rel="noopener noreferrer">BetStars</a><b>,</b> you cannot make five $100 bets, you can only make one $500 free bet. So whatever your first bet on a new site is, make sure it is a big one, and save your free bet for a five unit bet, or TQE’s best bet of the night! A deposit match is just that, if you use <a href="https://wlsugarhouseaffiliates.adsrv.eacdn.com/C.ashx?btag=a_564b_305c_&amp;affid=241&amp;siteid=564&amp;adid=305&amp;c=" target="_blank" rel="noopener noreferrer">Sugarhouse’s</a> $250 deposit match and deposit $250 your account will have 500 dollars in it to start. Make sure you read terms and conditions closely as deposit matches often come with rollover rates and you will need to make multiple bets before you can withdraw the money.</p>
+        <p><b>Free Plays</b> – Sportsbooks will offer free plays throughout the course of the year to their customers, and like all things free the more the merrier. Often on holidays or before big games, sportsbooks will reward customers with a free bet. The more free bets a sportsbook offers, the easier it is to grow your bankroll. Keep in mind, when you get a free bet, you only keep the winnings. Unlike other bets where if you risk $27.50 to&nbsp;win $25 dollars, you get $52.50 put in your account. A free bet is something you can only get credited on winnings</p>
+        <p><b>Promotions and Bonuses</b> – Bonuses extend beyond an original deposit bonus. If you fall down on your luck and need to reload your account, make sure to reach out to customer service of your sportsbook. Often, they will give smaller reload bonuses. Books also run promotions and reward customer loyalty. <a href="https://www.playsugarhouse.com/?affid=241&amp;btag=a_564b_230c_" target="_blank" rel="noopener noreferrer">Sugarhouse </a>has a customer loyalty program that allows you to rack up points as you bet and whenever you hit certain milestones you get free plays or scratch off cards.</p>
+        <p>Now that you know what to look for in a Sportsbook check out our Sportsbook reviews on each book to pick which ones are right for you.</p>
+      </div>
+    </div>
+  </div>
+</div>

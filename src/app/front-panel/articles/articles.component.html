@@ -1,0 +1,33 @@
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>TQE Articles <span> | {{ articleTitle }} </span></h1>
+      </div>
+      <div class="col-auto">
+        <a routerLink="/membership-plan" class="page-title-anchor">Unlock Full TQE Articles</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="parentHorizontalTab" class="article-tabs">
+  <div class="resp-tabs-list hor_1">
+    <div class="container">
+      <ul class="row align-items-center">
+          <li class="col" routerLink="all" routerLinkActive="resp-tab-active"><span>All Articles</span></li>
+          <li class="col" routerLink="betting" routerLinkActive="resp-tab-active"><span>Betting</span></li>
+          <li class="col" routerLink="nfl" routerLinkActive="resp-tab-active"><span>NFL</span></li>
+          <li class="col" routerLink="nba" routerLinkActive="resp-tab-active"><span>NBA</span></li>
+          <li class="col" routerLink="mlb" routerLinkActive="resp-tab-active"><span>MLB</span></li>
+          <li class="col" routerLink="cbb" routerLinkActive="resp-tab-active"><span>CBB</span></li>
+          <li class="col" routerLink="ufc" routerLinkActive="resp-tab-active"><span>UFC</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="resp-tabs-container hor_1">
+    <router-outlet>
+      
+    </router-outlet>
+    
+  </div>
+</div>

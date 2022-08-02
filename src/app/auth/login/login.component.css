@@ -1,0 +1,37 @@
+.loggin-screen {
+	max-width: 500px;
+	margin: 100px auto;
+}
+.actionBtn {
+	text-align: center;
+}
+.actionBtn a {
+	color: #000;
+	text-decoration: underline;
+}
+.actionButton {
+	background-color: #1ab21a;
+	border: 2px solid transparent;
+	color: #fff;
+	font-size: 14px;
+	height: 50px;
+	margin: 10px auto;
+	line-height: 18px;
+	padding: 11px 19px;
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+	max-width: 250px;
+	display: block;
+}
+.actionButton[disabled] {
+	background-color: #ccc;
+	cursor: not-allowed;
+}
+.actionButton:not([disabled]):hover {
+	color: #1ab21a;
+	border-color: #1ab21a;
+	background-color: #fff;
+}

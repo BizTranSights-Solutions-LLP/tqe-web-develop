@@ -1,0 +1,280 @@
+.main-container{
+    padding: 10px;
+  }
+  
+  .flex-center{
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .headline{
+    color: #1fb122;
+    font-size: 20pt;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .p1-text{
+    font-size: 18px;
+    line-height: 20px;
+    color: #777;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .row{
+    width: 100%;
+  }
+  
+  .dropdown{
+    width: 300px;
+    max-width: 100%;
+  }
+  
+  .layout-container{
+    height: 100%;
+    width:100%;
+  }
+  
+  .titlecomp{
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: underline;
+    color: #000;
+    line-height: 1;
+    padding: 0 0 20px;
+  }
+  
+  .center{
+    text-align: center;
+  }
+  
+  .left{
+    text-align: left;
+  }
+  
+  .left-container, .middle-container, .right-container {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 -2px 20px;
+    width: 100%;
+  }
+  
+  @media (min-width: 768px){
+    .left-container {
+      width: 40%;
+    }
+    .middle-container {
+      width: 20%;
+    }
+    .right-container {
+      width: 40%;
+    }
+    .scroll-pick{
+      display: table !important;
+    }
+  }
+  
+  @media (min-width: 1260px){
+    .scroll-vl {
+      display: table !important;
+    }
+  }
+  
+  @media (max-width: 768px){
+    #player1-team-logo, #player2-team-logo{
+      width: 60px !important;
+      height: 60px !important;
+      left: 0;
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 1100px){
+    #player1-logo, #player2-logo{
+      width: 150px !important;
+      height: 150px !important;
+    }
+  }
+  
+  .sub-left, .sub-middle, .sub-right {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 -2px 20px;
+  }
+  
+  .sub-left {
+    width: 40%;
+  }
+  .sub-middle {
+    width: 20%;
+  }
+  .sub-right {
+    width: 40%;
+  }
+  
+  #logo{
+    border-radius: 0;
+    height: auto !important;
+    width: 100px !important;
+    margin: 0 auto;
+  }
+  
+  #VS-text{
+    float: none;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 -2px 20px;
+  }
+  
+  #VS-h{
+    font-size: 40px;
+    font-style: italic;
+    color: #000;
+    display: inline-block;
+  }
+  
+  #h3-text{
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  #title-team{
+    color: #000;
+    font-size: 26px;
+    display: block;
+  }
+  
+  .result-tb td{
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    color: #777;
+  }
+  .result-tb tr:nth-child(odd){
+    background-color: #f9f9f9;
+  }
+  
+  .scroll-vl, .scroll-pick {
+    display: block;
+    overflow: auto;
+    white-space: normal;
+  }
+  
+  .player-holder{
+    position: relative;
+    width: 200px;
+    display: contents;
+  }
+  
+  #player1-logo{
+    border-radius: 100%;
+    overflow: hidden;
+    height: 200px !important;
+    width: 200px !important;
+    margin: 0 auto 20px;
+    vertical-align: middle;
+  }
+  
+  #player1-team-logo{
+    /*position: absolute;
+    top: 36%;
+    left: 119px;*/
+    z-index: 9;
+    background: #fff;
+    width: 100px !important;
+    height: 100px !important;
+    margin-top: -40px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    vertical-align: middle;
+  }
+  
+  
+  /*Angular Material Slider*/
+  mat-slider {
+    width: 300px;
+  }
+  
+  ::ng-deep {
+    .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+      height: 12px;
+      border-radius: 10px
+    }
+    .mat-slider.mat-slider-horizontal .mat-slider-track-background,
+    .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
+      height: 100%;
+    }
+  
+    #container-0 .mat-accent .mat-slider-track-background {
+      background:linear-gradient(-90deg, green, yellow, red);
+    }
+  
+    #container-50 .mat-accent .mat-slider-track-fill {
+      background-image: linear-gradient(-90deg, yellow, red);
+    }
+  
+    #container-50 .mat-accent .mat-slider-track-background {
+      background:linear-gradient(-90deg, green, yellow);
+    }
+  
+    #container-100 .mat-accent .mat-slider-track-fill {
+      background:linear-gradient(-90deg, green, yellow, red);
+    }
+  
+    .mat-accent .mat-slider-thumb {
+      height: 30px;
+      width: 30px;
+      background-color: white;
+      border: solid 2px gray;
+      bottom: -20px;
+      right: -20px;
+    }
+    .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+      background-color: white;
+    }
+  }
+  
+  .range-label {
+    position: relative;
+    background: #fff;
+    padding: 5px 0;
+    width: 330px;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  .range-label span {
+    display: inline-block;
+    color: #000000;
+  }
+  
+  .range-label span:first-child {
+    float: left;
+  }
+  
+  .range-label span:last-child {
+    float: right;
+  }
+  
+  .loadersmall {
+    border: 5px solid #f3f3f3;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    border-top: 5px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

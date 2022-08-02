@@ -1,0 +1,13 @@
+div /deep/ .dataTables_wrapper .col-sm-12 {
+    width: 100%;
+    overflow-x: auto;
+}
+@media only screen and (max-width:786px) {
+    div /deep/ .txtLimit {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 70px;
+        display: block;
+     }
+}

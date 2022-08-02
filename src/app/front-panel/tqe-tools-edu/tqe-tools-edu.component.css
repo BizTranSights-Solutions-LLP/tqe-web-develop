@@ -1,0 +1,29 @@
+.aboutUs {
+    overflow: hidden;
+    padding: 50px 0;
+    font-size: 15px;
+    line-height: 1.5
+}
+.aboutUs h2 {
+    font-size: 21px;
+    margin: 0 0 10px;
+    padding-right: 60px;
+}
+.aboutUs p {
+    margin: 0 0 20px;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.points-spread {
+    width: 70%;
+}
+@media(min-width: 200px) and (max-width: 650px) {
+    .formula {
+        width: 85%;
+    }
+}

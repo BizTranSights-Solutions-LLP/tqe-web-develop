@@ -1,0 +1,809 @@
+.loading {
+    height: 100%;
+    padding: 150px 0 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    background: #000;
+}
+.subscribed_plan_image{
+    margin-bottom: 13%;
+}
+.Membership_Plans {position: relative;}
+.heading_sub {
+    font-size: 30px;	
+    font-weight: 900;	
+    line-height: 33px;
+    text-align: center;
+    color: #000000;
+    margin: 0 0 10px;
+}
+/* .loading {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    background-image: none;
+    z-index: 99;
+    height: 100%;
+    top: 35%;
+} */
+span.steps {
+    height: 30px;
+    width: 164px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    display: block;
+    margin-right: -40px;
+    padding: 0 20px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+}
+.exc {
+    color: #939393;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: right;
+    display: block;
+}
+.page-title-anchor {
+    height: 38px;
+    line-height: 38px;
+    width: 140px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    background-color: #000000;
+}
+.packages {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EAF4FF 100%);	
+    box-shadow: inset 0 -3px 5px 0 #8BD7EB;
+    padding: 50px 0 70px;
+}
+.plans-table {
+    border: none;
+    margin: 0 auto 25px;
+    display: table;
+    width: 100%;
+    max-width: 800px;
+}
+.plans-table .thead { display: table-header-group; }
+.plans-table .tbody { display: table-row-group; }
+.plans-table .tbody {
+    box-shadow: 0 2px 20px 0 #B2DAE4;
+    border-radius: 0 16px  16px 16px;
+    -webkit-border-radius: 0 16px  16px 16px;
+    -moz-border-radius: 0 16px  16px 16px;
+}
+
+.plans-table .tr {display: table-row;}
+.plans-table .thead > .tr > .th:nth-child(2) {
+    border-radius: 16px 0 0 0;
+    -moz-border-radius: 16px 0 0 0;
+    -webkit-border-radius: 16px 0 0 0;
+}
+.plans-table .thead > .tr > .th:not(:first-child),
+.plans-table .tbody > .tr > .td strong.heading {
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 19px;
+    padding: 20px;
+    border-right: 1px solid #373F46;
+    border-bottom: 1px solid #373F46;
+    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
+    height: 51px;
+}
+.monthlyPass .plans-table .thead .th .best_value { 
+  display:inline-block;
+  color:#73E33F;
+  font-style:italic;
+}
+.monthlyPass.annual .plans-table .thead .th:nth-child(2) {
+  border-radius: 16px 16px 0 0;
+  -moz-border-radius: 16px 16px 0 0;
+  -webkit-border-radius: 16px 16px 0 0;
+}
+.monthlyPass.annual .plans-table .tbody .tr:last-child .td:nth-child(2) {
+  padding:25px 0;
+}
+.monthlyPass.annual .plans-table .tbody .tr:last-child .td:nth-child(2) {
+  border-radius: 0 0 16px 16px;
+  -moz-border-radius: 0 0 16px 16px;
+  -webkit-border-radius: 0 0 16px 16px;
+  border-left:1px solid #c2c2c2;
+}
+
+.monthlyPass .plans-table .annual_description {
+  display:flex;
+  flex-direction:row;
+}
+.monthlyPass .plans-table .annual_description .fcol {
+  flex:1;
+}
+.monthlyPass .plans-table .annual_description .fcol .save {
+  font-size:18px;
+  line-height:1.5em;
+}
+.monthlyPass .plans-table .annual_description .fcol .price {
+  font-weight:bold;
+  font-size:24px;
+  line-height:2.0em;
+}
+.monthlyPass .plans-table .annual_description .fcol .price .green-text {
+  color:#18B219;
+}
+.monthlyPass .plans-table .annual_description .fcol .summary {
+  font-size:14px;
+  font-weight:bold;
+}
+.monthlyPass .plans-table .annual_description .fcol button {
+  display:block;
+  margin:0 auto;
+}
+
+strong.heading { display: none; }
+.plans-table .thead > .tr > .th {
+    border: none;
+    background: none;
+    text-align: center;
+    display: table-cell;
+    vertical-align: top;
+}
+.season_package{
+    background: none;
+    box-shadow: none;
+    padding: 0px;
+}
+
+.plans-table .thead > .tr > .th:last-child  {
+    border-radius: 0 16px 0 0;
+    -moz-border-radius: 0 16px 0 0;
+    -webkit-border-radius: 0 16px 0 0;
+    border-right: 0;
+}
+.seasonPass.plans-table .thead > .tr > .th:nth-child(4)  {
+    border-radius: 0 16px 0 0;
+    -moz-border-radius: 0 16px 0 0;
+    -webkit-border-radius: 0 16px 0 0;
+    border-right: 0;
+}
+.seasonPass.plans-table .thead > .tr > .th:last-child  {
+    background: none;
+    border:none;
+}
+.plans-table .tbody > .tr > .td {
+    display: table-cell;
+    vertical-align: top;
+    position: relative;
+}
+.plans-table .package_info:hover {
+    color: #fff;
+    background: #24b91e;
+}
+.plans-table .package_info {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    border-radius: 100%;
+    border: 1px solid #24b91e;
+    font-size: 12px;
+    line-height: 18px;
+    text-indent: -1px;
+    color: #24b91e;
+    cursor: pointer;
+}
+.plans-table .tbody > .tr > .td:first-child {
+    border: none;
+    padding: 0;
+    text-align: right;
+}
+.plans-table .tbody > .tr > .td:first-child strong {
+    color: #000000;	
+    font-size: 15px;
+    font-weight: 900;	
+    line-height: 19px;	
+    text-align: right;
+    position: absolute;
+    top: 20px;
+    left: -140px;
+    width: 130px;
+}
+.plans-table .tbody > .tr:last-child > .td:nth-child(2) {
+    border-radius: 0 0 0 16px;
+    -moz-border-radius: 0 0 0 16px;
+    -webkit-border-radius: 0 0 0 16px;
+}
+.plans-table .tbody > .tr > .td:nth-child(2) {
+    border-left: 1px solid #C2C2C2;
+}
+.plans-table .tbody > .tr > .td:not(:first-child) {
+    border-right: 1px solid #C2C2C2;
+    background-color: #FFFFFF;
+    /* box-shadow: 0 2px 20px 0 #B2DAE4; */
+    color: #000;
+    font-size: 19px;
+    line-height: 23px;
+    text-align:center;
+    padding: 20px;
+    font-weight: normal;
+    position: relative;
+}
+.seasonPass.plans-table .tbody > .tr:first-child > .td:last-child {
+    border-radius: 0 16px 0  0;
+    -moz-border-radius: 0 16px 0  0;
+    -webkit-border-radius: 0 16px 0  0;
+    border-top: 1px solid #C2C2C2;
+}
+.plans-table .tbody > .tr:last-child > .td:last-child {
+    border-left: none;
+    border-right: 1px solid #C2C2C2;
+    border-radius: 0 0 16px 0;
+    -moz-border-radius: 0 0 16px 0;
+    -webkit-border-radius: 0 0 16px 0;
+}
+.plans-table .tbody > .tr:last-child > .td:not(:first-child) {
+    border-bottom: 1px solid #C2C2C2;
+}
+.plans-table .tbody > .tr > .td:not(:first-child)::after {
+    background-image: url('../../../assets/images/td-strip.png');
+    content: '';
+    height: 100%;
+    width: 15px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.plans-table .tbody > .tr > .td:last-child::after {
+    background: none;
+}
+.plans-table .tbody > .tr > .td strong {
+    color: #000000;	
+    font-size: 19px;
+    line-height: 23px;
+    text-align: center;
+    font-weight: 400;
+}
+.plans-table .tbody > .tr > .td strong span {color:#18B219;}
+
+.plans-table .save {
+    display: block;
+    color: #18B219;	
+    font-size: 12px;	
+    font-weight: bold;	
+    line-height: 15px;
+    height: 15px;
+}
+.plans-table .all {
+    color: #000;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 19px;
+    text-align: right;
+    display: block;
+}
+.seasonPass  {
+    display: flex;
+}
+.seasonPass .plans-table {
+    width: 85%;
+    margin: 0;
+    padding-left: 120px;
+}
+.seasonPass .plans-table .tbody {
+    box-shadow: 0 2px 20px 0 #B2DAE4;
+    -webkit-box-shadow: 0 2px 20px 0 #B2DAE4;
+    -moz-box-shadow: 0 2px 20px 0 #B2DAE4;
+}
+.seasonPass .actionBtn {
+    background: linear-gradient(180deg, #5C6D7C 0%, #34414D 100%);
+    text-align: center;
+    width: 15%;
+    margin-top: 59px;
+    border-radius: 0 16px 16px 0;
+}
+.seasonPass .actionBtn li {
+    padding: 20px 20px 12px;
+}
+.seasonPass .plans-table .tbody > .tr:last-child > .td:last-child {border-radius: 0}
+
+.freeTrial {
+    width: 25vw;
+    background: linear-gradient(180deg, #73E33F 0%, #18B219 100%);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    margin:1.5em auto;
+    padding:10px 0;
+}
+
+.selectPackage {
+    width: 80%;
+    background: linear-gradient(180deg, #73E33F 0%, #18B219 100%);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    height: 30.5px;
+    display: block;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -0.09px;
+    line-height: 30.5px;
+    text-align: center;
+    margin: 0 auto;
+    text-transform: uppercase;
+    &.secondary {
+      color:white;
+      border:1px solid #18B219;
+      background:linear-gradient(180deg, #73E33F 0%, #18B219 100%);
+      line-height: 1.0em;
+      &:hover {
+        color:#fff;
+      }
+    }
+}
+.selectPackage:disabled{
+    background: linear-gradient(180deg, #939393 0%, #B2C6C9 100%);
+    cursor: not-allowed;
+}
+.selectPackage:hover:not([disabled]) {
+    text-decoration: none;
+    background: linear-gradient(0deg, #73E33F 0%, #18B219 100%);
+}
+.compare {
+    background: linear-gradient(180deg, #000000 0%, #2A3540 100%);
+    padding: 30px 0;
+}
+.compare .comTable {  overflow-x: auto }
+.compare .plans-table {  padding-left: 230px; }
+.compare .plans-table .tbody > .tr > .td:first-child strong {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 17px;
+    width: 220px;
+    left: auto;
+    right: 20px;
+    top: 0;
+    height: 50px;
+    padding: 5px 0px;
+}
+.compare .plans-table .tbody > .tr > .td:first-child strong.sng {padding: 15px 0px;}
+.compare .plans-table .tbody {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+.compare .plans-table .thead > .tr > .th:not(:first-child){
+    border: 1px solid #3fae3d;
+    background-image: linear-gradient(180deg, #73e33f 0%, #18b219 100%);
+}
+.compare .plans-table .tbody > .tr > .td:not(:first-child)::after {
+    width: 24px;
+    background-repeat: repeat-y;
+}
+.compare .plans-table .tbody > .tr:nth-child(odd) > .td:not(:first-child)::after {
+    background-image: url('../../../assets/images/td-strip-1.png');
+}
+.compare .plans-table .tbody > .tr:nth-child(even) > .td:not(:first-child)::after {
+    background-image: url('../../../assets/images/td-strip-2.png');
+}
+.compare .plans-table .tbody > .tr:last-child > .td:last-child::after {background: none;}
+.compare .plans-table .tbody > .tr > .td:not(:first-child) {padding: 13px 0;}
+.compare .plans-table .tr .td {border-color: #B2C6C9;}
+.compare .plans-table .tr:nth-child(2n+1) .td {
+    background-color: #ECFCFF !important;
+}
+.compare h2.heading_sub {
+    color: #FFFFFF;
+    font-weight: 800;
+    line-height: 38px;
+    margin: 0 0 10px;
+}
+.why-subscribe {
+    background: linear-gradient(180deg, #FFFFFF 0%, #EAF4FF 100%);	
+    box-shadow: inset 0 -3px 5px 0 #8BD7EB;
+    -webkit-box-shadow: inset 0 -3px 5px 0 #8BD7EB;
+    -moz-box-shadow: inset 0 -3px 5px 0 #8BD7EB;
+    padding: 50px 0;
+}
+.whyTQE {
+    margin: 0 0 20px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.why-subscribe h2 {margin-bottom: 20px}
+.why-subscribe .container {  max-width: 740px; }
+.whyTQE .row {height: 194px;}
+.subscribe {
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, #73E33F 0%, #18B219 100%);
+    height: 100%;
+}
+.subscribe p {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 29px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+}
+.whyTQE .tqe {
+    background: url('../../../assets/images/bg-tqe.jpg') no-repeat;
+    height: 100%;
+    background-size: cover;
+    text-align: center;
+    padding: 70px 0;
+}
+.bTN-Ytqe {
+    height: 51px;
+    width: 208px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    padding: 13px 10px 10px 18px;
+}
+.bTN-Ytqe img {float: left;}
+.bTN-Ytqe span {
+  display: block;
+  overflow: hidden;
+  color: #383838;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11px;
+  text-align: left;
+  padding: 0 0 0 5px;
+}
+.bTN-Ytqe strong {
+  display: block;
+  font-size: 14px;
+  line-height: 1;
+}
+.FAQs {
+    padding: 22px 0 0;
+    font-size: 12px;	
+    line-height: 14px;
+    color: #000000;
+}
+.FAQs > div {padding: 0 0 45px;}
+.FAQs h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 22px;
+}
+.rel-images {padding: 0 0 20px;}
+.rel-images img {
+    display: block;
+    margin: 0 auto 15px;
+}
+.FAQs a {
+    color: #00AF17;
+    text-decoration: underline;
+    font-weight: 500;
+}
+.freeUser {
+    padding: 100px 0 40px;
+}
+.freeUser button.bTN- {
+    margin: 0 auto;
+    height: 50px;
+    font-size: 14px;
+    padding: 0 40px;
+}
+.freeUser h4.heading_sub {
+    font-size: 20px;
+    text-transform: capitalize;
+}
+h3.freeOpt {
+    margin: 0 0 70px;
+    font-weight: 700;
+    border-radius: 7px;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 11px;
+    color: #2b4344;
+    box-shadow: 0 0 5px #21a73f;
+}
+/*Plan Information*/
+.info {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+.info .ico {
+    background: url('../../../assets/images/ico-info.png') no-repeat;
+    width: 26px;
+    height: 26px;
+    display: block;
+}
+.info:hover .ico {background-position: 0 -26px;}
+.info .dropdown strong {
+    color: #000000;	
+    font-size: 14px;	
+    font-weight: bold;	
+    line-height: 18px;
+    display: block;
+    padding: 0 0 10px;
+}
+.info p {
+    color: #6E6E6E;	
+    font-size: 12px;	
+    line-height: 14px;    
+    font-weight: 400;
+    text-align: left;
+    padding: 0 10px;
+}
+.info p + p {margin-top: 10px;}
+.info .dropdown {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: auto;
+    padding: 0;
+    border: 1px solid #CECECE;	
+    border-radius: 12px;	
+    background-color: #FFFFFF;	
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.11);
+    text-align: center;
+    display: none;
+    transform: translateX(-50%);
+    margin-bottom: 10px;
+}
+.info:hover .dropdown {display: block;}
+.info .dropdown::after {
+    background: url('../../../assets/images/ico-dropdown.png') no-repeat;
+    width: 13px;
+    height: 10px;
+    bottom: 0;
+    right: 50%;
+    margin-right: -6px;
+    position: absolute;
+    content: '';
+    margin-bottom: -10px;
+}
+.plans-table .info .dropdown .headTitle {
+    border-radius: 11px 11px 0 0;
+    height: 67px;
+    background: linear-gradient(180deg, #6C7B89 0%, #48545F 100%);
+    color: #fff;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    overflow: hidden;
+    padding: 14px 0;
+}
+.plans-table .info .dropdown .headTitle strong {
+    color: #fff;
+    padding: 0 0 10px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 15px;
+    text-align: center;
+}
+.info .headTitle p {
+    font-size: 13px;
+    line-height: 16px;
+    color: #fff;
+    text-align: center;
+    margin: -5px 0;
+}
+/* .info .headTitle p::first-letter { color: #29b81f; } */
+.info .headTitle p span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #29b81f;
+}
+.info .headTitle span {
+    color: #18b219;
+}
+.info .dropdown ul {
+    color: #000000;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 25px;
+    text-align: left;
+    padding: 10px 40px;
+    white-space: nowrap;
+}
+.info .dropdown ul /deep/ li {
+    padding: 0 0;
+    position: relative;
+}
+.info .dropdown ul  /deep/ li::after {
+    content: '';
+    background-color: #65c644;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    top: 10px;
+    left: -15px;
+    border-radius: 100%;
+}
+@media only screen and (max-width:991px) {
+    
+    .info .dropdown {
+        right: -10px;
+        width: 300px;
+        left: auto;
+        min-width: auto;
+        top: -170px;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    .info .dropdown::after {
+        right: 27px;
+    }
+    .dropdown ul {
+        height: 100px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        white-space: normal;
+    }
+    .plans-table .tbody > .tr > .td strong.heading { 
+        display: block;
+        position: relative;
+        z-index: 9;
+        display: block;
+        margin: 0 0 20px;
+        padding: 0;
+        line-height: 51px;
+    }
+    .monthlyPass .plans-table {  max-width: 290px; }
+    .monthlyPass .plans-table .thead { display: none;  }
+    .monthlyPass .plans-table .tbody {
+        display: block;
+        border-radius: 16px 16px 16px 16px;
+        -webkit-border-radius: 16px 16px 16px 16px;
+        -moz-border-radius: 16px 16px 16px 16px;    
+    }
+    .monthlyPass .plans-table .tr {  display: block; }
+    .monthlyPass .plans-table .tbody > .tr > .td:first-child strong {
+        top: 320px;
+        transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        text-align: center;
+        left: -80px;
+    }
+    .monthlyPass .plans-table .tbody > .tr:last-child > .td:not(:first-child) {
+        border-bottom: none;
+        border-left: 1px solid #C2C2C2;
+        border-top: 1px solid #C2C2C2;
+        overflow: hidden;    
+        padding: 0 0 20px;
+    }
+    .monthlyPass .plans-table .tbody > .tr:last-child > .td:last-child  {
+        border-radius: 0 0 16px 16px;
+        -moz-border-radius: 0 0 16px 16px;
+        -webkit-border-radius: 0 0 16px 16px;
+        border-bottom: 1px solid #C2C2C2;
+    }
+    .monthlyPass .plans-table .tbody > .tr > .td {  display: block; }
+    .monthlyPass .plans-table .tbody > .tr:last-child > .td:nth-child(2) {
+        border-radius: 16px 16px 0 0;
+        -moz-border-radius: 16px 16px 0 0;
+        -webkit-border-radius: 16px 16px 0 0;    
+    }
+    .monthlyPass .plans-table .tbody > .tr > .td:last-child::after {
+        background: url('../../../assets/images/td-strip.png');
+    }
+    .page-title h1 { text-align: center; display: block;padding: 0 0 20px;}
+    span.steps {
+        top: auto;
+        bottom: 0;
+        right: 50%;
+        margin-right: -82px;
+        text-align: center;
+        border-radius: 15px 15px 0 0;
+    }
+    .steps strong { padding: 0 5px; }
+    .seasonPass {overflow-x: auto;}
+    .seasonPass .plans-table {  width: 75%; }
+    .seasonPass .actionBtn {width: auto; margin-top: 59px;}
+    .monthlyPass .info {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+    }
+    .monthlyPass .info .dropdown {
+        right: -22px;
+        width: 270px;
+        left: auto;
+        min-width: auto;
+        top: -61px;
+        margin: 0;
+        z-index: 999;
+        height: 170px;
+    }
+    .monthlyPass .plans-table .info .dropdown .headTitle {  border-radius: 0; }
+    .plans-table .info .dropdown .headTitle {
+        height: 47px;
+        background: linear-gradient(180deg, #6C7B89 0%, #48545F 100%);
+        padding: 5px 0;
+    }
+    .plans-table .info .dropdown .headTitle strong {
+        color: #fff;
+        padding: 0 0 10px;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 15px;
+        text-align: center;
+    }
+    .info .headTitle p {
+        font-size: 9px;
+        line-height: 10px;
+        color: #fff;
+        text-align: center;
+        margin: -6px 0 0;
+    }
+    .info .dropdown ul {
+        font-size: 10px;
+        white-space: normal;
+        padding: 10px 30px;
+    }
+    .monthlyPass .info .dropdown ul {  height: 112px; }
+    .plans-table .tbody > .tr > .td:not(:first-child) {  padding: 20px 60px;  }
+    .seasonPass .info .dropdown { right: -15px; }
+    .seasonPass .plans-table .tbody .tr:first-child .td .info .dropdown::after,
+    .seasonPass .plans-table .tbody .tr:nth-child(2) .td .info .dropdown::after {background: none;}
+    .seasonPass .plans-table .tbody .tr:first-child .td .info .dropdown,
+    .seasonPass .plans-table .tbody .tr:nth-child(2) .td .info .dropdown {
+        top: 34px;
+        right: -10px;
+        z-index: 999999;
+        height: 160px;
+    }
+}
+@media only screen and (max-width:767px) {
+    
+}
+@media only screen and (max-width:500px) {
+    .monthlyPass .plans-table .tbody {margin-left: 20px;}
+    .subscribe p {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0,0);
+        -webkit-transform: translate(0,0);
+        -moz-transform: translate(0,0);
+        padding: 10px 0;
+    }
+    .whyTQE .col:first-child { margin-bottom: -10px; }
+    .whyTQE .tqe {padding: 30px 0;}
+    .subscribe {
+        position: relative;
+        z-index: 9;
+    }
+
+}

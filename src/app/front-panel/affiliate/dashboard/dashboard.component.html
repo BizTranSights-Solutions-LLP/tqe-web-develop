@@ -1,0 +1,169 @@
+<div class="page-title" *ngIf="user_role?.roles_status?.affiliate_status">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>Affiliate Dashboard</h1>
+      </div>
+      <div class="col-auto" >
+        <a [routerLink]="['/affiliate/dashboard/edit']"  class="page-title-anchor">Edit Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" *ngIf="loader">
+  <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+</div>
+<strong *ngIf="serverErrors" class="error">{{serverErrors}}</strong>
+
+<div class="container" *ngIf="!loader && !user_role?.roles_status?.affiliate_status">
+  <div class="row justify-content-center align-content-center">
+    <div class="col-auto">
+      <div class="alert alert-warning not_registered">
+        <strong >{{user_role?.roles_status?.affiliate_message}}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="user_info" *ngIf="user_role?.roles_status?.affiliate_status">
+  <div class="container section-box">
+    <div class="profile">
+      <div class="row">        
+        <div class="col">
+          <div class="profile-info">
+            <h2 class="profile-position">Affiliate</h2>
+            <h1 class="profile-title"> {{userData.first_name}} {{userData.last_name}}</h1>
+          </div>
+          <ul class="profile-list">
+            <li class="clearfix">
+              <strong class="title">PayPal E-mail</strong>
+              <span class="cont">{{userData.affiliate_details.paypal_email}}</span>
+            </li>
+            <li class="clearfix">
+              <strong class="title">Twitter E-mail</strong>
+              <span class="cont">{{userData.affiliate_details.twitter_account}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="profile-info">
+      <h1 class="formTitle">Bank Detail Information</h1>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="memberships">
+          <div class="row">
+            <div class="col-md-12">
+              <strong style="display: block;text-align:center;" *ngIf="userData?.bank_details.bank_name == ''">You Did not Save Any Bank Info</strong>
+              <table class="table" *ngIf="userData?.bank_details.bank_name">
+                <thead>
+                  <tr>
+                    <th>Bank Name</th>
+                    <th>Account Number</th>
+                    <th>Routing Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{userData?.bank_details?.bank_name}}</td>
+                    <td>{{userData?.bank_details?.bank_account_number}}</td>
+                    <td>{{userData?.bank_details?.bank_routing_number}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="intForm">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="register-form">
+                  <form autocomplete="off" [formGroup]="bankDetailForm" (ngSubmit)="save()">
+                    <div class="form-group">
+                      <label for="uname"><b>Bank Name</b></label>
+                      <input type="text" class="form-control" placeholder="Enter Bank Name" formControlName="bank_name">
+                      <div class="error" *ngIf="bankDetailForm.get('bank_name').touched && bankDetailForm.get('bank_name').invalid">Name is invalid</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="psw"><b>Bank Account Number</b></label>
+                      <div class="form-control" >
+                        <input [type]="showPassword ? 'text' : 'password'" placeholder="xxxx-xxxx-xxxx-xxxx" formControlName="bank_account_number">
+                        <span class="showMe"
+                          (click)="button_show_password()" >
+                          <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" ></i> &nbsp;<span [innerHTML]="showPassword ? 'Hide' : 'Show'"></span>
+                        </span>
+                      </div>
+                      <div class="error" *ngIf="bankDetailForm.get('bank_account_number').touched && bankDetailForm.get('bank_account_number').invalid">Card Number is invalid</div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="psw"><b>Bank Routing Number</b></label>
+                      <input type="text" class="form-control" placeholder="Enter Routing Number" formControlName="bank_routing_number">
+                      <div class="error" *ngIf="bankDetailForm.get('bank_routing_number').touched && bankDetailForm.get('bank_routing_number').invalid">Routing Number is invalid</div>
+                    </div>
+                    
+                    <p class="error"> {{ server_error_message }} </p>
+                    <div *ngIf="disable_register" class="loading"></div>
+                    <div class="actionBtn">
+                      <button class="actionButton " type="submit" [disabled]="bankDetailForm.invalid || disable_register">Save Detail</button>
+                    </div>
+                    <strong class="alert alert-success" *ngIf="bank_detail_saved !== ''">{{ bank_detail_saved }} </strong>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<div class="theme-modal modal fade" bsModal #tourGuide="bs-modal">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content">
+          <div class="modal-body text-center">
+              <h1>Are you sure to Unsubscribe <span>"{{ selectedMemberShipName }}"?</span></h1>
+              <img class="loading" src="../../../assets/images/loading-sm.svg" *ngIf="user_subscriptionLoader">
+              <button class="btn del-btn"
+                (click)="unsubscribe(selectedMemberShipId)" 
+                [disabled]="user_subscriptionLoader" *ngIf="!user_subscriptionLoader"> 
+                Unsubscribe!
+              </button>
+              <button class="btn btn-default" *ngIf="!user_subscriptionLoader" (click)="hideModal()">Cancel</button>
+          </div>  
+      </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="upload_picture_modal">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <button class="btnClose" (click)="update_profile_picture()" *ngIf="!uploading"><i class="fa fa-close"></i></button>
+      <div class="modal-body text-center">
+        <label class="image-upload-container btn btn-bwm">
+          <span><i class="fa fa-image"></i> Select Image</span>
+          <input #imageInput type="file" accept='image/*' (change)="processFile(imageInput)" />
+        </label>
+        <div *ngIf="profile_picture_holder" class="img-preview-container">
+          <div class="img-preview" [ngClass]="{'error': selectedFile?.status === 'fail'}" *ngIf="selectedFile?.status === 'ok'"
+            [ngStyle]="{'background-image': 'url(' + selectedFile?.src + ')'}"></div>
+  
+            <div class="loading" *ngIf="uploading"></div>
+  
+            <div *ngIf="selectedFile?.status === 'ok'" class="alert alert-success">Image Successfully Selected!</div>
+            <div *ngIf="selectedFile?.status === 'fail'" class="alert alert-danger">Image Upload Failed Try Again!</div>
+            <div *ngIf="image_size_exceed_error === 'exceed'" class="alert alert-danger">File is bigger than 1MB</div>
+            <button (click)="uploadPhoto()" class="btnUpload" [disabled]="selectedFile?.status != 'ok'" *ngIf="!uploading">Upload Photo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,40 @@
+<!-- NBA Tools-->
+<div class="NFLtools">
+  <div class="loading" *ngIf="loading"></div>
+  <strong *ngIf="tools.length == 0" style="
+  display: block;
+  text-align: center;
+  padding: 100px 0;
+  color: red;
+  font-size: 20px;
+  ">{{message}}</strong>
+  <div class="rept" *ngFor="let data of tools; let i = index; let odd = odd; let even = even">
+    <div class="container" *ngIf="!data.hidden">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <div class="tool-img">
+            <div class="loading image_ph_{{i}}"></div>
+            <div class="img-holder" *ngIf="data.images.length > 0">
+              <img [src]="data.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+            </div>
+            <div class="img-holder" *ngIf="!data.images.length > 0">
+              <img class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../assets/images/tweet-placeholder.jpg">
+            </div>
+          </div>
+          
+        </div>
+        <div class="col">
+          <div class="desc">
+            <h2 class="article-title">
+              <a [routerLink]="['/tool/',data.url]">{{data.title}}</a>
+            </h2>
+            <p [innerHTML]="data.description"></p>
+            <button class="btn-picks" (click)="openModal(data.video_url, data.title)">
+              {{data.button_text}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

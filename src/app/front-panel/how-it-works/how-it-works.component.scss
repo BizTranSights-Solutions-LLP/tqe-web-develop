@@ -1,0 +1,207 @@
+input.ng-invalid.ng-touched{
+    border: 1px solid red !important;
+}
+.aboutUs {
+    overflow: hidden;
+    padding: 50px 0;
+    font-size: 15px;
+    line-height: 1.5
+}
+.aboutUs h2 {
+    font-size: 21px;
+    margin: 0 0 10px;
+    padding-right: 60px;
+}
+.aboutUs p {
+    margin: 0 0 20px;
+}
+.info {
+    font-weight: 700;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.register-form {
+    max-width: 492px;
+}
+.register-form strong {
+    color: #000000;
+    padding: 0 0 15px;
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 19px;
+    display: block;
+}
+.register-form label {
+    color: #000000;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500 !important;
+    line-height: 15px;
+}
+.register-form input.form-control {
+    height: 40px;
+}
+.register-form .form-control {
+    padding: 5px 6px;
+    border: 0.75px solid #B8B8B8;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 4px 3px 0 #DEE7EF;
+    position: relative;
+    height: auto;
+}
+.register-form .form-group {
+    margin: 0;
+    position: relative;
+}
+.register-form .form-group + .form-group {margin-top: 17px;}
+.register-form .form-control input,
+.register-form .form-control textarea {
+    color: #989595;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    border: none;
+    outline: none;
+    box-shadow: 0 100px 100px #fff inset;
+    height: 100%;
+}
+
+.register-form button.actionButton {
+    cursor: pointer;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
+    font-size: 15px;	
+    font-weight: bold;	
+    line-height: 21px;	
+    text-align: center;
+    float: right;
+    width: 249px;
+    margin-top: 20px;
+}
+.register-form button.actionButton[disabled] {
+    background: lightgray;
+    cursor: not-allowed;
+    color: #fff;
+}
+.register-form .form-check label{
+    color: #37414B;	
+    font-size: 15px;	
+    font-weight: 500;	
+    line-height: 15px;
+    position: relative;
+}
+.register-form p.ngPass {
+    color: #007AFF;
+    font-size: 11px;
+    letter-spacing: -0.09px;
+    line-height: 14px;
+    text-align: right;
+    padding: 7px 0 0;
+}
+.register-form .form-check {padding: 30px 0 25px;}
+.register-form .form-check b {padding: 0 0 0 10px;}
+.register-form .form-check label::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    height: 15.71px;
+    width: 15.71px;
+    border: 0.75px solid #B8B8B8;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    box-shadow: inset 0 4px 3px 0 #DEE7EF;
+}
+.register-form .showMe {
+    opacity: 0.99;
+    color: #7A8897;
+    font-family: 'proxima_nova_altsemibold';
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    cursor: pointer;
+}
+.register-form .showMe:hover span { color: #1BB31C; }
+.error {
+    position: absolute;
+    top: 100%;
+    width: 329px;
+    border: 2px solid #FFFFFF;
+    background-color: #D0021B;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
+    color: #fff;
+    left: 0;
+    z-index: 99;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 19px;
+    padding: 15px;
+    border-radius: 14px;
+    -webkit-animation: scale-up-center 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards;
+			animation: scale-up-center 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) forwards;
+	z-index: -1;
+}
+@-webkit-keyframes scale-up-center {
+    0% {
+	  opacity: 1;
+	  z-index: 9;
+    }
+    50% {
+		opacity: 1;
+		z-index: 9;
+    }
+    80% {
+		opacity: 1;
+		z-index: 9;
+    }
+    100% {
+     opacity: 0;
+    }
+}
+@keyframes scale-up-center {
+    0% {
+		opacity: 1;
+		z-index: 9;
+    }
+    50% {
+		opacity: 1;
+		z-index: 9;
+    }
+    80% {
+		opacity: 1;
+		z-index: 9;
+    }
+    100% {
+       opacity: 0;
+
+    }
+}
+.error::after {
+    content: '';
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    background: url('../../../assets/images/ico-dropdown-top-arrow.png') no-repeat;
+    width: 34px;
+    height: 18px;
+    margin-left: -17px;
+}
+
+@media only screen and (max-width:765px) {
+    .aboutUs h2 { font-size: 16px; }
+    .aboutUs { font-size: 12px; }
+    .col {order: 2;}
+    .aboutUs img {
+        display: block;
+        margin: 0 auto 10px;
+    }
+    .col-auto {width: 100%;}
+}

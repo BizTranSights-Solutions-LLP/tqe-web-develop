@@ -1,0 +1,188 @@
+<div class="dashboar-bar">
+  <div class="container-fluid">
+    <div class="row justify-content-between">
+      <div class="col-auto">
+        <a [routerLink]="['/']">Visit Site</a>
+      </div>
+      <div class="col-auto">
+        <a href="javascript:void(0)" (click)="logout()">Log Out <i class="fa fa-sign-out" aria-hidden="true" ></i></a>
+      </div>
+    </div>    
+  </div>
+</div>
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse" [ngClass]="{expend: dropDownIcon}">
+  <button class="nav-btn "  [ngClass]="{collapsed: !dropDownIcon}"  (click)="menu()">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <strong class="title">Dashboard</strong>
+  <div>
+    
+  </div>
+  <div id="accordion">
+    <ul class="navigation">
+      <!-- <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Dashboard 
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+          <li>
+            <a class="nav-link" routerLink="/">Home<small>(Site layout)</small></a>
+          </li>
+        </ul>
+      </li> -->
+      
+      <!-- <li 
+        class="has_drop dropdown_has_drop_{{i + 1}}" 
+        *ngFor="let nav of Navigation; let i = index" 
+        
+      >
+        <button class="btn btn-link" [ngClass]="{collapsed: dropDownIcon}" (click)="openClose('has_drop_'+ (i+1), $event)">
+          {{nav.link_name}}
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapse{{i + 1}}" class="collapse dropdown_ has_drop_{{i + 1}}" *ngIf="nav.haveDropDown">
+          <li *ngFor="let sub of nav.dropDown">
+            <a routerLink="{{sub.link}}" >{{sub.link_name}}</a>
+          </li>
+        </ul>
+      </li> -->
+
+      <li 
+        *ngFor="let nav of Navigation; let i = index"
+        
+        [ngClass]="{'have-drop': nav.haveDropDown}"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}"
+        >
+        <a 
+          class="nav-link"
+          [ngClass]="{'dropdown-toggle': nav.haveDropDown}"
+          [attr.data-toggle]="nav.haveDropDown ? 'dropdown' : null"
+          (click)="dropDown(i)"
+          href="#"
+        >
+          {{nav.link_name}}
+          
+        </a>
+        <div class="dropdown-menu dropDown collapse" *ngIf="nav.haveDropDown" >
+          <a class="dropdown-item" routerLink="{{sub.link}}" *ngFor="let sub of nav.dropDown" routerLinkActive="active">{{sub.link_name}}</a>
+        </div>
+      </li>
+      <!-- <li class="has_drop has_drop_1">
+        <button class="btn btn-link collapsed" (click)="openClose('has_drop_1', $event)" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> 
+          Articles
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+          <li>
+            <a routerLink="/admin/article-lists">Articles List</a>
+          </li>
+          <li>
+            <a routerLink="/admin/article-form" routerLinkActive="router-link-active" >Add New</a>
+          </li>
+       </ul>
+      </li>
+      <li class="has_drop has_drop_2">
+        <button class="btn btn-link collapsed" (click)="openClose('has_drop_2', $event)" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo"> 
+          Podcasts
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapseThree" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/podcast-lists">Podcasts List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/podcast-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+       </ul>
+      </li>
+
+      <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapseTwo"> 
+          Users
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapse5" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/users-list">Users List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/user-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+       </ul>
+      </li>
+
+      <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapseTwo"> 
+          Discount Codes
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapse6" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/discounts-list">Discounts List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/discount-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapseTwo"> 
+          SEO
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapse7" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/seo-list">SEO List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/seo-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+        </ul>
+      </li> -->
+      <!-- <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapseTwo"> 
+          Tools
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapsefour" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/tool-lists">Tools List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/tool-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+       </ul>
+      </li>
+      <li>
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapseTwo"> 
+          Memberships
+          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-chevron-up"></i>
+        </button>
+        <ul id="collapsefive" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion">
+            <li>
+              <a routerLink="/admin/membership-lists">Memberships List</a>
+            </li>
+            <li>
+              <a routerLink="/admin/membership-form" routerLinkActive="router-link-active" >Add New</a>
+            </li>
+       </ul>
+      </li> -->
+    </ul>    
+  </div>  
+</nav>
+
+<app-media-library></app-media-library>

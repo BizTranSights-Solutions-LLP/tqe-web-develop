@@ -1,0 +1,115 @@
+<div class="container-fluid">
+  <!-- Row to select year/ seasons and such  -->
+  <div class="row">
+    <div class="col-sm">
+    </div>
+
+    <div class="col-sm" > 
+      <div class="form-group shiny-input-container text-center">
+        <h4 class="p1-text">Select a season</h4>
+        <br />
+        <mat-form-field class="dropdown" appearance="fill">
+          <mat-label class="p1-text">Year</mat-label>
+          <mat-select [(value)]="selected_year" [disabled]="nfl_pick_loading">
+            <mat-option *ngFor="let year of this.years | unique | orderBy: '-'" [value]="year" (click)="onClickSel()">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm" *ngIf="!nfl_pick_loading">
+      <div class="form-group shiny-input-container text-center">
+
+        <h3 class="p1-text">Select a week</h3>
+        <br />
+        
+        <mat-form-field class="dropdown" appearance="fill">
+          <mat-label class="p1-text">Week</mat-label>
+          <mat-select [(value)]="selected_week" [disabled]="nfl_pick_loading">
+            <mat-option *ngFor="let week of this.weeks | unique | orderBy: '-'" [value]="week" (click)="onClickSel()">{{week}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div class="col-sm" *ngIf="!nfl_pick_loading">
+    </div>
+  </div>
+  <br>
+
+  <div class="row" *ngIf="!nfl_pick_loading">
+    <div class="container center">
+      <!-- Row to desplay data and such  -->
+      <table class="bets-table all-bets table table-borderless mb-0 scroll-pick result-tb center">
+        <thead>
+          <tr>
+            <th scope="col">Week {{this.selected_week}} ATS Record</th>
+            <th scope="col">YTD ATS Record</th>
+            <th scope="col">Week {{this.selected_week}} O/U Record</th>
+            <th scope="col">YTD O/U Record</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{this.s_win}}-{{this.s_lose}}-{{this.s_push}}({{this.s_prob*100 |  number:'1.1-1'}}%)</td>
+            <td>{{this.ytd_s_win}}-{{this.ytd_s_lose}}-{{this.ytd_s_push}}({{this.ytd_s_prob*100 |  number:'1.1-1'}}%)</td>
+            <td>{{this.ou_win}}-{{this.ou_lose}}-{{this.ou_push}}({{this.ou_prob*100 |  number:'1.1-1'}}%)</td>
+            <td>{{this.ytd_ou_win}}-{{this.ytd_ou_lose}}-{{this.ytd_ou_push}}({{this.ytd_ou_prob*100 |  number:'1.1-1'}}%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="row">
+    <div class="container center">
+      <div class="wrapper">
+        <table #dataTable class="display  table-striped" style="width:100%">
+          <thead class="thead-light">
+            <tr class="p1-text">
+              <th>Year</th>
+              <th>Week</th>
+              <th>Actual_score</th>
+              <th>Team</th>
+              <th>OPP</th>
+              <th>Sprd_pick</th>
+              <th>Sprd_result</th>
+              <th>Ou_pick</th>
+              <th>Ou_result</th>
+              <th>Schedule</th>
+              <th>Tqe_sstar</th>
+              <th>Tqe_tstar</th>
+              <th>Tqe_sprob</th>
+              <th>Tqe_tprob</th>
+              <th>Vegas_sprd</th>
+              <th>Vegas_ou</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let record of this.selected_record">
+              <tr>
+                <td>{{record.year}}</td>
+                <td>{{record.week}}</td>
+                <td>{{record.actual_score}}</td>
+                <td>{{record.team}}</td>
+                <td>{{record.OPP}}</td>
+                <td>{{record.sprd_pick}}</td>
+                <td>{{record.sprd_result}}</td>
+                <td>{{record.ou_pick}}</td>
+                <td>{{record.ou_result}}</td>
+                <td>{{record.schedule}}</td>
+                <td>{{record.tqe_sstar}}</td>
+                <td>{{record.tqe_tstar}}</td>
+                <td>{{record.tqe_sprob}}</td>
+                <td>{{record.tqe_tprob}}</td>
+                <td>{{record.vegas_sprd}}</td>
+                <td>{{record.vegas_ou}}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,162 @@
+<div *ngIf="updatePassword" class="update-password"><strong>{{updatePassword}}</strong></div>
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center ">
+      <div class="col">
+        <h1>Update<span> | Your Profile</span></h1>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/profile']"  class="page-title-anchor">Back to Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading mainloading" *ngIf="loader">
+  <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+</div>
+<strong *ngIf="serverErrors" class="unauth">{{serverErrors}}</strong>
+<div class="update-profile-form" *ngIf="userData.length != 0">
+  <form autocomplete="off" [formGroup]="updateProfileForm" (ngSubmit)="updateRrofile()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label><b>First Name</b></label>
+          <div class="form-control" >
+            <input type="text" placeholder="Enter First Name" name="name" formControlName="first_name" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label><b>Last Name</b></label>
+          <div class="form-control" >
+            <input type="text" placeholder="Enter Last Name" name="name" formControlName="last_name" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label><b>Update Password</b></label>
+          <div class="form-control" >
+            <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="new_password">
+            <span class="showMe"
+              (click)="button_show_password()" >
+              <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" ></i>
+                &nbsp;<span [innerHTML]="showPassword ? 'Hide' : 'Show'"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
+    <div *ngIf="updateRes">
+      <br>
+      <p  class="alert alert-success">{{ updateRes }}</p>
+    </div>
+    <div *ngIf="disable_register" class="loading"></div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <button class="actionButton" [disabled]="updateProfileForm.invalid || disable_register" *ngIf="!disable_button" type="submit" >Update</button>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row" *ngIf="userData.is_credit_card">
+  <div class="col-md-12">
+    <div class="register-form">
+      <form autocomplete="off" (ngSubmit)="createToken()" [formGroup]="paymentForm">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="psw"><b>Name on Card</b></label>
+              <div class="form-control" >
+                <input type="text" placeholder="Enter Name Exactly" formControlName="name" minlength="2" maxlength="50">
+              </div>
+              <div class="error" *ngIf="paymentForm.get('name').touched && paymentForm.get('name').invalid">Name is invalid</div>
+            </div>
+            <div class="form-group">
+              <label for="psw"><b>Zip/Postal Code</b></label>
+              <div class="form-control" >
+                <input type="text" placeholder="Ex: 90210" formControlName="address_zip"  minlength="5">
+              </div>
+              <div class="error" *ngIf="paymentForm.get('address_zip').touched && paymentForm.get('address_zip').invalid">Zip/Postal Code is invalid</div>
+            </div>
+
+            <div class="form-group">
+              <label for="psw"><b>Card Number</b></label>
+              <div class="form-control" >
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="xxxx-xxxx-xxxx-xxxx" formControlName="number"  minlength="13" maxlength="19">
+                <span class="showMe"
+                  (click)="button_show_password()" >
+                  <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" ></i> &nbsp;<span [innerHTML]="showPassword ? 'Hide' : 'Show'"></span>
+                </span>
+              </div>
+              <div class="error" *ngIf="paymentForm.get('number').touched && paymentForm.get('number').invalid">Card Number is invalid</div>
+            </div>
+            <div class="form-group card-info">
+              <div class="row">
+                <div class="col-md-4">
+                  <label><b>Expiration Date</b></label>
+                  <div class="form-control day" >
+                    <input type="text" placeholder="MM" formControlName="exp_month"  minlength="2" maxlength="2">
+                    <div class="error" *ngIf="paymentForm.get('exp_month').touched && paymentForm.get('exp_month').invalid">Expiry Month is invalid</div>
+                  </div>
+                  <div class="form-control month" >
+                    <input type="text" placeholder="YYYY" formControlName="exp_year" minlength="4" maxlength="4">
+                    <div class="error" *ngIf="paymentForm.get('exp_year').touched && paymentForm.get('exp_year').invalid">Expiry Year is invalid</div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label><b>CVC</b></label>
+                  <div class="form-control" >
+                    <input type="text" placeholder="Ex: 210" formControlName="cvc" minlength="3" maxlength="4">
+                    <div class="info cvv">
+                      <span class="ico"></span>
+                      <div class="dropdown">
+                        <strong>CVC Security Code Locations</strong>
+                        <div class="row">
+                          <div class="col">
+                            <strong>Visa/Mastercard</strong>
+                            <p>3 digit number on the back of your credit card typically on the right.</p>
+                          </div>
+                          <div class="col-auto">
+                            <img src="../../../../assets/images/img-card-back.png" alt="">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <strong>American Express</strong>
+                            <p>4 digit number on the front of your card above right of your number.</p>
+                          </div>
+                          <div class="col-auto">
+                            <img src="../../../../assets/images/img-card-cvv.png" alt="">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="error" *ngIf="paymentForm.get('cvc').touched && paymentForm.get('cvc').invalid">CVC is invalid</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-danger">
+            <div *ngIf="serverError">{{ serverError }}</div>
+          </div>
+        </div>
+        <div *ngIf="disablePay" class="loading"></div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <button class="actionButton" type="submit" [disabled]="paymentForm.invalid || disablePay">Update Card Info</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="desclaim alert alert-success" *ngIf="serverResponse"> {{ serverResponse }}   </div>
+    </div>
+  </div>
+</div>

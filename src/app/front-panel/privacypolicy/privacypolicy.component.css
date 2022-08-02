@@ -1,0 +1,18 @@
+.policy {
+    overflow: hidden;
+    padding: 50px 0;
+    font-size: 13px;
+    line-height:21px;
+}
+.policy h3 {
+    font-size: 18px;
+    margin: 0 0 15px;
+}
+.policy p {
+    margin: 0 0 20px;
+}
+ul,ol {
+    list-style: disc;
+    margin: 0 0 15px;
+    padding: 0 0 0 40px;
+}

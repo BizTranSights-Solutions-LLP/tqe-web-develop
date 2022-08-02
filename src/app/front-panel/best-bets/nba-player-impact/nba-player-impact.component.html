@@ -1,0 +1,289 @@
+<!-- not authorized + not auth_loading   -->
+<div class="row justify-content-center" *ngIf="!isAuthorized && !auth_loading">
+  <div class="col-md-6">
+    <div class="alert alert-info" style="margin: 100px 0 0;text-align: center;font-size: 14px;padding: 10px 50px;">
+      <strong style="display: block;"> Your not authorized for this. </strong><br>
+      Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" [routerLink]="['/login']">Log
+          In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);"
+          [routerLink]="['/membership-plan']">Sign Up</a></strong>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid p1-text" *ngIf="isAuthorized && !auth_loading && !hasApiError && hasGames && !gamesLoading">-
+  <div class="tab-pane Player_compare main-container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2></h2>
+      </div>
+    </div>
+    <br />
+    <h4 class="mainHeading headline text-center">Schedule: <span>{{this.gameDate}}</span></h4>
+    <br />
+    <div class="row flex-center">
+      <div id="last_update" class="shiny-text-output shiny-bound-output text-center">Note: Scroll all the way Down to
+        Change Player Impact</div>
+    </div>
+    <br />
+    <h6 class="mainHeading headline text-center"><span>Filter Picks by Teams</span></h6>
+    <br />
+    <div class="row flex-center">
+      <div class="form-group shiny-input-container text-center">
+        <label class="control-label"><b>SELECT YOUR TEAM</b></label>
+        <br>
+        <mat-form-field class="dropdown" appearance="fill">
+          <mat-label>Select a match</mat-label>
+          <mat-select [(value)]="selected_teams" [disabled]="match_loading">
+            <mat-option *ngFor="let team of this.teams" [value]="team" (click)="onClickTeamSel()">{{team}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr style="border:1px dashed #eee;">
+    <div *ngIf="match_loading" class="layout-container text-center">
+      <div class="loadersmall"></div>
+    </div>
+    <div *ngIf="!match_loading" class="layout-container">
+      <div class="left-container">
+        <div class="team-logo-container">
+          <span id="title-team">Away Team: {{this.away_team}}</span>
+          <img src="../../../../assets/images/logos/nba/{{this.selected_match.away_team_abbr}}.png"
+              id="player1-team-logo">
+        </div>
+        <div *ngFor="let player of this.selected_player_set.away_lineup; let i = index" class="player-select-each-1">
+          <div class="teamname-con">
+            <h5 id="player-name">{{ player.player_name }}</h5>
+          </div>
+          <div class="image-con">
+          <img src="../../../../assets/images/headshots/nba/{{ player.player_name }}.jpg"
+              style="width:auto;height:auto;" id="player1-logo">
+          </div>
+          <div class="performance-level-bar">
+            <label class="control-label"><b>Performance Level</b></label>
+            <div id="{{'container-' + slider_team.value}}">
+              <mat-slider #slider_team [(value)]="player_value_a[i]" step="50" min="0" max="100" (input)="onInputChangeA($event, i)"></mat-slider>
+            </div>
+            <div class="range-label">
+              <span>Poor</span>
+              <span>Average</span>
+              <span>Great</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="middle-container">
+        <div>
+          <span class="titlecomp">Vegas Line</span>
+        </div>
+        <div class="layout-container">
+          <table class="bets-table all-bets table table-borderless mb-0 scroll-vl result-tb center">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Schedule</th>
+                <th scope="col">Team</th>
+                <th scope="col">OPP</th>
+                <th scope="col">Spread</th>
+                <th scope="col">O/U</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ this.formatTime(this.selected_match.schedule) }}</td>
+                <td>{{this.selected_match.away_team_abbr}}</td>
+                <td>{{this.selected_match.home_team_abbr}}</td>
+                <td class=" dt-right">{{this.selected_match.away_spread}}</td>
+                <td class=" dt-right">{{this.selected_match.OU_line}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="h3-text-1">
+            <span style="display:inline-block">
+              <img src="https://tools.thequantedge.com/shiny/rstudio/tqe_h2h/img/logo-1.png" align="left"
+                style="width: 60px;display: block;">
+              PICK
+            </span>
+          </h3>
+          <table *ngIf="!loading" class="bets-table all-bets table table-borderless mb-0 scroll-pick result-tb center">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Spread</th>
+                <th scope="col">O/U</th>
+                <!-- <th scope="col">Moneyline</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TQE Line</td>
+                <td><span *ngIf="this.selected_match.s_pred > 0">+</span>{{this.selected_match.s_pred | number:'1.1-1'}}</td>
+                <td>{{this.selected_match.t_pred | number:'1.1-1'}}</td>
+                <!-- <td>
+                  <span *ngIf="this.m_pick == this.selected_match.away_team_abbr; else hometeam">{{this.selected_match.away_money}}</span>
+                  <ng-template #hometeam>{{this.selected_match.home_money}}</ng-template>
+                </td> -->
+              </tr>
+              <tr>
+                <td>TQE Pick</td>
+                <td>
+                  <div>
+                    <img src="../../../../assets/images/logos/nba/{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}.png"
+                      height="35">{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}
+                  </div>
+                </td>
+                <td>{{this.selected_match.total_pick}}</td>
+                <!-- <td>
+                  <div>
+                    <img src="../../../../assets/images/logos/nba/{{this.m_pick}}.png"
+                      height="35">{{this.m_pick}}
+                  </div>
+                </td> -->
+              </tr>
+              <tr>
+                <td>Pick Probability</td>
+                <td>{{this.selected_match.s_prob*100 | number:'1.1-1'}}%</td>
+                <td>{{this.selected_match.t_prob*100 | number:'1.1-1'}}%</td>
+                <!-- <td>{{this.mprob*100 | number:'1.1-1'}}%</td> -->
+              </tr>
+              <tr>
+                <td>Expected Return</td>
+                <td>{{this.selected_match.sER | number:'1.2-2'}}</td>
+                <td>{{this.selected_match.tER | number:'1.2-2'}}</td>
+                <!-- <td>{{this.mER | number:'1.1-1'}}</td> -->
+              </tr>
+            </tbody>
+          </table>
+          <h3 *ngIf="this.isShowPlayerImpact" id="h3-text-2">
+            <span style="display:inline-block">
+              <img src="https://tools.thequantedge.com/shiny/rstudio/tqe_h2h/img/logo-1.png" align="left"
+                style="width: 60px;display: block;">
+              PICK After Adjustment
+            </span>
+          </h3>
+          <table *ngIf="!loading && this.isShowPlayerImpact" class="bets-table all-bets table table-borderless mb-0 scroll-pick result-tb center">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Spread</th>
+                <th scope="col">O/U</th>
+                <!-- <th scope="col">Moneyline</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TQE Line</td>
+                <td><span *ngIf="this.s_pred > 0">+</span>{{this.s_pred | number:'1.1-1'}}</td>
+                <td>{{this.t_pred | number: '1.1-1'}}</td>
+                <!-- <td>
+                  <span *ngIf="this.m_pick == this.selected_match.away_team_abbr; else hometeam">{{this.selected_match.away_money}}</span>
+                  <ng-template #hometeam>{{this.selected_match.home_money}}</ng-template>
+                </td> -->
+              </tr>
+              <tr>
+                <td>TQE Pick</td>
+                <td>
+                  <div>
+                    <img src="../../../../assets/images/logos/nba/{{this.s_pick}}.png"
+                      height="35">{{this.s_pick}}
+                  </div>
+                </td>
+                <td>{{this.t_pick}}</td>
+                <!-- <td>
+                  <div>
+                    <img src="../../../../assets/images/logos/nba/{{this.m_pick}}.png"
+                      height="35">{{this.m_pick}}
+                  </div>
+                </td> -->
+              </tr>
+              <tr>
+                <td>Pick Probability</td>
+                <td>{{this.sprob*100 | number:'1.1-1'}}%</td>
+                <td>{{this.tprob*100 | number:'1.1-1'}}%</td>
+                <!-- <td>{{this.mprob*100 | number:'1.1-1'}}%</td> -->
+              </tr>
+              <tr>
+                <td>Expected Return</td>
+                <td>{{this.sER | number:'1.2-2'}}</td>
+                <td>{{this.tER | number:'1.2-2'}}</td>
+                <!-- <td>{{this.mER | number:'1.1-1'}}</td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="team-logo-container">
+          <span id="title-team">Home Team: {{this.home_team}}</span>
+          <img src="../../../../assets/images/logos/nba/{{this.selected_match.home_team_abbr}}.png"
+              id="player1-team-logo">
+        </div>
+        <div *ngFor="let player of this.selected_player_set.home_lineup, let i = index" class="player-select-each-2">
+          <div class="teamname-con">
+            <h5 id="player-name">{{ player.player_name }}</h5>
+          </div>
+          <div class="image-con">
+          <img src="../../../../assets/images/headshots/nba/{{ player.player_name }}.jpg"
+              style="width:auto;height:auto;" id="player1-logo">
+          </div>
+          <div class="performance-level-bar">
+            <label class="control-label"><b>Performance Level</b></label>
+            <div id="{{'container-' + slider_team.value}}">
+              <mat-slider #slider_team [(value)]="player_value_h[i]" step="50" min="0" max="100" (input)="onInputChangeH($event, i)"></mat-slider>
+            </div>
+            <div class="range-label">
+              <span>Poor</span>
+              <span>Average</span>
+              <span>Great</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr style="border:1px dashed #eee;">
+    <div *ngIf="match_loading" class="layout-container text-center">
+      <div class="loadersmall"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- authorized + not auth_loading + api not working -->
+<div class="row justify-content-center" *ngIf="isAuthorized && !auth_loading && hasApiError && !gamesLoading">
+  <div class="col-md-8">
+    <div class="alert alert-info mt-5" role="alert">
+      <h4 class="alert-heading mb-2">Check back soon </h4>
+      <hr>
+      <br>
+      <p class="alert-text"> Oooops, some error occurs, our engineers are working hard fixing it, it will come back soon!
+      </p>
+      <br>
+      <br>
+      <a routerLink="/" class="alert-link text-right" >Go back</a>
+    </div>
+</div>
+</div>
+<!-- authorized + not auth_loading + api working + no game -->
+<div class="row justify-content-center" *ngIf="isAuthorized && !auth_loading && !gamesLoading &&!hasApiError && !hasGames">
+    <div class="col-md-8 ">
+      <div class="alert alert-info mt-5" role="alert">
+        <h4 class="alert-heading mb-2">Check back tomorrow</h4>
+        <hr>
+        <br>
+        <br>
+        <p class="alert-text"> There is no NBA games today, please come and check tomorrow for updates!
+        </p>
+        <br>
+        <br>
+        <a routerLink="/" class="alert-link text-right">Go back</a>
+      </div>
+  </div>
+</div>

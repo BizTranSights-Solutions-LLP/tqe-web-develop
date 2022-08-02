@@ -1,0 +1,35 @@
+<div id="bestbets-nav" class="container mt-5">
+  <ul class="nav nav-pills nav-fill">
+    <!-- Hide till future update
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{active: league === 'today' }" href="/tool/best-bets/today">Today's Best Bets</a>
+  </li>
+  -->
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'nfl' }" href="/tool/best-bets/nfl">NFL</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'soccer' }" href="/tool/best-bets/soccer">Soccer</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'mlb' }" href="/tool/best-bets/mlb">MLB</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'nba' }" href="/tool/best-bets/nba">NBA</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'cb' }" href="/tool/best-bets/cb">NCAAB</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'cf' }" href="/tool/best-bets/cf">NCAAF</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: league === 'nhl' }" href="/tool/best-bets/nhl">NHL</a>
+    </li>
+
+  </ul>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,76 @@
+<div class="loading" *ngIf="loader"></div>
+<div class="page-title" *ngIf="LoggedIn">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>TQE <span> | Discord Chat </span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row justify-content-center" *ngIf="!LoggedIn">
+    <div class="col-md-6">
+      <div class="alert alert-info" style="margin: 100px 0 0;text-align: center;font-size: 14px;padding: 10px 50px;">
+        <strong style="display: block;"> Your not authorized for this. </strong><br>
+        Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);" (click)="showOverlay()">Log In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);" [routerLink]="['/membership-plan']">Sign Up</a></strong> 
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center" *ngIf="LoggedIn">
+    <div class="col-auto" *ngFor="let data of discrods; let i = index;">
+      
+      <div id="wp-discord" class="wpd-white">
+        <div class="wpd-head">
+          <img src="../../../assets/images/icon_discord.png" class="wpd-icon">
+          <img src="../../../assets/images/text_discord.png" class="wpd-name">
+          <h3>{{data.title}}</h3>
+        </div>
+        <div class="alert alert-warning" *ngIf="!data.is_allowed">
+          <span [innerHTML]="data.membership_plan"></span>
+        </div>
+        <div class="wpd-info" *ngIf="data.is_allowed">
+          <span><strong>{{data.server_response.members.length}}</strong> User(s) Online</span>
+          <a href="{{data.server_response.instant_invite}}" target="_blank">Join Server</a>
+          <ul class="wpd-users">
+            <li *ngFor="let list of data.server_response.members">
+              <img [src]="list.avatar_url" alt="{{list.username}}">
+              <strong>{{list.username}}</strong>
+              <span 
+                class="wpd-status " 
+                [ngClass]="
+                {
+                  online: list.status == 'online',
+                  idle: list.status == 'idle'
+                }
+                "></span>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- <li>
+  <img src="//cdn.discordapp.com/embed/avatars/1.png">
+  <strong>SK</strong>
+  <span class="wpd-status idle"></span>
+</li>
+<li>
+  <img src="//cdn.discordapp.com/embed/avatars/0.png">
+  <strong>erickjones1</strong>
+  <span class="wpd-status idle"></span>
+</li>
+<li>
+  <img src="//cdn.discordapp.com/avatars/131429931841224704/240d76fc138dbe1246b3c032d26c7650.jpg">
+  <strong>Wimsy</strong>
+  <span class="wpd-status idle"></span>
+</li>
+<li>
+  <img src="//cdn.discordapp.com/avatars/484448053722480643/64aa76b071010c303fa22867837eeea2.jpg">
+  <strong>EliotCrist</strong>
+  <span class="wpd-status idle"></span>
+</li> -->

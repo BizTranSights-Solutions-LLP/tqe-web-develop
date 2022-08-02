@@ -1,0 +1,132 @@
+<p class="loader" *ngIf="loading">Loading...</p>
+  <form [formGroup]="articleForm" (ngSubmit)="onSubmit(articleForm.value)" *ngIf="!loading">
+
+      <h4>Article</h4>
+      <hr/>
+      <div class="form-group">    
+        <input type="text" class="form-control"  placeholder="Enter title here" [ngClass]="{ 'is-invalid': submitted && articleForm.controls.title.errors }" formControlName="title">
+        <div *ngIf="submitted && articleForm.controls.title.errors" class="invalid-feedback">
+            <div *ngIf="articleForm.controls.title.errors.required">Title is required</div>
+        </div>
+      </div>
+
+      <div class="form-group form-inline" *ngIf="articleForm.get('article_url').value ? true: false">  
+        <label for="image">Permalink:</label>
+        <a  [href]="articleForm.value.article_url" class="mx-sm-3" target="_blank">{{articleForm.value.article_url}}</a>        
+      </div>
+
+      <div class="form-group">
+        <div id="summernote-custom" #textEditor formControlName="content" [ngxSummernote]="editorConfig" [ngClass]="{ 'is-invalid': submitted && articleForm.controls.content.errors }"></div>
+        <!-- <tinymce formControlName="content" [config]="{'plugins': 'advcode', 'toolbar': 'code'}"></tinymce> -->
+        <!-- <textarea placeholder="Enter content here" [ngClass]="{ 'is-invalid': submitted && articleForm.controls.content.errors }" formControlName="content"></textarea> -->
+        <!-- <ejs-richtexteditor placeholder="Enter content here" [ngClass]="{ 'is-invalid': submitted && articleForm.controls.content.errors }" formControlName="content" [toolbarSettings]='tools' [fontSize]="{'default': '12pt'}"></ejs-richtexteditor> -->
+        <div *ngIf="submitted && articleForm.controls.content.errors" class="invalid-feedback">
+            <div *ngIf="articleForm.controls.content.errors.required">Content is required</div>
+        </div>    
+      </div>
+
+      <br/>
+      <div class="form-group">
+        <label>Article tags</label>
+        <ng-select [items]="sportsTags"
+                  bindLabel="name"
+                  bindValue="id"
+                  [addTag]="addCustomUser"
+                  [multiple]="true"
+                  placeholder="Select sports tags"                     
+                  formControlName="article_sports_tag"
+                  >
+        </ng-select>
+      </div>
+      <br/>
+
+      <div class="form-group">
+        <label>Tools</label>
+        <ng-select [items]="article_tools"
+                  bindLabel="name"
+                  bindValue="id"
+                  [addTag]="addCustomUser"
+                  [multiple]="true"
+                  placeholder="Select tools"                     
+                  formControlName="article_tool_association"
+                  >
+        </ng-select>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select class="form-control" formControlName="status">
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+        </select>
+      </div>
+
+      <br/>
+
+      <h6>Meta Tag</h6>
+      <br/>
+
+      <div class="form-group" formArrayName="article_meta_tag" *ngFor="let metaTag of articleForm.get('article_meta_tag')['controls']; let i = index;">
+        <div [formGroupName]="i"> 
+          <div class="form-group">    
+            <input type="text" class="form-control" placeholder="Enter title here" formControlName="title">
+          </div>
+
+          <div class="form-group">    
+            <input type="text" class="form-control" placeholder="Enter keyword here" formControlName="keyword">
+          </div>
+
+          <div class="form-group">    
+            <textarea type="text" class="form-control" placeholder="Enter description here" formControlName="description" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <h6> Image</h6>
+      <br/>
+
+      <div class="card" style="width: 14rem" *ngIf="articleForm.get('file_path').value ? true: false">
+        <button class="btn-del-img" type="button" (click)="removeAssociation('image','file_path')"><i class="fa fa-trash"></i></button>
+        <img class="card-img-top" [src]="articleForm.get('file_path').value" alt="Card image cap">           
+      </div>
+      <br/>
+
+      <div class="form-group">      
+        <!-- <input type="file" accept="image/*" class="form-control-file" [ngClass]="{ 'is-invalid': articleForm.controls.image.errors }" (change)="onFileChange($event)" formControlName="image"> -->
+        <!-- <input type="file" accept="image/*" class="form-control-file" (change)="upload($event)" [ngClass]="{ 'is-invalid': articleForm.controls.image.errors }" (change)="onFileChange($event)" formControlName="image">
+        <div *ngIf="articleForm.controls.image.errors" class="invalid-feedback">
+           Image upload error: only png, jpg, jpeg allowed.
+        </div> -->
+        <!-- <button type="button" (click)="gallery.show()" class="btn btn-success">Upload</button> -->
+        <button type="button" (click)="openML('image')" class="btn btn-success">Upload</button>
+      </div>
+
+      <!-- <div class="form-group">    
+        <input type="text" class="form-control" placeholder="Enter title here" formControlName="image_title">
+      </div>
+
+      <div class="form-group">    
+        <textarea  type="text" class="form-control" placeholder="Enter description here" formControlName="image_desc" rows="3"></textarea>
+      </div> -->
+
+      <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+        <strong>{{ successMsg }}</strong>
+        <button type="button" class="close" (click)="successMsg = ''">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    
+      <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+        <strong>{{ errorMsg }}</strong>
+        <button type="button" class="close" (click)="errorMsg = ''">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <hr/> 
+    
+      <p class="loader" *ngIf="disableBtn">Processing...</p>
+      <button type="submit"  class="btn btn-primary" [disabled]="disableBtn" *ngIf="!removeBtn">Submit</button>  
+      <hr/>
+
+  </form>

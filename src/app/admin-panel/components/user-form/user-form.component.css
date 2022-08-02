@@ -1,0 +1,9 @@
+.bTN-trash {
+    position: absolute;
+    top: 0;
+    right: -30px;
+}
+
+ng-select.ng-touched.ng-invalid /deep/ .ng-select-container{
+    border: red 1px solid;
+}

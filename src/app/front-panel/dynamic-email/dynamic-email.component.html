@@ -1,0 +1,14 @@
+<form [formGroup]="group">
+  <div class="dynamic-row">
+
+    <div class="dynamic-column">
+      <input formControlName="r_email" placeholder="Your friend's email" [class.error]="feeItemErrors.r_email">
+      <div class="error-text">{{feeItemErrors.r_email}}</div>
+    </div>
+
+    <div class="dynamic-column deleteColumn" (click)="onRemoveItem()">
+      <i class="fa fa-close"></i>
+    </div>
+
+  </div>
+</form>

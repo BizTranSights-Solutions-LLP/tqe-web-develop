@@ -1,0 +1,141 @@
+<div id="main-call-to-action">
+  <div class="container-fluid">
+    <div class="row flex-nowrap justify-content-between align-items-center introduction">
+      <div class="box-l col-3 pt-1">
+        <img src="../../../assets/images/web-view-2.png" id="phone-img" alt="">
+      </div>
+      <div class="box-c col-6 text-center success-text">
+        <div class="splash-text">
+          <span class = "l-5">65% SUCCESS</span><br>
+          <span class = "l-1">WHEN USING PLAYER IMPACT TOOLS EFFECTIVELY</span><br>
+          <br>
+          <span class="l-6">MACHINE LEARNING</span><br>
+
+          <span class="l-5">QUANTITATIVE ANALYTICS</span><br>
+          <!-- <span class="l-3">In </span><span class="l-4">sports analysis</span><br> -->
+          <span class="l-1">FOR SPORTS ANALYSIS</span><br>
+        </div>
+      </div>
+
+
+      <div class="box-r col-3 d-flex justify-content-center align-items-center all-buttons">
+        <div class="whyTQE">
+          <!--    Refer to friends and get coupon      -->
+          <button (click)="referLink()" class="bTN- bTN_view">Refer Friends!</button>
+
+          <button (click)="showModal()" class="bTN-Ytqe Ytqe-button">
+            <img src="../../../assets/images/ico-tqe.png" alt="">
+            <span>
+              <strong>Why Choose TQE? </strong>Watch the 60 Sec Overview
+            </span>
+          </button>
+          <button (click)="tryItFree()" class="bTN- bTN_view">Start Your Free 7-day Trial Now!</button>
+          <button (click)="nottryItFree()" class="bTN- bTN_view">Subscribe Now!</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div id="choose-your-adventure">
+  <div class="container-fluid">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-3">
+      </div>
+      <div class="col-6" [class.current]="bigTab === 'betting'" (mouseenter)="changeBigTab('betting')">
+        <h2>Sports Betting</h2>
+        <h4>
+          <span>Get Your Picks</span>
+          <br>
+          <span>BUILD YOUR OWN PREDICTIONS*</span>
+        </h4>
+        <br>
+
+      </div>
+      <div class="col-3">
+      </div>
+      <!-- <div class="box-r col-6" [class.current]="bigTab === 'fantasy'" (mouseenter)="changeBigTab('fantasy')">
+        <h2>Fantasy Sports</h2>
+        <h4><span>Gain Your Edge</span></h4>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<section *ngIf="bigTab === 'betting'" class="win">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <!-- <h2>WORLD CLASS<span>BETTING RESULTS</span></h2> -->
+        <h3>PREDICTION SUCCESS</h3>
+        <br>
+        <ul class="results">
+          <li>
+            <strong>{{this.past_season_prediction*100 | number:'1.1-1'}}<sub>%</sub></strong>
+            In 2013-2019 NFL seasons using the player impact tool
+          </li>
+          <li>
+
+            <strong>{{this.curr_season_prediction*100 | number:'1.1-1'}}<sub>%</sub></strong>
+            In the latest 2020-2021 NFL season, our high-confidence (probability greater than 60%) picks
+          </li>
+          <!-- <li>
+            <strong>66<sub>%</sub></strong>
+            On 2019 NCAA Tournament First Round
+          </li>
+          <li>
+            <strong>59<sub>%</sub></strong>
+            On 2019 NFL Best Bets
+          </li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <!-- <div class="col pt-5"> -->
+      <!-- <p class="lead testimonial">"I finally stopped relying on my gut and let the data experts tell me how to bet."
+        <br><small>-Chris B</small></p> -->
+      <!-- </div> -->
+      <div class="col pt-5">
+        <p class="lead testimonial" style="font-weight: bold">*Utilize TQE’s proprietary patent-pending <a href="https://www.thequantedge.com/nfl-demo" style="color:#33FF57;text-decoration: none;">Player Impact Tools</a> to input your own views on a player’s likely performance and rerun TQE’s algorithms with instant updates on the game predictions!</p>
+        <!-- <p >Utilize TQE’s proprietary patent-pending Player Impact Tools to input your own views on a player’s likely performance and rerun TQE’s algorithms with instant updates on the game predictions!</p> -->
+        <!-- <p class="lead testimonial">"Using TQE's tools has helped me figure out which players perform best in different
+          matchups " <br><small>-Jess L</small></p> -->
+      </div>
+      <!-- <div class="col pt-5"> -->
+      <!-- <p class="lead testimonial">"Booked my ticket to the DraftKings Fantasy Football Championship in Miami! Couldn't
+        have done it without TheQuantEdge" <br><small>-Gareth G</small></p> -->
+      <!-- </div> -->
+    </div>
+  </div>
+</section>
+<section *ngIf="bigTab === 'fantasy'" id="tool-to-win">
+  <div class="container">
+    <div class="heading">
+      <h2 class="section-heading">
+        <span>All The Tools You Need To Win</span>
+        <strong>
+          30+ TOOLS AT YOUR FINGERTIPS
+        </strong>
+      </h2>
+    </div>
+    <div class="row no-gutters" *ngIf="Tools.length !== 0">
+      <div class="col-lg-3 col-md-4" *ngFor="let data of Tools">
+        <div class="tool-img-holder">
+          <strong>
+            <a [routerLink]="['/membership-plan']">{{data.title}}</a>
+            <span>{{data.short_description}}</span>
+          </strong>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 offset-3 pt-3">
+        <a [routerLink]="['/membership-plan']" class="btn-picks">Start your free 7-day trial now!</a>
+      </div>
+    </div>
+  </div>
+</section>

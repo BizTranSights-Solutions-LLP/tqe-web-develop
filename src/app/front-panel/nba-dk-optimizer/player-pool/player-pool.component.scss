@@ -1,0 +1,107 @@
+#tqe-player-pool {
+  #pool-controls {
+    .btn-sm {
+      font-size:12px;
+      font-weight:bold;
+    }
+  }
+  .position-filter {
+    .input-group-text, .dropdown-toggle {
+      font-size:12px;
+      font-weight: 600;
+    }
+    a.dropdown-item {
+      font-size:12px;
+      padding-top:6px;
+      padding-bottom:6px;
+      cursor:pointer;
+      font-weight: 600;
+      &:hover {
+        background:#eee;
+        color:#000 !important;
+      }
+      &.active {
+        color:#fff;
+      }
+    }
+  }
+  #player-pool {
+    .carets {
+      td {
+        text-align:center;
+        padding-bottom:0;
+        color:#999;
+      }
+    }
+    .headers {
+      th {
+        border-top:0;
+        font-weight:bold;
+        &.sortable:hover {
+          cursor:pointer;
+        }
+      }
+    }
+    td,th {
+      vertical-align:middle;
+      font-weight: 500;
+      .locked-icon {
+        height:14px;
+      }
+    }
+    .player {
+      display:flex;
+      flex-direction:row;
+      .team {
+        flex:1;
+        text-align: center;
+        img {
+          width:100%;
+          max-width: 32px;
+        }
+      }
+      .player-data {
+        padding-left:3px;
+        flex:5;
+      }
+    }
+    td.position {
+      text-align:left;
+      select {
+        font-size:12px;
+        font-weight:bold;
+      }
+      b {
+        display:inline-block;
+        text-indent:8px;
+      }
+    }
+    td.actions {
+      .btn {
+        font-size: .66rem !important;
+      }
+    }
+    td.input-col {
+      input {
+        max-width:50px;
+        margin:0 auto;
+        font-size:12px;
+        padding: .125rem .25rem;
+      }
+    }
+    .null-state {
+      p {
+
+        i {
+          font-size:48px;
+          line-height:1.5em;
+        }
+        span {
+          font-size:24px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+

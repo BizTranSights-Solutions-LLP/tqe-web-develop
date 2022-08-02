@@ -1,0 +1,20 @@
+<div class="loggin-screen">
+  <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" class="form-control" placeholder="Enter Username" name="uname" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="psw"><b>Password</b></label>
+      <input type="password" class="form-control" placeholder="Enter Password" name="psw" formControlName="password">    
+    </div>
+    <p class="error" *ngIf="(loginForm.get('username').touched && loginForm.get('username').invalid) || (loginForm.get('password').touched && loginForm.get('password').invalid)"> {{ login_error_message }} </p>
+    <p class="error"> {{ server_error_message }} </p>
+    <div class="actionBtn">
+      <button class="actionButton " type="submit" [disabled]="loginForm.invalid || disable_login">Login</button>
+      
+      <!-- If you're not register Click <a class="" routerLink="/register">Here</a> -->
+      
+    </div>
+  </form>
+</div>

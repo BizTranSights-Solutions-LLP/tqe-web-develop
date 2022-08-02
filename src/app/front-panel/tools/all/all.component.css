@@ -1,0 +1,131 @@
+/** COMMON STYLE **/
+
+.page-content {
+    font-family: "Segoe UI";
+    font-size: 1rem;
+    position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Segoe UI" !important;
+}
+
+h5 {
+    font-weight: 500;
+}
+
+.proj_input {
+    display: none;
+}
+
+.logos-wrap {
+    overflow: hidden;
+}
+
+.player_range_filter_btn {
+    padding: 4% 15%;
+}
+
+.logos-wrap ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.player_pool_name {
+    cursor: pointer;
+}
+
+.logos-wrap ul li {
+    display: inline-block;
+    width: calc(5% - 5px);
+    padding: 10px 15px;
+}
+
+.logos-wrap ul li a {
+    display: block;
+    text-align: center;
+}
+
+.logos-wrap ul li a img {
+    max-width: 100%;
+    cursor: pointer;
+}
+
+.tools-table.first_table thead tr th {
+    background-color: #404040;
+    color: #fff;
+}
+
+.table-outer /deep/ .dataTables_filter {
+    display: none !important;
+}
+
+.sidebar-form-buttons .loading {
+    background: none;
+    height: 70px;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+.sidebar-form-buttons .loading::before {
+    width: 30px;
+    height: 30px;
+}
+
+.sidebar-form-buttons .loading::after {
+    width: 50px;
+    height: 50px;
+}
+.sidebar-save-btns .btn + .btn {
+    margin-left: 5px;
+}
+.loadPlayerpool-search {    padding: 20px 0 0;}
+.loadPlayerpool-search .inline-label {
+    margin-right: 10px;
+    font-weight: 600;
+}
+.points-wrap label {   margin-right: 5px; }
+.loadPlayerPool-table {
+    text-align: center;
+}
+.loadPlayerPool-table td {
+    vertical-align: middle;
+}
+.logo-.fanshare {
+    width: 70px;
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    margin-left: 11%;
+}
+@media only screen and (max-width:1400px) {
+    .logo-.fanshare {   margin-left: 17%;  }
+}
+@media only screen and (max-width:990px) {
+    .logos-wrap ul li {
+        width: 80px
+    }    
+    .table-lock {padding: 0 5px;}
+}
+@media only screen and (max-width:767px) {
+    .logo-.fanshare {
+        margin: 0 auto;
+        left: 0;
+        position: relative;    
+    }
+}

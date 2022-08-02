@@ -1,0 +1,26 @@
+.main-content {
+    margin-left: 250px;
+    padding: 50px 20px 20px;
+    height: 100%;
+}
+
+.form-control {
+    font-size: inherit;
+}
+@media only screen and (max-width:992px) {
+    
+    .main-content { margin-left: 0; }
+    table { width: 100% !important; }
+}
+@media only screen and (max-width:767px){
+    .main-content /deep/ .dataTables_wrapper .dataTables_paginate .paginate_button.first, 
+    .main-content /deep/ .dataTables_wrapper .dataTables_paginate .paginate_button.previous, 
+    .main-content /deep/ .dataTables_wrapper .dataTables_paginate .paginate_button.next, 
+    .main-content /deep/ .dataTables_wrapper .dataTables_paginate .paginate_button.last {
+        display: block;
+        min-width: auto;
+        width: 90px;
+        margin: 8px auto;
+    }
+    .main-content /deep/ div.dataTables_wrapper div.dataTables_paginate ul.pagination {display: block;}
+}

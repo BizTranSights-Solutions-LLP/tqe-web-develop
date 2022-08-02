@@ -1,0 +1,454 @@
+<div *ngIf="!hideToolOutlet">
+  <div class="page-title">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1>{{allData.title}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="todays-best-bets" class="container best-bets" *ngIf="this.isNFL">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="alert alert-info mt-5" role="alert">
+          <h4 class="alert-heading mb-2">Coming Soon!</h4>
+          <p>This tool is not available yet because our engineers are hard at work updating it for the upcoming season.
+          </p>
+          <hr>
+          <p class="mb-0">Check back soon, for updates to this great tool!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!this.isNFL">
+  <section class="toolbar">
+    <div class="container-fluid">
+      <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>Before you Begin!</strong> You should clear previous weeks data by clicking Reset All.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-lg-12 col-xl-7" id="toolbar-main-left">
+          <div class="row align-items-center">
+            <div class="col-md-auto">
+              <div class="tabs-wrap group-btns-wrap">
+                <ul>
+                  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="navOptions(true)"><a [routerLink]="['/tool/', tool, 'ng']">All</a></li>
+                  <li routerLinkActive="active" (click)="navOptions(false)"><a [routerLink]="['/tool/', tool, 'ng', 'excluded']">Excluded</a>
+                  </li>
+                  <li routerLinkActive="active" (click)="navOptions(false)"><a [routerLink]="['/tool/', tool, 'ng', 'lineups']">My Lineups</a>
+                  </li>
+                  <li routerLinkActive="active" (click)="navOptions(false)"><a [routerLink]="['/tool/', tool, 'ng', 'injury']">Injury</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- <ng-container *ngIf="hideOptions"> -->
+
+              <div class="col-md-3 col-lg-auto">
+                <div class="toolbar-button-wrap">
+                  <button class="btn theme-btn" (click)="buildRules()">Stack and Groups</button>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-5" *ngIf="hideOptions">
+                <div class="dark-btns group-btns-wrap">
+                  <ul>
+                    <li class="{{ posArray[0] }}"><a (click)="selectPos(0,'QB')">QB</a></li>
+                    <li class="{{ posArray[1] }}"><a (click)="selectPos(1,'RB')">RB</a></li>
+                    <li class="{{ posArray[2] }}"><a (click)="selectPos(2,'WR')">WR</a></li>
+                    <li class="{{ posArray[3] }}"><a (click)="selectPos(3,'TE')">TE</a></li>
+                    <li class="{{ posArray[4] }}"><a (click)="selectPos(4,'FLEX')">FLEX</a></li>
+                    <li class="{{ posArray[5] }}"><a (click)="selectPos(5,'DST')">DST</a></li>
+                    <li class="{{ posArray[6] }}"><a (click)="selectPos(6,'ALL')">ALL</a></li>
+                  </ul>
+                </div>
+              </div>
+            <!-- </ng-container> -->
+          </div>
+        </div>
+        <div class="col-lg-12 col-xl-5" id="toolbar-main-right" *ngIf="hideOptions">
+          <div class="row align-items-center justify-content-end">
+            <div class="col-md-6 col-lg text-right" id="toolbar-inner-left">
+              <div class="select-tools">
+                <label>Select Week</label>
+                <select #selectWeek (change)="emitWeekNSlateVals(selectWeek.value,selectSlate.value)">
+                  <option *ngFor="let w of week" [selected]="w === weekDefault" [value]="w">{{ w }}</option>
+                </select>
+              </div>
+              <div class="select-tools">
+                <label>Select Slate</label>
+                <select #selectSlate (change)="emitWeekNSlateVals(selectWeek.value,selectSlate.value)">
+                  <option *ngFor="let s of slates" [value]="s" [selected]="s === slateDefault">{{ s }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-auto" id="toolbar-inner-right">
+              <div class="select-tools-btns">
+                <button type="button" class="btn red-btn" (click)="excludeAll()">Exclude All</button>
+                <button type="button" class="btn black-btn" (click)="clearExposure()">Clear Exposure</button>
+                <button type="button" class="btn black-btn" (click)="resetAll()">Reset All</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <router-outlet></router-outlet>
+
+  <div class="modal fade s_player_det_modal" id="myModal-1" role="dialog" bsModal #buildRule="bs-modal" (onHide)="clear_interval()" (onShow)="setup_range_sliders()">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header d-flex align-items-center">
+          <div class="s_profile_player mb-0">
+            <h3>Stack and Groups</h3>
+          </div>
+          <button type="button" class="clr-green close" data-dismiss="modal" (click)="buildRule.hide()">&times;</button>
+        </div>
+        <div class="modal-body d-flex flex-column flex-lg-row p-0">
+          <div class="s_build_rule_sidebar">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a class="nav-link" data-toggle="pill" href="#v-pills-position" role="tab"><i class="fas fa-cubes"></i>
+                Stacks</a>
+              <a class="nav-link active" data-toggle="pill" href="#v-pills-group" role="tab"><i class="fas fa-users"></i>
+                Groups</a>
+              <!-- <a class="nav-link" (click)="openPlayerPool()"><i class="fas fa-building"></i> My
+                Builds</a> -->
+            </div>
+          </div>
+          <div class="s_brule_wrap">
+            <div class="tab-content" id="v-pills-tabContent">
+              <div class="tab-pane fade" id="v-pills-position" role="tabpanel">
+                <div class="s_sub_group d-flex">
+                  <div class="s_create_group">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab1" role="tablist" aria-orientation="vertical">
+                      <ng-container *ngFor="let stack of buildRulesStacks;let i = index;">
+                        <a class="nav-link {{ i === 0 ? 'active':'' }} sl-{{stack.id}}" data-toggle="pill" href="#v-pills-stack-{{stack.id}}" role="tab">Stack {{ i+1 }}</a>
+                      </ng-container>
+                    </div>
+                    <div class="s_new_group">
+                      <button
+                        type="button"
+                        class="nav-link btn theme-btn"
+                        (click)="createNewStack()"
+                        [hidden]="buildRulesStacks.length === 3">
+                        <i class="fas fa-users-cog"></i>
+                        Create New Stack
+                      </button>
+                    </div>
+                  </div>
+                  <div class="s_group_detail">
+                    <div class="tab-content" id="v-pills-tab1Content">
+                      <ng-container *ngFor="let stack of buildRulesStacks;let i = index;">
+                        <div class="tab-pane fade {{ i === 0 ? 'show active' : '' }} sv-{{stack.id}}" id="v-pills-stack-{{stack.id}}" role="tabpanel">
+                          <div class="s_sub_group_detail d-block d-lg-flex align-items-center justify-content-between">
+                            <div class="col-md-8">
+                              <form>
+                                <h5 class="form-heading">Create New Stack</h5>
+                                <div class="form-field">
+                                  <div class="row align-items-md-center">
+                                    <div class="col-md-4">
+                                      <div class="d-flex">
+                                        <label>Player</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                      <!-- <div class="d-block d-md-flex align-items-center s_select_option"> -->
+                                        <!-- <select class="form-control mr-0 mr-md-2 spn-{{stack.id}}" name="{{stack.id}}">
+                                          <option value="" disabled>Select</option>
+                                          <ng-container *ngIf="playersList.length > 0">
+                                            <option *ngFor="let p of playersList;" [value]="p.name" [selected]="p.name === stack.player">{{ p.name }}</option>
+                                          </ng-container>
+                                        </select> -->
+                                        <tag-input
+                                          class="stack_name_{{stack.id}}"
+                                          name="stack_name"
+                                          [onTextChangeDebounce]="0"
+                                          [ngModel]="stack.player"
+                                          [maxItems]='1'
+                                          [onlyFromAutocomplete]="true"
+                                          [placeholder]="'Type to add player'"
+                                          [secondaryPlaceholder]="'Type to add player'">
+
+                                          <tag-input-dropdown
+                                            [zIndex]="99999999"
+                                            [displayBy]="'group_player'"
+                                            [identifyBy]="'name'"
+                                            [autocompleteItems]="playersList"
+                                            [showDropdownIfEmpty]="true"
+                                            [keepOpen]="false"
+                                            [appendToBody]="false"></tag-input-dropdown>
+                                        </tag-input>
+                                      <!-- </div> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-field">
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <label>Stack with Pos.</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <tag-input
+                                          class="brs-pos_{{stack.id}}"
+                                          name="pos"
+                                          [onTextChangeDebounce]="0"
+                                          [ngModel]="stack.pos"
+                                          [inputClass]="'brs-pos'"
+                                          [maxItems]='3'
+                                          [onlyFromAutocomplete]="true"
+                                          [placeholder]="'Type to add Pos.'"
+                                          [secondaryPlaceholder]="'Type to add Pos.'">
+                                          <tag-input-dropdown
+                                            [zIndex]="99999999"
+                                            [autocompleteItems]="['RB','WR','TE']"
+                                            [showDropdownIfEmpty]="true"
+                                            [keepOpen]="false"
+                                            [appendToBody]="false"></tag-input-dropdown>
+                                        </tag-input>
+                                      <!-- <input type="text" class="stack_of" data-role="tagsinput" value="WR"> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-field">
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                      <label class="text-left">Stack with Opposing Pos.</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <tag-input
+                                          class="brs-oppos_pos_{{stack.id}}"
+                                          name="oppos_pos"
+                                          [onTextChangeDebounce]="0"
+                                          [ngModel]="stack.oppos_pos"
+                                          [inputClass]="'brs-oppos_pos'"
+                                          [maxItems]='2'
+                                          [onlyFromAutocomplete]="true"
+                                          [placeholder]="'Type to add Pos.'"
+                                          [secondaryPlaceholder]="'Type to add Pos.'">
+                                          <tag-input-dropdown
+                                            [zIndex]="99999999"
+                                            [autocompleteItems]="['WR','TE']"
+                                            [showDropdownIfEmpty]="true"
+                                            [keepOpen]="false"
+                                            [appendToBody]="false"></tag-input-dropdown>
+                                        </tag-input>
+                                      <!-- <input type="text" class="stack_of" data-role="tagsinput" value="WR"> -->
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-field">
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <div class="tool-box mb-2">
+                                        <label class="toolbox-label">Max Exposure for the Stack</label>
+                                        <input type="text" class="stack_range ss-{{stack.id}}" name="ss-{{stack.id}}" value="" />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-field submit-btn-wrap">
+                                    <div class="alert alert-success stack-alert alert-{{ stack.id }} mb-1 mt-1" role="alert">
+                                        Stack has been added!
+                                    </div>
+                                    <div class="alert col alert-danger stack-error error-alert-{{ stack.id }} mb-1 mt-1" role="alert">
+                                        Stack will be added when player is selected and atleast one position for Stack with Pos or Stack with opposing pos is selected
+                                    </div>
+                                    <div class="mb-1">
+                                      <b>Note:</b> Stack rules will be added on Add Stacking Rules button click.
+                                    </div>
+                                    <div class="row tab-2_actions">
+                                      <div class="col-md-6">
+                                        <button type="button" class="btn theme-btn d-block" (click)="addStackRules(stack.id)" style="white-space: nowrap;">Add Stacking Rules</button>
+                                        <!-- <button type="button" class="btn theme-btn d-block" (click)="resetStack(stack.id)" style="white-space: nowrap;">Reset</button> -->
+                                        <!-- <i (click)="resetStack(stack.id)" class="fas fa-undo m-2"></i> -->
+                                      </div>
+                                      <div class="col-md-6">
+                                        <button class="btn black-btn col-md-6" (click)="resetStack(stack.id)"> <i class="fas fa-undo m-2"></i> Reset </button>
+                                        <button *ngIf="i !== 0" class="btn red-btn col-md-6" (click)="deleteBuildRuleStack(stack.id)"><i class="fas fa-trash-alt pr-2"></i> Delete </button>
+                                      </div>
+                                    </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade show active" id="v-pills-group" role="tabpanel">
+                <div class="s_sub_group d-flex">
+                  <div class="s_create_group">
+                    <div class="s_load_group d-flex justify-content-between align-items-center">
+                      <h4>Load Saved Groups</h4>
+                      <div class="s_dropdown">
+                        <button class="s_ellipsis_dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li class="dropdown-item" (click)="deleteAllGroups()">Delete All Groups</li>
+                          <!-- <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nav flex-column nav-pills" id="v-pills-tab1" role="tablist" aria-orientation="vertical">
+                      <ng-container *ngFor="let g of buildRulesGroups;let i = index">
+                          <a class="nav-link {{ i === 0 && !activeFirstTab ? 'active': '' }} gl-{{g.name}}" data-toggle="pill" href="#v-pills-{{g.name}}" role="tab">Group {{ i+1 }}</a>
+                      </ng-container>
+                    </div>
+                    <div class="s_new_group">
+                      <button
+                        type="button"
+                        class="nav-link btn theme-btn"
+                        (click)="createNewGroup()"
+                        [hidden]="buildRulesGroups.length === 10">
+                        <i class="fas fa-users-cog"></i>
+                        Create New Group
+                      </button>
+                    </div>
+                  </div>
+                  <div class="s_group_detail">
+                    <div class="tab-content" id="v-pills-tab1Content">
+                      <div *ngIf="buildRulesGroups.length === 0" class="mt-5 text-center">
+                        <h3> Click create new group to add a group.</h3>
+                      </div>
+                      <ng-container *ngFor="let g of buildRulesGroups;let i = index">
+                        <div class="tab-pane fade {{ i == 0 ? 'show active' : '' }} gv-{{g.name}}" id="v-pills-{{g.name}}" role="tabpanel">
+                          <div class="s_sub_group_detail d-block d-lg-flex align-items-center justify-content-between">
+                            <div class="s_p_group">
+                              <p class="m-0">Player(s) from this group.</p>
+                            </div>
+                          </div>
+                          <div class="s_add_player">
+                            <div *ngIf="playersList.length > 0">
+                              <tag-input
+                                [onTextChangeDebounce]="0"
+                                [ngModel]="g.selected_players"
+                                (onAdd)="updateGroupPlayers($event,'add',g.name)"
+                                (onRemove)="updateGroupPlayers($event,'remove',g.name)"
+                                [maxItems]='3'
+                                [onlyFromAutocomplete]="true"
+                                [placeholder]="'Type to add player'"
+                                [secondaryPlaceholder]="'Type to add player'">
+
+                                <tag-input-dropdown
+                                  [zIndex]="99999999"
+                                  [displayBy]="'group_player'"
+                                  [identifyBy]="'name'"
+                                  [autocompleteItems]="playersList"
+                                  [showDropdownIfEmpty]="true"
+                                  [keepOpen]="false"
+                                  [appendToBody]="false"></tag-input-dropdown>
+                              </tag-input>
+                            </div>
+                          </div>
+                          <div class="s_group_items">
+                            <div class="tool-box ">
+                              <label class="toolbox-label">Min / Max Exposure for the group</label>
+                              <input type="text" class="js-range-slider group-range-slider gs-{{ g.name }}" name="my_range" value=""/>
+                            </div>
+                            <div class="alert col alert-success stack-error alert-{{ g.name }} mb-1 mt-1" role="alert">
+                                Group has been updated.
+                            </div>
+                            <div class="alert col alert-danger stack-error error-alert-{{ g.name }} mb-1 mt-1" role="alert">
+                                Player has been removed.
+                            </div>
+                            <div class="select-tools-btns mb-4">
+                              <button  class="btn red-btn mr-2 mb-2 mb-lg-0" (click)="deleteBuildRuleGroup(i)"><i class="fas fa-trash-alt pr-2"></i>
+                                Delete Group</button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="tab-pane fade" id="v-pills-build" role="tabpanel">..werhyt</div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="hideToolOutlet">
+
+  <div *ngIf="unAuthorized" class="unAuthorized">
+    <strong>{{unAuthorized}}</strong>
+    <div class="unlockArticle" *ngIf="!LoggedIn">
+      <div>
+        <strong class="free-title">UNLOCK ALL THE TOOLS</strong>
+        <button [routerLink]="['/register']" class="btnFreeArticle">Unlock All Tools!</button>
+        <p>Already a Member? <a href="javascript:void(0)" (click)="showOverlay()">Log In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-article_post" [ngStyle]="{'height':loader === true ? '100vh' : 'auto' }" *ngIf="LoggedIn">
+
+    <div class="loading" *ngIf="loader">
+      <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+    </div>
+
+    <div class="page-title">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>{{allData.title}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+            <div class="para" [ngClass]="{'notAllowed' : !allData.is_allowed}">
+              <div class="locked-content" *ngIf="!allData.is_allowed">
+                <div class="alert alert-warning" [innerHTML]="allData.membership_plan "></div>
+                <p>{{allData.description}}</p>
+                <button class="btn-picks" (click)="showModal(allData.video_url)">
+                  <img alt="" src="../../../../assets/images/ico-tqe-white.png"> &nbsp;
+                  {{allData.button_text}}
+                </button>
+                <button [routerLink]="['/membership-plan']" class="btnFreeArticle">Click Here To Unlock This Tool!</button>
+              </div>
+
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg" id="{{allData.id}}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-auto-name" class="modal-title pull-left">{{allData.title}}</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <iframe width="100%" height="500" src="https://www.youtube.com/embed/Fano265b8Zc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+
+          <div [innerHTML]="videoSrc | safe: 'html'"></div>
+          <!-- <div #myDiv></div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

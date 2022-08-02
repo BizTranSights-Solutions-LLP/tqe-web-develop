@@ -1,0 +1,223 @@
+<div *ngIf="loader">Loading...</div>
+<div *ngIf="!loader">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+  
+    <h4>User</h4>
+    <hr/>
+
+    <h6>First Name</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="text" class="form-control col-6"  placeholder="Enter first name here" formControlName="first_name">
+      <div *ngIf="userForm.controls.first_name.touched && userForm.controls.first_name.errors" class="text-danger">
+          <div *ngIf="userForm.controls.first_name.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Last Name</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="text" class="form-control col-6"  placeholder="Enter last name here" formControlName="last_name">
+      <div *ngIf="userForm.controls.last_name.touched && userForm.controls.last_name.errors" class="text-danger">
+          <div *ngIf="userForm.controls.last_name.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Username</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="text" class="form-control col-6"  placeholder="Enter username here" formControlName="username" [attr.disabled]="update ? '' : null">
+      <div *ngIf="userForm.controls.username.touched && userForm.controls.username.errors" class="text-danger">
+          <div *ngIf="userForm.controls.username.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Role</h6>
+    <br/>
+    <div class="form-group">    
+      <div class="row">
+        <div class="col-6" >
+            <ng-select [items]="roles"
+            bindLabel="name"
+            bindValue="id"
+            [multiple]="true"
+            placeholder="Select roles"                     
+            formControlName="role_ids"
+            (add)="updatePaypalValidators()"
+            (remove)="updatePaypalValidators(1)"
+            >
+          </ng-select>
+        </div>
+      </div>
+      
+      <div *ngIf="userForm.controls.role_ids.touched && userForm.controls.role_ids.errors" class="text-danger">
+          <div *ngIf="userForm.controls.role_ids.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Email</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="text" class="form-control col-6"  placeholder="Enter email here" formControlName="email" [ngClass]="{ 'is-invalid': userForm.controls.email.touched && userForm.controls.email.errors }" [attr.disabled]="update ? '' : null">
+      <div *ngIf="userForm.controls.email.touched && userForm.controls.email.errors" class="text-danger">
+          <div *ngIf="userForm.controls.email.errors.pattern">Provided email is invalid!</div>
+      </div>
+      <div *ngIf="userForm.controls.email.errors" class="text-danger">
+          <div *ngIf="userForm.controls.email.errors.special_char_found">Provided email is invalid!</div>
+      </div>
+      <div *ngIf="userForm.controls.email.touched && userForm.controls.email.errors" class="text-danger">
+          <div *ngIf="userForm.controls.email.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Biographical Info</h6>
+    <br/>
+    <div class="form-group">
+      <div formControlName="biographical_info" [ngxSummernote]="editorConfig"></div>    
+        <!-- <ejs-richtexteditor class="form-control" placeholder="Enter biographical info here" formControlName="biographical_info" [fontSize]="{'default': '12pt'}"></ejs-richtexteditor> -->
+    </div>
+
+    <br/>
+
+    <h6>Password</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="password" class="form-control col-6"  placeholder="Enter password here" formControlName="password" autocomplete="new-password">
+      <div *ngIf="userForm.controls.password.touched && userForm.controls.password.errors" class="text-danger">
+          <div *ngIf="userForm.controls.password.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Profile Image</h6>
+    <br/>
+
+    <div class="card" style="width: 14rem" *ngIf="userForm.get('file_path').value ? true: false">
+        <img class="card-img-top" [src]="userForm.get('file_path').value" alt="Card image cap">           
+     </div>
+     <br/>
+
+    <div class="form-group">    
+      <input type="file" class="form-control col-6" placeholder="Enter title here" formControlName="photo" (change)="onFileChange($event)">
+    </div>
+
+    <br/>
+
+    <h6>Twitter Account</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="text" class="form-control col-6"  placeholder="Enter twitter account here" formControlName="twitter_account">
+      <div *ngIf="userForm.controls.twitter_account.touched && userForm.controls.twitter_account.errors" class="text-danger">
+          <div *ngIf="userForm.controls.twitter_account.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Paypal Email</h6>
+    <br/>
+    <div class="form-group">    
+      <input type="email" class="form-control col-6"  placeholder="Enter paypal email here" formControlName="paypal_email">
+      <div *ngIf="userForm.controls.paypal_email.touched && userForm.controls.paypal_email.errors?.required" class="text-danger">
+          Field is required
+      </div>
+      <div *ngIf="userForm.controls.paypal_email.touched && userForm.controls.paypal_email.errors?.email" class="text-danger">
+          Provided email is invalid!
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Discount Code</h6>
+    <br/>
+    <ng-container formArrayName="discount_code">
+      <div class="form-group col-6" *ngFor="let dc of userForm.get('discount_code').controls;let i = index;">
+        <input type="text" class="form-control"  placeholder="Enter discount code here" formControlName="{{i}}">
+        <button type="button" class="btn btn-default text-danger bTN-trash" *ngIf="i !== 0" (click)="removeDiscountCode(i)"><i class="fa fa-trash"></i></button>
+      </div>
+      <button type="button" class="btn btn-default text-primary" (click)="addDiscountCode()" *ngIf="userForm.get('discount_code').value.length !== 5">Add</button>
+    </ng-container>
+
+    <div *ngIf="userForm.controls.discount_code.controls[0].touched && userForm.controls.discount_code.controls[0].errors" class="text-danger">
+        <div *ngIf="userForm.controls.discount_code.controls[0].errors.required">One discount code is required</div>
+    </div>
+
+    <br/>
+
+    <hr>
+
+    <h6>Membership Levels</h6>
+    <br/>
+
+    <table class="table">
+      <thead>
+        <th scope="col">Membership Level</th>
+        <th scope="col">Expiration</th>
+        <th>&nbsp;</th>
+      </thead>
+      <tbody formArrayName="user_memberships">
+        
+        <tr *ngFor="let um of userForm.get('user_memberships').controls;let i = index;" [formGroupName]="i">
+            <td>
+              <select class="form-control" formControlName="membership_id">
+                <option value="">Choose</option>
+                <option *ngFor="let m of memberships;" [value]="m.id" [selected]="m.id == um.value.membership_id">{{ m.name }}</option>
+              </select>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-4">
+                  <select class="form-control" formControlName="expiration">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                  </select>
+                </div>
+                <div class="col-md-5">
+                    <input type="date" class="form-control" *ngIf="um.value.expiration === 1 || um.value.expiration === '1'" formControlName="end_date">
+                </div>
+              </div>
+            </td>
+            <td><button type="button" class="btn btn-default text-primary" (click)="removeMembership(i)">Remove</button></td>
+        </tr>
+        <tr>
+          <td><button type="button" class="btn btn-default text-primary" (click)="addMoreMemberships()"> + Add another</button></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br/>
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+      <strong>{{ successMsg }}</strong>
+      <button type="button" class="close" (click)="successMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+      <strong>{{ errorMsg }}</strong>
+      <button type="button" class="close" (click)="errorMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+    <hr/>
+    <div class="mb-2" *ngIf="disableBtn">Processing......</div>  
+    <button type="submit"  class="btn btn-primary" [disabled]="disableBtn">Submit</button>  
+    <hr/>
+
+  </form>
+</div>

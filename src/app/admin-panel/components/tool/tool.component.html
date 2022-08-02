@@ -1,0 +1,113 @@
+<form [formGroup]="toolForm" (ngSubmit)="onSubmit(toolForm.value)">
+ 
+    <h4>Tool</h4>
+    <hr/>
+    <div class="form-group">    
+      <input type="text" class="form-control"  placeholder="Enter title here" [ngClass]="{ 'is-invalid': submitted && toolForm.controls.title.errors }" formControlName="title">
+      <div *ngIf="submitted && toolForm.controls.title.errors" class="invalid-feedback">
+          <div *ngIf="toolForm.controls.title.errors.required">Title is required</div>
+      </div>
+    </div>
+
+    <div class="form-group form-inline" *ngIf="toolForm.get('tool_url').value ? true: false">  
+        <label for="image">Permalink:</label>
+        <a  [href]="toolForm.value.tool_url" class="mx-sm-3" target="_blank">{{toolForm.value.tool_url}}</a>        
+    </div>
+
+    <div class="form-group">
+      <ejs-richtexteditor class="form-control" placeholder="Enter description here" [ngClass]="{ 'is-invalid': submitted && toolForm.controls.description.errors }" formControlName="description" [toolbarSettings]='tools'></ejs-richtexteditor>
+      <div *ngIf="submitted && toolForm.controls.description.errors" class="invalid-feedback">
+          <div *ngIf="toolForm.controls.description.errors.required">Description is required</div>
+      </div>    
+    </div>
+
+    <br/>
+    <div class="form-group">
+      <label>Tool tags</label>
+      <ng-select [items]="sportsTags"
+                bindLabel="name"
+                bindValue="id"
+                [addTag]="addCustomUser"
+                [multiple]="true"
+                placeholder="Select user or add custom tag"                     
+                formControlName="tool_sports_tag"
+                >
+      </ng-select>
+    </div>
+    <br/>
+
+    <h6>Meta Tag</h6>
+    <br/>
+
+    <div class="form-group" formArrayName="tool_meta_tag" *ngFor="let metaTag of toolForm.get('tool_meta_tag')['controls']; let i = index;">
+      <div [formGroupName]="i"> 
+        <div class="form-group">    
+          <input type="text" class="form-control" placeholder="Enter title here" formControlName="title">
+        </div>
+
+        <div class="form-group">    
+          <input type="text" class="form-control" placeholder="Enter keyword here" formControlName="keyword">
+        </div>
+
+        <div class="form-group">    
+          <textarea type="text" class="form-control" placeholder="Enter description here" formControlName="description" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <h6>Add Image</h6>
+    <br/>
+  
+    <div class="card" style="width: 14rem" *ngIf="toolForm.get('file_path').value ? true: false">
+       <img class="card-img-top" [src]="toolForm.get('file_path').value" alt="Card image cap">           
+    </div>
+    <br/>
+
+    <div class="form-group">      
+        <input type="file" accept="image/*" class="form-control-file" [ngClass]="{ 'is-invalid': toolForm.controls.image.errors }" (change)="onFileChange($event)" formControlName="image">
+        <div *ngIf="toolForm.controls.image.errors" class="invalid-feedback">
+           Image upload error: only png, jpg, jpeg allowed.
+        </div>
+    </div>
+
+    <div class="form-group">    
+      <input type="text" class="form-control" placeholder="Enter image title here" formControlName="image_title">
+    </div>
+
+    <div class="form-group">    
+      <textarea  type="text" class="form-control" placeholder="Enter image description here" formControlName="image_desc" rows="3"></textarea>
+    </div>
+
+
+    <div class="form-group">    
+        <label > Short Description	</label> 
+        <textarea  type="text" class="form-control" placeholder="" formControlName="short_description" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">    
+        <label > Iframe Url</label> 
+        <input type="text" class="form-control" placeholder="" formControlName="iframe_url">
+    </div>
+
+    <div class="form-group">   
+        <label > Video Url</label>  
+        <input type="text" class="form-control" placeholder="" formControlName="video_url">
+    </div>
+
+    <div class="form-group">    
+        <label > Button text</label> 
+        <input type="text" class="form-control" placeholder="" formControlName="button_text">
+    </div>
+
+    <div class="form-group">    
+        <label > Display Order</label> 
+        <input type="text" class="form-control" placeholder="" formControlName="display_order">
+    </div>
+
+    
+    <hr/>  
+    <button type="submit"  class="btn btn-primary">Submit</button>  
+    <hr/>
+
+</form>
+

@@ -1,0 +1,89 @@
+<div *ngIf="loading">Loading.....</div>
+<div *ngIf="!loading">
+  <form [formGroup]="seoForm" (ngSubmit)="onSubmit(seoForm.value)">
+
+    <h4>Seo Setting</h4>
+    <hr/>
+
+    <div class="form-group form-inline" *ngIf="seoForm.get('page_url').value ? true: false">  
+      <label for="image">Permalink:</label>
+      <a  [href]="origin + '/' + seoForm.value.page_url" class="mx-sm-3" target="_blank">{{ origin + '/' + seoForm.value.page_url }}</a>        
+    </div>
+    <br/>
+
+    <h6>Name</h6>
+    <br/>
+    <div class="form-group col-3">
+        <input class="form-control" type="text" formControlName="name">    
+      <div *ngIf="seoForm.controls.name.touched && seoForm.controls.name.errors" class="text-danger">
+          <div *ngIf="seoForm.controls.name.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Title</h6>
+    <br/>
+    <div class="form-group col-3">
+        <input class="form-control" type="text" formControlName="title">    
+      <div *ngIf="seoForm.controls.title.touched && seoForm.controls.title.errors" class="text-danger">
+          <div *ngIf="seoForm.controls.title.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Description</h6>
+    <br/>
+    <div class="form-group col-3">
+      <textarea class="form-control" formControlName="description"></textarea>
+      <div *ngIf="seoForm.controls.description.touched && seoForm.controls.description.errors" class="text-danger">
+          <div *ngIf="seoForm.controls.description.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <h6>Keyword</h6>
+    <br/>
+    <div class="form-group col-3">
+        <input class="form-control" type="text" formControlName="keyword">    
+      <div *ngIf="seoForm.controls.keyword.touched && seoForm.controls.keyword.errors" class="text-danger">
+          <div *ngIf="seoForm.controls.keyword.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/>
+
+    <!-- <h6>Page URL</h6>
+    <br/>
+    <div class="form-group col-3">
+        <input class="form-control" type="text" formControlName="page_url">    
+      <div *ngIf="seoForm.controls.page_url.touched && seoForm.controls.page_url.errors" class="text-danger">
+          <div *ngIf="seoForm.controls.page_url.errors.required">Field is required</div>
+      </div>
+    </div>
+
+    <br/> -->
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+      <strong>{{ successMsg }}</strong>
+      <button type="button" class="close" (click)="successMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+      <strong>{{ errorMsg }}</strong>
+      <button type="button" class="close" (click)="errorMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+    <hr/>
+    <div class="mb-2" *ngIf="disableBtn">Processing......</div>  
+    <button type="submit"  class="btn btn-primary" [disabled]="disableBtn">Submit</button>  
+    <hr/>
+
+  </form>
+</div>

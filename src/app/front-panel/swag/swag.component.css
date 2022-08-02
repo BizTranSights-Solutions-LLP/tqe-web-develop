@@ -1,0 +1,25 @@
+.swag {
+    padding: 50px 0;
+    text-align: center;
+}
+.shop {
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #fff;
+    background: linear-gradient(180deg, #73E33F 0%, #18B219 100%);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.09px;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+    max-width: 200px;
+    margin: 30px auto;
+}
+.shop:hover {
+    border-color: #18B219;
+    color: #18B219;
+    background: #fff;
+    text-decoration: none;
+}

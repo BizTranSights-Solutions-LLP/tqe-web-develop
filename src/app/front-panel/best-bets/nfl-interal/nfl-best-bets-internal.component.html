@@ -1,0 +1,106 @@
+<div id="nba-best-bets" class="container best-bets">
+  <div *ngIf="games_this_week.length != 0" class="row">
+    <div class="col-xl">
+      <div class="card shadow-lg mt-3 mb-5">
+        <div class="card-header">
+          <h6><span>{{nflWeek}}</span>'s NFL Picks (Internal)</h6>
+          <!-- <span class="tqe-pick">TQE Picks in Green</span> -->
+        </div>
+        <div class="wrapper">
+          <table *ngIf="!loading" class="bets-table all-bets table table-borderless mb-0 table-striped">
+            <thead class="thead-dark ">
+              <tr>
+                <th scope="col" class="text-center">Schedule</th>
+                <th scope="col" class="text-center">Away</th>
+                <th scope="col" class="text-center">Home</th>
+                <th scope="col" class="text-center">Away Spread</th>
+                <th scope="col" class="text-center">OU Line</th>
+                <th scope="col" class="text-center">Away DMoney</th>
+                <th scope="col" class="text-center">Home DMoney</th>
+                <th scope="col" class="text-center">Spread Pick</th>
+                <th scope="col" class="text-center">Spick Prob</th>
+                <th scope="col" class="text-center">Total Pick</th>
+                <th scope="col" class="text-center">Tpick Prob</th>
+                <th scope="col" class="text-center">Ml Pick</th>
+                <th scope="col" class="text-center">MlPick Prob</th>
+                <th scope="col" class="text-center">N1 aways</th>
+                <th scope="col" class="text-center">N1 overt</th>
+                <th scope="col" class="text-center">N2 aways</th>
+                <th scope="col" class="text-center">N2 overt</th>
+                <th scope="col" class="text-center">N3 aways</th>
+                <th scope="col" class="text-center">N3 overt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let game of games_this_week">
+                <tr>
+                  <td class="border-bottom align-middle text-center">
+                    <b>{{ game.local_start_time }}</b>
+                  </td>
+                  <!-- <td style="max-width:48px"><img
+                      src="../../../../assets/images/logos/nfl/pills/{{game.away_team_abbr}}.svg"
+                      style="max-height:32px">
+                  </td> -->
+                  <td class="away name border-bottom align-middle text-center">
+                    <b>{{game.away_team_abbr}}</b>
+                  </td>
+                  <td class="home name border-bottom align-middle text-center">
+                    <b>{{game.home_team_abbr}}</b>
+                  </td>
+                  <td class="away spread border-bottom align-middle text-center">
+                    <b>{{game.away_spread}}</b>
+                  </td>
+                  <td class="OU line border-bottom align-middle text-center">
+                    <b>{{game.OU_line}}</b>
+                  </td>
+                  <td class="away money border-bottom align-middle text-center">
+                    <b>{{game.away_dmoney| number:'1.1-1'}}</b>
+                  </td>
+                  <td class="home money border-bottom align-middle text-center">
+                    <b>{{game.home_dmoney| number:'1.1-1'}}</b>
+                  </td>
+                  <td class="sp_pick border-bottom align-middle text-center">
+                    <b>{{game.sp_pick}}</b>
+                  </td>
+                  <td class="spick_prob border-bottom align-middle text-center">
+                    <b>{{game.spick_prob*100 | number:'1.1-1'}}%</b>
+                  </td>
+                  <td class="totoal_pick border-bottom align-middle text-center">
+                    <b>{{game.total_pick}}</b>
+                  </td>
+                  <td class="total_prob border-bottom align-middle text-center">
+                    <b>{{game.tpick_prob*100 | number:'1.1-1'}}%</b>
+                  </td>
+                  <td class="ml_pick border-bottom align-middle text-center">
+                    <b>{{game.ml_pick}}</b>
+                  </td>
+                  <td class="ml_prob border-bottom align-middle text-center">
+                    <b>{{game.mpick_prob*100 | number:'1.1-1'}}%</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N1aways| number:'1.0-0'}}</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N1overt | number:'1.0-0'}}</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N2aways | number:'1.0-0'}}</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N2overt | number:'1.0-0'}}</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N3aways | number:'1.0-0'}}</b>
+                  </td>
+                  <td class="N1aways border-bottom align-middle text-center">
+                    <b>{{game.N3overt | number:'1.0-0'}}</b>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

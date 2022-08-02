@@ -1,0 +1,30 @@
+<div>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+    <thead *ngIf="Loading; else stillLoading">
+      <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Starts</th>        
+        <th>Expires</th>
+        <th>Uses</th>
+        <th>Levels</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dc of discountCodes;let i = index">
+        <td>{{ dc.id }}</td>
+        <td>{{ dc.code }}</td>
+        <td>{{ dc.starts_at | date:'mediumDate' }}</td>
+        <td>{{ dc.expires_at | date:'mediumDate' }}</td>
+        <td>{{ dc.uses !== '0' && dc.uses !== 0 && dc.uses !== '' ? dc.uses : 'unlimited' }}</td>
+        <td><span class="txtLimit">{{ dc.membership_names }}</span></td>        
+        <td> <a class="btn btn-primary" [routerLink]="['/admin/discount-form',dc.id]">Edit</a> </td>
+        <td> <button type="button" class="btn btn-primary" (click)="deleteDC(dc.id, i)">Delete</button> </td>
+      </tr>
+    </tbody>
+ </table>
+
+ <ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+ </div>

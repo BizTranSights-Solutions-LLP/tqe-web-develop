@@ -1,0 +1,55 @@
+<div *ngIf="isAuthorized" id="nba-best-bets" class="container best-bets">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-lg mt-3 mb-5">
+        <div class="card-header">
+          <h5>Pick your sport</h5>
+          <span class="right">
+                        <button class="button" [style.background-color]="sport=='NBA' ? '#4CAF50' : 'white'"
+                                (click)="onClickNBA()">NBA </button>
+                        <button class="button" [style.background-color]="sport=='NFL' ? '#4CAF50' : 'white'"
+                                (click)="onClickNFL()">NFL </button>
+
+                        <button class="button" [style.background-color]="sport=='SOCCER' ? '#4CAF50' : 'white'"
+                                (click)="onClickSOCCER()">Soccer </button>
+                        <button class="button" [style.background-color]="sport=='MLB' ? '#4CAF50' : 'white'"
+                                (click)="onClickMLB()">MLB </button>
+
+
+                        <button class="button" [style.background-color]="sport=='NCAAB' ? '#4CAF50' : 'white'"
+                                (click)="onClickNCAAB()">NCAAB </button>
+
+                        <button class="button" [style.background-color]="sport=='NCAAF' ? '#4CAF50' : 'white'"
+                                (click)="onClickNCAAF()">NCAAF </button>
+
+                        <button class="button" [style.background-color]="sport=='NHL' ? '#4CAF50' : 'white'"
+                                (click)="onClickNHL()">NHL </button>
+                    </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="nba">
+    <app-if-nba></app-if-nba>
+  </div>
+  <div *ngIf="nfl">
+    <app-if-nfl></app-if-nfl>
+  </div>
+  <div *ngIf="mlb">
+    <app-if-mlb></app-if-mlb>
+  </div>
+  <div *ngIf="soccer">
+    <app-if-soccer></app-if-soccer>
+  </div>
+
+  <div *ngIf="ncaab">
+    <app-if-ncaab></app-if-ncaab>
+  </div>
+  <div *ngIf="ncaaf">
+    <app-if-ncaaf></app-if-ncaaf>
+  </div>
+  <div *ngIf="nhl">
+    <app-if-nhl></app-if-nhl>
+  </div>
+</div>

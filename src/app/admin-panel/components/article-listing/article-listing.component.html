@@ -1,0 +1,27 @@
+
+<div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+    <thead *ngIf="Loading; else stillLoading">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Url</th>        
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of articles;let i = index">
+        <td>{{ article.id }}</td>
+        <td><span class="txtLimit">{{ article.title }}</span></td>
+        <td>{{ article.status }}</td>
+        <td><span class="txtLimit">{{ base_url + article.url }}</span></td>        
+        <td> <button type="button" class="btn btn-primary" (click)="editArticle(article.id)">Edit</button> </td>
+        <td> <button type="button" class="btn btn-primary" (click)="deleteArticle(article.id, i)" *ngIf="canDelete">Delete</button> </td>
+      </tr>
+    </tbody>
+ </table>
+
+  <ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+</div>

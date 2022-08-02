@@ -1,0 +1,83 @@
+
+<div class="main-article_post" [ngStyle]="{'height':loader === true ? '100vh' : 'auto' }">
+  <div class="loading" *ngIf="loader">
+    <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+  </div>
+  <div class="" *ngIf="(allData | json) != '{}'">
+    <div class="feature-img">
+      <!-- <img src="{{allData?.images[0]?.file_path}}" class="img-fluid" alt="{{allData?.images[0]?.title}}"> -->
+      <div class="article_banner" *ngIf="allData?.images.length > 0">
+        <img [src]="allData?.images[0]?.file_path" class="img-fluid" alt="{{allData?.images[0]?.alt_text}}" title="{{allData?.images[0]?.title}}" >
+      </div>
+      <img *ngIf="!allData.images.length"  class="img-fluid" src="../../../../assets/images/placeholder.png" style="width: auto;">
+
+      <div class="bg"></div>
+      <!-- [style.background-image]="'url('+allData.images[0].file_path+')'" -->
+      <div class="caption">
+        <h1>{{allData.title}}</h1>
+        <div class="author">
+          <img src="../../../../assets/images/avatar.jpg" alt="" class="img-fluid">
+          <div class="by">
+            By:
+            <span>{{allData.author.first_name}}</span>
+            <span>{{allData.created_at | dateTimeFormatFilter : "MMM DD, YYYY"}}</span>
+            Posted In: <span>{{allData.sports_tags[0].name}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+
+
+        <div class="para" [ngClass]="{'notAllowed' : allData.is_allowed === 0 || !LoggedIn}">
+          <!-- [ngClass]="{'notAllowed' : allData.is_allowed == 0}" -->
+          <div *ngIf="allData.is_allowed && LoggedIn">
+            <div [innerHTML]="allData.content | safe: 'html'">     </div>
+            <div [innerHTML]="allData.embedded_url | safe: 'html'">     </div>
+            <!-- <div *ngIf="show_player" plyr style="width: 100%;margin-top: 50px;" plyrTitle="Audio 1" [plyrSources]="audioSources" plyrType="audio" (plyrInit)="player = $event" (plyrPlay)="played($event)"></div> -->
+            <div class="audio_pod">
+              <ng-container *ngIf="audioSources[0].src">
+                  <audio controls #audioPlyr>
+                    <source [src]="audioSources[0].src" type="audio/mp3">
+                    Your browser does not support the audio tag.
+                  </audio>
+                  <div class="speed">
+                    <select #audioSpeed (change)="setAudioPlaybackRate(audioSpeed.value)">
+                      <option value="" selected>Speed</option>
+                      <option value="0.5">0.5x</option>
+                      <option value="0.75">0.75x</option>
+                      <option value="1">Normal</option>
+                      <option value="1.25">1.25x</option>
+                      <option value="1.5">1.5x</option>
+                      <option value="1.75">1.75x</option>
+                      <option value="2">2x</option>
+                    </select>
+                  </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <div [innerHTML]="(allData.content | slice:0:100) + '...'" *ngIf="allData.is_allowed === 0 || !LoggedIn"></div>
+          <div class="unlockArticle" *ngIf="allData.is_allowed === 0 || !LoggedIn">
+            <div>
+              <strong class="free-title">UNLOCK  THE  FULL  PODCAST  &  100s  MORE  <span>FREE!</span></strong>
+              <button [routerLink]="['/membership-plan']" class="btnFreeArticle">Unlock All Podcasts For FREE!</button>
+              <br>
+            </div>
+          </div>
+          <div class="unlockArticle" *ngIf="!LoggedIn">
+            <div>
+              <strong class="free-title">UNLOCK  THE  FULL  PODCAST  &  100s  MORE  <span>FREE!</span></strong>
+              <button (click)="tryItFree()" class="btnFreeArticle">Unlock All Podcasts For FREE!</button>
+              <p>Already a Member? <a (click)="showOverlay()" href="javascript:void(0);" >Log In</a></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

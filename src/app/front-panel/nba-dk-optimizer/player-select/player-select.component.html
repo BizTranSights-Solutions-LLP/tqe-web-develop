@@ -1,0 +1,30 @@
+<div class="modal fade" [id]="'playerSelectModal-' + stackId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Search Player To Add To Stack</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="mb-4 mt-2">
+          <input class="form-control" name="searchText" type="text" placeholder="Search player" [(ngModel)]="searchText" autocomplete="off" autofocus="true">
+        </form>
+        <ul class="list-group" *ngIf="searchText">
+          <li class="list-group-item" *ngFor="let player of slate.playerPool | textsearch: searchText" (click)="selectedPlayer.emit({event:event, playerId: player.id, stackId: stackId}); searchText = ''" data-dismiss="modal">
+            <div class="player">
+              <div class="team">
+                <img src="../../../assets/images/logos/nba/{{player.team}}.png" [alt]="player.team">
+              </div>
+              <div class="player-data">
+                <b>{{player.name}}</b><br>
+                <small><b>{{player.team}}</b> vs <span class="text-muted">{{player.OPP}}</span></small>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

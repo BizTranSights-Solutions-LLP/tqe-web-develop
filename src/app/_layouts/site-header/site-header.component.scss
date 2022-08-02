@@ -1,0 +1,83 @@
+#masthead-top {
+  padding:10px 0;
+  background-color: darken(#18B219, 5%);
+}
+
+#main-nav {
+  .navbar {
+    .nav {
+      width:100%;
+      .nav-item.dropdown {
+        &.show{
+          background: lighten(#343a40, 5%);
+        }
+        >a {
+          font-size:16px;
+          color:white;
+          font-weight:bold;
+          text-align:center;
+        }
+        @media (min-width: 210px) and (max-width: 420px) {
+          >a {
+            font-size:16px;
+            color:white;
+            font-weight:bold;
+            text-align:left;
+          }
+        }
+        .dropdown-menu {
+          &.show {
+            width: 100%;
+            background: lighten(#343a40, 5%);
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+          }
+          .dropdown-item {
+            color:white;
+            font-size:14px;
+            line-height: 24px;
+            &:hover {
+              color:#343a40;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  background: #000;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  opacity: .5;
+}
+
+@media only screen and (max-width:767px) {
+  .tryFree { display: none; }
+  .loggin-screen .form-check { padding: 27px 0; }
+  .select-tools .dropdown-menu {
+    left:  30px !important;
+    top: 15px !important;
+  }
+  .dropdown-menu::after {
+    right: auto;
+    left: 10px;
+  }
+}
+@media only screen and (max-width:500px) {
+  .loggin-screen {
+    max-width: 292px;
+    margin: 0 auto;
+  }
+  .loggin-screen .form-check { padding: 10px 0; }
+}
+@media only screen and (max-width:400px) {
+  .btn {
+    width: 60px;
+    height: 30px;
+  }
+}

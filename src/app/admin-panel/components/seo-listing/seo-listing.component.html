@@ -1,0 +1,28 @@
+<div>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+  <thead *ngIf="Loading; else stillLoading">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Title</th>        
+      <th>Keyword</th>
+      <th>Description</th>
+      <!-- <th>Page URL</th> -->
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of seoData;let i = index">
+      <td>{{ s.id }}</td>
+      <td>{{ s.name }}</td>
+      <td><span class="txtLimit">{{ s.title }}</span></td>
+      <td>{{ s.keyword }}</td>
+      <td><span class="txtLimit">{{ s.description }}</span></td>
+      <!-- <td>{{ s.page_url }}</td> -->
+      <td> <a class="btn btn-primary" [routerLink]="['/admin/seo-form',s.id]">Edit</a> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+</div>

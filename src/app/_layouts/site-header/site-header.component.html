@@ -1,0 +1,51 @@
+<div class="overlay" *ngIf="overLay" (click)="showOverlay()"></div>
+<div id="masthead-top">
+  <div class="container-fluid">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-4 pt-1">
+        <a class="text-light" href="#" *ngIf="true"></a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="header-logo" [routerLink]="['/']"><img src="../../assets/images/tqe_logo_black.png" alt="" class="img-fluid"></a>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center" *ngIf="!loggedIn">
+        <a class="btn btn-sm btn-outline-light"[routerLink]="['/login']">Login</a>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center" *ngIf="loggedIn">
+        <!-- Example split danger button -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-light"><i class="fa fa-user"></i> {{Name}}</button>
+          <button type="button" class="btn btn-outline-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="/profile">Profile &amp; Settings</a>
+            <a class="dropdown-item" href="/admin" *ngIf="is_admin">Admin Dashboard</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logOut()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="main-nav" class="bg-dark">
+  <div class="container">
+    <nav class="navbar navbar-dark bg-dark">
+      <ul class="nav row justify-content-center">
+        <ng-container *ngFor="let nav of navigationLinks">
+          <li class="nav-item col dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{nav.label}}</a>
+            <div class="dropdown-menu">
+              <ng-container *ngFor="let link of nav.subNav">
+                <a *ngIf="!loggedIn" class="dropdown-item" [routerLink]="[link.loggedOutURL]">{{link.label}}</a>
+                <a *ngIf="loggedIn" class="dropdown-item" [routerLink]="[link.loggedInURL]">{{link.label}}</a>
+              </ng-container>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div class="navTop" [ngClass]="{extH: is_admin}"></div>

@@ -1,0 +1,25 @@
+#team-filter {
+  td,th {
+    vertical-align:middle;
+  }
+  .action {
+    .btn-sm {
+      font-size:12px;
+    }
+  }
+  .player {
+    display:flex;
+    flex-direction:row;
+    .team {
+      flex:1;
+      img {
+        width:100%;
+        max-width: 32px;
+      }
+    }
+    .player-data {
+      padding-left:3px;
+      flex:5;
+    }
+  }
+}

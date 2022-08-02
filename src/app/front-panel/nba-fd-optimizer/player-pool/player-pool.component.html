@@ -1,0 +1,148 @@
+<div id="tqe-player-pool">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-1 mb-3">
+    <nav class="nav position-filter">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Player Filter</span>
+        </div>
+        <input type="text" tabIndex="-1" class="form-control" [(ngModel)]="playerFilter" name="playerFilter">
+        <div class="input-group-append">
+            <span class="input-group-text">Position:</span>
+          </div>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{slate.filteredPos === null ? "All" : slate.filteredPos}}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="slate.posFilter('PG')" [ngClass]="slate.filteredPos === 'PG' ? 'active' : ''">PG</a>
+            <a class="dropdown-item" (click)="slate.posFilter('SG')" [ngClass]="slate.filteredPos === 'SG' ? 'active' : ''">SG</a>
+            <a class="dropdown-item" (click)="slate.posFilter('SF')" [ngClass]="slate.filteredPos === 'SF' ? 'active' : ''">SF</a>
+            <a class="dropdown-item" (click)="slate.posFilter('PF')" [ngClass]="slate.filteredPos === 'PF' ? 'active' : ''">PF</a>
+            <a class="dropdown-item" (click)="slate.posFilter('C')" [ngClass]="slate.filteredPos === 'C' ? 'active' : ''">C</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="slate.posFilter(null)">Show All</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2" id="pool-controls">
+        <button type="button" tabIndex="-1" class="btn btn-sm btn-outline-danger" (click)="slate.excludeAll()"><i class="fas fa-times-circle"></i> Exclude All</button>
+        <button type="button" tabIndex="-1" class="btn btn-sm btn-outline-success" (click)="slate.includeAll()"><i class="fas fa-check-circle"></i> Include All</button>
+        <button type="button" tabIndex="-1" class="btn btn-sm btn-outline-secondary" (click)="slate.clearExposure()"><i class="fas fa-snowplow"></i> Clear Exposure</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive table-striped">
+    <table id="player-pool" class="table table-sm">
+      <thead>
+        <tr class="carets">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><i *ngIf="slate.sortKey === 'salary'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'Adv DvP'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'TT'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'OTP'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'Usage'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'Own'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'PPD'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'projected_pts'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'floor'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td><i *ngIf="slate.sortKey === 'ceiling'" class="fas" [ngClass]="{'fa-caret-down': !slate.sortAsc, 'fa-caret-up': slate.sortAsc}"></i></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr class="headers">
+          <th class="text-left" scope="col">POS</th>
+          <th class="text-left"scope="col">PLAYER</th>
+          <th scope="col">ACTION</th>
+          <th class="text-center sortable" (click)="sortColumn('salary')" scope="col">SALARY</th>
+          <th class="text-center sortable" (click)="sortColumn('Adv DvP')" scope="col">ADvP</th>
+          <th class="text-center sortable" (click)="sortColumn('TT')" scope="col">TT</th>
+          <th class="text-center sortable" (click)="sortColumn('OTP')" scope="col">Pace</th>
+          <th class="text-center sortable" (click)="sortColumn('Usage')" scope="col">Usage</th>
+          <th class="text-center sortable" (click)="sortColumn('Own')" scope="col">OWN %</th>
+          <th class="text-center sortable" (click)="sortColumn('PPD')" scope="col">PPD</th>
+          <th class="text-center sortable" (click)="sortColumn('projected_pts')" scope="col">PROJ</th>
+          <th class="text-center sortable" (click)="sortColumn('floor')" scope="col">FLOOR</th>
+          <th class="text-center sortable" (click)="sortColumn('ceiling')" scope="col">CEIL</th>
+          <th class="text-center" scope="col" *ngIf="includedPool">MIN %</th>
+          <th class="text-center" scope="col" *ngIf="includedPool">MAX %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="slate.playerPool | shown | excluded:filterArgs | textsearch:playerFilter:filterArgs as players">
+          <tr *ngIf="players.length === 0">
+            <td class="null-state" colspan="15">
+              <p class="text-center pt-4 pb-4">
+                <i class="far fa-folder-open"></i><br />
+                <span class="label">No {{filterArgs.excluded ? 'Excluded' : 'Included' }} Players</span>
+              </p>
+            </td>
+          </tr>
+          <tr [id]="'player-' + player.id" *ngFor="let player of players; let i = index;">
+            <td class="position" *ngIf="includedPool">
+              <select *ngIf="player.positions.length > 1" class="form-control form-control-sm" tabIndex="-1" (change)="handlePositionChange($event.target.value, player.id)" [value]="player.selectedpos">
+                <option *ngFor="let p of player.positions">{{p}}</option>
+              </select>
+              <b *ngIf="player.positions.length === 1">{{player.pos1}}</b>
+            </td>
+            <td class="position" *ngIf="!includedPool"><b>{{player.pos1}}</b></td>
+
+            <td class="text-left">
+              <div class="player">
+                <div class="team">
+                  <img src="../../../assets/images/logos/nba/{{player.team}}.png" [alt]="player.team">
+                </div>
+                <div class="player-data">
+                  <b>{{player.name}}</b><br>
+                  <small><b>{{player.team}}</b> vs <span class="text-muted">{{player.OPP}}</span></small>
+                </div>
+              </div>
+            </td>
+            <td class="actions">
+              <div class="btn-group" role="group">
+                <button type="button" tabIndex="-1" *ngIf="player.locked"  class="btn btn-sm btn-dark" (click)="unlock.emit({event:event, playerId: player.id})"><i class="fas" [ngClass]="player.locked ? 'fa-lock' : 'fa-unlock'"></i></button>
+                <button type="button" tabIndex="-1" *ngIf="!player.locked" class="btn btn-sm btn-outline-dark" (click)="lock.emit({event:event, playerId: player.id})"><i class="fas" [ngClass]="player.locked ? 'fa-lock' : 'fa-unlock'"></i></button>
+                <button type="button" tabIndex="-1" *ngIf="includedPool" (click)="slate.exclude(player.id)" class="btn btn-sm btn-outline-dark"><i class="fas fa-times text-danger"></i></button>
+                <button type="button" tabIndex="-1" *ngIf="!includedPool" (click)="slate.include(player.id)" class="btn btn-sm btn-outline-dark"><i class="fas fa-check text-success"></i></button>
+              </div>
+            </td>
+            <td class="text-center">${{player.salary_display}}</td>
+            <td class="text-center" [ngClass]="{'text-success': (player['Adv DvP'] > 20),'text-danger': (player['Adv DvP'] < 11)}">{{player['Adv DvP']}}</td>
+            <td class="text-center">{{player.TT}}</td>
+            <td class="text-center">{{player.OTP}}</td>
+            <td class="text-center">{{player.Usage}}</td>
+            <td class="text-center">
+              <span *ngIf="isAuthorized">{{player.Own}}</span>
+              <img *ngIf="!isAuthorized" class="locked-icon" src="../../../../assets/images/tqe_logo_black.png">
+            </td>
+
+            <td class="text-center" [ngClass]="{'text-danger': (player.PPD < 4), 'text-warning': ((player.PPD >= 4) && (player.PPD < 5)), 'text-info': ((player.PPD >= 5) && (player.PPD < 6)),'text-success': (player.PPD >= 6)}">
+              <span *ngIf="isAuthorized">{{player.PPD}}</span>
+              <img *ngIf="!isAuthorized" class="locked-icon" src="../../../../assets/images/tqe_logo_black.png">
+            </td>
+            <td class="input-col">
+              <span *ngIf="!includedPool">{{player.projected_pts.toFixed(1)}}</span>
+              <input *ngIf="includedPool" type="number" class="form-control form-control-sm" [value]="isAuthorized ? player.projected_pts : ''" pattern="^\d*(\.\d{0,1})?$" (change)="handleProjChange($event.target.value, player.id)">
+            </td>
+            <td class="input-col">
+              <span *ngIf="!includedPool">{{player.floor.toFixed(1)}}</span>
+              <input *ngIf="includedPool" type="number" class="form-control form-control-sm" [value]="isAuthorized ? player.floor : ''" (change)="handleFloorChange($event.target.value, player.id)">
+            </td>
+            <td class="input-col">
+              <span *ngIf="!includedPool">{{player.ceiling.toFixed(1)}}</span>
+              <input *ngIf="includedPool" type="number" class="form-control form-control-sm" [value]="isAuthorized ? player.ceiling : ''" (change)="handleCeilingChange($event.target.value, player.id)">
+            </td>
+
+            <td class="input-col" *ngIf="includedPool">
+              <input type="number" class="form-control form-control-sm" [value]="player.min_exp" min="0" max="100" [tabindex]="i + 1" (change)="handleMinExChange($event.target.value, player.id)">
+            </td>
+            <td class="input-col" *ngIf="includedPool">
+              <input type="number" class="form-control form-control-sm" [value]="player.max_exp" min="0" max="100" [tabindex]="i + 1" (change)="handleMaxExChange($event.target.value, player.id)">
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,179 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: auto;
+  margin-left: auto;
+}
+.best-bets{
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 130%;
+    margin-left: -10%;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    overflow-y: auto;
+  }
+  @media(max-width: 1300px) {
+    .card {
+      width: 110%;
+      margin-left: -5%;
+    }
+  }
+  .card-header {
+    .tqe-pick {
+      display: inline-block;
+      border: 1px solid #f8f8f8;
+      background-color: #f8f8f8;
+      padding: 5px;
+      margin: 15px 0;
+      margin-right: 5px;
+      border-color: #159c16;
+      background-color: #9be9ad;
+      font-weight: bold;
+    }
+    .tqe-high-pick {
+      display: inline;
+      border:1px solid #f8f8f8;
+      background-color: #f8f8f8;
+      padding:5.5px;
+      margin:10px 0;
+      border-color: #159c16;
+      background-color: #35aa51;
+      font-weight: bold;
+    }
+  }
+  .all-bets {
+    .team {
+      .name {
+        vertical-align: middle;
+      }
+      .odds {
+        width:20%;
+        text-align:center;
+        padding:10px;
+
+        span {
+          display: inline-block;
+          border:1px solid #f8f8f8;
+          background-color: #f8f8f8;
+          padding:15px;
+          width:100%;
+          font-size:14px;
+        }
+        &.tqe-pick {
+          span {
+            border-color: #159c16;
+            background-color: rgb(195, 230, 203);
+            font-weight: bold;
+          }
+        }
+        &.tqe-high-pick {
+          span {
+            border-color: #159c16;
+            background-color: #35aa51;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  &.best-bets {
+    .table {
+      th.sortable {
+        cursor: pointer;
+      }
+      .team {
+        &.home {
+          td {
+            padding-top: 10px;
+          }
+        }
+        &.away {
+          td {
+            padding-bottom: 0.25em;
+          }
+        }
+      }
+      .digits {
+        font-size:14px;
+        font-weight:800;
+        text-align:center;
+      }
+      .name {
+        b {
+          font-weight:800;
+          text-transform:uppercase
+        }
+      }
+      .tqe-best-bet {
+        border:1px solid #159c16;
+        background-color: #c3e6cb;
+        font-weight: bold;
+      }
+    }
+  }
+  .table {
+    .team {
+      &.home {
+        td {
+          padding-top: 0.25em;
+        }
+      }
+      &.away {
+        td {
+          padding-bottom: 0.25em;
+        }
+      }
+    }
+    .digits {
+      font-size:14px;
+      font-weight:800;
+      text-align:center;
+    }
+    .name {
+      b {
+        font-weight:800;
+        text-transform:uppercase
+      }
+    }
+  }
+  .sub-title {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #454d55;
+    text-align:center;
+  }
+  .button {
+    background-color: white;
+    border: 2px solid #4CAF50;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button:hover {
+    background-color: #4CAF50 !important;
+    color: white;
+  }
+  .right {
+    float:right;
+    right: 0px;
+  }
+  .scroll {
+    // display: block;
+    overflow: auto;
+    white-space: normal;
+  }
+}

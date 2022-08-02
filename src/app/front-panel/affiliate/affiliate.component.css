@@ -1,0 +1,182 @@
+.easySteps {
+    color: #565656;	
+    font-size: 20px;	
+    line-height: 20px;	
+    text-align: center;
+    background: linear-gradient(0deg, #E5FAFF 0%, #FFFFFF 100%);
+    box-shadow: inset 0 -1px 4px 0 #BAF0FF;
+    padding: 45px 0;
+}
+.make-money {
+    overflow: hidden;
+    padding: 0 0 40px;
+}
+.make-money img {
+    display: inline-block;
+    height: 196px;
+    width: 162px;
+    vertical-align: middle;
+}
+.make-money .caption {
+    display: inline-block;
+    padding: 0 40px 0;
+    color: #000000;
+    font-size: 17.4px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: left;
+    vertical-align: middle;
+}
+.caption h2 span {
+    display: block;
+    color: #00B900;
+    font-size: 31.5px;
+    font-weight: 900;
+    line-height: 31px;
+}
+.easySteps h2 {
+    color: #000000;
+    font-size: 50.6px;
+    font-weight: 900;
+    line-height: 44px;
+}
+.easySteps p {margin: 0;}
+.easySteps ol {
+	margin:0 0 30px;
+	padding:0;
+	color:#000;
+	width:100%;
+	overflow:hidden;
+    counter-reset:item;
+    font-size: 12px;
+    font-weight: 300;	
+    line-height: 15px;
+}
+.easySteps ol li {
+    padding: 0 20px;
+    display: inline-block;
+    vertical-align: top;
+    max-width: 33.33%;
+    position: relative;
+}
+.easySteps ol li::after {
+    border-radius: 100%;
+    float:left;
+	margin: 0 10px 0 0;
+	content:counters(item, ".") " ";
+    counter-increment:item;
+    color: #fff;
+    height: 70px;	
+    width: 70px;	
+    background: linear-gradient(180deg, #45505B 0%, #000000 100%);
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 70px;
+    text-align: center;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.easySteps ol > * {display: block;}
+.easySteps ol strong {
+    font-size: 21px;	
+    font-weight: 900;	
+    line-height: 25px;
+    color: #000000;	
+}
+.easySteps ol span {
+    color: #00BA00;	
+    font-size: 17px;	
+    font-weight: bold;	
+    line-height: 20px;
+}
+.easySteps ol .holder {
+    overflow: hidden;
+    text-align: left;
+    padding: 0 0 0 60px;    
+}
+.easySteps ol .holder > * { display: block; }
+.easySteps ol p {
+    margin: 0;
+    color: #000000;	
+    font-size: 11px;	
+    font-style: italic;	
+    font-weight: 500;	
+    line-height: 13px;
+}
+
+.FAQs {
+    padding: 45px 0;
+    overflow: hidden;
+}
+.FAQs h2 {
+    text-align: center;
+    margin: 0 0 20px;
+    color: #0B0B0B;	
+    font-size: 30px;	
+    font-weight: 800;	
+    line-height: 38px;
+}
+.FAQs h3 {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 19px;
+    margin: 0 0 5px;
+}
+.FAQs p {
+    margin: 0 0 20px;
+    font-size: 12px;
+    line-height: 14px;
+}
+.FAQs a {
+    color: #00BA00;
+    text-decoration: underline;
+    font-weight: 700;
+}
+.FAQs a.bTN_view {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;	
+    font-weight: 600;
+    margin-top: 100px;
+}
+@media only screen and (max-width:767px) {
+    .make-money img {
+        position: absolute;
+        width: auto;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        opacity: .1;
+    }
+    .make-money .caption {
+        padding: 0;
+        font-size: 8px;
+        text-align: center;
+    }
+    .easySteps h2 {  font-size: 24px; }
+    .caption h2 span {
+        font-size: 14px;
+        line-height: 15px;
+    }    
+    .easySteps ol .holder {  padding: 80px 0 30px; }
+    .easySteps ol .holder > * {
+        display: block;
+        text-align: center;
+    }
+    .easySteps ol li::after {
+        top: 0;
+        float: none;
+        left: 50%;
+        margin-left: -35px;
+        margin-right: 0;
+    }
+    .easySteps ol li {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+    }
+}

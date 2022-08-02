@@ -1,0 +1,139 @@
+.thumbnail-image .loading {
+    height: 100%;
+    width: 100%;
+}
+.thumbnail-image .loading::before {
+    background-image: url('../../../../assets/images/loading-sm.svg');
+}
+.thumbnail-image .loading::after {height: 130px;}
+.listing_articles h3.article-heading {
+    margin-bottom: 10px;
+}
+.listing_articles {padding: 0 0 50px;}
+.listing_articles h3.article-heading {
+  color: #000;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 19px;
+  margin: 0 0 0 -15px;
+}
+.listing_articles .viewmore {
+    margin-right: 15px;
+    margin-top: -10px;
+    display: block;
+}
+.gallery-holder a.btn-prev, .gallery-holder a.btn-next {
+    top: 24px;
+}
+.owl-carousel .owl-stage-outer {margin-left: 15px;}
+.loading {height: 165px;}
+.thumbnail-image {
+    height: 150px;
+    position: relative;
+    border: 1px solid #979797;
+    text-align: center;
+    background: #fff;
+}
+.thumbnail-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+}
+.thumbnail-image .title {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #000;
+    width: 100%;
+    padding: 0 10px;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    font-family: 'AvenirNext-Regular';	
+    font-size: 14px;
+    height: 33.5px;
+    line-height: 33.5px;
+    letter-spacing: -0.29px;
+    transition: all 0.25s ease-in 0s
+}
+.thumbnail-image:hover .title {
+    z-index: 9;
+    height: 100%;
+    padding: 20px 50px 20px 30px;
+    line-height: 2;
+    text-decoration: none;
+    opacity: .9;
+    white-space: normal;
+    font-weight: 300;
+}
+owl-carousel /deep/ .owl-carousel .owl-item .thumbnail-image div {
+    height: 100%;
+}
+owl-carousel /deep/ .owl-carousel .owl-item .thumbnail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-object-fit: cover;
+    object-position: center;
+    -webkit-object-position: center;
+}
+owl-carousel /deep/ .owl-carousel.owl-theme .owl-nav [class*='owl-'].disabled {display: none}
+owl-carousel /deep/ .owl-theme .owl-nav [class*='owl-'] {
+    border: 1px solid #979797;
+    font-weight: bold;
+    background: #fff;
+    text-align: center;
+    color: #161924;
+    font-size: 16px;
+    text-decoration: none;
+    right: -5px;
+    left: auto;
+    top: 15px;
+    height: 89.01px;
+    width: 28.48px;
+    background-color: #FFFFFF;
+    z-index: 99;
+    position: absolute;
+    line-height: 80px;
+    border-radius: 14px 0 0 14px;
+}
+owl-carousel /deep/ .owl-theme .owl-nav .owl-prev {
+    text-indent: 3px;
+    left: -5px;
+    border-radius: 0 14px 14px 0;
+}
+.sports_tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.sports_tag li {
+    float: left;
+    padding: 2px;
+}
+.sports_tag li span {
+    display: block;
+    background: #18B219;
+    color: #fff;
+    padding: 4px;
+    font-size: 10px;
+    border-radius: 2px;
+}
+@media only screen and (max-width: 767px) {
+    owl-carousel /deep/ .owl-theme .owl-nav .owl-prev {
+        left: 15px;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .listing_articles h3.article-heading {margin: 0 0 0 6px}
+    owl-carousel /deep/ .owl-carousel .owl-stage-outer {margin-left: 20px;}
+}

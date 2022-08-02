@@ -1,0 +1,24 @@
+<div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+  <thead *ngIf="Loading; else stillLoading">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Confirmation Message</th>        
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let membership of memberships;let i = index">
+      <td>{{ membership.id }}</td>
+      <td>{{ membership.name }}</td>
+      <td>{{ membership.confirmation_message }}</td>        
+      <td> <button type="button" class="btn btn-primary" (click)="editMembership(membership.id)">Edit</button> </td>
+      <td> <button type="button" class="btn btn-primary" (click)="deleteMembership(membership.id, i)">Delete</button> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+</div>

@@ -1,0 +1,142 @@
+<section class="page-content">
+  <div class="full-container">
+    <div class="row no-gutters">
+      <div class="col-md-12">
+        <!--CONTENT AREA-->
+        <div class="content-area">
+          <div class="content-area-header">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-sm-8 col-md-3">
+                <h3 class="section-label">Include Teams</h3>
+              </div>
+              <div class="col-sm-4 col-md-3 text-right">
+                <button type="button" class="btn theme-btn" (click)="includeAll()">Include All</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="include-teams-logo">
+            <div class="include-teams-inner">
+              <label class="team-logo-wrap" *ngFor="let tl of teamLogos;">
+                <input type="checkbox" class="check_{{tl.logo}}" name="team" value="" [checked]="tl.status"
+                  (click)="include_or_exclude($event,tl.logo)">
+                <span class="team-logo-image">
+                  <img class="{{tl.logo}}" src="../../../../assets/images/{{tl.logo}}.png" alt="{{tl.logo}}">
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="sort-position-wrap">
+            <h3 class="section-label">Sort by Position</h3>
+            <div class="row align-items-center">
+              <div class="col-md-auto mb-3">
+                <div class="sort-positions">
+                  <label class="green-checkbox">
+                    <input type="checkbox" class="QB" value="" name="positions" (click)="filterByPos('QB',$event)"
+                      [checked]="checkAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">QB</span>
+                  </label>
+                  <label class="green-checkbox">
+                    <input type="checkbox" class="RB" value="" name="positions" (click)="filterByPos('RB',$event)"
+                      [checked]="checkAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">RB</span>
+                  </label>
+                  <label class="green-checkbox">
+                    <input type="checkbox" class="WR" value="" name="positions" (click)="filterByPos('WR',$event)"
+                      [checked]="checkAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">WR</span>
+                  </label>
+                  <label class="green-checkbox">
+                    <input type="checkbox" class="TE" value="" name="positions" (click)="filterByPos('TE',$event)"
+                      [checked]="checkAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">TE</span>
+                  </label>
+                  <label class="green-checkbox">
+                    <input type="checkbox" class="DST" value="" name="positions" (click)="filterByPos('DST',$event)"
+                      [checked]="checkAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">DST</span>
+                  </label>
+                  <label class="green-checkbox">
+                    <input type="checkbox" value="" name="positions" #posAll (click)="showAllExcluded(posAll.checked)"
+                      [checked]="uncheckAll">
+                    <span class="checkmark"><i class="fas fa-check"></i></span>
+                    <span class="checkbox-text">All</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-3 col-xl-2 mb-3">
+                <form (ngSubmit)="findPlayerSubmit(playerName.value, $event)">
+                  <div class="input-group">
+                    <input type="text" class="form-control" (keyup)="findPlayerKeyup(playerName.value, $event)" #playerName placeholder="Find Player">
+                    <div class="input-group-append">
+                      <button class="btn input-green-btn" type="submit"><i
+                          class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <h3 class="section-label">Excluded Players</h3>
+            <div style="overflow-x: auto;">
+
+              <table class="tools-table" id="third_table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <thead>
+                  <tr>
+                    <th>
+                      <span class="popover-container" data-toggle="popover" data-placement="top" data-container="body"
+                        data-trigger="hover"
+                        data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.">Pos</span>
+                    </th>
+                    <th class="name-column">
+                      <span class="popover-container" data-toggle="popover" data-placement="top" data-container="body"
+                        data-trigger="hover"
+                        data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.">Name</span>
+                    </th>
+                    <th>
+                      <span class="popover-container" data-toggle="popover" data-placement="top" data-container="body"
+                        data-trigger="hover"
+                        data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.">Sal.</span>
+                    </th>
+                    <th>
+                      <span class="popover-container" data-toggle="popover" data-placement="top" data-container="body"
+                        data-trigger="hover"
+                        data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.">Proj.</span>
+                    </th>
+                    <th>
+                      <span class="popover-container" data-toggle="popover" data-placement="top" data-container="body"
+                        data-trigger="hover"
+                        data-content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of excludedData">
+                    <td>{{ data.pos1 }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.salary }}</td>
+                    <td>{{ data.projected_pts }}</td>
+                    <td>
+                      <button type="button" class="btn btn-secondary include" id="include_2"
+                        (click)="include(data)">Inc</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <!--END CONTENT AREA-->
+      </div>
+    </div>
+  </div>
+</section>

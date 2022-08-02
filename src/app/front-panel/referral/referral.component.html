@@ -1,0 +1,67 @@
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>Referral <span> | Refer to Friends and Get $10 Coupons!</span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="dynamic-wrapper" [formGroup]="feeForm">
+  <div class="dynamic-container-wrapper">
+
+    <strong class="formTitle">Referral Information</strong>
+    <br/>
+    <input formControlName="u_email" placeholder="Your email">
+    <div class="error" *ngIf="feeForm.controls['u_email'].touched && feeForm.controls['u_email'].errors?.required">
+      Required
+    </div>
+    <!--    <p class="error" *ngIf="feeForm.controls['u_email'].touched && feeForm.controls['u_email'].hasError('pattern')"> Invalid Email</p>-->
+    <!--    <p class="error" *ngIf="feeForm.controls['u_email'].hasError('special_char_found')"> Invalid Email</p>-->
+    <br/>
+    <br/>
+
+
+    <strong class="formTitle">Referral Email List</strong>
+    <div class="plusIcon">
+      <i class="fa fa-plus" (click)="addFeeItem()"><span>Add Referral Email</span></i>
+    </div>
+
+
+    <!--        <div class="dynamic-header-row">-->
+    <!--          <div class="dynamic-column deleteColumn">-->
+
+
+    <!--          </div>-->
+    <!--          <div class="dynamic-column">-->
+    <!--            Refer Email List-->
+    <!--          </div>-->
+
+
+    <!--        </div>-->
+    <div formArrayName="feeArray">
+      <div *ngFor="let arrayItem of feeArray.controls;let i=index">
+        <div formGroupName="{{i}}">
+          <dynamic-email (deleteFeeItem)="removeFeeItem()"
+                         [group]="feeForm.controls.feeArray.controls[i]"></dynamic-email>
+        </div>
+      </div>
+    </div>
+
+    <button class="button" (click)="onSubmit()">Submit</button>
+
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+

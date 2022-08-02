@@ -1,0 +1,23 @@
+<div><table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+  <thead *ngIf="Loading; else stillLoading">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Url</th>        
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tool of tools;let i = index">
+      <td>{{ tool.id }}</td>
+      <td>{{ tool.title }}</td>
+      <td>{{ tool.url }}</td>        
+      <td> <button type="button" class="btn btn-primary" (click)="editTool(tool.id)">Edit</button> </td>
+      <td> <button type="button" class="btn btn-primary" (click)="deleteTool(tool.id, i)">Delete</button> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+</div>

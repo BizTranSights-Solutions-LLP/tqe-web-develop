@@ -1,0 +1,47 @@
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>DFS <span> | Promos</span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="promoTitles">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <strong>Sportsbook</strong>
+      </div>
+      <div class="col">
+        <strong>Welcome Bonus</strong>
+      </div>
+      <div class="col">
+        <strong>Take Action!</strong>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="promos">
+  <div class="container">
+    <div class="row align-items-center" *ngFor="let promo of Promos">
+      <div class="col">
+        <div class="img-holder">
+          <img class="img-fluid" src="../../../assets/images/{{promo.logo}}" alt="">
+        </div>
+      </div>
+      <div class="col">
+        <div class="bouns" [innerHTML]="promo.bouns"></div>
+      </div>
+      <div class="col">
+        <div class="actionBtns">
+          <a [routerLink]="['/', promo.readmore]" *ngIf="promo.readmore !== ''" class="more">Learn More</a>
+          <a href="{{promo.App_ios}}" *ngIf="promo.App_ios !== ''" class="join"><i class="fa fa-apple"></i> <span>iOS App</span></a>
+          <a href="{{promo.App_android}}" *ngIf="promo.App_android !== ''" class="join"><i class="fa fa-android"></i> <span>Android App</span></a>
+          <a href="{{promo.active_link}}" class="join" target="_blank">Activate Bonus</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

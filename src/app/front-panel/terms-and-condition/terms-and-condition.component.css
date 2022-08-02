@@ -1,0 +1,19 @@
+.terms {
+    overflow: hidden;
+    padding: 50px 0;
+    font-size: 13px;
+    line-height:21px;
+}
+.terms h3 {
+    font-size: 18px;
+    margin: 0 0 15px;
+}
+.terms p {
+    margin: 0 0 20px;
+}
+.terms a {color: #1ab21a;}
+ul,ol {
+    list-style: disc;
+    margin: 0 0 15px;
+    padding: 0 0 0 40px;
+}

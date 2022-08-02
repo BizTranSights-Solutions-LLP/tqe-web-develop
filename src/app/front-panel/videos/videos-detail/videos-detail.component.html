@@ -1,0 +1,64 @@
+
+<strong *ngIf="error" style="display: block;text-align: center;color: red;font-size: 15px;margin: 5%;">{{error}}</strong>
+
+<div class="main-article_post" [ngStyle]="{'height':loader === true ? '100vh' : 'auto' }" *ngIf="!error">
+  <div class="loading" *ngIf="loader">
+    <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+  </div>
+  <div class="" *ngIf="(allData | json) != '{}'">
+    <div class="feature-img">
+      <!-- <img src="{{allData?.images[0]?.file_path}}" class="img-fluid" alt="{{allData?.images[0]?.title}}"> -->
+      <div class="article_banner" *ngIf="allData?.images.length > 0">
+        <img [src]="allData?.images[0]?.file_path" class="img-fluid" alt="{{allData?.images[0]?.title}}" >
+      </div>
+      <img *ngIf="!allData.images.length"  class="img-fluid" src="../../../../assets/images/placeholder.png" style="width: auto;">
+
+      <div class="bg"></div>
+      <!-- [style.background-image]="'url('+allData.images[0].file_path+')'" -->
+      <div class="caption">
+        <h1>{{allData.title}}</h1>
+        <div class="author">
+          <img src="../../../../assets/images/avatar.jpg" alt="" class="img-fluid">
+          <div class="by">
+            By:
+            <span>{{allData.author.first_name}}</span>
+            <span>{{allData.created_at | dateTimeFormatFilter : "MMM DD, YYYY"}}</span>
+            <!-- Posted In: <span>{{allData.sports_tags[0]?.name}}</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+
+
+        <div class="para" [ngClass]="{'notAllowed' : allData.is_allowed === 0 || !LoggedIn}">
+          <!-- [ngClass]="{'notAllowed' : allData.is_allowed == 0}" -->
+          <div *ngIf="allData.is_allowed && LoggedIn">
+            <div class="embedVid summary" [innerHTML]="allData.content | safe: 'html'">     </div>
+            <div class="embedVid" [innerHTML]="allData.embedded_url | safe: 'html'">     </div>
+          </div>
+
+          <div [innerHTML]="(allData.content | slice:0:100) + '...'" *ngIf="allData.is_allowed === 0 || !LoggedIn"></div>
+          <div class="unlockArticle" *ngIf="allData.is_allowed === 0 || !LoggedIn">
+            <div>
+              <strong class="free-title">UNLOCK  THE  FULL  VIDEO  &  100s  MORE  <span>FREE!</span></strong>
+              <button [routerLink]="['/membership-plan']" class="btnFreeArticle">Unlock All Videos For FREE!</button>
+              <br>
+            </div>
+          </div>
+          <div class="unlockArticle" *ngIf="!LoggedIn">
+            <div>
+              <strong class="free-title">UNLOCK  THE  FULL  VIDEO  &  100s  MORE  <span>FREE!</span></strong>
+              <button (click)="tryItFree()" class="btnFreeArticle">Unlock All Videos For FREE!</button>
+              <p>Already a Member? <a (click)="showOverlay()" href="javascript:void(0);" >Log In</a></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

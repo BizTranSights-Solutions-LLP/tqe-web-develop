@@ -1,0 +1,186 @@
+<div class="loading loadingmain" *ngIf="loading"></div>
+<div class="page-title">    
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1>Create Affiliate Account</h1>
+        </div>
+        <div class="col-auto">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="intForm">
+    <div class="container">      
+      <div class="row">
+        <div class="col">
+          <div class="register-form">
+            <strong class="formTitle" *ngIf="!loggedIn">Account Information</strong>
+            <strong class="formTitle" *ngIf="loggedIn && user_role?.roles_status?.is_affiliate === undefined">Become Affiliate</strong>
+            <form *ngIf="!loggedIn" autocomplete="off" [formGroup]="registerForm" (ngSubmit)="register()" >
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="fname"><b>First Name</b></label>
+                    <div class="form-control" >
+                      <input type="text" placeholder="Enter First Name" name="name" formControlName="first_name" >
+                      <p class="error" *ngIf="registerForm.controls['first_name'].touched && registerForm.controls['first_name'].hasError('required')"> This field is required</p>    
+                    </div>
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="lname"><b>Last Name</b></label>
+                    <div class="form-control" >
+                      <input type="text" placeholder="Enter Last Name" name="name" formControlName="last_name" >
+                      <p class="error" *ngIf="registerForm.controls['last_name'].touched && registerForm.controls['last_name'].hasError('required')"> This field is required</p>    
+                    </div>
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="uname"><b>Username</b></label>
+                    <div class="form-control" >
+                      <input type="text" placeholder="Enter Username" name="uname" formControlName="username" >
+                      <p class="error" *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].hasError('required')"> This field is required</p>  
+                    </div>
+                  </div>
+  
+                  <div class="form-group">
+                    <label for="email"><b>Email</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Enter Email" name="email" formControlName="email" >
+                      <p class="error" *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('required')"> This field is required</p>  
+                      <p class="error" *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('pattern')"> Invalid Email</p>
+                      <p class="error" *ngIf="registerForm.controls['email'].hasError('special_char_found')"> Invalid Email</p>     
+                    </div>
+                  </div>                
+                  <div class="form-group">
+                    <label for="psw"><b>Confirm Email</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Your Confirm Email" name="confirmEmail" formControlName="confirmEmail">
+                      <p class="error" *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('required')"> This field is required</p>
+                      <p class="error" *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('pattern')"> Invalid Email</p>
+                      <p class="error" *ngIf="registerForm.controls['confirmEmail'].hasError('special_char_found')"> Invalid Email</p>      
+                      <p class="error" *ngIf="frontErrorEmail != ''"> {{ frontErrorEmail }} </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email"><b>Payapal Email</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Enter Paypal Email" name="paypal_email" formControlName="paypal_email" >
+                      <p class="error" *ngIf="registerForm.controls['paypal_email'].touched && registerForm.controls['paypal_email'].hasError('required')"> This field is required</p>  
+                      <p class="error" *ngIf="registerForm.controls['paypal_email'].touched && registerForm.controls['paypal_email'].hasError('pattern')"> Invalid Email</p>
+                      <p class="error" *ngIf="registerForm.controls['paypal_email'].hasError('special_char_found')"> Invalid Email</p>     
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="text"><b>Twitter Account</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Enter Twitter Account" name="twitter_account" formControlName="twitter_account" >
+                      <p class="error" *ngIf="registerForm.controls['twitter_account'].touched && registerForm.controls['twitter_account'].hasError('required')"> This field is required</p>  
+                      <p class="error" *ngIf="registerForm.controls['twitter_account'].touched && registerForm.controls['twitter_account'].hasError('twitter_account')"> Invalid Email</p>                           
+                    </div>
+                  </div>
+
+                  <div class="form-group" formArrayName="discount_code">
+                    <label for="text"><b>Discount Code</b></label>
+                    <div class="form-control promoCode" *ngFor="let item of discountCodeNew.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                      <input type="text" placeholder="Enter Discount Code" formControlName="discount_code" > 
+                      <p class="error" *ngIf="registerForm.controls['discount_code'].touched && registerForm.controls['discount_code'].hasError('discount_code')"> Invalid Discount Code</p>    
+                      <button *ngIf="pointIndex > 0" class="removeField_Btn" type="button" (click)="deleteDiscountCodeNew(pointIndex)"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <button class="addMore_Btn" type="button" (click)="addDiscountCodeNew()"><i class="fa fa-plus"></i> Add Promo Codes</button>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="psw"><b>Password</b></label>
+                    <div class="form-control">
+                      <input type="password" placeholder="Enter Password" name="psw" formControlName="password" >  
+                      <p class="error" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('required')"> This field is required</p>  
+                      <p class="error" *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('minlength')"> Password length should be greater than 5</p>
+                    </div>
+                  </div>
+  
+                </div>
+              </div>
+              <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
+              <p *ngIf="serverResponse">{{ serverResponse }}</p>
+              <div *ngIf="disable_register" class="loading"></div>
+              <div class="row">
+                <div class="col">                      
+                  <div class="form-group">
+                    <button class="actionButton" type="submit" [disabled]="registerForm.invalid || disable_register">Create Account & Continue</button>
+                  </div>
+                </div>
+              </div>
+              <!-- {{ this.registerForm.value | json }} -->
+            </form>
+            <form *ngIf="loggedIn && user_role?.roles_status?.is_affiliate === undefined" autocomplete="off" [formGroup]="updateForm" (ngSubmit)="update()" >
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="fname"><b>First Name</b></label>
+                    <div class="form-control notAllowed">
+                      {{user_role.first_name}}
+                    </div>
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="lname"><b>Last Name</b></label>
+                    <div class="form-control notAllowed" >
+                      {{user_role.last_name}}
+                    </div>
+                  </div>
+  
+                  <div class="form-group">
+                    <label for="email"><b>Email</b></label>
+                    <div class="form-control notAllowed" >
+                      {{user_role.email}}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email"><b>Payapal Email</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Enter Paypal Email" name="paypal_email" formControlName="paypal_email" >
+                      <p class="error" *ngIf="updateForm.controls['paypal_email'].touched && updateForm.controls['paypal_email'].hasError('required')"> This field is required</p>  
+                      <p class="error" *ngIf="updateForm.controls['paypal_email'].touched && updateForm.controls['paypal_email'].hasError('paypal_email')"> Invalid Email</p>     
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="text"><b>Twitter Account</b></label>
+                    <div class="form-control" >
+                      <input type="email" placeholder="Enter Twitter Account" name="twitter_account" formControlName="twitter_account" >    
+                      <p class="error" *ngIf="updateForm.controls['twitter_account'].touched && updateForm.controls['twitter_account'].hasError('required')"> This field is required</p>
+                      <p class="error" *ngIf="updateForm.controls['twitter_account'].touched && updateForm.controls['twitter_account'].hasError('twitter_account')"> Invalid Email</p>
+                    </div>
+                  </div>
+                  <div class="form-group" formArrayName="discount_code">
+                    <label for="text"><b>Discount Code</b></label>
+                    <div class="form-control promoCode" *ngFor="let item of discountCodeUpdate.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                      <input type="text" placeholder="Enter Discount Code" formControlName="discount_code" > 
+                      <p class="error" *ngIf="updateForm.controls['discount_code'].touched && updateForm.controls['discount_code'].hasError('discount_code')"> Invalid Discount Code</p>    
+                      <button *ngIf="pointIndex > 0" class="removeField_Btn" type="button" (click)="deleteDiscountCodeUpdate(pointIndex)"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <button class="addMore_Btn" type="button" (click)="addDiscountCodeUpdate()"><i class="fa fa-plus"></i> Add Promo Codes</button>
+                  </div>
+
+                </div>
+              </div>
+              <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
+              <p *ngIf="serverResponse">{{ serverResponse }}</p>
+              <div *ngIf="disable_register" class="loading"></div>
+              <div class="row">
+                <div class="col">                      
+                  <div class="form-group">
+                    <button class="actionButton" type="submit" [disabled]="updateForm.invalid || disable_register">Create Account & Continue</button>
+                  </div>
+                </div>
+              </div>
+              <!-- {{ this.updateForm.value | json }} -->
+            </form>
+            <p class="login" *ngIf="!loggedIn">Already have an account? <a href="javascript:void(0);" (click)="showOverlay()"> Sign In</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

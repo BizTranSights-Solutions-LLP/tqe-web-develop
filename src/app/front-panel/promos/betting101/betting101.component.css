@@ -1,0 +1,17 @@
+h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+p{
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 24px
+}
+.page-title h1 {
+    text-align: center;
+    display: block;
+}
+.wpb_wrapper {
+    padding: 20px 0;
+}

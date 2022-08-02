@@ -1,0 +1,475 @@
+<section class="page-content gray-bg">
+  <div class="container-fluid">
+    <div class="row no-gutters row-margins">
+      <div class="col-md-4 col-lg-3">
+        <div class="lineups-sidebar">
+          <h3 class="sidebar-heading">Build Rules</h3>
+          <div class="tool-box">
+            <label class="toolbox-label"> Number of lineups to produce:</label>
+            <!-- <input type="text" class="span2 lineups-range" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" /> -->
+            <input type="text" class="js-range-slider lineups_range" name="my_range" value="" />
+          </div>
+          <div class="tool-box">
+            <label class="toolbox-label"> Min / Max Salary <i class="fas fa-info-circle text-secondary" [tooltip]="getFilterInfo('salary')"></i></label>
+            <!-- <input type="text" class="span2 lineups-range" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" /> -->
+            <input type="text" class="js-range-slider_1 salary_range" name="my_range" value="" />
+          </div>
+          <div class="tool-box">
+            <label class="toolbox-label"> Number of unique players <i class="fas fa-info-circle text-secondary" [tooltip]="getFilterInfo('unique_players')"></i></label>
+            <!-- <input type="text" class="span2 lineups-range" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" /> -->
+            <input type="text" class="js-range-slider_2 unique_range" name="my_range" value="" />
+          </div>
+          <div class="tool-box">
+            <label class="toolbox-label"> Max Exposure for the rest of the players: <i class="fas fa-info-circle text-secondary" [tooltip]="getFilterInfo('exposure')"></i></label>
+            <!-- <input type="text" class="span2 lineups-range" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" /> -->
+            <input type="text" class="js-range-slider_3 exposure_range" name="my_range" value="" />
+          </div>
+
+          <div class="tool-box">
+            <label class="toolbox-label"> Avoid Opposing Defense? <i class="fas fa-info-circle text-secondary" [tooltip]="getFilterInfo('oppos_def')"></i></label>
+            <input type="radio" name="oppos_def" value="n" [(ngModel)]="avoid_oppos_def" (ngModelChange)="saveAOD()" checked="true"/> No
+            <input type="radio" name="oppos_def" value="y" [(ngModel)]="avoid_oppos_def" (ngModelChange)="saveAOD()"/> Yes
+          </div>
+
+          <div class="tool-box">
+            <label class="toolbox-label"> Select position in the flex? <i class="fas fa-info-circle text-secondary" [tooltip]="getFilterInfo('flex')"></i></label>
+            <input type="radio" name="flex" value="n" [(ngModel)]="select_flex_pos" checked="true" (click)="selectFlex($event.target.value)"/> No
+            <input type="radio" name="flex" value="y" [(ngModel)]="select_flex_pos" (click)="selectFlex($event.target.value)"/> Yes
+          </div>
+
+          <div class="tool-box" *ngIf="chooseFlex">
+              <label class="toolbox-label">Select position to be in the flex:</label>
+              <input type="checkbox" value="RB" (change)="setFlexValues($event)" [checked]="selectedFlex.RB"/> RB
+              <input type="checkbox" value="WR" (change)="setFlexValues($event)" [checked]="selectedFlex.WR"/> WR
+              <input type="checkbox" value="TE" (change)="setFlexValues($event)" [checked]="selectedFlex.TE"/> TE
+            </div>
+
+
+          <!-- <h3 class="sidebar-heading">Positional Stacking <span class="info-popover popover-container"
+              data-toggle="popover" data-placement="top" data-container="body" data-trigger="hover"
+              data-content="Total Player Exposure"><i class="fas fa-info-circle"></i></span></h3> -->
+          <div class="sidebar-tabs-wrap">
+            <!-- <ul class="nav nav-tabs">
+              <li>
+                <a class="nav-link active" data-toggle="tab" href="#tab2">Stacks Rule</a>
+              </li>
+            </ul> -->
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane s_limit_rule active" id="tab2">
+                <!-- <div class="tab-form mb-4 s_stack_rule">
+                  <h5 class="form-heading">Create New Stack</h5>
+                  <div class="form-field">
+                    <div class="row align-items-md-center">
+                      <div class="col-md-4">
+                        <div class="d-flex">
+                          <label>Player</label>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="d-block d-md-flex align-items-center s_select_option">
+                          <select class="form-control mr-0 mr-md-2" #stackPlayerName>
+                            <option value="" disabled>Select</option>
+                            <ng-container *ngIf="playersList.length > 0">
+                              <option *ngFor="let p of playersList;" [value]="p.name"
+                                [selected]="p.name === buildRulesStack.player">{{ p.name }}</option>
+                            </ng-container>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-field">
+                      <div class="row">
+                        <div class="col-4">
+                          <label>Stack with Pos.</label>
+                        </div>
+                        <div class="col-md-8">
+                          <tag-input 
+                            class="brs-pos_1"
+                            name="pos"
+                            [onTextChangeDebounce]="0"
+                            [ngModel]="buildRulesStack.pos"
+                            [inputClass]="'brs-pos'"
+                            [maxItems]='3' 
+                            [onlyFromAutocomplete]="true"
+                            [placeholder]="'Type to add Pos.'"
+                            [secondaryPlaceholder]="'Type to add Pos.'">
+                            <tag-input-dropdown 
+                              [zIndex]="99999999"
+                              [autocompleteItems]="['RB','WR','TE']"
+                              [showDropdownIfEmpty]="true"
+                              [keepOpen]="false"></tag-input-dropdown>
+                          </tag-input>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-field">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Stack with Opposing Pos.</label>
+                        </div>
+                        <div class="col-md-8">
+                          <tag-input
+                            class="brs-oppos_pos_1"
+                            name="oppos_pos" 
+                            [onTextChangeDebounce]="0"
+                            [ngModel]="buildRulesStack.oppos_pos"
+                            [inputClass]="'brs-oppos_pos'"
+                            [maxItems]='2' 
+                            [onlyFromAutocomplete]="true"
+                            [placeholder]="'Type to add Pos.'"
+                            [secondaryPlaceholder]="'Type to add Pos.'">
+                            <tag-input-dropdown 
+                              [zIndex]="99999999"
+                              [autocompleteItems]="['WR','TE']"
+                              [showDropdownIfEmpty]="true"
+                              [keepOpen]="false"
+                              ></tag-input-dropdown>
+                          </tag-input>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-field">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="tool-box mb-2">
+                          <label class="toolbox-label">Max Exposure for the Stack</label>
+                          <input type="text" class="js-range-slider_4 stack_range" name="my_range" value="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-field submit-btn-wrap">
+                    <button type="button" class="btn theme-btn d-block"
+                      (click)="addStackRules(stackPlayerName.value)">Add Stacking
+                      Rules</button>
+                  </div>
+                </div> -->
+                <h3 class="sidebar-heading mb-4">Locked Players</h3>
+                <div class="sidebar-table mb-4">
+                  <div class="s_side_table mb-2">
+                    <table class="display responsive nowrap" style="width:100%" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                      <thead>
+                        <tr>
+                          <th data-priority="1">Pos</th>
+                          <th>Name</th>
+                          <th>Sal</th>
+                          <th>Proj.</th>
+                          <th data-priority="2">Act.</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let lu of lineupData;let i = index;">
+                          <td>{{ lu.pos1 }}</td>
+                          <td>{{ lu.name }}</td>
+                          <td>{{ lu.salary }}</td>
+                          <td>{{ lu.projected_pts }}</td>
+                          <td (click)="removeFromSlate(i)">
+                            <span class="table-lock" *ngIf="lu.name" ><i
+                                class="fas fa-unlock clr-green"></i></span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="s_player-btns d-block d-sm-flex align-items-center justify-content-between mb-3">
+                  <button type="button" class="btn theme-btn d-block d-md-inline mb-2 mb-md-0 mr-2"
+                    (click)="resetSlate()">Reset Locked
+                    Player</button>
+                  <!-- <button type="button" class="btn theme-btn d-block d-md-inline" (click)="buildMyLineups()">Build My Lineups!</button> -->
+                </div>
+                <div class="s_description">
+                  <p><span class="clr-green">Note: </span>Flex player will always be the player
+                    with the latest possible start time
+                  </p>
+                </div>
+                <ng-container *ngIf="playerExposures.length">
+                  <h3 class="sidebar-heading mb-4">Player Exposures</h3>
+                  <div class="sidebar-table mb-4">
+                    <div class="table-inner">
+                      <div id="second_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <table class="tools-table dataTable no-footer exposure_datatable" role="grid">
+                              <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc peps sorting" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="
+                                                                          Pos: activate to sort column descending"
+                                    aria-sort="ascending" (click)="sortPlayerExposurePos()">
+                                    Pos</th>
+                                  <th class="name-column pens sorting" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="
+                                                                          Name: activate to sort column ascending">
+                                    Name</th>
+                                  <th class="sorting pees" tabindex="0" aria-controls="second_table" rowspan="1" colspan="1"
+                                    aria-label="
+                                                                          Sal.: activate to sort column ascending">
+                                    Exp</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let pe of playerExposures;">
+                                  <td class="sorting_1">{{ pe.pos1 }}</td>
+                                  <td>{{ pe.name }}</td>
+                                  <td>{{ pe.final_exp*100 | number }}%</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="flexPercent.length">
+                  <h3 class="sidebar-heading mb-4">% of Flex Per Position Type</h3>
+                  <div class="flex_record_table mb-4">
+                    <div class="table-inner">
+                      <div id="second_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <table class="tools-table dataTable no-footer flex_datatable" role="grid">
+                              <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="
+                                                                          Pos: activate to sort column descending"
+                                    aria-sort="ascending">
+                                    Position</th>
+                                  <th class="name-column sorting" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="
+                                                                          Name: activate to sort column ascending">
+                                    Percentage</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr role="row" class="odd" *ngFor="let fp of flexPercent">
+                                  <td class="sorting_1">{{ fp.Postion }}</td>
+                                  <td>{{ fp.Percentage*100 | number }}%</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="stackOwnership.length">
+                  <h3 class="sidebar-heading mb-4">Ownership of stacks</h3>
+                  <div class="flex_record_table mb-4">
+                    <div class="table-inner">
+                      <div id="second_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <table class="tools-table dataTable no-footer stack_ownership_table" role="grid">
+                              <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="Pos: activate to sort column descending"
+                                    aria-sort="ascending">
+                                    Ownership</th>
+                                  <th>Percentage</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr role="row" class="odd" *ngFor="let own of stackOwnership;">
+                                  <td>{{ own.Stack }}</td>
+                                  <td>{{ own['Stack Ownership']*100 | number }}%</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="groupOwnership.length">
+                  <h3 class="sidebar-heading mb-4">Ownership of groups</h3>
+                  <div class="flex_record_table mb-4">
+                    <div class="table-inner">
+                      <div id="second_table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <table class="tools-table dataTable no-footer group_ownership_table" role="grid">
+                              <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc" tabindex="0" aria-controls="second_table" rowspan="1"
+                                    colspan="1" aria-label="Pos: activate to sort column descending"
+                                    aria-sort="ascending">
+                                    Ownership</th>
+                                  <th>Percentage</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr role="row" class="odd" *ngFor="let g_own of groupOwnership;">
+                                  <td>{{ g_own.Group }}</td>
+                                  <td>{{ g_own.Percentage*100 | number }}%</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-9">
+        <!--CONTENT AREA-->
+        <div class="lineups-header">
+          <div class="row align-items-center">
+            <div class="col-sm-7 col-md-12 col-lg-6">
+              <div class="d-flex align-items-center justify-content-between">
+                <h3 class="sidebar-heading mb-3 mb-md-0">My Lineups</h3>
+                <span class="ml-auto">
+                  <button 
+                    type="button" 
+                    class="btn theme-btn d-block d-md-inline" 
+                    (click)="buildMyLineups()"
+                    [disabled]="disableBML"
+                    >Build My Lineups!</button></span>
+              </div>
+            </div>
+            <div class="col-sm-5 col-md-12 col-lg-6 text-right">
+              <button type="button" class="btn theme-btn" (click)="downloadMyLineups()" [disabled]="lineups.length === 0">
+                <i class="fas fa-download"></i> Download Lineups
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="content-area lineup-content-area">
+          <div class="lineups-content">
+            <div class="alert alert-danger alert-dismissible mt-1 mb-3" *ngIf="serverError">
+              <a  class="close" style="line-height: 50%;" (click)="serverError = ''">&times;</a>
+              <strong>{{ serverError }}</strong> 
+            </div>
+            <div class="loading" *ngIf="loadLineups"></div>
+            <div class="row" *ngIf="lineups.length > 0">
+              <div class="col-lg-6" *ngFor="let lineup of lineups;let i = index;">
+                <div class="s_main_wrap mb-2">
+                  <div class="table-header lineups-t-header">
+                    <div class="d-flex align-items-center mb-2">
+                      <label class="t-label mr-auto">Lineup {{ i+1 }}</label>
+                      <div class="d-md-block">
+                        <span class="table-header-text">Total Salary: <span
+                            class="yellow-text">${{ lineup[0].TeamSalary }}</span></span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <a class="font_toggle d-md-none btn theme-btn mr-2" data-toggle="collapse"
+                          href="#collapseExample_{{i}}" aria-expanded="true" (click)="trigger(i)">
+                          <i class="collapse_toggle_{{i}} toggle_button fa fa-angle-down"></i></a>
+                        <button type="button" class="btn theme-btn" (click)="deleteMyLineup(i,lineup)"><i class="fas fa-trash-alt"></i></button>
+                      </div>
+                    </div>
+                    <div class="s_salary" style="display:none;">
+                      <div class="d-md-none d-flex align-items-center justify-content-between">
+                        <span class="table-header-text">TQE Projection</span>
+                        <span class="table-header-text">|</span>
+                        <span class="table-header-text">Total Salary <span class="yellow-text">${{ lineup[0].TeamSalary }}</span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="collapse show " id="collapseExample_{{i}}">
+                    <table class="display responsive nowrap lineups_table lineup_{{i}}" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th data-priority="1">Pos</th>
+                          <th data-priority="3" class="name">Player Name</th>
+                          <th data-priority="4">Proj</th>
+                          <th>Own</th>
+                          <th data-priority="6">Sal</th>
+                          <th data-priority="5"><span class="popover-container" data-toggle="popover" data-placement="top"
+                              data-container="body" data-trigger="hover" [tooltip]="getTooltipContent('TPE')">TPE</span>
+                          </th>
+                          <th data-priority="2"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let lu of lineup;let j = index;">
+                          <td>{{ lu.pos1 }}</td>
+                          <td class="name-with-logo"><img src="assets/images/{{ lu.team }}.png" alt="Team Logo">{{ lu.name }}
+                          </td>
+                          <td>{{ lu.projected_pts }}</td>
+                          <td>{{ lu.Own }}</td>
+                          <td>{{ lu.salary }}</td>
+                          <td>{{ lu.final_exp * 100 | number }}%</td>
+                          <td class="text-right">
+                            <button type="button" class="btn green-border-btn" (click)="init_replace(i,j,lu.pos1,lu.player,lu.name)"><i
+                                class="fas fa-pencil-alt"></i></button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Total</td>
+                          <td></td>
+                          <td>{{ lineup[0].TotalPoints | number }}</td>
+                          <td></td>
+                          <td>{{ lineup[0].TeamSalary }}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END CONTENT AREA-->
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="theme-modal modal fade" id="player-pool" bsModal #replacePopup="bs-modal">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+
+            <div class="modal-body text-center">
+                <h1>Available Replacements</h1>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="rowReplaceError">
+                  <strong>{{ rowReplaceError }}</strong>
+                  <button type="button" class="close" (click)="rowReplaceError = ''">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="loading" *ngIf="replacePopupLoader"></div>
+                <table class="display responsive nowrap replacement_table" style="width:100%" [hidden]="replacementsData.length === 0">
+                  <thead>
+                    <tr>
+                      <th>Pick</th>
+                      <th>Pos</th>
+                      <th>Name</th>
+                      <th>Sal</th>
+                      <th>Proj</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let rd of replacementsData;let z = index;">
+                      <td>
+                        <button class="btn btn-success" type="button" (click)="perform_replacement(rd)">Pick</button>
+                      </td>
+                      <td>{{ rd.pos1 }}</td>
+                      <td>{{ rd.name }}</td>
+                      <td>{{ rd.salary }}</td>
+                      <td>{{ rd.projected_pts }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+    
+        </div>
+    </div>
+</div>

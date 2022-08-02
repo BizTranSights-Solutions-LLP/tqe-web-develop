@@ -1,0 +1,137 @@
+
+<div class="podcastlists">
+  <div class="container">
+    <div class="loading" *ngIf="loadingSearch"> </div>
+    <div *ngIf="!allData">
+      <div class="pods" *ngIf="!loadingSearch">
+        <div class="search_filter">
+          <div class="row">
+            <div class="col">
+              Search Type: <strong>{{sreachText?.search_type}}</strong>      
+            </div>
+            <div class="col-auto">
+              <strong>{{data.message}}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-top" >
+          <div class="col-md-3" id="{{item.id}}" *ngFor="let item of data.data;let i = index">
+              <div class="article">
+                <div class="loading image_ph_{{i}}"></div>
+                <div class="img-holder" *ngIf="item.images.length > 0">
+                  <a [routerLink]="['/' + searchRoute + '/',item.url]">
+                    <img [src]="item.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                  </a>
+                </div>
+                <a [routerLink]="['/' + searchRoute + '/',item.url]">
+                  <img *ngIf="item.images.length === 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../assets/images/placeholder.png">
+                </a>
+              </div>
+            <div class="desc">
+                <a [routerLink]="['/' + searchRoute + '/',item.url]" class="title date">{{item.title}}</a>
+                <!-- <p>{{ (item.content.length>100)? (item.content | slice:0:100)+'...':(item.content) }}</p> -->
+                <!-- <a [routerLink]="['/podcast/',item.url]" class="btn-pod bTN- bTN_banner">Listen Now</a> -->
+            </div>
+              
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div *ngIf="allData">
+      <div class="pods" *ngIf="!loadingSearch">
+        <div>
+            <!-- *ngIf="data.articles.data.length !== 0" -->
+          <div class="search_filter">
+            <div class="row">
+              <div class="col">
+                <strong>Articles</strong>
+              </div>
+              <div class="col-auto">
+                <strong>{{data.articles.message}}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-md-3" id="{{item.id}}" *ngFor="let item of data.articles.data;let i = index">
+                <div class="article">
+                  <div class="loading image_ph_{{i}}"></div>
+                  <div class="img-holder" *ngIf="item.images.length > 0">
+                    <a [routerLink]="['/article/',item.url]"><img [src]="item.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)"></a>
+                  </div>
+                  <a [routerLink]="['/article/',item.url]"><img *ngIf="item.images.length === 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../assets/images/placeholder.png"></a>
+                </div>
+            
+              <div class="desc">
+                  <a [routerLink]="['/article/',item.url]" class="title date">{{item.title}}</a>
+                  <!-- <p>{{ (item.content.length>100)? (item.content | slice:0:100)+'...':(item.content) }}</p> -->
+                  <!-- <a [routerLink]="['/article/',item.url]" class="btn-pod bTN- bTN_banner">Listen Now</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+            <!-- *ngIf="data.podcasts.data.length !== 0" -->
+          <div class="search_filter">
+            <div class="row">
+              <div class="col">
+                <strong>Podcasts</strong>
+              </div>
+              <div class="col-auto">
+                <strong>{{data.podcasts.message}}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-md-3" id="{{item.id}}"  *ngFor="let item of data.podcasts.data;let i = index">
+                <div class="article">
+                  <div class="loading image_ph_{{i}}"></div>
+                  <div class="img-holder" *ngIf="item.images.length > 0">
+                    <a [routerLink]="['/podcast/',item.url]"><img [src]="item.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)"></a>
+                  </div>
+                  <a [routerLink]="['/podcast/',item.url]"><img *ngIf="item.images.length === 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../assets/images/placeholder.png"></a>
+                </div>
+              <div class="desc">
+                  <a [routerLink]="['/podcast/',item.url]" class="title date">{{item.title}}</a>
+                  <!-- <p>{{ (item.content.length>100)? (item.content | slice:0:100)+'...':(item.content) }}</p> -->
+                  <!-- <a [routerLink]="['/podcast/',item.url]" class="btn-pod bTN- bTN_banner">Listen Now</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+            <!-- *ngIf="data.tools.data.length !== 0" -->
+          <div class="search_filter">
+            <div class="row">
+              <div class="col">
+                <strong>Tools</strong>
+              </div>
+              <div class="col-auto">
+                <strong>{{data.tools.message}}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-md-3" id="{{item.id}}" *ngFor="let item of data.tools.data;let i = index">
+              <div class="article">
+                <div class="loading image_ph_{{i}}"></div>
+                <div class="img-holder" *ngIf="item.images.length > 0">
+                    <a [routerLink]="['/tool/',item.url]"><img [src]="item.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)"></a>
+                </div>
+                <a [routerLink]="['/tool/',item.url]"><img *ngIf="item.images.length === 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../assets/images/placeholder.png"></a>
+              </div>
+              <div class="desc">
+                  <a [routerLink]="['/tool/',item.url]" class="title date">{{item.title}}</a>
+                  <!-- <p>{{ (item.content.length>100)? (item.content | slice:0:100)+'...':(item.content) }}</p> -->
+                  <!-- <a [routerLink]="['/../', item.url]" class="btn-pod bTN- bTN_banner">Listen Now</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>      
+</div>

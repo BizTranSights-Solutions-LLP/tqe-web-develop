@@ -1,0 +1,96 @@
+.loading {
+    height: 100%;
+    padding: 150px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    background: #000;
+}
+.page-title h1 {
+    display: block;
+    text-align: center;
+}
+.pod_cats_list {
+    padding: 50px 0;
+}
+.podcast-holder {
+    position: relative;
+    margin: 0 0 30px;
+}
+.pod_cats_list img {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s;
+    transition: transform 1s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+.pod_cats_list .podcast-holder:hover img {
+    -webkit-transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg);
+    -o-transform: rotateX(180deg);
+    transform: rotateX(180deg);
+}
+.no-img {
+    width: 100%;
+    height: 100%;
+}
+.pod_cats_list .flip-x {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #0E120E;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    opacity: 0;
+    -webkit-transition: all .6s ease;
+    -o-transition: all .6s ease;
+    transition: all .6s ease;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform: rotateX(180deg);
+    -ms-transform: rotateX(180deg);
+    -o-transform: rotateX(180deg);
+    transform: rotateX(180deg);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.pod_cats_list .podcast-holder:hover .flip-x {
+    opacity: 1;
+    -webkit-transform: rotateX(0);
+    -ms-transform: rotateX(0);
+    -o-transform: rotateX(0);
+    transform: rotateX(0deg);
+}
+.pod_cats_list .cat_type {
+    background: #1AB21A;
+    padding: 0 5px;
+    color: #fff;
+    font-weight: 700;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 4px;
+}
+.pod_cats_list .cat_des {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    left: 0;
+    padding: 10px;
+    transform: translateY(-50%);
+}
+.pod_cats_list .cat_des a {
+    color: #fff;
+}

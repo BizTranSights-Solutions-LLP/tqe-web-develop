@@ -1,0 +1,41 @@
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col">
+        <h1>Prime Time Proccess</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="podcastlists">
+  <div class="container">
+    <div class="loading" *ngIf="mainLoader"> </div>
+    <strong *ngIf="this.serverMessage === 'No data available'" style="display: block;text-align: center;color: red;font-size: 15px;">{{serverMessage}}</strong>
+    <div class="pods" *ngIf="podcastData.length !== 0">
+      <div class="row align-items-center" *ngFor="let item of podcastData;let i = index">
+        <div class="col-md-3" id="{{item.id}}">
+            <div class="arTilce">
+              <div class="loading image_ph_{{i}}"></div>
+              <div *ngIf="item.images.length > 0">
+                <img [src]="item.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+              </div>
+              <img *ngIf="!item.images.length > 0" class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+            </div>
+        </div>
+        <div class="col">
+          <div class="desc">
+              <a [routerLink]="['/podcast/',item.url]" class="title date">{{item.title}}</a>
+              <p [innerHTML]="(item.content.length>100)? (item.content | slice:0:100)+'...':(item.content)"></p>
+              <a [routerLink]="['/podcast/',item.url]" class="btn-pod bTN- bTN_banner">Listen Now</a>
+          </div>
+            
+        </div>
+        
+      </div>
+    </div>
+    <div *ngIf="podcastData.length > 3">
+      <div class="loading" *ngIf="Loader"> </div>
+      <button type="button" class="bTN_view" (click)="loadMore()" *ngIf="!hideLoadMore">LOAD MORE</button>
+    </div>
+  </div>      
+</div>

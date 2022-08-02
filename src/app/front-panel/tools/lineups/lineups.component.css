@@ -1,0 +1,21 @@
+table /deep/ .odd .dataTables_empty {
+    display: none !important;
+}
+
+.page-content {
+    font-family: "Segoe UI";
+    font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Segoe UI" !important;
+}
+
+h5 {
+    font-weight: 500;
+}

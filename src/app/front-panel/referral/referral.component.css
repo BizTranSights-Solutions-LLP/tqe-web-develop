@@ -1,0 +1,45 @@
+.page-title h1{
+  text-align: center;
+  display: block;
+}
+
+.dynamic-wrapper {
+  max-width: 492px;
+  margin: 0 auto;
+  font-size: 16px;
+  font-weight: 500 !important;
+  line-height: 15px;
+  /*font-weight: 500;*/
+  /*line-height: 16px;*/
+  margin-top: 17px;
+}
+
+.dynamic-wrapper .form-group {
+  margin: 0;
+
+}
+.dynamic-wrapper .form-group + .form-group {margin-top: 17px;}
+.dynamic-wrapper .form-control input {
+  color: #989595;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  border: none;
+  outline: none;
+  box-shadow: 0 100px 100px #fff inset;
+  height: 100%;
+}
+
+.dynamic-container-wrapper button {
+  height: 40px;
+  border-radius: 4px;
+  color: #fff;
+  background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
+  font-size: 15px;
+  font-weight: bold;
+  /*line-height: 21px;*/
+  text-align: center;
+  width: 149px;
+  margin-top: 20px;
+}

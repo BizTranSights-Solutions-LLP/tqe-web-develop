@@ -1,0 +1,199 @@
+<form [formGroup]="dcForm" (ngSubmit)="onSubmit(dcForm.value)">
+
+  <h4>Discount Code</h4>
+  <hr/>
+
+  <h6>Code</h6>
+  <br/>
+  <div class="form-group col-3">
+      <input class="form-control" type="text" formControlName="code">    
+    <div *ngIf="dcForm.controls.code.touched && dcForm.controls.code.errors" class="text-danger">
+        <div *ngIf="dcForm.controls.code.errors.required">Field is required</div>
+    </div>
+  </div>
+
+  <br/>
+
+  <h6>Start Date</h6>
+  <br/>
+  <div class="form-group col-3">
+      <input class="form-control" type="date" formControlName="starts_at" (change)="validateDate('starts_at')">    
+    <div *ngIf="dcForm.controls.starts_at.touched && dcForm.controls.starts_at.errors" class="text-danger">
+        <div *ngIf="dcForm.controls.starts_at.errors.required">Field is required</div>
+    </div>
+    <div *ngIf="dcForm.controls.starts_at.touched && dcForm.controls.starts_at.errors" class="text-danger">
+        <div *ngIf="dcForm.controls.starts_at.errors.invalid_date">Date is invalid</div>
+    </div>
+  </div>
+
+  <br/>
+
+  <h6>Expiration Date</h6>
+  <br/>
+  <div class="form-group col-3">
+      <input class="form-control" type="date" formControlName="expires_at" (change)="validateDate('expires_at')">    
+    <div *ngIf="dcForm.controls.expires_at.touched && dcForm.controls.expires_at.errors" class="text-danger">
+        <div *ngIf="dcForm.controls.expires_at.errors.required">Field is required</div>
+    </div>
+    <div *ngIf="dcForm.controls.expires_at.touched && dcForm.controls.expires_at.errors" class="text-danger">
+        <div *ngIf="dcForm.controls.expires_at.errors.invalid_date">Date is invalid</div>
+    </div>
+  </div>
+
+  <br/>
+
+  <!-- <h6>Uses</h6>
+  <br/>
+  <div class="form-group col-3">
+      <input class="form-control" type="text" formControlName="uses">    
+    <div *ngIf="userForm.controls.first_name.touched && userForm.controls.first_name.errors" class="text-danger">
+        <div *ngIf="userForm.controls.first_name.errors.required">Field is required</div>
+    </div>
+  </div>
+
+  <br/> -->
+  <hr/>
+
+  <h6>Which Levels Will This Code Apply To?</h6>
+  <br/>
+  <div *ngIf="membershipLoading">Loading Memberships....</div>
+  <div class="promo_discount_levels" formArrayName="memberships">
+    <ng-container *ngFor="let m of dcForm.get('memberships')['controls'];let i = index;">
+      <div class="holder" [formGroupName]="i">
+          <label>
+            <input type="checkbox" name="subscribed" formControlName="enabled" (change)="disableMembership(m.value)">
+          </label>
+          {{ m.value.name }}
+          <div class="promo_discount_levels_pricing level_1" [hidden]="!m.value.enabled">
+              <table class="form-table table">
+                  <tbody>
+                  <tr>
+                      <th scope="row" valign="top">
+                        <label for="initial_payment">Initial Payment:</label></th>
+                      <td>
+                          $                                        
+                          <input type="text" formControlName="initial_payment" name="initial_payment">
+                          <small>The initial amount collected at registration.</small>
+                      </td>
+                  </tr>
+                  <tr>
+                      <th scope="row" valign="top">
+                          <label>Recurring Subscription:</label>
+                      </th>
+                      <td>
+                        <input class="recurring_checkbox" type="checkbox" formControlName="recurring" #recurringSubscription>
+                        <label for="recurring_1">Check if this level has a recurring subscription payment.</label>
+                      </td>
+                  </tr>
+                  
+                  <tr class="recurring_info" [hidden]="!recurringSubscription.checked">
+                      <th scope="row" valign="top">
+                        <label for="billing_amount">Billing Amount:</label></th>
+                      <td>
+                          $
+                          <input type="text" formControlName="billing_amount">
+                          <small>per</small>
+                          <input type="text" formControlName="cycle_number">
+                          <select formControlName="cycle_period">
+                            <option value="day">Day(s)</option>
+                            <option value="week">Week(s)</option>
+                            <option value="month">Month(s)</option>
+                            <option value="year">Year(s)</option>
+                          </select>
+                          <br>
+                          <small>The amount to be billed one cycle after the initial payment.</small>
+                      </td>
+                  </tr>
+    
+                  <tr class="recurring_info" [hidden]="!recurringSubscription.checked">
+                      <th scope="row" valign="top">
+                        <label for="billing_limit">Billing Cycle Limit:</label></th>
+                      <td>
+                          <input name="billing_limit" formControlName="billing_limit">
+                          <br>
+                          <small>The <strong>total</strong> number of recurring billing cycles for this level, including the trial period (if applicable) but not including the initial payment. Set to zero if membership is indefinite.</small>
+                      </td>
+                  </tr>
+
+                  <tr class="recurring_info" [hidden]="!recurringSubscription.checked">
+                      <th scope="row" valign="top">
+                        <label>Custom Trial:</label>
+                      </th>
+                      <td>
+                        <input type="checkbox" formControlName="custom_trial" #customTrial>
+                        <label for="custom_trial_1">Check to add a custom trial period.</label>
+                      </td>
+                  </tr>
+
+                  <tr class="trial_info recurring_info" [hidden]="!customTrial.checked">
+                      <th scope="row" valign="top">
+                        <label for="trial_amount">Trial Billing Amount:</label></th>
+                      <td>
+                          $
+                          <input type="text" formControlName="trial_amount">
+                          <small>for the first</small>
+                          <input type="text" formControlName="trial_limit">
+                          <small>subscription payments.</small>
+                      </td>
+                  </tr>
+    
+                  <tr>
+                      <th scope="row" valign="top">
+                        <label>Membership Expiration:</label>
+                      </th>
+                      <td>
+                        <input type="checkbox" formControlName="membership_expires" #canExpire>
+                        <label>Check this to set when membership access expires.</label>
+                      </td>
+                  </tr>
+    
+                  <tr class="expiration_info" [hidden]="!canExpire.checked">
+                      <th scope="row" valign="top">
+                        <label for="billing_amount">Expires In:</label></th>
+                      <td>
+                          <div *ngIf="m.value.expiration_date">
+                            <input type="radio" [value]="true" formControlName="expiration_format">
+                            <input type="date" formControlName="expiration_date">
+                            <br>
+                          </div>
+
+                          <input type="radio" [value]="false" formControlName="expiration_format" *ngIf="m.value.expiration_date">
+                          <input type="text" formControlName="expiration_number">
+                          <select formControlName="expiration_period">
+                              <option value="day">Day(s)</option>
+                              <option value="week">Week(s)</option>
+                              <option value="month">Month(s)</option>
+                              <option value="year">Year(s)</option>
+                            </select>
+                          <br>
+                          <small>Set the duration of membership access. Note that the any future payments (recurring subscription, if any) will be cancelled when the membership expires.</small>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+          </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+    <strong>{{ successMsg }}</strong>
+    <button type="button" class="close" (click)="successMsg = ''">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+    <strong>{{ errorMsg }}</strong>
+    <button type="button" class="close" (click)="errorMsg = ''">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <hr/>
+  <div class="mb-2" *ngIf="disableBtn">Processing......</div>  
+  <button type="submit"  class="btn btn-primary" [disabled]="disableBtn">Submit</button>  
+  <hr/>
+
+</form>

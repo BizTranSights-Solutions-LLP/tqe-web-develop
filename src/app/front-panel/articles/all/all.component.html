@@ -1,0 +1,216 @@
+<!-- All Articles-->
+<div>
+  <div class="all-articles">
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">Betting Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../betting" >View All</a> »</span>
+          </div>
+        </div>
+        
+        <div class="loading" *ngIf="bettingData.length === 0"> </div>
+        
+        <owl-carousel *ngIf="bettingData.length !== 0"
+          [options]="allArticlesOption"
+          (dragging)="isDragging = $event.dragging"
+          [items]="bettingData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']">
+          <div class="item" *ngFor="let article of bettingData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>              
+                
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+      
+    </div>
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">NBA Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../nba" >View All</a> »</span>
+          </div>
+        </div>
+        <div class="loading" *ngIf="nbaData.length === 0"> </div>
+        <owl-carousel *ngIf="nbaData.length !== 0"
+          [options]="allArticlesOption"
+          [items]="nbaData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']">
+          <div class="item" *ngFor="let article of nbaData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>              
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+      
+    </div>
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">CBB Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../cbb" >View All</a> »</span>
+          </div>
+        </div>
+        <div class="loading" *ngIf="ncaabData.length === 0"> </div>
+        <owl-carousel *ngIf="ncaabData.length !== 0"
+          [options]="allArticlesOption"
+          [items]="ncaabData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']">
+          <div class="item" *ngFor="let article of ncaabData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>              
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+      
+    </div>
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">UFC Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../ufc" >View All</a> »</span>
+          </div>
+        </div>
+        
+        <div class="loading" *ngIf="ufcData.length === 0"> </div>
+        <owl-carousel *ngIf="ufcData.length !== 0"
+          [options]="allArticlesOption"
+          [items]="ufcData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']">
+          <div class="item" *ngFor="let article of ufcData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>              
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+    </div>
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">MLB Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../mlb" >View All</a> »</span>
+          </div>
+        </div>
+        <div class="loading" *ngIf="mlbData.length === 0"> </div>
+        <owl-carousel *ngIf="mlbData.length !== 0"
+          [options]="allArticlesOption"
+          [items]="mlbData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']"
+          (dragend)="test($event)" draggable="true">
+          <div class="item" *ngFor="let article of mlbData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>              
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+      
+    </div>
+    <div class="listing_articles">
+      <div class="container">
+        <div class="row">
+          <div class="col-auto">
+            <h3 class="article-heading">NFL Articles</h3>
+          </div>
+          <div class="col">
+            <span class="viewmore"><a routerLink="../nfl" >View All</a> »</span>
+          </div>
+        </div>
+        <div class="loading" *ngIf="nflData.length === 0"> </div>
+        <owl-carousel *ngIf="nflData.length !== 0"
+          [options]="allArticlesOption"
+          [items]="nflData"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']">
+          <div class="item" *ngFor="let article of nflData;let i = index">
+              <ul class="sports_tag">
+                <li *ngFor="let tags of article.sports_tags">
+                  <span>{{tags.name}}</span>
+                </li>
+              </ul>
+              <div class="thumbnail-image" [ngStyle]="">
+                <div class="loading image_ph_{{i}}"></div>
+                <div *ngIf="article.images.length > 0">
+                  <img [src]="article.images[0].file_path" class="img-fluid image_show_{{i}}" (load)="displayImage(i)">
+                </div>
+                <img *ngIf="!article.images.length > 0"  class="img-fluid image_show_{{i}}" (load)="displayImage(i)" src="../../../../assets/images/placeholder.png">
+                
+                <a [routerLink]="['/article',article.url]" class="title">{{article.title}}</a>
+              </div>
+          </div>
+        </owl-carousel>
+      </div>
+      
+    </div>
+  </div>
+</div>

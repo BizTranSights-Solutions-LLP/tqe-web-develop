@@ -1,0 +1,33 @@
+<div>
+  <!-- <button type="button" (click)="exportAsCsv()" class="btn btn-success pull-right" [disabled]="users.length === 0">Export</button> -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+  <thead *ngIf="Loading; else stillLoading">
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Memberships</th>
+      <th>Registeration Date</th>        
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users;let i = index">
+      <td>{{ user.id }}</td>
+      <td><img [src]="user.photo" width="32" height="32"> {{ user.username }}</td>
+      <td>{{ user.first_name }} {{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user?.roles }}</td>
+      <td>{{ user.membership_names ? user.membership_names : 'None' }}</td>
+      <td>{{ user.created_at | date:'mediumDate' }}</td>     
+      <td> <button type="button" class="btn btn-primary" (click)="editUser(user.id)">Edit</button> </td>
+      <td> <button type="button" class="btn btn-primary" (click)="deleteUser(user.id, i)">Delete</button> </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #stillLoading><p class="loader">Loading...</p></ng-template>
+</div>

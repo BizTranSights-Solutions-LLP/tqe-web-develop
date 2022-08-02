@@ -1,0 +1,38 @@
+#accordionExample {
+    padding: 100px 0;
+}
+#accordionExample .btn.btn-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none !important;
+    padding: .75rem 1.25rem;
+}
+#accordionExample .btn.btn-link:not(.collapsed) {
+    background: #1ab21a;
+    background-color: #1ab21a;
+    color: #fff;
+}
+.card-header {padding: 0;}
+
+.FAQs {
+    overflow: hidden;
+    padding: 50px 0;
+    font-size: 13px;
+    line-height:21px;
+}
+.FAQs h3 {
+    font-size: 18px;
+    margin: 0 0 15px;
+}
+.FAQs p {
+    margin: 0 0 20px;
+}
+.FAQs a {
+    color: #1ab21a;
+    text-decoration: underline;
+    font-weight: 700;
+}

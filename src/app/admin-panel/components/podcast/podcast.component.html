@@ -1,0 +1,168 @@
+<p class="loader" *ngIf="loading">Loading...</p>
+<form [formGroup]="podcastForm" (ngSubmit)="onSubmit(podcastForm.value)" *ngIf="!loading">
+
+    <h4>Podcast</h4>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="serverError">
+      <strong>{{ serverError }}</strong>
+      <button type="button" class="close" (click)="serverError = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <hr/>
+    <div class="form-group">
+
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && podcastForm.controls.title.errors }"  placeholder="Enter title here"  formControlName="title">
+
+      <div *ngIf="submitted && podcastForm.controls.title.errors" class="invalid-feedback">
+          <div *ngIf="podcastForm.controls.title.errors.required">Title is required</div>
+      </div>
+
+    </div>
+<!-- <div class="form-group">
+  <ckeditor [editor]="Editor" [config]="cktools" data="<p>Hello, world!</p>"></ckeditor>
+</div> -->
+    <div class="form-group form-inline" *ngIf="podcastForm.get('podcast_url').value ? true: false">
+        <label for="image">Permalink:</label>
+        <a  [href]="podcastForm.value.podcast_url" class="mx-sm-3" target="_blank">{{podcastForm.value.podcast_url}}</a>
+    </div>
+
+    <div class="form-group">
+      <div [ngxSummernote]="editorConfig" [ngClass]="{ 'is-invalid': submitted && podcastForm.controls.content.errors }" formControlName="content"></div>
+      <!-- <ejs-richtexteditor class="" id='iframeRTE' placeholder="Enter content here" [ngClass]="{ 'is-invalid': submitted && podcastForm.controls.content.errors }" formControlName="content" [toolbarSettings]='tools' [fontSize]="{'default': '12pt'}"></ejs-richtexteditor> -->
+      <div *ngIf="submitted && podcastForm.controls.content.errors" class="invalid-feedback">
+          <div *ngIf="podcastForm.controls.content.errors.required">Content is required</div>
+      </div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <label>Embed Podcast</label>
+      <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && podcastForm.controls.embedded_url.errors }"  placeholder="Enter Embedded URL here"  formControlName="embedded_url">
+    <!-- <div *ngIf="submitted && podcastForm.controls.embedded_url.errors" class="invalid-feedback">
+        <div *ngIf="podcastForm.controls.embedded_url.errors.required">Embedded  is required</div>
+    </div> -->
+
+  </div>
+  <br>
+    <div class="form-group">
+      <label>Podcast tags</label>
+      <ng-select [items]="sportsTags"
+                bindLabel="name"
+                bindValue="id"
+                [addTag]="addCustomUser"
+                [multiple]="true"
+                placeholder="Select user or add custom tag"
+                formControlName="podcast_sports_tag"
+                >
+      </ng-select>
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <select class="form-control" formControlName="status">
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+      </select>
+    </div>
+
+    <br/>
+
+    <h6>Meta Tag</h6>
+    <br/>
+
+    <div class="form-group" formArrayName="podcast_meta_tag" *ngFor="let metaTag of podcastForm.get('podcast_meta_tag')['controls']; let i = index;">
+      <div [formGroupName]="i">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter title here" formControlName="title">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Enter keyword here" formControlName="keyword">
+        </div>
+
+        <div class="form-group">
+          <textarea type="text" class="form-control" placeholder="Enter description here" formControlName="description" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <h6>Add Image</h6>
+    <br/>
+
+    <div class="card" style="width: 14rem" *ngIf="podcastForm.get('file_path').value ? true: false">
+      <button type="button" class="btn-del-img" (click)="removeAssociation('image')"><i class="fa fa-trash"></i></button>
+      <img class="card-img-top" [src]="podcastForm.get('file_path').value" alt="Card image cap">
+    </div>
+    <br/>
+
+    <div class="form-group">
+        <!-- <input type="file" accept="image/*" class="form-control-file" [ngClass]="{ 'is-invalid': podcastForm.controls.image.errors }" (change)="onFileChange($event)" formControlName="image">
+        <div *ngIf="podcastForm.controls.image.errors" class="invalid-feedback">
+           Image upload error: only png, jpg, jpeg allowed.
+        </div> -->
+        <!-- <button type="button" (click)="gallery.show()" class="btn btn-success">Upload</button> -->
+        <button type="button" (click)="openML('image')" class="btn btn-success">Upload</button>
+    </div>
+
+    <!-- <div class="form-group">
+      <input type="text" class="form-control" placeholder="Enter title here" formControlName="image_title">
+    </div>
+
+    <div class="form-group">
+      <textarea  type="text" class="form-control" placeholder="Enter description here" formControlName="image_desc" rows="3"></textarea>
+    </div> -->
+
+    <h6>Add Audio File or URL</h6>
+    <br/>
+
+    <!-- <div *ngIf="set_mp3">
+      <p> <strong>Uploaded Audio:</strong> {{ set_mp3 }}</p>
+    </div>
+    <br/> -->
+
+    <div class="form-group">
+      <!-- <label>Audio file</label>
+      <input type="file" accept="audio/*" class="form-control-file" [ngClass]="{ 'is-invalid': podcastForm.controls.podcast_file.errors }" (change)="onFileChange($event, 'audio')" formControlName="podcast_file">
+      <div *ngIf="podcastForm.controls.podcast_file.errors" class="invalid-feedback">
+        Audio upload error: only mp3 allowed.
+      </div> -->
+      <div *ngIf="podcastForm.get('file_title').value ? true: false">
+        <div class="uploadedAud">
+          <button type="button" class="btn-del-img" (click)="removeAssociation('file')"><i class="fa fa-trash"></i></button>
+          <p>Associated File: {{ podcastForm.get('file_title').value }}</p>
+        </div>
+      </div>
+      <button type="button" (click)="openML('file')" class="btn btn-success">Upload</button>
+    </div>
+
+    <!-- <br/> -->
+
+    <!-- <div class="form-group">
+      <label>Audio URL</label>
+      <input type="url" class="form-control" [ngClass]="{ 'is-invalid': podcastForm.controls.custom_file_url.errors }" formControlName="custom_file_url" placeholder="URL of audio file">
+      <div *ngIf="podcastForm.controls.custom_file_url.errors?.pattern" class="invalid-feedback">
+        Audio url error: Invalid URL.
+      </div>
+    </div> -->
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="successMsg">
+      <strong>{{ successMsg }}</strong>
+      <button type="button" class="close" (click)="successMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMsg">
+      <strong>{{ errorMsg }}</strong>
+      <button type="button" class="close" (click)="errorMsg = ''">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <hr/>
+    <p class="loader" *ngIf="disableBtn">Processing...</p>
+    <button type="submit"  class="btn btn-primary" [disabled]="disableBtn" *ngIf="!removeBtn">Submit</button>
+    <hr/>
+
+</form>

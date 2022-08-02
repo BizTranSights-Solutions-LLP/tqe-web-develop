@@ -1,0 +1,66 @@
+<section class="page-content gray-bg">
+  <div class="content-area-header header-border">
+    <div class="d-block d-md-flex align-items-center">
+      <h3 class="section-label mr-auto">NFL Injuries</h3>
+        <div class="inline-select mr-sm-2 s_block_team">
+          <label>Team:</label>
+          <select #team (change)="get_injuries_data(team.value)">
+            <option selected>All</option>
+            <option *ngFor="let t of teams" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+        <!-- <a href="#" class="btn green-border-btn mr-sm-2 s_block">Fantasy Player News</a>
+        <a href="#" class="btn theme-btn s_block">Injury</a> -->
+    </div>
+  </div>
+  <div class="container-fluid">
+    <!--CONTENT AREA-->
+    <div class="content-area no-padding">
+      <div class="alert alert-danger alert-dismissible fade show col-md-4" style="margin: 10px auto;" role="alert" *ngIf="serverError">
+        {{ serverError }}
+        <button class="pull-right" type="button" (click)="serverError = ''">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="loading" *ngIf="showLoader"></div>
+      <div class="injuries-tables">
+        <div class="row">
+          <div class="col-lg-6" *ngFor="let injury of injuryData">
+            <div class="table-with-header">
+              <div class="table-header">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="t-label">{{ injury.Team }}</label>
+                  <a href="/tool/injury-impact" target="_blank" class="btn theme-btn">Analyze Injury</a>
+                </div>
+              </div>
+              <div class="injury-table-wrap">
+                <table class="tools-table injury-table">
+                  <thead>
+                    <tr>
+                        <th class="name">Name</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Returns</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ injury.Name }}, {{ injury.Position }}</td>
+                      <td>{{ injury.Status }}</td>
+                      <td>{{ injury['Start Date'] | date:'MMMM d' }}</td>
+                      <td>{{ injury['Return Estimate'] }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center" *ngIf="injuryMessage">
+        <h3>{{ injuryMessage }}</h3>
+      </div>
+    </div>
+    <!--END CONTENT AREA-->
+  </div>
+</section>

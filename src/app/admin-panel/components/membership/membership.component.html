@@ -1,0 +1,155 @@
+<form [formGroup]="membershipForm" (ngSubmit)="onSubmit(membershipForm.value)">
+ 
+  <h4>Membership</h4>
+  <hr/>
+
+  <div class="form-group" >    
+    <input type="text" class="form-control"  placeholder="Enter name here" [ngClass]="{ 'is-invalid': submitted && membershipForm.controls.name.errors }" formControlName="name">
+    <div *ngIf="submitted && membershipForm.controls.name.errors" class="invalid-feedback">
+        <div *ngIf="membershipForm.controls.name.errors.required">Name is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <ejs-richtexteditor class="form-control" [ngClass]="{ 'is-invalid': submitted && membershipForm.controls.description.errors }" formControlName="description" [toolbarSettings]='tools' placeholder="Enter description here"></ejs-richtexteditor>
+    <div *ngIf="submitted && membershipForm.controls.description.errors" class="invalid-feedback">
+        <div *ngIf="membershipForm.controls.description.errors.required">Description is required</div>
+    </div>    
+  </div>
+
+  <div class="form-group">
+    <ejs-richtexteditor class="form-control" [ngClass]="{ 'is-invalid': submitted && membershipForm.controls.confirmation_message.errors }" formControlName="confirmation_message" [toolbarSettings]='tools' placeholder="Enter confirmation message here"></ejs-richtexteditor>
+    <div *ngIf="submitted && membershipForm.controls.confirmation_message.errors" class="invalid-feedback">
+        <div *ngIf="membershipForm.controls.confirmation_message.errors.required">Confirmation Message is required</div>
+    </div>    
+  </div>
+  <hr/> 
+  
+  <h4>Billing Details</h4>
+  <br/>
+
+  <div class="form-inline form-group">
+    <label for="Initial Payment"> Initial Payment :</label>
+    <input type="text" class="form-control mx-sm-3" [ngClass]="{ 'is-invalid': submitted && membershipForm.controls.initial_payment.errors }" placeholder="$" formControlName="initial_payment">
+    <small  class="text-muted">
+      The initial amount collected at registration.
+    </small>
+    <div *ngIf="submitted && membershipForm.controls.initial_payment.errors" class="invalid-feedback">
+      <div *ngIf="membershipForm.controls.initial_payment.errors.required">Initial payment is required</div>
+   </div> 
+  </div>  
+
+  <div class="form-group row" >  
+    <div class="col-sm-2">Recurring Subscription:</div>
+    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+      <input type="checkbox" class="custom-control-input" id="customControlInline" formControlName="recurringSubs">     
+      <label class="custom-control-label" for="customControlInline">Check if this level has a recurring subscription payment.</label>
+    </div>
+  </div> 
+
+
+  <div [hidden]="!membershipForm.get('recurringSubs').value">
+  
+    <div class="form-inline form-group" >
+        <label for="Billing Amoun"> Billing Amount:</label>
+        <input type="text" class="form-control mx-sm-3" placeholder="$" formControlName="billing_amount">
+
+        <label  for="per">per</label>
+        <div class="col-sm-3 my-1">
+            <label class="sr-only" for="inlineFormInputName">Name</label>
+            <input type="text" class="form-control" id="inlineFormInputName" placeholder="" formControlName="cycle_number">
+        </div>
+
+        <div class="col-auto my-1">
+            <select class="custom-select mr-sm-2" formControlName="cycle_period">           
+              <option value="day">Day(s)</option>
+              <option value="week">Week(s)</option>
+              <option value="month">Month(s)</option>
+              <option value="year">Year(s)</option>            
+            </select>
+          
+        </div>      
+
+    </div> 
+
+    <div class="form-inline form-group">
+        <label for="Billing Cycle Limit"> Billing Cycle Limit:	</label>
+        <input type="text" class="form-control mx-sm-3" formControlName="billing_limit">
+    </div>
+
+    <div class="form-group row">  
+        <div class="col-sm-2">Custom Trial:	</div>
+        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+          <input type="checkbox" class="custom-control-input" id="customControl" formControlName="customTrial">
+          <label class="custom-control-label" for="customControl">Check to add a custom trial period.</label>
+        </div>
+    </div> 
+
+    <div class="form-inline form-group" [hidden]="!membershipForm.get('customTrial').value">
+        <label for="Trial Billing Amount"> Trial Billing Amount:</label>
+        <input type="text" class="form-control mx-sm-3" placeholder="$" formControlName="trial_amount">
+        <label  for="per">for the first</label>
+        <div class="col-sm-3 my-1">
+            <label class="sr-only" for="inlineFormInputName">Name</label>
+            <input type="text" class="form-control" id="inlineFormInputName" placeholder="subscription payments." formControlName="trial_limit">
+        </div>   
+    </div> 
+
+  </div>
+
+  <h4>Other Settings</h4>
+  <br/>
+
+ 
+  <div class="form-group row">  
+      <div class="col-sm-2">Disable New Signups:		</div>
+      <div class="custom-control custom-checkbox my-1 mr-sm-2">
+        <input type="checkbox" class="custom-control-input" id="signUps"  formControlName="allow_signups" >
+        <label class="custom-control-label" for="signUps"> Check to hide this level from the membership levels page and disable registration.
+          </label>
+      </div>
+  </div>
+
+  <div class="form-group row">  
+      <div class="col-sm-2">Membership Expiration:		</div>
+      <div class="custom-control custom-checkbox my-1 mr-sm-2">
+        <input type="checkbox" class="custom-control-input"  id="membershipExp" formControlName="membershipExp">
+        <label class="custom-control-label" for="membershipExp"> Check this to set when membership access expires.</label>
+      </div>
+  </div>
+
+  <div class="form-inline form-group" [hidden]="!membershipForm.get('membershipExp').value">
+      <label for="Billing Amoun"> Expires In:	</label>
+      <input type="text" class="form-control mx-sm-3" placeholder="" formControlName="expiration_number">      
+
+      <div class="col-auto my-1">
+          <select class="custom-select mr-sm-2"  formControlName="expiration_period">           
+            <option value="day">Day(s)</option>
+            <option value="week">Week(s)</option>
+            <option value="month">Month(s)</option>
+            <option value="year">Year(s)</option>            
+          </select>
+         
+       </div>      
+
+  </div>
+
+  <div class="form-group row">  
+    <div class="col-sm-2">Expiration Date:		</div>
+    <div class="col-xs-12 col-12 col-md-4 form-group">
+      <input type="text"
+             placeholder="Datepicker"           
+             class="form-control"
+             bsDatepicker           
+             formControlName="expiration_date"
+             >
+    </div>
+</div>
+  
+  
+
+  <hr/>  
+  <button type="submit"  class="btn btn-primary">Submit</button>  
+  <hr/>
+
+</form>

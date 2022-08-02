@@ -1,0 +1,51 @@
+<div *ngIf="updatePassword" class="update-password"><strong>{{updatePassword}}</strong></div>
+<div class="page-title">
+  <div class="container">
+    <div class="row align-items-center ">
+      <div class="col">
+        <h1>Update<span> | Afiliate Profile</span></h1>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/affiliate/dashboard']"  class="page-title-anchor">Back to Profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading mainloading" *ngIf="loader">
+  <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
+</div>
+<strong *ngIf="serverErrors" class="unauth">{{serverErrors}}</strong>
+<div class="update-profile-form" *ngIf="userData.length != 0">
+  <form autocomplete="off" [formGroup]="updateProfileForm" (ngSubmit)="updateRrofile()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label><b>Twitter Account</b></label>
+          <div class="form-control" >
+            <input type="text" placeholder="Enter Twitter Account" name="name" formControlName="twitter_account" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label><b>Paypal Email</b></label>
+          <div class="form-control" >
+            <input type="text" placeholder="Enter Paypal Email" name="name" formControlName="paypal_email" >
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
+    <div *ngIf="updateRes">
+      <br>
+      <p  class="alert alert-success">{{ updateRes }}</p>
+    </div>
+    <div *ngIf="disable_register" class="loading"></div>
+    <div class="row">
+      <div class="col">                      
+        <div class="form-group">
+          <button class="actionButton" [disabled]="updateProfileForm.invalid || disable_register" *ngIf="!disable_button" type="submit" >Update</button>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

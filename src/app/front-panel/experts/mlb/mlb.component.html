@@ -1,0 +1,38 @@
+<div class="rept" id="{{i + 1}}" *ngFor="let expert of Experts; let i = index">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <div class="img-holder">
+          <img src="../../../../assets/images/experts/{{expert.avatar}}" alt="" class="img-fluid">
+        </div>
+      </div>
+      <div class="col">
+        <div class="desc">
+          <h2 class="article-title">
+            {{expert.name}}
+          </h2>
+          <div [innerHTML]="expert.bio">
+            
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="expertIn">
+                Expertise In:
+                <ul>
+                  <li *ngFor="let tool of expert.tool; let i = index">
+                    {{tool}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-auto">
+              <a [routerLink]="['/chat']" class="btn-picks">{{expert.button_text}}</a>    
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  

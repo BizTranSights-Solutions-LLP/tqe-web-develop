@@ -1,0 +1,43 @@
+<div class="table table-striped">
+  <table id="team-filter" class="table table-sm">
+    <thead>
+      <tr>
+        <th class="text-left">Team</th>
+        <th>Opp Pace</th>
+        <th>Team Total</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of slate.teams">
+        <td class="text-left">
+          <div class="player">
+            <div class="team">
+              <img src="../../../assets/images/logos/nba/{{team.abbr}}.png" [alt]="team.abbr">
+            </div>
+            <div class="player-data">
+              <b>{{team.first_name}} {{team.last_name}}</b><br>
+              <small><span *ngIf="team.is_home">vs.</span><span *ngIf="!team.is_home">@</span> {{team.opponent}}</small>
+            </div>
+          </div>
+        </td>
+        <td>{{ team.pace }}</td>
+        <td>{{ team.TT }}</td>
+        <td class="action">
+          <button type="button" 
+                  class="btn btn-sm" 
+                  (click)="excludeTeam(team.abbr)"
+                  [ngClass]="team.isExcluded() ? 'disabled' : 'btn-outline-danger'" 
+                  ><i class="fas fa-times"></i> Exclude All</button>
+        </td>
+        <td class="action">
+          <button type="button" 
+                  class="btn btn-sm" 
+                  (click)="includeTeam(team.abbr)"
+                  [ngClass]="team.isIncluded() ? 'disabled' : 'btn-outline-success'" 
+                  ><i class="fas fa-check"></i> Include All</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

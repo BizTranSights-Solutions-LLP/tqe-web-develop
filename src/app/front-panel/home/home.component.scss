@@ -1,3 +1,143 @@
+
+.bg-div{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(94,132,162,1) 0%, rgba(193,229,220,1) 51%, rgba(154,197,130,1) 85%);
+height:auto;
+width: 100%;
+}
+.crouser-head-line1{
+  margin-top: 3rem;
+    text-align: center;
+   font-size: 2.4rem;
+   color: white;
+   font-weight: 700;
+   
+}
+.crouser-head-line2{
+  margin-top: 2rem;
+  text-align: center;
+   font-size: 2.4rem;
+   color: white;
+   font-weight: 700;
+   line-height: normal;
+}
+.main-div-btn{
+  margin-top: 4rem;
+  text-align: center;
+}
+.btn-Impact{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: white;
+}
+.btn-ref{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 13rem;
+}
+.btn-Ytqe{
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color:#3b9300;
+  width: 13rem;
+}
+.btn-sub{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 13rem;
+}
+
+.main-div-btn-2{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 21rem;
+    justify-content:center;
+}
+
+
+@media (min-width: 1537px) {
+ .img-team{
+  width: 100%;
+ }
+.main-div-btn-2{
+  margin-top: 5rem;
+}
+.btn-Impact{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: white;
+}
+.btn-ref{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 15rem;
+}
+.btn-Ytqe{
+  color: white;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color:#3b9300;
+  width: 15rem;
+}
+.btn-sub{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 15rem;
+}
+}
+
+
+
+
+
+
+//Privious code
 #main-call-to-action {
   background:#18B219 url('../../../assets/images/splash-bg.jpg') center -200px no-repeat;
   background-size:80%;
@@ -1405,4 +1545,90 @@ div /deep/ .title .loading::before {
     width: 100%;
     padding-bottom: 160%;
   }
+}
+
+//My Media Query
+@media (min-width: 210px) and (max-width: 420px) {
+  .crouser-head-line1{
+    margin-top: 1rem;
+      text-align: center;
+     font-size: 1.1rem;
+     color: white;
+     font-weight: bold;
+     line-height:1.2
+     
+  }
+  .crouser-head-line2{
+    margin-top: 1rem;
+      text-align: center;
+     font-size: 1.1rem;
+     color: white;
+     font-weight: bold;
+     line-height: normal
+  }
+  .player-1-img{
+    margin-top: 5rem;
+  }
+  .player-2-img{
+    margin-top: 5rem;
+  }
+  .btn-Impact{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.3rem;
+    // padding-bottom: 0.3rem;
+    font-size: 0.7rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: white;
+    width: 7rem;
+  }
+  .main-div-btn{
+    margin-top: 1rem;
+  }
+  .main-div-btn-2{
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 15rem;
+      justify-content:center;
+  }
+  .btn-ref{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: #9ec981;
+    width: 8rem;
+  }
+  .btn-Ytqe{
+    color: white;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color:#3b9300;
+    width: 8rem;
+  }
+  .btn-sub{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: #9ec981;
+    width: 8rem;
+  }
+  .img-team{
+    width: 100%;
+   
+   }
 }

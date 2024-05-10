@@ -137,9 +137,9 @@ export class NbaBestBetsComponent implements OnInit {
             g.sp_pick = g.spread_pick;
             g.ou_pick = g.total_pick;
             // if (moment(g.schedule).isSame(moment(), 'day')) {
-            if (moment(g.schedule).isSame(moment(), 'week')) {
+            //if (moment(g.schedule).isSame(moment(), 'week')) { //TODO Remove this if for only this week data
               this.games_today.push(g);
-            }
+            //}
           });
         },
         fail => {

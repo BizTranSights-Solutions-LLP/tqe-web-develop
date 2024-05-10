@@ -1,3 +1,143 @@
+
+.bg-div{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(94,132,162,1) 0%, rgba(193,229,220,1) 51%, rgba(154,197,130,1) 85%);
+height:auto;
+width: 100%;
+}
+.crouser-head-line1{
+  margin-top: 3rem;
+    text-align: center;
+   font-size: 2.4rem;
+   color: white;
+   font-weight: 700;
+   
+}
+.crouser-head-line2{
+  margin-top: 2rem;
+  text-align: center;
+   font-size: 2.4rem;
+   color: white;
+   font-weight: 700;
+   line-height: normal;
+}
+.main-div-btn{
+  margin-top: 4rem;
+  text-align: center;
+}
+.btn-Impact{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: white;
+}
+.btn-ref{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 13rem;
+}
+.btn-Ytqe{
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color:#3b9300;
+  width: 13rem;
+}
+.btn-sub{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 13rem;
+}
+
+.main-div-btn-2{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 21rem;
+    justify-content:center;
+}
+
+
+@media (min-width: 1537px) {
+ .img-team{
+  width: 100%;
+ }
+.main-div-btn-2{
+  margin-top: 5rem;
+}
+.btn-Impact{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: white;
+}
+.btn-ref{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 15rem;
+}
+.btn-Ytqe{
+  color: white;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color:#3b9300;
+  width: 15rem;
+}
+.btn-sub{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  background-color: #9ec981;
+  width: 15rem;
+}
+}
+
+
+
+
+
+
+//Privious code
 #main-call-to-action {
   background:#18B219 url('../../../assets/images/splash-bg.jpg') center -200px no-repeat;
   background-size:80%;
@@ -11,6 +151,7 @@
 
   }
   .splash-text {
+    line-height: 220%;
     color:white;
     text-transform:uppercase;
 
@@ -43,23 +184,23 @@
     }
     .l-3 {
       font-size:36px;
-      font-family: Montserrat,sans-serif;
       font-weight:normal;
+      font-family: Montserrat,sans-serif;
       letter-spacing:3px;
       text-shadow:0 0 4px rgba(0,0,0,0.35);
       line-height:1.0em;
     }
     .l-4 {
       font-size:36px;
+      text-shadow:0 0 16px rgba(156, 156, 156, 0.5);
       font-family: Montserrat,sans-serif;
-      text-shadow:0 0 16px rgba(0,0,0,0.5);
       font-weight:900;
       line-height:1.0em;
     }
     .l-5 {
       font-size:48px;
-      font-family: Montserrat,sans-serif;
       text-shadow:0 0 16px rgba(0,0,0,0.5);
+      font-family: Montserrat,sans-serif;
       font-weight:900;
       line-height:1.0em;
     }
@@ -116,7 +257,6 @@
       }
     }
   }
-  
   .bTN-Ytqe {
     height: 51px;
     width: 208px;
@@ -131,14 +271,10 @@
     .bTN-Ytqe {
       height: 40px;
       width: 140px;
-      border-radius: 3px;
-      background-color: #FFFFFF;
-      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
-      float: left;
-      text-align: center;
       padding: 10px 10px 10px 1px;
     }
   }
+
   .bTN-Ytqe {
     img {float: left;}
   }
@@ -147,8 +283,8 @@
     overflow: hidden;
     color: #383838;
     font-size: 10px;
-    font-family: Montserrat,sans-serif;
     font-weight: 500;
+    font-family: Montserrat,sans-serif;
     line-height: 11px;
     text-align: left;
     padding: 0 0 0 5px;
@@ -208,7 +344,6 @@
       }
     }
     &.current {
-      width: 110%;
       background-color: white;
       h2 {
         color:#343a40;
@@ -235,8 +370,8 @@
     float: right;
     padding-left: 15px;
   }
-}
 
+}
 @media (min-width: 210px) and (max-width: 420px) {
   .success-text {
     flex: 0 0 50%;
@@ -272,6 +407,7 @@
   color: #75889B;
   font-size: 18.11px;
   font-weight: 600;
+  font-family: Montserrat,sans-serif;
   letter-spacing: 5.9px;
   line-height: 23px;
   display: block;
@@ -295,7 +431,6 @@
   display: block;
   color: #fff;
   font-size: 89.25px;
-  font-family: Montserrat,sans-serif;
   font-weight: 900;
   line-height: 74px;
   letter-spacing: -4.7px;
@@ -334,14 +469,6 @@
   font-family: Montserrat,sans-serif;
   line-height: 1;
 }
-// @media (min-width: 210px) and (max-width: 420px) {
-//   .bTN-Ytqe strong {
-//     display: block;
-//     font-size: 9px;
-//     line-height: 1;
-//   }
-// }
-
 .bTN-.bTN_banner {
   width: 310px;
   float: left;
@@ -414,17 +541,9 @@ div /deep/ .bTN_view {
 }
 @media (min-width: 210px) and (max-width: 420px) {
   div /deep/ .bTN_view {
-    display: block;
-    margin: 0 auto;
-    color: #FFF;
-    font-family: 'ProximaNovaA-Extrabld';
     font-size: 14px;
-    line-height: 30px;
-    text-align: center;
+    line-height: 15px;
     height: 40px;
-    max-width: 310px;
-    border-radius: 4px;
-    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
   }
 }
 div /deep/ .bTN_view:hover {
@@ -432,7 +551,6 @@ div /deep/ .bTN_view:hover {
   color: #ECECEC;
   text-decoration: none;
 }
-
 .tool-img-holder {
   position: relative;
   text-align: center;
@@ -1231,8 +1349,8 @@ div /deep/ .title .loading::before {
   }
   .win .results strong {
     font-size: 36px;
-    font-family: Montserrat,sans-serif;
     line-height: 30px;
+    font-family: Montserrat,sans-serif;
   }
   .win .results strong sub { color: #62C239;}
   .win .btn-picks { font-size: 15px; }
@@ -1376,7 +1494,6 @@ div /deep/ .title .loading::before {
   .expert-members .top-tweets .name {white-space: normal}
   .banner .bTN-Ytqe {margin: 0 0 20px;}
 }
-
 @media only screen and (max-width:500px) {
   owl-carousel /deep/ .owl-carousel {margin:0;}
   #promo .col-sm-4 {order: 1}
@@ -1420,13 +1537,98 @@ div /deep/ .title .loading::before {
     margin: 10px 0 0;
   }
 }
-
 @media (min-width: 210px) and (max-width: 420px) {
-    .introduction{
-      display: flex;
+  .introduction{
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 100%;
+    padding-bottom: 160%;
+  }
+}
+
+//My Media Query
+@media (min-width: 210px) and (max-width: 420px) {
+  .crouser-head-line1{
+    margin-top: 1rem;
+      text-align: center;
+     font-size: 1.1rem;
+     color: white;
+     font-weight: bold;
+     line-height:1.2
+     
+  }
+  .crouser-head-line2{
+    margin-top: 1rem;
+      text-align: center;
+     font-size: 1.1rem;
+     color: white;
+     font-weight: bold;
+     line-height:normal
+  }
+  .player-1-img{
+    margin-top: 5rem;
+  }
+  .player-2-img{
+    margin-top: 5rem;
+  }
+  .btn-Impact{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.3rem;
+    // padding-bottom: 0.3rem;
+    font-size: 0.7rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: white;
+    width: 7rem;
+  }
+  .main-div-btn{
+    margin-top: 1rem;
+  }
+  .main-div-btn-2{
+    display: flex;
       flex-direction: column;
-      height: 500px;
-      width: 100%;
-      padding-bottom: 160%;
-    }
+      align-items: center;
+      height: 15rem;
+      justify-content:center;
+  }
+  .btn-ref{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: #9ec981;
+    width: 8rem;
+  }
+  .btn-Ytqe{
+    color: white;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color:#3b9300;
+    width: 8rem;
+  }
+  .btn-sub{
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    font-weight: bold;
+    background-color: #9ec981;
+    width: 8rem;
+  }
+  .img-team{
+    width: 100%;
+   
+   }
 }

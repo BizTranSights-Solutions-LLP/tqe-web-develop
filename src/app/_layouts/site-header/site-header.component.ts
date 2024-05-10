@@ -25,6 +25,7 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
   burgerMenu:boolean = false;
   is_admin:boolean = false;
   searchBarDrop:boolean = false;
+  typeofComponent: string = 'light';
 
   selectTool:string = 'All';
   forgot_pass_error:string = '';
@@ -76,7 +77,7 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
         {label: 'NCAAB Picks', loggedInURL: '/tool/best-bets/cb', loggedOutURL: '/tool/best-bets/cb'},
         {label: 'NCAAF Picks', loggedInURL: '/tool/best-bets/cf', loggedOutURL: '/tool/best-bets/cf'},
         {label: 'NHL Picks', loggedInURL: '/tool/best-bets/nhl', loggedOutURL: '/tool/best-bets/nhl'},
-        {label: 'Statistical Surveillance', loggedInURL: '/', loggedOutURL: '/'},
+        //{label: 'Statistical Surveillance', loggedInURL: '/', loggedOutURL: '/'},
         
         // {label: 'Today\'s NCAA Basketball Picks', loggedInURL: '/tool/best-bets/cb', loggedOutURL: '/tool/best-bets/cb'},
         // {label: 'MLB', loggedInURL: '', loggedOutURL: ''},
@@ -113,7 +114,8 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
       event => {
         if(event instanceof NavigationStart) {
           let url = event.url;
-          let module_name = url.substring(1, url.length).split('/')[0];
+		  
+		           let module_name = url.substring(1, url.length).split('/')[0];
           this.editBtn = module_name in this.dashboardUrls;
         }
       }
@@ -123,6 +125,15 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
   async ngOnInit() {
 
     let url = this.router.url;
+
+
+    if(url.includes("/best-bets") || url.includes("/nfl-player-impact") || url.includes("/nba-player-impact")){
+      this.typeofComponent = 'dark'
+
+    }else{
+      this.typeofComponent = 'light'
+    }
+
     let module_name = url.substring(1, url.length).split('/')[0];
     this.editBtn = module_name in this.dashboardUrls;
 

@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   curr_season_prediction: any;
   past_season_prediction: any;
   prediction_data: any = [];
-
+	loggedIn : boolean = false;
   bigTab: string = 'betting';
 
   Tools: any = [
@@ -169,7 +169,16 @@ export class HomeComponent implements OnInit {
       }
     );
     this.getHomepageData();
-  }
+	
+	if(this.authService.isUserLoggedIn() == true){
+      this.loggedIn = true;
+    }
+    else{
+      this.loggedIn = false;
+    }
+
+  }
+  
 
   private getHomepageData() {
     this.prediction_data = [];

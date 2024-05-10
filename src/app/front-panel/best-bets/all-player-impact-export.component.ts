@@ -67,6 +67,7 @@ export class AllPlayerExportImpactComponent implements OnInit {
       return false;
     }
     if (e.data.key == 'eyJtZXNzYWdlIjoiSldUIFJ1b') {
+    //if (e.data.key != 'eyJtZXNzYWdlIjoiSldUIFJ1b') {
       this.isAuthorized = true;
       console.log('access granted');
     }

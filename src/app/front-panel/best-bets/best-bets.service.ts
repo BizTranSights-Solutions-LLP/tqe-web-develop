@@ -309,8 +309,16 @@ export class BestBetsService {
 
   getIFNbaPlayerImpactData() {
     let url = environment.base_url + 'getIFNbaPlayerImpactData';
-
-    return this.http.get(url);
+    // changed on 2023-03-22 by BP
+    let header = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      // 'Authorization': localStorage.getItem('data') ? `Bearer ${JSON.parse(localStorage.getItem('data'))['jwt_token']}` : ''
+    });
+    return this.http.get('assets/nba_lineup.json', {headers: header});
+    //return this.getNbaPlayerImpactData();
+    //return this.http.get(url);
   }
 
 

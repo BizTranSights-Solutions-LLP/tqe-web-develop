@@ -26,7 +26,7 @@ export class LandingComponent implements OnInit {
   curr_season_prediction: any;
   past_season_prediction: any;
   prediction_data: any = [];
-
+	loggedIn : boolean = false;
   serverErrors: string = '';
   loader: boolean = true;
   bigTab: string = 'betting';
@@ -178,7 +178,20 @@ export class LandingComponent implements OnInit {
     );
     this.get_user_data();
     this.getHomepageData();
-  }
+	
+	
+	if(this.authService.isUserLoggedIn() == true){
+      this.loggedIn = true;
+    }
+    else{
+      this.loggedIn = false;
+    }
+
+  }
+	
+  
+
+
 
   private getHomepageData() {
     this.prediction_data = [];

@@ -1,39 +1,60 @@
-#masthead-top {
-  padding:10px 0;
-  background-color: darken(#18B219, 5%);
-}
 
+
+#masthead-top {
+  
+  background-color: white;
+}
+.width-cont{
+  width: 100%;
+}
+.super-main-div{
+  display: flex;
+  justify-content: flex-end;
+}
+.logo-tqe{
+  padding: 8px;
+}
+.resp-logo{
+  height: 3.7rem;
+  width: 5.8rem;
+}
 #main-nav {
+  width: 60%;
+  // margin-left: 32rem;
   .navbar {
     .nav {
       width:100%;
       .nav-item.dropdown {
-        &.show{
-          background: lighten(#343a40, 5%);
-        }
+        // &.show{
+        //   // background: lighten(#343a40, 5%);
+        //   background-color: black;
+        // }
         >a {
           font-size:16px;
-          color:white;
+          color:black;
           font-weight:bold;
           text-align:center;
         }
         @media (min-width: 210px) and (max-width: 420px) {
-          >a {
-            font-size:16px;
-            color:white;
-            font-weight:bold;
-            text-align:left;
-          }
+          // >a {
+          //   font-size:16px;
+          //   color:white;
+          //   font-weight:bold;
+          //   text-align:left;
+          // }
+         
+          
         }
         .dropdown-menu {
           &.show {
             width: 100%;
-            background: lighten(#343a40, 5%);
+            // background: lighten(#343a40, 5%);
+            background-color: white;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
           }
           .dropdown-item {
-            color:white;
+            color:black;
             font-size:14px;
             line-height: 24px;
             &:hover {
@@ -47,6 +68,8 @@
 }
 
 .overlay {
+  padding-top: 0px;
+  margin-top: 0px;
   position: fixed;
   top: 0;
   background: #000;
@@ -80,4 +103,50 @@
     width: 60px;
     height: 30px;
   }
+}
+
+.btn-outline-light{
+  border-radius: 1rem;
+  padding-left: 0.8rem;
+  padding-right: 1rem;
+  background-color: #000;
+}
+.drop-title{
+  color: white;
+}
+.btn.btn-sm.btn-outline-light:hover {
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+}
+// My Media Query
+@media (min-width: 210px) and (max-width: 420px) {
+  .resp-nav{
+    display: flex;
+    flex-direction: column;
+  }
+ .super-main-div{
+  margin-left: -20rem;
+ }
+ .nav-lgn-btn{
+  margin-left: -12rem;
+ }
+ .logo-tqe{
+  padding: 0px;
+}
+.btn-outline-light{
+  border-radius: 1rem;
+  padding-left: 0.8rem;
+  padding-right: 1rem;
+  background-color: #000;
+  // width: 8rem;
+}
+.name-btn{
+   width: 8rem;
+}
+
+.aft-log-btn{
+  margin-left: 5rem;
+}
+
 }

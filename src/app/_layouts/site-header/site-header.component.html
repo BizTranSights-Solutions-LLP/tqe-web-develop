@@ -46,7 +46,7 @@
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="/profile">Profile &amp; Settings</a>
+            <a class="dropdown-item" href="/profile" *ngIf="!is_whop_user">Profile &amp; Settings</a>
             <a class="dropdown-item" href="/admin" *ngIf="is_admin">Admin Dashboard</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="logOut()">Logout</a>

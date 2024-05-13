@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit,OnDestroy {
           console.log(res);
           this.disable_login = false;
           if(res.meta.code === 200) {
+            res.result.is_whop_user = false;
             localStorage.setItem('data', JSON.stringify(res.result));
             this.authService.logginEvent.emit(true);
             this.router.navigate(['landing']);
@@ -69,6 +70,10 @@ export class LoginComponent implements OnInit,OnDestroy {
 
     }
 
+  }
+
+  authWithWhop(): string {
+    return `https://whop.com/oauth?client_id=${environment.whopClientId}&redirect_uri=${encodeURIComponent(environment.whopRedirectURI)}`;
   }
 
   ngOnDestroy() {

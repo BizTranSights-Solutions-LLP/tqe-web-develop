@@ -8,5 +8,6 @@ export interface UserData {
     type: Number,
     user_id: Number,
     verified: any,
-    jwt_token: string
+    jwt_token: string,
+    is_whop_user: boolean
 }

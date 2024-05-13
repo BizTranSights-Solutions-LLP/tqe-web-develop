@@ -68,7 +68,7 @@ export class AuthService {
 
   isUserLoggedIn(): boolean {
     const data = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null;
-
+    // Whop users have GZ account's auth code
     if (data && data.auth_code) {
       return true;
     }

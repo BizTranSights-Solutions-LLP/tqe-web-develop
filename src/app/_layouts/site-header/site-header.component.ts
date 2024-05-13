@@ -24,6 +24,7 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
   overLay:boolean = false;
   burgerMenu:boolean = false;
   is_admin:boolean = false;
+  is_whop_user:boolean = false;
   searchBarDrop:boolean = false;
   typeofComponent: string = 'light';
 
@@ -163,6 +164,9 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
             if(user_data.roles_status && (user_data.roles_status.is_admin || user_data.roles_status.is_editor || user_data.roles_status.is_author)) {
               this.is_admin = true;
             }
+            if(user_data.is_whop_user) {
+              this.is_whop_user = true;
+            }
           }
         }
       }
@@ -181,6 +185,7 @@ export class SiteHeaderComponent implements OnInit,OnDestroy {
         if(res) {
           this.loggedIn = false;
           this.is_admin = false;
+          this.is_whop_user = false;
         }
       }
     )

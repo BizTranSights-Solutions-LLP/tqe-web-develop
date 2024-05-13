@@ -148,6 +148,8 @@ import {IfNcaafComponent} from './front-panel/ifream-picks/if-ncaaf/if-ncaaf.com
 import {IfNhlComponent} from './front-panel/ifream-picks/if-nhl/if-nhl.component';
 import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 
+// whop
+import { WhopLoginComponent } from './auth/whop-login/whop-login.component';
 
 const routes: Routes = [
 
@@ -187,6 +189,7 @@ const routes: Routes = [
       {path: 'register', component: RegisterComponent},
       {path: 'reset-password', component: ResetPasswordComponent},
       {path: 'forget-password', component: ForgotPasswordComponent},
+      {path: 'whopCallback', component: WhopLoginComponent},
       {
         path: 'landing',
         loadChildren: './front-panel/landing/landing.module#LandingModule',
@@ -384,7 +387,8 @@ const routes: Routes = [
     IfMlbComponent,
     IfNcaabComponent,
     IfNcaafComponent,
-    IfNhlComponent
+    IfNhlComponent,
+    WhopLoginComponent
 
   ],
   imports: [

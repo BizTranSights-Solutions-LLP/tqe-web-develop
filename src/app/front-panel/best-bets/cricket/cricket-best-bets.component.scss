@@ -1,0 +1,345 @@
+.body {
+    font-size: 16px;
+    /* 1rem = 16px */
+    font-family: 'Chakra Petch', sans-serif;
+  }
+  
+  .game-logo {
+    width: 6em;
+    height: 5em;
+  }
+  
+  .main-container {
+    position: relative;
+    color: white;
+    font-style: normal;
+    padding-bottom: 10%;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+  }
+  
+  .main-container::before {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.85);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .container-fluid {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 1300px;
+    padding-top: 3%;
+    margin-bottom: 5em;
+  }
+  
+  .no-games-text {
+    text-align: center;
+    font-size: 2em;
+    padding-top: 3em;
+    color: #E8CA30;
+    animation: flash 1s infinite;
+    line-height: 2em;
+  }
+  
+  .main-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .game-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .league-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    flex-wrap: wrap;
+    max-width: 18em;
+  }
+  
+  .league-headers {
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0.3em 0.8em;
+    margin: 0.5em 0 0.5em 1em;
+    background: #111416;
+    border: 1px solid #999999;
+    border-radius: 2px;
+  }
+  
+  .league-headers:hover,
+  .league-headers.selected {
+    background: #454545;
+    border: 1px solid #FFFFFF;
+  }
+  
+  .game-week {
+    line-height: 1.5em;
+    font-size: 1.25em;
+    font-weight: 500;
+    margin-left: 1em;
+  }
+  
+  .game-body {
+    margin-top: 3em;
+  }
+  
+  .right-angled-triangle {
+    margin-left: -0.1em;
+    background-color: #13A211;
+    color: #13A211;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+    border-top-left-radius: 5%;
+    font-size: 1.5em;
+    padding: 0.35em 0em;
+  }
+  
+  .table-heading-section {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: -0.5em;
+  }
+  
+  .table-heading-text {
+    background-color: #13A211;
+    font-weight: 700;
+    font-size: 1.375em;
+    padding: 0.35em 0.7em;
+    font-family: 'Smooch Sans', sans-serif;
+    color: white;
+    border-top-right-radius: 8.5%;
+  }
+  
+  .table-legend-text {
+    display: flex;
+    flex-direction: row;
+    margin: -2.5em 0 1.5em auto;
+    font-size: 0.88em;
+    font-weight: 400;
+    justify-content: space-between;
+    flex: 1;
+    max-width: 21em;
+  }
+  
+  .green-circle {
+    display: inline-block;
+    align-items: center;
+    width: 0.75em;
+    height: 0.75em;
+    border-radius: 50%;
+    background-color: #AFE965;
+    margin-right: 0.5em;
+  }
+  
+  .red-circle {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    border-radius: 50%;
+    background-color: #E36794;
+    margin-right: 0.5em;
+  }
+  
+  .table-body {
+    background-color: #1B1C1D;
+    border: 1px solid #454545;
+    padding: 0 2em;
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 90vw;
+    // max-height: 60vh;
+    // overflow: scroll;
+  }
+  
+  table {
+    text-align: center;
+    margin-top: 1em;
+    
+  }
+  
+  thead {
+    position: sticky;
+    top: 1.25em;
+    padding-top: 3em;
+    // background-color: #1B1C1D;
+    vertical-align: center;
+  }
+  
+  thead tr {
+    vertical-align: middle;
+  }
+  
+  thead tr:last-child {
+    border-bottom: 1px solid #6c6c6c;
+    div {
+      margin-top: -1em;
+    }
+  }
+  
+  thead th, thead td {
+    color: #E8CA30;
+    font-size: 1.5em;
+    font-weight: lighter;
+    font-family: 'Smooch Sans', sans-serif;
+    padding-bottom: 1em;
+  }
+  
+  thead td {
+    font-size: 1em;
+  }
+  
+  th,
+  td {
+    div {
+      margin: auto;
+      margin-top: 0.75em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      max-width: 12em;
+      span {
+        width: 10ch;
+      }
+    }
+  }
+  
+  tbody {
+    color: white;
+  }
+  
+  .team-first-name {
+    font-family: 'Smooch Sans', sans-serif;
+    font-size: 1.25em;
+  }
+  
+  .team-name{
+    text-transform: uppercase;
+    margin-top: 0.5em;
+  }
+  
+  .at-text {
+    margin: 0.8em 0 -2.5em 0;
+    font-size: 0.75em;
+  }
+  
+  .stats-div-top {
+    padding-top: 0.25em;
+  }
+  
+  .stats-div-bottom {
+    padding-top: 2em;
+  }
+  
+  tr.away-team-info td {
+    vertical-align: middle;
+  }
+  
+  .team-logo {
+    padding-top: 1.5em;
+    text-align: left;
+
+    img {
+      width: 3em;
+      height: 3em;
+      margin-right: 0.25em;
+    }
+  }
+
+  tr.game-info {
+    border-bottom: 1px solid #6c6c6c;
+    td {
+      vertical-align: middle;
+      padding-bottom: 1.2em;
+    }
+  }
+  
+  tr.game-info:last-child {
+    border-bottom: none;
+  }
+  
+  .TQEHCP {
+    color: #E36794;
+  }
+  
+  .TQEP {
+    color: #AFE965;
+  }
+  
+  .hidden-text {
+    visibility: hidden;
+  }
+  
+  @keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  .started {
+    animation: flash 1s infinite;
+    color: #E8CA30;
+  }
+  
+  .loadersmall {
+    border: 5px solid #f3f3f3;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    border-top: 5px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .mobile-body {
+    font-size: 12px;
+    .container-fluid {
+      font-size: 1em;
+      width: 100%;
+      margin-top: 2em;
+    }
+  
+    td {
+      div {
+        width: 15em;
+      }
+    }
+  
+    .team-logo {
+      padding-top: 1.75em;
+    }
+  
+    .at-text {
+      margin: 0.8em 0 -3em 0;
+    }
+  
+    .main-header {
+      flex-direction: column;
+    }
+    
+    .league-info {
+      margin: auto;
+      max-width: 22em;
+    }
+  }
+  

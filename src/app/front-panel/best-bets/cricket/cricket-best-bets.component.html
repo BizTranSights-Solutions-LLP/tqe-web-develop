@@ -1,0 +1,184 @@
+<div class="body" [class.mobile-body]="isMobile">
+  <div class="main-container" *ngIf="!auth_loading" [ngStyle]="{
+  'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
+}">
+    <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day); let i=index;">
+      <div class="main-header">
+        <div class="game-header">
+          <div class="logo-section">
+            <img class="game-logo" [src]="game_logo">
+          </div>
+          <div class="game-week">
+            <span>{{gameDay}} Cricket Picks</span>
+          </div>
+        </div>
+        <div class="league-info" *ngIf="i === 0">
+          <div type="button" class="league-headers" *ngFor="let league of all_leagues" (click)="onClickLeague(league)"
+            [class.selected]="league === selected_league">
+            {{league}}
+          </div>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="table-top">
+          <div class="table-heading-section">
+            <div class="table-heading-text">Our Picks</div>
+            <div class="right-angled-triangle">TT</div>
+          </div>
+          <div class="table-legend-text">
+            <div>
+              <span class="green-circle"></span>
+              <span>TQE Picks</span>
+            </div>
+            <div>
+              <span class="red-circle"></span>
+              <span>TQE High Confidence Picks</span>
+            </div>
+          </div>
+        </div>
+        <div class="table-body">
+          <table *ngIf="!loading" class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col" rowspan="2" class="align-middle">TIME</th>
+                <th scope="col" rowspan="2" class="align-middle">HOME</th>
+                <th scope="col" rowspan="2" class="align-middle">AWAY</th>
+                <th scope="col" colspan="3" class="align-middle">MONEYLINE</th>
+              </tr>
+              <tr>
+                <td>
+                  <div>
+                    <span>Implied Prob</span>
+                    <span>Home</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </td>
+                <td *ngIf="league === 'Test'">
+                  <div>
+                    <span>Implied Prob</span>
+                    <span>Draw</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span>Implied Prob</span>
+                    <span>Away</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let game of games_by_day[gameDay]">
+                <tr class="game-info">
+                  <td>
+                    <p class="mb-2 started" *ngIf="game.started">
+                      Started
+                    </p>
+                    <p>
+                      {{ game.local_start_date }}, {{ game.local_start_time}}
+                    </p>
+                  </td>
+                  <td class="team-logo">
+                    <span>
+                      <img [src]="game.home_team_logo">
+                    </span>
+                    <span>
+                      {{ game.home_team }}
+                    </span>
+                  </td>
+                  <td class="team-logo">
+                    <span>
+                      <img [src]="game.away_team_logo">
+                    </span>
+                    <span>
+                      {{ game.away_team }}
+                    </span>
+                  </td>
+                  <td [class.TQEP]="isTQEP(game, 'h')" [class.TQEHCP]="isTQEHCP(game, 'h')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.m_h_improb*100 | number:'1.1-1' }}%
+                      </span>
+                      <span>
+                        {{ game.m_h_odds }}
+                      </span>
+                      <span>
+                        {{ game.m_h_prob*100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span class="hidden-text">NA</span>
+                      <span>{{ game.m_h_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td *ngIf="league === 'Test'" [class.TQEP]="isTQEP(game, 't')" [class.TQEHCP]="isTQEHCP(game, 't')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.m_t_improb*100 | number:'1.1-1' }}%
+                      </span>
+                      <span>
+                        {{ game.m_t_odds }}
+                      </span>
+                      <span>
+                        {{ game.m_t_prob*100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span class="hidden-text">NA</span>
+                      <span>{{ game.m_t_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td [class.TQEP]="isTQEP(game, 'a')" [class.TQEHCP]="isTQEHCP(game, 'a')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.m_a_improb*100 | number:'1.1-1' }}%
+                      </span>
+                      <span>
+                        {{ game.m_a_odds }}
+                      </span>
+                      <span>
+                        {{ game.m_a_prob*100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span class="hidden-text">NA</span>
+                      <span>{{ game.m_a_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loading" class="pt-5">
+      <div class="loadersmall"></div>
+    </div>
+    <div class="container-fluid" *ngIf="!loading && (games_by_day).length === 0">
+      <div class="main-header">
+        <div class="game-header">
+          <div class="logo-section">
+            <img class="game-logo" [src]="game_logo">
+          </div>
+          <div class="game-week">
+            <span>No Cricket Picks for league {{ selected_league }}</span>
+          </div>
+        </div>
+        <div class="league-info">
+          <div type="button" class="league-headers" *ngFor="let league of all_leagues" (click)="onClickLeague(league)"
+            [class.selected]="league === selected_league">
+            {{league}}
+          </div>
+        </div>
+      </div>
+      <p class="no-games-text">No upcoming games for league {{ selected_league }}</p>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,9 @@ export class DataService {
   popupToolVideo = new EventEmitter();
   editOnDashboard = new EventEmitter();
   getSearchValue = new Subject();
+  selectedNFLTeams = new BehaviorSubject<string>("");
+  selectedNBATeams = new BehaviorSubject<string>("");
+  selectedCricketTeams = new BehaviorSubject<string>("");
 
   preservedAllArticles = [];
   preservedBettingArticles = [];

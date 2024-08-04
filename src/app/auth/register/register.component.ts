@@ -24,6 +24,7 @@ import {CouponService} from '../../services/coupon.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+  bg_img = `../../../../assets/images/home_page/login_bg.jpg`
   title = 'angular-dynamic-form';
   feeForm: FormGroup;
 
@@ -261,7 +262,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         );
       } else {
-        this.frontErrorEmail = 'Your Email not matched';
+        this.frontErrorEmail = "Email addresses do not match. Please ensure both 'Email' and 'Confirm Email' are the same.";
       }
 
     }

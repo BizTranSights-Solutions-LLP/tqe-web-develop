@@ -1,301 +1,157 @@
 <div class="loading" *ngIf="loading"></div>
 
-<div class="page-title">
-  <span class="steps">
-    Step <strong>1</strong> of <strong [innerHtml]="loggedIn == true ? '2' : '3'"></strong>
-  </span>
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col">
-        <h1>Membership Plans <span> | Select Your Winning Plan Today!</span></h1>
-      </div>
+<div class="Membership_Plans" [ngStyle]="{
+  'background-image': 'url(' + background_img + ')'
+}">
+  <div class="container-fluid">
+    <div class="header">
+      <span>
+        <h4>Membership Plans | Select Your Winning Plan Today!</h4>
+      </span>
+      <span class="steps">
+        Step <strong>1</strong> of <strong [innerHtml]="loggedIn == true ? '2' : '3'"></strong>
+      </span>
     </div>
-  </div>
-</div>
-
-<div class="Membership_Plans">
-  <div class="packages">
-    <div class="container">
-
-      <h2 class="heading_sub">Free Trial</h2>
-      <div class="monthlyPass annual">
-        <div class="plans-table">
-          <div class="thead">
-            <div class="tr">
-              <div class="th"></div>
-              <div class="th">All-Inclusive 7-day Free Trial</div>
-            </div>
+    <div class="packages">
+      <div class="plan free-trial">
+        <div class="plan-header">
+          <span>
+            Free Trial
+          </span>
+          <span class="right-angled-triangle">&nbsp;</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-body-header">
+            <span>
+              <h5>All-Inclusive 7-day Free Trial</h5>
+            </span>
           </div>
-          <div class="tbody">
-            <div class="tr">
-              <div class="td">
-                <strong class="all"></strong>
-              </div>
-              <div class="td">
-                <div class="annual_description">
-                  <div class="fcol">
-                    <p class="price"><span class="green-text">$0.00</span><small>/day</small></p>
-                  </div>
-                  <div class="fcol">
-                    <p class="summary">All the tools for all the leagues. Auto-renewed to a monthly pass when the free
-                      trial expires without cancellation</p>
-                  </div>
-                  <div class="fcol">
-                    <button type="button" class="selectPackage" (click)="selectedPlan('month','annual_trial')"
-                            [disabled]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed"
-                            [innerHTML]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed ? 'Selected Plan' : 'Select Plan'"></button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <hr />
+          <div class="plan-body-data">
+            <span class="price">Free</span>
+            <span class="plan-info">
+              All the tools for all the leagues. Auto-renewed to a monthly pass when the free
+              trial expires without cancellation
+            </span>
+            <span class="subscription-button">
+              <button type="button" class="btn selectPackage" (click)="selectedPlan('month','annual_trial')"
+                [disabled]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed"
+                [innerHTML]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed ? 'Selected Plan' : 'Select Plan'"></button>
+            </span>
           </div>
         </div>
       </div>
 
-      <h2 class="heading_sub">Annual Plan (Most Popular)</h2>
-      <div class="monthlyPass annual">
-        <div class="plans-table">
-          <div class="thead">
-            <div class="tr">
-              <div class="th"></div>
-              <div class="th">All SPORTS, ALL PLANS, ALL YEAR</div>
-            </div>
+      <div class="plan annual">
+        <div class="plan-header">
+          <span>
+            Annual Plan (<span class="flashing-text">Most Popular</span>)
+          </span>
+          <span class="right-angled-triangle">&nbsp;</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-body-header">
+            <span>
+              <h5>All Sports, All Plans for a Year</h5>
+            </span>
           </div>
-          <div class="tbody">
-            <div class="tr">
-              <div class="td">
-                <strong class="all">Paid Once Annually for $239.99</strong>
-              </div>
-              <div class="td">
-                <div class="annual_description">
-                  <div class="fcol">
-                    <p class="save">SAVE $360</p>
-                    <p class="price"><span class="green-text">$19.99</span><small>/month</small></p>
-                  </div>
-                  <div class="fcol">
-                    <p class="summary">Best Value: Get our betting and fantasy plans for ALL sports for one year and
-                      SAVE 60%!</p>
-                  </div>
-                  <div class="fcol">
-                    <button type="button" class="selectPackage" (click)="selectedPlan('month','annual_passes')"
-                            [disabled]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed"
-                            [innerHTML]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed ? 'Selected Plan' : 'Select Plan'"></button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <hr />
+          <div class="plan-body-data">
+            <span class="price">
+              <p>Paid Annually - $239</p>
+              <p>( $19.99 / month )</p>
+            </span>
+            <span class="plan-info">
+              Best Value: Get our betting and fantasy plans for ALL sports for one year and SAVE 60% ( USD 360 )
+            </span>
+            <span class="subscription-button">
+              <button type="button" class="btn selectPackage" (click)="selectedPlan('month','annual_passes')"
+                [disabled]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed"
+                [innerHTML]="monthlyPasses?.all_sports?.annual_passes.initial_payment === '' || monthlyPasses?.all_sports?.annual_passes.is_subscribed ? 'Selected Plan' : 'Select Plan'"></button>
+            </span>
           </div>
         </div>
       </div>
 
-      <h2 class="heading_sub">Monthly Pass</h2>
-      <div class="monthlyPass annual">
-        <div class="plans-table">
-          <div class="thead">
-            <div class="tr">
-              <div class="th"></div>
-              <div class="th">The Monthly All-Inclusive Plan</div>
-            </div>
+      <div class="plan annual">
+        <div class="plan-header">
+          <span>
+            Monthly Pass
+          </span>
+          <span class="right-angled-triangle">&nbsp;</span>
+        </div>
+        <div class="plan-body">
+          <div class="plan-body-header">
+            <span>
+              <h5>The Monthly All-Inclusive Plan</h5>
+            </span>
           </div>
-          <div class="tbody">
-            <div class="tr">
-              <div class="td">
-                <strong class="all">Paid Monthly</strong>
-              </div>
-              <div class="td">
-                <div class="annual_description">
-                  <div class="fcol">
-                    <!-- <p class="save">Great Price</p> -->
-                    <p class="price"><span class="green-text">$49.99</span><small>/month</small></p>
-                  </div>
-                  <div class="fcol">
-                    <p class="summary">All the tools for all the leagues.</p>
-                  </div>
-                  <div class="fcol">
-                    <button type="button" class="selectPackage secondary"
-                            (click)="selectedPlan('month','all_inclusive')"
-                            [disabled]="monthlyPasses?.all_sports?.all_inclusive.initial_payment === '' || monthlyPasses?.all_sports?.all_inclusive.is_subscribed"
-                            [innerHTML]="monthlyPasses?.all_sports?.all_inclusive.initial_payment === '' || monthlyPasses?.all_sports?.all_inclusive.is_subscribed ? 'Selected Plan' : 'Select Plan'"
-                    ></button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <hr />
+          <div class="plan-body-data">
+            <span class="price">
+              <p>Paid Monthly</p>
+              <p>( $49.99 / month )</p>
+            </span>
+            <span class="plan-info">
+              All tools for all the leagues.
+            </span>
+            <span class="subscription-button">
+              <button type="button" class="btn selectPackage secondary" (click)="selectedPlan('month','all_inclusive')"
+                [disabled]="monthlyPasses?.all_sports?.all_inclusive.initial_payment === '' || monthlyPasses?.all_sports?.all_inclusive.is_subscribed"
+                [innerHTML]="monthlyPasses?.all_sports?.all_inclusive.initial_payment === '' || monthlyPasses?.all_sports?.all_inclusive.is_subscribed ? 'Selected Plan' : 'Select Plan'"></button>
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="why-subscribe">
-    <div class="container">
-      <h2 class="heading_sub">Frequently Asked Questions</h2>
-      <div class="whyTQE">
-        <div class="row no-gutters">
-          <div class="col">
-            <div class="subscribe">
-              <p>Why Should I<br> Subscribe to TQE?</p>
-            </div>
-          </div>
-          <div class="col">
-            <div class="tqe">
-              <button (click)="showModal()" class="bTN-Ytqe">
-                <img src="../../../assets/images/ico-tqe.png" alt="">
-                <span>
-                                    <strong>Why Choose TQE? </strong>Watch the 60 Sec Overview
-                                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="FAQs">
-        <div>
-          <h3>Will TQE send me an email before switching me from a free trial to a paid subscription?</h3>
-          <p>Yes! The day before your Free Week Trial ends you will be sent an email notifying you of the switch to a
-            paid subscription.</p>
-        </div>
-        <div>
-          <h3>How Do The Tools Work?</h3>
-          <p>Each tool is unique and designed to be simple to use. See how they work and how you can <a
-            [routerLink]="['/']"><strong>start winning today</strong></a>.</p>
-        </div>
-        <div>
-          <h3 style="font-family: Montserrat; font-size: 15px; font-weight: 900; line-height: 19px; margin: 0;">How Have
-            People Done Using Your Products?</h3>
-          <p>Our customers have won big and have been thrilled with the results!</p>
-        </div>
-      </div>
-      <div class="rel-images">
-        <div class="row">
-          <div class="col-md-4"><img class="img-fluid" src="../../../assets/images/TQE_1.jpg"></div>
-          <div class="col-md-4"><img class="img-fluid" src="../../../assets/images/TQE_2.jpg"></div>
-          <div class="col-md-4"><img class="img-fluid" src="../../../assets/images/TQE_3.jpg"></div>
-        </div>
-      </div>
-      <div class="FAQs">
-        <div>
-          <h3>How Has Your Betting Model Performed Historically?</h3>
-          <p>A $25 dollar bettor in NFL made $1207 since the tool launched! Hitting 59.7% of our total bets and 66% of
-            our
-            NFL Best Bets. We are transparent with all of our results and invite you to <a
-              [routerLink]="['/picks-history']"><strong>learn more</strong></a>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="theme-modal modal fade" id="player-pool" bsModal #seasonPassPopup="bs-modal">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content">
-
-      <div class="modal-body text-center">
-        <div class="Membership_Plans">
-          <div class="packages season_package">
-            <div class="container">
-              <h2 class="heading_sub">{{ selectedSeasonPass }} Season Passes</h2>
-              <div style="overflow-x: auto">
-                <div class="plans-table season_plans-table" *ngIf="selectedSeasonPass">
-                  <div class="thead">
-                    <div class="tr">
-                      <div class="th"></div>
-                      <div class="th">FANTASY PLAN</div>
-                      <div class="th">BETTING PLAN</div>
-                      <div class="th">ALL INCLUSIVE</div>
-                    </div>
-                  </div>
-                  <div class="tbody">
-                    <div class="tr">
-                      <div class="td"></div>
-                      <div class="td">
-
-                        <ng-container *ngIf="seasonPassesSelect.fantasy_plan">
-                          <img src="../../../assets/images/icon_checkmark.png">
-                        </ng-container>
-
-                        <ng-container *ngIf="!seasonPassesSelect.fantasy_plan">
-                          <strong>{{ selectSeasonFantasyPrice != '' ? '$' + selectSeasonFantasyPrice : '---' }}</strong>
-                        </ng-container>
-
-                        <span class="save"></span>
-                        <button type="button" class="selectPackage secondary"
-                                (click)="selectedPlan('season','fantasy_plan')"
-                                [disabled]="selectSeasonFantasyPrice === '' || selectSeasonFantasyPrice === '---' || seasonPassesSelect.fantasy_plan"
-
-                                [innerHTML]="selectSeasonFantasyPrice === '' || selectSeasonFantasyPrice || seasonPassesSelect.fantasy_plan ? 'Selected Plan' : 'Select Plan'"
-                        ></button>
-                      </div>
-                      <div class="td">
-                        <ng-container *ngIf="seasonPassesSelect.betting_plan">
-                          <img src="../../../assets/images/icon_checkmark.png">
-                        </ng-container>
-
-                        <ng-container *ngIf="!seasonPassesSelect.betting_plan">
-                          <strong>{{ selectSeasonBettingPrice != '' ? '$' + selectSeasonBettingPrice : '---' }}</strong>
-                        </ng-container>
-
-                        <span class="save"></span>
-                        <button type="button" class="selectPackage secondary"
-                                (click)="selectedPlan('season','betting_plan')"
-                                [disabled]="selectSeasonBettingPrice === '' || selectSeasonBettingPrice === '---' || seasonPassesSelect.betting_plan"
-                                [innerHTML]="selectSeasonBettingPrice === '' || selectSeasonBettingPrice || seasonPassesSelect.betting_plan ? 'Selected Plan' : 'Select Plan'"
-                        ></button>
-                      </div>
-                      <div class="td">
-                        <ng-container *ngIf="seasonPassesSelect.all_inclusive">
-                          <img src="../../../assets/images/icon_checkmark.png">
-                        </ng-container>
-
-                        <ng-container *ngIf="!seasonPassesSelect.all_inclusive">
-                          <strong>{{ selectSeasonAllPrice != '' ? '$' + selectSeasonAllPrice : '---' }}</strong>
-                        </ng-container>
-
-                        <span class="save"></span>
-                        <button type="button" class="selectPackage secondary"
-                                (click)="selectedPlan('season','all_inclusive')"
-                                [disabled]="selectSeasonAllPrice === '' || selectSeasonAllPrice === '---' || seasonPassesSelect.all_inclusive"
-                                [innerHTML]="selectSeasonAllPrice === '' || selectSeasonAllPrice || seasonPassesSelect.all_inclusive ? 'Selected Plan' : 'Select Plan'"
-                        ></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="theme-modal modal fade" id="player-pool" bsModal #serverErrorPopup="bs-modal">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <h2> {{ serverErrorMessage }} </h2>
-      </div>
-    </div>
-  </div>
-</div>
-<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal"
-     class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="dialog-auto-name" class="modal-title pull-left">Why Choose TQE?</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <iframe width="100%" height="500" src="https://www.youtube.com/embed/Fano265b8Zc" frameborder="0"
+    <hr />
+    <br />
+    <div class="why-subscribe">
+      <div class="container">
+        <h4 class="heading_sub">Frequently Asked Questions</h4>
+        <div class="FAQs">
+          <div class="mb-3">
+            <p class="question">Q. Why Should I Subscribe to TQE?</p>
+            <p>A. Watch the 60 Sec Overview</p>
+            <p class="mb-3 mt-3">
+              <iframe src="https://www.youtube.com/embed/Fano265b8Zc" frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
+            </p>
+          </div>
+          <div class="mb-3">
+            <p class="question">Q. Will TQE send me an email before switching me from a free trial to a paid
+              subscription?</p>
+            <p>A. Yes! The day before your Free Week Trial ends you will be sent an email notifying you of the switch to
+              a paid subscription.</p>
+          </div>
+          <div class="mb-3">
+            <p class="question">Q. How Do The Tools Work?</p>
+            <p>A. Each tool is unique and designed to be simple to use. See how they work and how you can <a
+                [routerLink]="['/']"><strong>start winning today</strong></a>.</p>
+          </div>
+          <div class="mb-3">
+            <p class="question">
+              Q. How Have People Done Using Your Products?</p>
+            <p>A. Our customers have won big and have been thrilled with the results!</p>
+          </div>
+        </div>
+        <div class="rel-images mb-3">
+          <div class="row">
+            <div class="col-md-4"><img class="img-fluid mb-3" src="../../../assets/images/TQE_1.jpg"></div>
+            <div class="col-md-4"><img class="img-fluid  mb-3" src="../../../assets/images/TQE_2.jpg"></div>
+            <div class="col-md-4"><img class="img-fluid  mb-3" src="../../../assets/images/TQE_3.jpg"></div>
+          </div>
+        </div>
+        <div class="FAQs pb-5">
+          <div>
+            <p class="question">Q. How Has Your Betting Model Performed Historically?</p>
+            <p>A. A $25 dollar bettor in NFL made $1207 since the tool launched! Hitting 59.7% of our total bets and 66% of
+              our
+              NFL Best Bets. We are transparent with all of our results and invite you to <a
+                [routerLink]="['/picks-history']"><strong>learn more</strong></a>.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>

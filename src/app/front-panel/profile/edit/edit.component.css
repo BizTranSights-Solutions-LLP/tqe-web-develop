@@ -1,393 +1,117 @@
-.update-password {
-    position: fixed;
-    top: 0;
-    background: #00000091;
-    height: 100%;
-    width: 100%;
-    z-index: 10;
-}
-.update-password strong {
-    display: block;
-    background: #fff;
-    color: green;
-    font-size: 20px;
-    padding: 20px;
+.header {
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .steps {
+    margin-top: -1em;
+    color: #E8CA30;
+}
+
+.update-profile-form {
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: lighter;
+    font-family: 'Chakra Petch', sans-serif;
+    color: white;
+    width: 100vw;
+    margin: 5em auto 0 auto;
+    min-height: 80vh;
+}
+
+.container {
+    text-align: left;
+    max-width: 55em;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    color: #E8CA30;
+    margin-bottom: 0;
+}
+
+h2,
+h4,
+h6,
+h5 {
+    font-weight: normal;
+    line-height: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+h2,
+h4,
+h6,
+.formTitle {
+    color: #13A211;
+}
+
+h5,
+.steps,
+.plan-name {
+    color: #E8CA30;
+}
+
+input,
+select {
+    padding: 0.5em 1em;
+    border: 2px solid #333;
+    background-color: transparent;
+    color: beige;
+    border-radius: 5px;
+}
+
+select {
+    padding: 1em;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: none;
+    border: 2px solid #727272;
+}
+
+span {
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+.login {
+    text-align: center;
+}
+
+.actionButton {
+    padding: auto;
+    width: 10em;
+    margin: 1em 0;
+}
+
+.password-section {
     position: relative;
-    top: 50%;
-    max-width: 1000px;
-    margin: -28px auto 0;
-}
-.mainloading.loading {
-    height: 100%;
-    padding: 150px 0 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    width: 100%;
-    background: #000;
-}
-.unauth {
-    display: block;
-    text-align: center;
-    padding: 100px 0;
-    color: red;
-    font-size: 25px;
 }
 
 .showMe {
-    opacity: 0.99;
-    color: #7A8897;
-    font-family: 'proxima_nova_altsemibold';
-    font-size: 12px;
-    line-height: 15px;
-    text-transform: uppercase;
     position: absolute;
-    top: 13px;
-    right: 10px;
-}
-.update-profile-form {
-    max-width: 492px;
-    margin: 100px auto;
-    position: relative;
-}
-.update-profile-form strong {
-    color: #000000;
-    padding: 0 0 15px;
-    font-size: 21px;
-    font-weight: 800;
-    line-height: 19px;
-    display: block;
-}
-.update-profile-form label {
-    color: #000000;
-    margin: 0;
-    font-size: 13px;
-    font-weight: 500 !important;
-    line-height: 15px;
-}
-.form-control {
-    padding: 5px 6px;
-    height: 40px;
-    border: 0.75px solid #B8B8B8;
-    background-color: #FFFFFF;
-    box-shadow: inset 0 4px 3px 0 #DEE7EF;
-    position: relative;
-}
-.form-group {
-    margin: 0;
-    position: relative;
-}
-.form-control input {
-    color: #989595;
-    width: 100%;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 16px;
-    border: none;
-    outline: none;
-    box-shadow: 0 100px 100px #fff inset;
-    height: 100%;
-}
-.update-profile-form button.actionButton {
+    right: 1em;
+    transform: translateY(2.8em);
     cursor: pointer;
-    height: 40px;
-    border-radius: 4px;
-    color: #fff;
-    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
-    font-size: 15px;	
-    font-weight: bold;	
-    line-height: 21px;	
-    text-align: center;
-    float: right;
-    width: 249px;
-    margin-top: 20px;
-}
-.update-profile-form button.actionButton[disabled] {
-    background: lightgray;
-    cursor: not-allowed;
-    color: #fff;
-}
-.serverErr {
-    position: absolute;
-    bottom: -100px;
-    width: 100%;
-    left: 0;
-    text-align: center;
+    color: gray;
 }
 
+@media (max-width: 768px) {
 
-button[disabled] {
-    background: lightgray !important;
-    cursor: not-allowed !important;
-    color: #fff !important;
-}
-.register-form {
-    max-width: 492px;
-    margin: 0 auto 50px;
-}
-.register-form strong {
-    color: #000000;
-    padding: 0 0 15px;
-    font-size: 21px;
-    font-weight: 800;
-    line-height: 19px;
-    display: block;
-}
-.register-form label {
-    color: #000000;
-    margin: 0;
-    font-size: 13px;
-    font-weight: 500 !important;
-    line-height: 15px;
-}
-.form-group + .form-group {margin-top: 17px;}
+    .header {
+        flex-direction: column;
+    }
 
-.register-form button.actionButton {
-    cursor: pointer;
-    color: #fff;    
-    font-size: 15px;	
-    font-weight: bold;	
-    line-height: 40px;	
-    text-align: center;
-    margin-top: 20px;    
-    height: 40px;	
-    width: 100%;	
-    border-radius: 4px;	
-    background: linear-gradient(180deg, #2A3540 0%, #000000 100%);
-}
-.register-form .showMe:hover span { color: #1BB31C; }
-.note {
-    color: #778AA0;
-    font-size: 9px;
-    font-weight: 500;
-    line-height: 14px;
-    margin-top: 25px;
-}
-.card-info .form-control.day {  width: 55px; }
-.card-info .form-control {
-    float: left;
-    margin-top: 2px;
-}
-.card-info .form-control.month {  width: 74px; }
-.card-info .form-control + .form-control {  margin-left: 10px; }
-.pormoCode {
-    width: 215px;
-    margin: -20px auto 30px;
-}
-.pormoCode .form-control {
-    width: 143px;
-    display: inline-block;
-    vertical-align: middle;
-}
-.pormoCode .actionButton {
-    display: inline-block;
-    vertical-align: middle;
-    height: 40px;
-    width: 59px;
-    border-radius: 3px;
-    color: #FFFFFF;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: -0.09px;
-    line-height: 14px;
-    text-align: center;
-    background-image: linear-gradient(180deg, #6ad239 0%, #18b219 100%);
-    margin-left: 4px;
-}
-.cardAcc {
-    color: #000000;
-    font-family: 'proxima_nova_altregular';
-    font-size: 14px;
-    font-style: italic;
-    line-height: 18px;
-    padding: 10px 0 0;
-}
-.info {
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-}
-.info .ico {
-    background: url('../../../../assets/images/ico-info.png') no-repeat;
-    width: 26px;
-    height: 26px;
-    display: inline-block;
-    vertical-align: top;
-}
-.info:hover .ico {background-position: 0 -26px;}
-.info .dropdown strong {
-    color: #000000;	
-    font-size: 14px;	
-    font-weight: bold;	
-    line-height: 18px;
-    display: block;
-    padding: 0 0 10px;
-}
-.info p {
-    color: #6E6E6E;	
-    font-size: 12px;	
-    line-height: 14px;    
-    font-weight: 400;
-    text-align: left;
-    padding: 0 10px;
-}
-.info p + p {margin-top: 10px;}
-.info .dropdown {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    width: 274.65px;	
-    border: 1px solid #CECECE;	
-    border-radius: 12px;	
-    background-color: #FFFFFF;	
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.11);
-    text-align: center;
-    display: none;
-    transform: translateX(-50%);
-    margin-bottom: 10px;
-    padding: 10px 10px 15px;
-}
-.info:hover .dropdown {display: block;}
-.info .dropdown::after {
-    background: url('../../../../assets/images/ico-dropdown.png') no-repeat;
-    width: 13px;
-    height: 10px;
-    bottom: 0;
-    right: 50%;
-    margin-right: -6px;
-    position: absolute;
-    content: '';
-    margin-bottom: -10px;
-}
-.cvv {
-    position: absolute;
-    top: 10px;
-    right: 5px;
-}
-.cvv .ico {
-    background: url('../../../../assets/images/ico-calander.png') no-repeat;
-    width: 22px;
-    height: 18px;
-}
-.cvv:hover .ico {background-position: 0 -18px;}
-.cvv .dropdown {
-    padding: 10px;
-}
-.cvv .dropdown .col strong {
-    text-align: left;
-    color: #434343;	
-    font-size: 11px;	
-    font-weight: 600;	
-    line-height: 14px;
-    padding: 0 0 5px;
-}
-.cvv .dropdown .col p {
-    padding: 0 0 20px;
-    color: #6E6E6E;	
-    font-size: 11px;	
-    line-height: 12px;
-}
-
-.error {
-    position: absolute;
-    top: 0;
-    width: 329px;
-    border: 2px solid #FFFFFF;
-    background-color: #D0021B;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
-    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
-    color: #fff;
-    right: -360px;
-    z-index: 99;
-    font-size: 13px;
-    font-style: italic;
-    font-weight: 600;
-    line-height: 19px;
-    padding: 7px 15px;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-}
-.error::after {
-    content: '';
-    background: url('../../../../assets/images/ico-dropdown-top-arrow.png') no-repeat;
-    position: absolute;
-    top: 7px;
-    left: -25px;
-    width: 34px;
-    height: 18px;
-    margin-left: 0;
-    transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-}
-@-webkit-keyframes scale-up-center {
-    0% {
-        opacity: 1;
-        z-index: 9;
-    }
-    50% {
-        opacity: 1;
-        z-index: 9;
-    }
-    80% {
-        opacity: 1;
-        z-index: 9;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-@keyframes scale-up-center {
-    0% {
-        opacity: 1;
-        z-index: 9;
-    }
-    50% {
-        opacity: 1;
-        z-index: 9;
-    }
-    80% {
-        opacity: 1;
-        z-index: 9;
-    }
-    100% {
-        opacity: 0;
-
-    }
-}
-.register-form .desclaim {
-    text-align: center;
-    padding: 10px 0;
-    font-size: 11px;
-    color: #2b4344;
-    margin: 10px 0 0;
-    box-shadow: 0 0 5px #21a73f;
-}
-div#wrapper {
-    background: linear-gradient(0deg, #E5FAFF 0%, #FFFFFF 100%);
-    box-shadow: inset 0 -1px 4px 0 #BAF0FF;
-}
-@media only screen and (max-width: 768px) {
-    .update-profile-form {
-        margin: 50px auto;
-        padding: 0 20px;
-    }
-}
-@media only screen and (max-width: 767px)  {
-    .error {
-        top: -29px;
-        right: 0;
-        padding: 2px;
-        border: none;
-        width: auto;
-        font-size: 10px;
-    }
-    .error::after {
-        top: 4px;
-        left: -16px;
-        height: 15px;
-        width: 24px;
-        background-size: 100%;
+    .container {
+        max-width: 95%;
     }
 }

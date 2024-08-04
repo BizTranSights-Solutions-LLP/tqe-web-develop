@@ -1,7 +1,18 @@
 <site-header></site-header>
-<div id="wrapper">
-  <div class="w1">
+
+<div class="wrapper" *ngIf="!isMobile && items && items.length > 0; else basicView">
+  <div class="sidebar">
+    <site-sidebar [items]="items"></site-sidebar>
+  </div>
+  <div class="main-content">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<ng-template #basicView>
+  <div class="wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
+
 <site-footer></site-footer>

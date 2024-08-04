@@ -1,383 +1,268 @@
-<div id="nba-best-bets" class="container best-bets">
-  <div *ngIf="games_today.length != 0" class="row">
-    <div class="col-md-12">
-      <div class="card shadow-lg mt-3 mb-5">
-        <div class="card-header">
-          <h5>Today's NBA Picks <small>{{ gameDate }}</small></h5>
-          <span class="tqe-pick">TQE Picks in Green</span>
-          <!-- <span class="tqe-high-pick">TQE Hight Confidence Picks</span> -->
+<div class="body" [class.mobile-body]="isMobile">
+  <div class="main-container" *ngIf="!auth_loading" [ngStyle]="{
+  'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
+}">
+    <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day)">
+      <div class="game-header">
+        <div class="logo-section">
+          <img class="game-logo" [src]="game_logo">
         </div>
-
-
-        <div class="wrapper">
-          <table *ngIf="!loading" class="bets-table all-bets table table-borderless mb-0 scroll">
-            <!--            head                -->
-            <thead class="thead-dark">
-            <tr>
-              <th scope="col">Time</th>
-              <th scope="col" colspan="2">Matchup</th>
-              <th scope="col" class="text-center">Implied Prob/Moneyline/TQE Prob</th>
-              <th scope="col" class="text-center">Spread Line/Odds/TQE Prob</th>
-              <th scope="col" class="text-center">Total Line/Odds/TQE Prob</th>
-            </tr>
+        <div class="game-week">
+          <span>{{gameDay}} NBA Picks</span>
+        </div>
+      </div>
+      <div class="game-body">
+        <div class="table-top">
+          <div class="table-heading-section">
+            <div class="table-heading-text">Our Picks</div>
+            <div class="right-angled-triangle">TT</div>
+          </div>
+          <div class="table-legend-text">
+            <div>
+              <span class="green-circle"></span>
+              <span>TQE Picks</span>
+            </div>
+            <div>
+              <span class="red-circle"></span>
+              <span>TQE High Confidence Picks</span>
+            </div>
+          </div>
+        </div>
+        <div class="table-body">
+          <table *ngIf="!loading" class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">
+                  Time
+                  <div></div>
+                </th>
+                <th scope="col">
+                  Matchup
+                  <div></div>
+                </th>
+                <th scope="col">
+                  Money Line
+                  <div>
+                    <span>Implied Prob</span>
+                    <span>Odds</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </th>
+                <th scope="col">
+                  Spread Line
+                  <div>
+                    <span>Spread</span>
+                    <span>Odds</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </th>
+                <th scope="col">
+                  Total Line
+                  <div>
+                    <span>Over/Under</span>
+                    <span>Odds</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </th>
+              </tr>
             </thead>
-
-
             <tbody>
-            <ng-container *ngFor="let game of games_today">
-              <tr class="team away">
-                <td rowspan="2" class="border-bottom align-middle"><span class="badge badge-danger"
-                                                                         *ngIf="game.started">Started</span><br
-                  *ngIf="game.started"><b>{{ game.local_start_time }}</b>
-                </td>
-                <td style="max-width:48px"><img
-                  src="../../../../assets/images/logos/nba/{{game.away_team_abbr}}.png" style="max-height:32px">
-                </td>
-                <td class="name">
-                  <div class="d-block d-sm-none">
-                    <!-- Visible only on xs -->
-                    <b class="h6">{{game.away_team_first_name}} {{game.away_team_last_name}}</b><br>
-                    at
-                  </div>
-                  <div class="d-none d-sm-block">
-                    <!-- Hidden only on xs -->
-                    {{game.away_team_first_name}}<br/>
-                    <b class="h6">{{game.away_team_last_name}}</b><br>
-                    at
-                  </div>
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.moneyline_pick === 'away' && game.m_prob>game.away_improb && game.away_improb*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.moneyline_pick === 'away' && game.m_prob>game.away_improb && game.away_improb*100 >= 60.0" -->
-                <td class="odds money"
-                    [class.tqe-pick]="isAuthorized && game.moneyline_pick === 'away' && game.m_prob>game.away_improb"
-                >
-                  <!--<span>{{ game.away_money }}</span>-->
-
-                  <!--<span>{{ game.away_money }}</span>-->
-                  <span *ngIf="!isAuthorized">{{ game.away_money}}</span>
-
-                  <span *ngIf="isAuthorized && game.moneyline_pick === 'away'">
-                      {{ game.away_improb * 100 | number:'1.1-1'}}% / {{ game.away_money }}
-                    / {{game.m_prob * 100 | number:'1.1-1'}}%
+              <ng-container *ngFor="let game of games_by_day[gameDay]">
+                <tr class="away-team-info">
+                  <td rowspan="2" class="align-middle">
+                    <p class="mb-2 started" *ngIf="game.started">
+                      Started
+                    </p>
+                    <p>
+                      {{ game.local_start_date }}
+                    </p>
+                    <p class="mt-2">
+                      {{ game.local_start_time}}
+                    </p>
+                  </td>
+                  <td class="team-logo">
+                    <span>
+                      <img [src]="game.away_team_logo">
                     </span>
-
-                  <span *ngIf="isAuthorized && game.moneyline_pick === 'home'">
-                      <!--{{ game.away_money }}-->
-                    {{ game.away_improb * 100 | number:'1.1-1'}}% / {{ game.away_money }}
-                    / {{(1 - game.m_prob) * 100 | number:'1.1-1'}}%
+                    <span>
+                      <p class="team-first-name">
+                        {{ game.away_team_first_name }}
+                      </p>
+                      <p class="team-last-name">
+                        {{ game.away_team_last_name }}
+                      </p>
+                      <p class="at-text">at</p>
                     </span>
-
-
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.spread_pick === 'away' && game.s_prob*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.spread_pick === 'away' && game.s_prob*100 >= 60.0" -->
-                <td class="odds spread"
-                    [class.tqe-pick]="isAuthorized && game.spread_pick === 'away'"
-                >
-                  <!--<span>{{ game.away_spread }} / {{ game.away_odds }}</span>-->
-
-                  <span *ngIf="!isAuthorized">{{ game.away_spread }} / {{ game.away_odds }}</span>
-
-                  <span *ngIf="isAuthorized && game.spread_pick === 'away'">
-                      {{ game.away_spread }} / {{ game.away_odds }} / {{game.s_prob * 100 | number:'1.1-1'}}%
+                  </td>
+                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Money Line')"
+                    [class.TQEP]="isTQEP(game, 'away', 'Money Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.away_improb*100 | number:'1.1-1' }}%
+                      </span>
+                      <span>
+                        {{ game.away_money }}
+                      </span>
+                      <span *ngIf="game.ml_pick === 'away'">
+                        {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                      </span>
+                      <span *ngIf="game.ml_pick === 'home'">
+                        {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span class="hidden-text">NA</span>
+                      <span>{{ game.away_money }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Spread Line')"
+                    [class.TQEP]="isTQEP(game, 'away', 'Spread Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.away_spread }}
+                      </span>
+                      <span>
+                        {{ game.away_odds }}
+                      </span>
+                      <span *ngIf="game.sp_pick === 'away'">
+                        {{ game.spick_prob*100 | number:'1.1-1'}}%
+                      </span>
+                      <span *ngIf="game.sp_pick === 'home'">
+                        {{ (1 - game.spick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span>{{ game.away_spread }}</span>
+                      <span>{{ game.away_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td class="totalline" [class.TQEHCP]="isTQEHCP(game, 'over', 'Total Line')"
+                    [class.TQEP]="isTQEP(game, 'over', 'Total Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        O {{ game.OU_line }}
+                      </span>
+                      <span>
+                        {{ game.over_odds }}
+                      </span>
+                      <span *ngIf="game.ou_pick === 'over'">
+                        {{ game.tpick_prob*100 | number:'1.1-1'}}%
+                      </span>
+                      <span *ngIf="game.ou_pick === 'under'">
+                        {{ (1 - game.tpick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span>O {{ game.OU_line }}</span>
+                      <span>{{ game.over_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="home-team-info">
+                  <td class="team-logo">
+                    <span>
+                      <img [src]="game.home_team_logo">
                     </span>
-
-                  <span *ngIf="isAuthorized && game.spread_pick === 'home'">
-                      {{ game.away_spread }} / {{ game.away_odds }}
-                    <!-- {{ game.away_spread }} / {{ game.away_odds }} / {{(1-game.s_prob)*100 | number:'1.1-1'}}-->
-                    <!--%-->
+                    <span>
+                      <p class="team-first-name">
+                        {{ game.home_team_first_name }}
+                      </p>
+                      <p class="team-last-name">
+                        {{ game.home_team_last_name }}
+                      </p>
                     </span>
-
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.ou_pick === 'over' && game.t_prob*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.ou_pick === 'over' && game.t_prob*100 >= 60.0" -->
-
-
-                <td class="odds total"
-                    [class.tqe-pick]="isAuthorized && game.ou_pick === 'over'"
-                >
-
-                  <!--                 <span>
-                                        over
-                                        {{ game.OU_line }} / {{ game.over_odds }}
-                                      </span>-->
-
-                  <span *ngIf="!isAuthorized">
-                      over
-                    {{ game.OU_line }} / {{ game.over_odds }}
-                    </span>
-
-                  <span *ngIf="isAuthorized && game.ou_pick === 'over'">
-                      over
-                    {{ game.OU_line }} / {{ game.over_odds }} / {{game.t_prob * 100 | number:'1.1-1'}}%
-                    </span>
-
-                  <span *ngIf="isAuthorized && game.ou_pick === 'under'">
-                      over
-                    {{ game.OU_line }} / {{ game.over_odds }}
-                    <!--over {{ game.OU_line }} / {{ game.over_odds }} / {{(1-game.t_prob)*100 | number:'1.1-1'}}%%-->
-                    </span>
-
-                </td>
-              </tr>
-              <tr class="team home">
-                <td class="border-bottom" style="max-width:48px"><img
-                  src="../../../../assets/images/logos/nba/{{game.home_team_abbr}}.png" style="max-height:32px">
-                </td>
-                <td class="border-bottom name">
-                  <div class="d-block d-sm-none">
-                    <!-- Visible only on xs -->
-                    <b class="h6">{{game.home_team_first_name}} {{game.home_team_last_name}}</b>
-                  </div>
-                  <div class="d-none d-sm-block">
-                    <!-- Hidden only on xs -->
-                    {{game.home_team_first_name}}<br/>
-                    <b class="h6">{{game.home_team_last_name}}</b>
-                  </div>
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb  && game.m_prob*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb && game.m_prob*100 >= 60.0" -->
-                <td class="border-bottom odds money"
-                    [class.tqe-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb"
-                >
-
-                  <!-- <span>{{ game.home_money }}</span>-->
-                  <span *ngIf="!isAuthorized">{{ game.home_money }}</span>
-                  <span *ngIf="isAuthorized && game.ml_pick === 'home'">
-                      {{ game.home_improb * 100 | number:'1.1-1' }}% / {{ game.home_money }}
-                    / {{game.m_prob * 100 | number:'1.1-1'}}%
-                    </span>
-                  <span *ngIf="isAuthorized && game.ml_pick === 'away'">
-                      <!--{{ game.home_money }}-->
-                    {{ game.home_improb * 100 | number:'1.1-1' }}% / {{ game.home_money }}
-                    / {{(1 - game.m_prob) * 100 | number:'1.1-1'}}%
-                    </span>
-
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.spread_pick === 'home' && game.s_prob*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.spread_pick === 'home' && game.s_prob*100 >= 60.0" -->
-                <td class="border-bottom odds spread"
-                    [class.tqe-pick]="isAuthorized && game.spread_pick === 'home'"
-                >
-                  <!--<span>{{ game.home_spread }} / {{ game.home_odds }}</span>-->
-
-                  <span *ngIf="!isAuthorized">{{ game.home_spread }} / {{ game.home_odds }}</span>
-
-                  <span *ngIf="isAuthorized && game.spread_pick === 'home'">
-                      {{ game.home_spread }} / {{ game.home_odds }} / {{game.s_prob * 100 | number:'1.1-1'}}%
-                    </span>
-
-                  <span *ngIf="isAuthorized && game.spread_pick === 'away'">{{ game.home_spread }}
-                    / {{ game.home_odds }}</span>
-
-
-                </td>
-                <!-- [class.tqe-pick]="isAuthorized && game.ou_pick === 'under' && game.t_prob*100 < 60.0"
-                  [class.tqe-high-pick]="isAuthorized && game.ou_pick === 'under' && game.t_prob*100 >= 60.0" -->
-                <td class="border-bottom odds total"
-                    [class.tqe-pick]="isAuthorized && game.ou_pick === 'under'"
-                >
-                  <!--<span>under {{ game.OU_line }} / {{ game.under_odds }}</span>-->
-
-                  <span *ngIf="!isAuthorized">under {{ game.OU_line }} / {{ game.under_odds }}</span>
-                  <span *ngIf="isAuthorized && game.ou_pick === 'under'">
-                      under {{ game.OU_line }} / {{ game.under_odds }}
-                    / {{game.t_prob * 100 | number:'1.1-1'}}%
-                    </span>
-                  <span *ngIf="isAuthorized && game.ou_pick === 'over'">under {{ game.OU_line }}
-                    / {{ game.under_odds }}</span>
-
-                </td>
-              </tr>
-            </ng-container>
+                  </td>
+                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Money Line')"
+                    [class.TQEP]="isTQEP(game, 'home', 'Money Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.home_improb*100 | number:'1.1-1' }}%
+                      </span>
+                      <span>
+                        {{ game.home_money }}
+                      </span>
+                      <span *ngIf="game.ml_pick === 'away'">
+                        {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                      <span *ngIf="game.ml_pick === 'home'">
+                        {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span class="hidden-text">NA</span>
+                      <span>{{ game.home_money }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Spread Line')"
+                    [class.TQEP]="isTQEP(game, 'home', 'Spread Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        {{ game.home_spread }}
+                      </span>
+                      <span>
+                        {{ game.home_odds }}
+                      </span>
+                      <span *ngIf="game.sp_pick === 'away'">
+                        {{ (1 - game.spick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                      <span *ngIf="game.sp_pick === 'home'">
+                        {{ game.spick_prob*100 | number:'1.1-1'}}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span>{{ game.home_spread }}</span>
+                      <span>{{ game.home_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                  <td class="totalline" [class.TQEHCP]="isTQEHCP(game, 'under', 'Total Line')"
+                    [class.TQEP]="isTQEP(game, 'under', 'Total Line')">
+                    <div *ngIf="isAuthorized">
+                      <span>
+                        U {{ game.OU_line }}
+                      </span>
+                      <span>
+                        {{ game.under_odds }}
+                      </span>
+                      <span *ngIf="game.ou_pick === 'over'">
+                        {{ (1 - game.tpick_prob ) *100 | number:'1.1-1' }}%
+                      </span>
+                      <span *ngIf="game.ou_pick === 'under'">
+                        {{ game.tpick_prob*100 | number:'1.1-1'}}%
+                      </span>
+                    </div>
+                    <div *ngIf="!isAuthorized">
+                      <span>U {{ game.OU_line }}</span>
+                      <span>{{ game.under_odds }}</span>
+                      <span class="hidden-text">NA</span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
+    <div *ngIf="loading" class="pt-5">
+      <div class="loadersmall"></div>
+    </div>
+    <div class="container-fluid" *ngIf="!loading && (games_by_day).length === 0">
+      <div class="main-header">
+        <div class="game-header">
+          <div class="logo-section">
+            <img class="game-logo" [src]="game_logo">
+          </div>
+          <div class="game-week">
+            <span>No NBA Picks</span>
+          </div>
+        </div>
+      </div>
+      <p class="no-games-text">No upcoming games</p>
+    </div>
   </div>
-
-
-  <!--  <div *ngIf="games.length != 0" class="row">-->
-  <!--    <div class="col-md-12">-->
-  <!--      <div class="card shadow-lg mt-3 mb-5">-->
-  <!--        <div class="card-header">-->
-  <!--          <h5>NBA Full Schedule <small>Till {{ finalDate }}</small></h5>-->
-  <!--          <span class="tqe-pick">TQE Picks in Green</span>-->
-  <!--        </div>-->
-
-
-  <!--        <div class="wrapper">-->
-  <!--          <table *ngIf="!loading" class="bets-table all-bets table table-borderless mb-0 scroll">-->
-  <!--            <thead class="thead-dark">-->
-  <!--              <tr>-->
-  <!--                <th scope="col">Time</th>-->
-  <!--                <th scope="col" colspan="2">Matchup</th>-->
-  <!--                <th scope="col" class="text-center">Implied Prob/Moneyline/TQE Prob</th>-->
-  <!--                <th scope="col" class="text-center">Spread Line/Odds/TQE Prob</th>-->
-  <!--                <th scope="col" class="text-center">Total Line/Odds/TQE Prob</th>-->
-  <!--              </tr>-->
-  <!--            </thead>-->
-  <!--            <tbody>-->
-  <!--              <ng-container *ngFor="let game of games">-->
-  <!--                <tr class="team away">-->
-  <!--                  <td rowspan="2" class="border-bottom align-middle"><span class="badge badge-danger"-->
-  <!--                      *ngIf="game.started">Started</span><br *ngIf="game.started"><b>{{ game.local_start_time }}</b>-->
-  <!--                  </td>-->
-  <!--                  <td style="max-width:48px"><img-->
-  <!--                      src="../../../../assets/images/logos/nba/{{game.away_team_abbr}}.png" style="max-height:32px">-->
-  <!--                  </td>-->
-  <!--                  <td class="name">-->
-  <!--                    <div class="d-block d-sm-none">-->
-  <!--                      &lt;!&ndash; Visible only on xs &ndash;&gt;-->
-  <!--                      <b class="h6">{{game.away_team_first_name}} {{game.away_team_last_name}}</b><br>-->
-  <!--                      at-->
-  <!--                    </div>-->
-  <!--                    <div class="d-none d-sm-block">-->
-  <!--                      &lt;!&ndash; Hidden only on xs &ndash;&gt;-->
-  <!--                      {{game.away_team_first_name}}<br />-->
-  <!--                      <b class="h6">{{game.away_team_last_name}}</b><br>-->
-  <!--                      at-->
-  <!--                    </div>-->
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.ml_pick === 'away' && game.m_prob>game.away_improb && game.m_prob*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.ml_pick === 'away' && game.m_prob>game.away_improb && game.m_prob*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="odds money"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.ml_pick === 'away' && game.m_prob>game.away_improb"-->
-  <!--                  >-->
-
-  <!--                    &lt;!&ndash;<span>{{ game.away_money }}</span>&ndash;&gt;-->
-  <!--                    &lt;!&ndash;<span>{{ game.away_money }}</span>&ndash;&gt;-->
-  <!--                    <span *ngIf="!isAuthorized">{{ game.away_money}}</span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.moneyline_pick === 'away'">-->
-  <!--                      {{ game.away_improb*100 | number:'1.1-1'}}% / {{ game.away_money }} / {{game.m_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.moneyline_pick === 'home'">-->
-  <!--                      &lt;!&ndash;{{ game.away_money }}&ndash;&gt;-->
-  <!--                      {{ game.away_improb*100 | number:'1.1-1'}}% / {{ game.away_money }} / {{(1-game.m_prob)*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.sp_pick === 'away' && game.s_prob*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.sp_pick === 'away' && game.s_prob*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="odds spread"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.sp_pick === 'away'"-->
-  <!--                  >-->
-  <!--                    &lt;!&ndash;<span>{{ game.away_spread }} / {{ game.away_odds }}</span>&ndash;&gt;-->
-
-  <!--                    &lt;!&ndash;<span>{{ game.away_spread }} / {{ game.away_odds }}</span>&ndash;&gt;-->
-
-  <!--                    <span *ngIf="!isAuthorized">{{ game.away_spread }} / {{ game.away_odds }}</span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.spread_pick === 'away'">-->
-  <!--                      {{ game.away_spread }} / {{ game.away_odds }} / {{game.s_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.spread_pick === 'home'">-->
-  <!--                      {{ game.away_spread }} / {{ game.away_odds }}-->
-  <!--                      &lt;!&ndash; {{ game.away_spread }} / {{ game.away_odds }} / {{(1-game.s_prob)*100 | number:'1.1-1'}}&ndash;&gt;&lt;!&ndash;%&ndash;&gt;-->
-  <!--                    </span>-->
-
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.ou_pick === 'over' && game.t_prob*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.ou_pick === 'over' && game.t_prob*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="odds total"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.ou_pick === 'over'"-->
-  <!--                  >-->
-  <!--                    &lt;!&ndash;<span>over {{ game.OU_line }} / {{ game.over_odds }}</span>&ndash;&gt;-->
-
-  <!--                    <span *ngIf="!isAuthorized">-->
-  <!--                      over-->
-  <!--                      {{ game.OU_line }} / {{ game.over_odds }}-->
-  <!--                    </span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.ou_pick === 'over'">-->
-  <!--                      over-->
-  <!--                      {{ game.OU_line }} / {{ game.over_odds }} / {{game.t_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.ou_pick === 'under'">-->
-  <!--                      over-->
-  <!--                      {{ game.OU_line }} / {{ game.over_odds }}-->
-  <!--                      &lt;!&ndash;over {{ game.OU_line }} / {{ game.over_odds }} / {{(1-game.t_prob)*100 | number:'1.1-1'}}%%&ndash;&gt;-->
-  <!--                    </span>-->
-
-
-  <!--                  </td>-->
-  <!--                </tr>-->
-  <!--                <tr class="team home">-->
-  <!--                  <td class="border-bottom" style="max-width:48px"><img-->
-  <!--                      src="../../../../assets/images/logos/nba/{{game.home_team_abbr}}.png" style="max-height:32px">-->
-  <!--                  </td>-->
-  <!--                  <td class="border-bottom name">-->
-  <!--                    <div class="d-block d-sm-none">-->
-  <!--                      &lt;!&ndash; Visible only on xs &ndash;&gt;-->
-  <!--                      <b class="h6">{{game.home_team_first_name}} {{game.home_team_last_name}}</b>-->
-  <!--                    </div>-->
-  <!--                    <div class="d-none d-sm-block">-->
-  <!--                      &lt;!&ndash; Hidden only on xs &ndash;&gt;-->
-  <!--                      {{game.home_team_first_name}}<br />-->
-  <!--                      <b class="h6">{{game.home_team_last_name}}</b>-->
-  <!--                    </div>-->
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb && game.home_improb*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb && game.home_improb*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="border-bottom odds money"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.ml_pick === 'home' && game.m_prob>game.home_improb"-->
-  <!--                  >-->
-
-  <!--                    &lt;!&ndash; <span>{{ game.home_money }}</span>&ndash;&gt;-->
-  <!--                    <span *ngIf="!isAuthorized">{{ game.home_money }}</span>-->
-  <!--                    <span *ngIf="isAuthorized && game.ml_pick === 'home'">-->
-  <!--                      {{ game.home_improb*100 | number:'1.1-1' }}% / {{ game.home_money }} / {{game.m_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-  <!--                    <span *ngIf="isAuthorized && game.ml_pick === 'away'">-->
-  <!--                      &lt;!&ndash;{{ game.home_money }}&ndash;&gt;-->
-  <!--                      {{ game.home_improb*100 | number:'1.1-1' }}% / {{ game.home_money }} / {{(1-game.m_prob)*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.sp_pick === 'home' && game.s_prob*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.sp_pick === 'home' && game.s_prob*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="border-bottom odds spread"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.sp_pick === 'home'"-->
-  <!--                  >-->
-
-  <!--                    &lt;!&ndash;<span>{{ game.home_spread }} / {{ game.home_odds }}</span>&ndash;&gt;-->
-
-  <!--                    <span *ngIf="!isAuthorized">{{ game.home_spread }} / {{ game.home_odds }}</span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.spread_pick === 'home'">-->
-  <!--                      {{ game.home_spread }} / {{ game.home_odds }} / {{game.s_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-
-  <!--                    <span *ngIf="isAuthorized && game.spread_pick === 'away'">{{ game.home_spread }} / {{ game.home_odds }}</span>-->
-
-  <!--                  </td>-->
-  <!--                  &lt;!&ndash; [class.tqe-pick]="isAuthorized && game.ou_pick === 'under' && game.t_prob*100 < 60.0"-->
-  <!--                    [class.tqe-high-pick]="isAuthorized && game.ou_pick === 'under' && game.t_prob*100 >= 60.0" &ndash;&gt;-->
-  <!--                  <td class="border-bottom odds total"-->
-  <!--                    [class.tqe-pick]="isAuthorized && game.ou_pick === 'under'"-->
-  <!--                  >-->
-  <!--                    &lt;!&ndash;<span>under {{ game.OU_line }} / {{ game.under_odds }}</span>&ndash;&gt;-->
-
-  <!--                    <span *ngIf="!isAuthorized">under {{ game.OU_line }} / {{ game.under_odds }}</span>-->
-  <!--                    <span *ngIf="isAuthorized && game.ou_pick === 'under'">-->
-  <!--                      under {{ game.OU_line }} / {{ game.under_odds }}-->
-  <!--                      / {{game.t_prob*100 | number:'1.1-1'}}%-->
-  <!--                    </span>-->
-  <!--                    <span *ngIf="isAuthorized && game.ou_pick === 'over'">under {{ game.OU_line }} / {{ game.under_odds }}</span>-->
-
-  <!--                  </td>-->
-  <!--                </tr>-->
-  <!--              </ng-container>-->
-  <!--            </tbody>-->
-  <!--          </table>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
 </div>

@@ -13,7 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PapaParseModule } from 'ngx-papaparse';
 
-import { TagInputModule } from 'ngx-chips';
+// import { TagInputModule } from 'ngx-chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared/shared.module';
 
@@ -32,7 +32,7 @@ import { SharedModule } from '../../shared/shared/shared.module';
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     PapaParseModule,
-    TagInputModule,
+    // TagInputModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule

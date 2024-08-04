@@ -1,252 +1,805 @@
-<!-- Developed Using reference from NBA Player Impact Tool -->
-<div class="row justify-content-center" *ngIf="!isAuthorized && !auth_loading">
-  <div class="col-md-6">
-    <div class="alert alert-info" style="margin: 100px 0 0;text-align: center;font-size: 14px;padding: 10px 50px;">
-      <strong style="display: block;"> Your not authorized for this. </strong><br>
-      Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" [routerLink]="['/login']">Log
-          In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);"
-          [routerLink]="['/membership-plan']">Sign Up</a></strong>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<div class="body" [class.mobile-body]="isMobile">
+  <div class="row justify-content-center" *ngIf="!isAuthorized && !auth_loading" style="height: 100vh;">
+    <div class="col-md-6">
+      <div class="alert alert-info" style="margin: 100px 0 0;text-align: center;font-size: 14px;padding: 10px 50px;">
+        <strong style="display: block;"> You're not authorized for this. </strong><br>
+        Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" [routerLink]="['/login']">Log
+            In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);"
+            [routerLink]="['/membership-plan']">Sign Up</a></strong>
+      </div>
     </div>
   </div>
-</div>
-<div class="container-fluid p1-text" *ngIf="isAuthorized && !auth_loading">-
-  <div class="tab-pane Player_compare main-container">
-    <div class="row">
-      <div class="col-sm-12">
-        <h2></h2>
-      </div>
-    </div>
-    <br />
-    <h4 class="mainHeading headline text-center"><span>{{this.nflWeek}}</span></h4>
-    <!-- <br /><br />
-    <div class="row flex-center">
-     <div id="last_update" class="shiny-text-output shiny-bound-output text-center">Last Update Time:
-        {{this.updateTime}}</div>
-    </div>-->
-    <br />
-    <div class="row flex-center">
-      <div id="last_update" class="shiny-text-output shiny-bound-output text-center">Note: Scroll all the way Down to
-        Change Player Impact</div>
-    </div>
-    <br />
-    <h6 class="mainHeading headline text-center"><span>Filter Picks by Teams</span></h6>
-    <br />
-    <div class="row flex-center">
-      <div class="form-group shiny-input-container text-center">
-        <label class="control-label"><b>SELECT YOUR TEAM</b></label>
-        <br>
-        <mat-form-field class="dropdown" appearance="fill">
-          <mat-label>Select a match</mat-label>
-          <mat-select [(value)]="selected_teams" [disabled]="match_loading">
-            <mat-option *ngFor="let team of this.teams" [value]="team" (click)="onClickTeamSel()">{{team}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <hr style="border:1px dashed #eee;">
-    <div *ngIf="match_loading" class="layout-container text-center">
-      <div class="loadersmall"></div>
-    </div>
-    <div *ngIf="!match_loading" class="layout-container">
-      <div class="left-container">
-        <div class="team-logo-container">
-          <span id="title-team">Away Team: {{this.away_team}}</span>
+  <div class="main-container" *ngIf="isAuthorized && !auth_loading" [ngStyle]="{
+        'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'none',
+        'background-color': isMobile ? 'black' : 'transparent'
+    }">
+    <div class="container-fluid" [class.mobile-container-fluid]="isMobile">
+      <div class="matches-display-section" [class.mobile-matches-display-section]="isMobile">
+        <div class="logo-section">
+          <img class="game-logo" [src]="game_logo" [class.mobile-game-logo]="isMobile">
         </div>
-        <div *ngFor="let player of this.selected_player_away_all_pos.lineup; let i = index" class="player-select-each-1">
-          <div class="teamname-con">
-            <h5 id="player-name">{{ player.player_name }} ({{ player.position }})</h5>
-          </div>
-          <div class="image-con">
-            <img src="../../../../assets/images/headshots/nfl/{{ player.player_name }}.jpg"
-            style="width:auto;height:auto;" id="player1-logo">
-          </div>
-          <div class="performance-level-bar">
-            <label class="control-label"><b>Performance Level</b></label>
-            <div id="{{'container-' + slider_team.value}}">
-              <mat-slider #slider_team [(value)]="player_value_a[i]" step="50" min="0" max="100" (input)="onInputChangeA($event, i)"></mat-slider>
-            </div>
-            <div class="range-label">
-              <span>Poor</span>
-              <span>Average</span>
-              <span>Great</span>
-            </div>
+        <div class="mobile-game-week" *ngIf="isMobile">
+          <span>{{gameWeek}}</span> &nbsp;&nbsp;| &nbsp;&nbsp; <span>{{formatTime(selected_match?.schedule)}}</span>
+        </div>
+        <div class="match-details" *ngIf="!isMobile">
+          <div type="button" class="match-headers" *ngFor="let team of teams" (click)="onClickTeamSel(team)"
+            [class.selected]="selected_teams === team">
+            {{team}}
           </div>
         </div>
       </div>
-      <div class="middle-container">
+      <div class="mobile-match-details" *ngIf="isMobile">
         <div>
-          <span class="titlecomp">Vegas Line</span>
+          <label for="matches-dropdown-menu">Select a game:</label>
         </div>
-        <div class="layout-container">
-          <table class="bets-table all-bets table table-borderless mb-0 scroll-vl result-tb center">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Schedule</th>
-                <th scope="col">Team</th>
-                <th scope="col">OPP</th>
-                <th scope="col">Spread</th>
-                <th scope="col">O/U</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ this.formatTime(this.selected_match.schedule) }}</td>
-                <td>{{this.selected_match.away_team_abbr}}</td>
-                <td>{{this.selected_match.home_team_abbr}}</td>
-                <td class=" dt-right">{{this.selected_match.away_spread}}</td>
-                <td class=" dt-right">{{this.selected_match.OU_line}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h3 id="h3-text-1">
-            <span style="display:inline-block">
-              <img src="../../../../assets/images/tqe_logo_black.png" align="left"
-                style="width: 60px;display: block;">
-              PICK
-            </span>
-          </h3>
-          <table *ngIf="!loading" class="bets-table all-bets table table-borderless mb-0 scroll-pick result-tb center">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Spread</th>
-                <th scope="col">O/U</th>
-                <!-- <th scope="col">Moneyline</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>TQE Line</td>
-                <td><span *ngIf="this.selected_match.s_pred > 0">+</span>{{this.selected_match.s_pred | number:'1.1-1'}}</td>
-                <td>{{this.selected_match.t_pred | number:'1.1-1'}}</td>
-                <!-- <td>
-                  <span *ngIf="this.m_pick == this.selected_match.away_team_abbr; else hometeam">{{this.selected_match.away_money}}</span>
-                  <ng-template #hometeam>{{this.selected_match.home_money}}</ng-template>
-                </td> -->
-              </tr>
-              <tr>
-                <td>TQE Pick</td>
-                <td>
-                  <div>
-                    <img src="../../../../assets/images/logos/nfl/pills/{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}.svg"
-                      height="35">{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}
-                  </div>
-                </td>
-                <td>{{this.selected_match.total_pick}}</td>
-                <!-- <td>
-                  <div>
-                    <img src="../../../../assets/images/logos/nba/{{this.m_pick}}.png"
-                      height="35">{{this.m_pick}}
-                  </div>
-                </td> -->
-              </tr>
-              <tr>
-                <td>Pick Probability</td>
-                <td>{{this.selected_match.spick_prob*100 | number:'1.1-1'}}%</td>
-                <td>{{this.selected_match.tpick_prob*100 | number:'1.1-1'}}%</td>
-                <!-- <td>{{this.mprob*100 | number:'1.1-1'}}%</td> -->
-              </tr>
-              <tr>
-                <td>Expected Return</td>
-                <td>{{this.selected_match.spick_ER | number:'1.2-2'}}</td>
-                <td>{{this.selected_match.tpick_ER | number:'1.2-2'}}</td>
-                <!-- <td>{{this.mER | number:'1.1-1'}}</td> -->
-              </tr>
-            </tbody>
-          </table>
-          <h3 *ngIf="this.isShowPlayerImpact" id="h3-text-2">
-            <span style="display:inline-block">
-              <img src="../../../../assets/images/tqe_logo_black.png" align="left"
-                style="width: 60px;display: block;">
-              PICK After Adjustment
-            </span>
-          </h3>
-          <table *ngIf="!loading && this.isShowPlayerImpact" class="bets-table all-bets table table-borderless mb-0 scroll-pick result-tb center">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Spread</th>
-                <th scope="col">O/U</th>
-                <!-- <th scope="col">Moneyline</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>TQE Line</td>
-                <td><span *ngIf="this.s_pred > 0">+</span>{{this.s_pred | number:'1.1-1'}}</td>
-                <td>{{this.t_pred | number: '1.1-1'}}</td>
-                <!-- <td>
-                  <span *ngIf="this.m_pick == this.selected_match.away_team_abbr; else hometeam">{{this.selected_match.away_money}}</span>
-                  <ng-template #hometeam>{{this.selected_match.home_money}}</ng-template>
-                </td> -->
-              </tr>
-              <tr>
-                <td>TQE Pick</td>
-                <td>
-                  <!-- 
-                  <div>
-                    <img src="../../../../assets/images/logos/nfl/pills/{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}.svg"
-                      height="35">{{(this.selected_match.spread_pick == 'away') ? this.away_team : this.home_team}}
-                  </div>
-                  -->
-                  <!-- BP CHANGE 20220206-->
-                  <div>
-                    <img src="../../../../assets/images/logos/nfl/pills/{{this.s_pick}}.svg"
-                      height="35">{{this.s_pick}}
-                  </div>
-                </td>
-                <td>{{this.t_pick}}</td>
-                <!-- <td>
-                  <div>
-                    <img src="../../../../assets/images/logos/nba/{{this.m_pick}}.png"
-                      height="35">{{this.m_pick}}
-                  </div>
-                </td> -->
-              </tr>
-              <tr>
-                <td>Pick Probability</td>
-                <td>{{this.sprob*100 | number:'1.1-1'}}% </td>
-                <td>{{this.tprob*100 | number:'1.1-1'}}% </td>
-                <!-- <td>{{this.mprob*100 | number:'1.1-1'}}%</td> -->
-              </tr>
-              <tr>
-                <td>Expected Return</td>
-                <td>{{this.sER | number:'1.2-2'}} </td>
-                <td>{{this.tER | number:'1.2-2'}} </td>
-                <!-- <td>{{this.mER | number:'1.1-1'}}</td> -->
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <select class="custom-select" id="matches-dropdown-menu" (change)="onClickTeamSel($event.target.value)">
+            <option *ngFor="let team of teams" [value]="team" [selected]="selected_teams === team">{{team}}</option>
+          </select>
         </div>
       </div>
-      <div class="right-container">
-        <div class="team-logo-container">
-          <span id="title-team">Home Team: {{this.home_team}}</span>
+      <div class="mobile-team-names" *ngIf="isMobile">
+        <span class="mobile-team-detail-section">
+          <div class="team-type">Away Team</div>
+          <div class="team-name">{{away_team_full_name}}</div>
+        </span>
+        <span class="mobile-team-detail-section">
+          <div class="team-type">Home Team</div>
+          <div class="team-name">{{home_team_full_name}}</div>
+        </span>
+      </div>
+      <div *ngIf="match_loading" class="layout-container text-center">
+        <div class="loadersmall"></div>
+      </div>
+      <div class="score-board-section" *ngIf="!match_loading">
+        <div class="game-week" *ngIf="!isMobile">
+          <div class="row">
+            {{gameWeek}}
+          </div>
+          <div class="row game-game-date-row">
+            <span class="calendar-icon">
+              <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M15 1C15 0.447715 14.5523 0 14 0C13.4477 0 13 0.447715 13 1V2H7V1C7 0.447715 6.55228 0 6 0C5.44772 0 5 0.447715 5 1V2H3C1.34315 2 0 3.34315 0 5V19C0 20.6569 1.34315 22 3 22H17C18.6569 22 20 20.6569 20 19V5C20 3.34315 18.6569 2 17 2H15V1ZM18 8V5C18 4.44772 17.5523 4 17 4H15V5C15 5.55228 14.5523 6 14 6C13.4477 6 13 5.55228 13 5V4H7V5C7 5.55228 6.55228 6 6 6C5.44772 6 5 5.55228 5 5V4H3C2.44772 4 2 4.44772 2 5V8H18ZM2 10H18V19C18 19.5523 17.5523 20 17 20H3C2.44772 20 2 19.5523 2 19V10Z"
+                  fill="white" />
+              </svg>
+            </span>
+            <div class="game-game-date">
+              <span>{{formatTime(selected_match.schedule)}}</span>
+            </div>
+          </div>
+          <div class="row steps">
+            <span class="left-semi-circle"></span>
+            <span class="steps-header">Step 1</span>
+            <span class="right-semi-circle"></span>
+          </div>
+          <div class="row steps-text">
+            <span>Adjust player performance.</span>
+          </div>
+          <div class="row">
+            <span class="left-semi-circle"></span>
+            <span class="steps-header">Step 2</span>
+            <span class="right-semi-circle"></span>
+          </div>
+          <div class="row steps-text">
+            <span>Check the score board.</span>
+          </div>
         </div>
-        <div *ngFor="let player of this.selected_player_home_all_pos.lineup, let i = index" class="player-select-each-2">
-          <div class="teamname-con">
-            <h5 id="player-name">{{ player.player_name }} ({{player.position}})</h5>
-          </div>
-          <div class="image-con">
-            <img src="../../../../assets/images/headshots/nfl/{{ player.player_name }}.jpg"
-            style="width:auto;height:auto;" id="player1-logo">
-          </div>
-          <div class="performance-level-bar">
-            <label class="control-label"><b>Performance Level</b></label>
-            <div id="{{'container-' + slider_team.value}}">
-              <mat-slider #slider_team [(value)]="player_value_h[i]" step="50" min="0" max="100" (input)="onInputChangeH($event, i)"></mat-slider>
+        <div class="scoreboard container" [class.mobile-scoreboard]="isMobile">
+          <div class="scoreboard-header-row" *ngIf="!isMobile">
+            <div class="scoreboard-title-box">
+              <div class="scoreboard-title">Score Board</div>
+              <div class="right-angled-triangle">Tee</div>
             </div>
-            <div class="range-label">
-              <span>Poor</span>
-              <span>Average</span>
-              <span>Great</span>
+            <div class="scoreboard-legend-text">
+              <div>
+                <span class="green-circle"></span>
+                <span>Increased</span>
+              </div>
+              <div>
+                <span class="red-circle"></span>
+                <span>Decreased</span>
+              </div>
             </div>
+          </div>
+          <div class="scoreboard-body" [class.mobile-scoreboard-body]="isMobile" *ngIf="isMobile">
+            <div class="scoreboard-header-left-info">
+              <div class="scoreboard-header">
+                <div class="hidden-text">.</div>
+                <div class="scoreboard-header-helper-text hidden-text">.</div>
+              </div>
+              <div class="left-header-section">
+                <div class="scoreboard-header-left">Spread</div>
+                <div class="scoreboard-header-left">O/U</div>
+                <div class="scoreboard-header-left">Team</div>
+              </div>
+
+            </div>
+            <div class="vegas-line-info">
+              <div class="scoreboard-header">
+                <div>Vegas Line</div>
+                <div class="scoreboard-header-helper-text hidden-text">.</div>
+              </div>
+              <div class="vegas-line-info-section">
+                <div>
+                  <span *ngIf="selected_match.spread_pick === 'away'">
+                    <span *ngIf="selected_match.away_spread >= 0"> + </span>
+                    <span *ngIf="selected_match.away_spread < 0"> - </span>
+                  </span>
+                  <span *ngIf="selected_match.spread_pick === 'home'">
+                    <span *ngIf="selected_match.away_spread >= 0"> - </span>
+                    <span *ngIf="selected_match.away_spread < 0"> + </span>
+                  </span>
+                  {{ selected_match.away_spread | number:'1.1-1'}}
+                </div>
+                <div>
+                  {{ selected_match.OU_line }}
+                </div>
+                <div class="hidden-text">.</div>
+              </div>
+            </div>
+            <div class="our-pick-info">
+              <div class="scoreboard-header">
+                <div>Our Pick</div>
+                <div class="scoreboard-header-helper-text">(Original/Adjusted)</div>
+              </div>
+              <div class="our-pick-info-section">
+                <div>
+                  <span *ngIf="selected_match.spread_pick === 'away'">
+                    <span *ngIf="selected_match.s_pred >= 0"> + </span>
+                    <span *ngIf="selected_match.s_pred < 0"> - </span>
+                  </span>
+                  <span *ngIf="selected_match.spread_pick === 'home'">
+                    <span *ngIf="selected_match.s_pred >= 0"> - </span>
+                    <span *ngIf="selected_match.s_pred < 0"> + </span>
+                  </span>
+                  {{abs(selected_match.s_pred) | number:'1.1-1'}}
+                  /
+                  <span *ngIf="s_pred && s_pred === selected_match.s_pred">-</span>
+                  <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
+                    [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
+                    <span *ngIf="selected_match.spread_pick === 'away'">
+                      <span *ngIf="s_pred >= 0"> + </span>
+                      <span *ngIf="s_pred < 0"> - </span>
+                    </span>
+                    <span *ngIf="selected_match.spread_pick === 'home'">
+                      <span *ngIf="s_pred >= 0"> - </span>
+                      <span *ngIf="s_pred < 0"> + </span>
+                    </span>
+                    {{abs(s_pred) | number:'1.1-1'}}
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    {{ selected_match.total_pick === 'over' ? 'O' : 'U' }} {{ selected_match.t_pred | number: '1.1-1'}}
+                  </span>
+                  /
+                  <span *ngIf="t_pred && t_pred === selected_match.t_pred ">-</span>
+                  <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
+                    [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
+                    {{ t_pick === 'over' ? 'O' : 'U' }}
+                    {{ t_pred | number: '1.1-1'}}
+                  </span>
+                </div>
+                <div>
+                  <span>{{(selected_match.spread_pick == 'away') ? away_team : home_team}}</span>/
+                  <span *ngIf="t_pred && t_pred === selected_match.t_pred">-</span>
+                  <span *ngIf="t_pred && t_pred !== selected_match.t_pred" style="font-weight: 700;"
+                    [class.tqe-positive-prediction]="true">
+                    {{s_pick}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="probability-info">
+              <div class="scoreboard-header">
+                <div>Probability</div>
+                <div class="scoreboard-header-helper-text">(Winning)</div>
+              </div>
+              <div class="probability-info-section">
+                <div>
+                  <span>{{selected_match.spick_prob*100 | number:'1.1-1'}}%</span> /
+                  <span *ngIf="sprob && sprob === selected_match.spick_prob">-</span>
+                  <span *ngIf="sprob && sprob !== selected_match.spick_prob"
+                    [ngClass]="{'tqe-positive-prediction': sprob > selected_match.spick_prob, 'tqe-negative-prediction': sprob < selected_match.spick_prob}">
+                    {{sprob*100 | number:'1.1-1'}}%</span>
+                </div>
+                <div>
+                  <span>{{selected_match.tpick_prob*100 | number:'1.1-1'}}%</span> /
+                  <span *ngIf="tprob && tprob === selected_match.tpick_prob">-</span>
+                  <span *ngIf="tprob && tprob !== selected_match.tpick_prob"
+                    [ngClass]="{'tqe-positive-prediction': tprob > selected_match.tpick_prob, 'tqe-negative-prediction': tprob < selected_match.tpick_prob}">
+                    {{tprob*100 | number:'1.1-1'}}%</span>
+                </div>
+                <div class="hidden-text">.</div>
+              </div>
+            </div>
+            <div class="expected-return-info">
+              <div class="scoreboard-header">
+                <div>Expected Return</div>
+                <div class="scoreboard-header-helper-text hidden-text">.</div>
+              </div>
+              <div class="expected-return-info-section">
+                <div>
+                  <span>
+                    {{this.selected_match.spick_ER | number:'1.2-2'}} /
+                  </span>
+                  <span *ngIf="sER && sER === selected_match.spick_ER ">-</span>
+                  <span *ngIf="sER && sER !== selected_match.spick_ER"
+                    [ngClass]="{'tqe-positive-prediction': sER > selected_match.spick_ER, 'tqe-negative-prediction': sER < selected_match.spick_ER }">
+                    {{this.sER | number:'1.2-2'}}
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    {{this.selected_match.tpick_ER | number:'1.2-2'}} /
+                  </span>
+                  <span *ngIf="tER && tER === selected_match.tpick_ER ">-</span>
+                  <span *ngIf="tER && tER !== selected_match.tpick_ER"
+                    [ngClass]="{'tqe-positive-prediction': tER > selected_match.tpick_ER, 'tqe-negative-prediction': tER < selected_match.tpick_ER }">
+                    {{this.tER | number:'1.2-2'}}
+                  </span>
+                </div>
+                <div class="hidden-text">.</div>
+              </div>
+            </div>
+          </div>
+          <div class="scoreboard-body" *ngIf="!isMobile">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <td class="scoreboard-header-left">
+                  </td>
+                  <td>
+                    <div class="scoreboard-header">Vegas Line</div>
+                  </td>
+                  <td>
+                    <div class="scoreboard-header">Our Pick</div>
+                    <div class="scoreboard-header-helper-text">(Original/Adjusted)</div>
+                  </td>
+                  <td>
+                    <div class="scoreboard-header">Probability</div>
+                    <div class="scoreboard-header-helper-text">(Winning)</div>
+                  </td>
+                  <td>
+                    <div class="scoreboard-header">Expected Return</div>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="scoreboard-header-left">Spread</td>
+                  <td>
+                    <span *ngIf="selected_match.spread_pick === 'away'">
+                      <span *ngIf="selected_match.away_spread >= 0"> + </span>
+                      <span *ngIf="selected_match.away_spread < 0"> - </span>
+                    </span>
+                    <span *ngIf="selected_match.spread_pick === 'home'">
+                      <span *ngIf="selected_match.away_spread >= 0"> - </span>
+                      <span *ngIf="selected_match.away_spread < 0"> + </span>
+                    </span>
+                    {{ abs(selected_match.away_spread) | number:'1.1-1' }}
+                  </td>
+                  <td>
+                    <span *ngIf="selected_match.spread_pick === 'away'">
+                      <span *ngIf="selected_match.s_pred >= 0"> + </span>
+                      <span *ngIf="selected_match.s_pred < 0"> - </span>
+                    </span>
+                    <span *ngIf="selected_match.spread_pick === 'home'">
+                      <span *ngIf="selected_match.s_pred >= 0"> - </span>
+                      <span *ngIf="selected_match.s_pred < 0"> + </span>
+                    </span>
+                    {{abs(selected_match.s_pred) | number:'1.1-1'}}
+                    /
+                    <span *ngIf="s_pred && s_pred === selected_match.s_pred">-</span>
+                    <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
+                      [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
+                      <span *ngIf="selected_match.spread_pick === 'away'">
+                        <span *ngIf="s_pred >= 0"> + </span>
+                        <span *ngIf="s_pred < 0"> - </span>
+                      </span>
+                      <span *ngIf="selected_match.spread_pick === 'home'">
+                        <span *ngIf="s_pred >= 0"> - </span>
+                        <span *ngIf="s_pred < 0"> + </span>
+                      </span>
+                      {{abs(s_pred) | number:'1.1-1'}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>{{selected_match.spick_prob*100 | number:'1.1-1'}}%</span> /
+                    <span *ngIf="sprob && sprob === selected_match.spick_prob">-</span>
+                    <span *ngIf="sprob && sprob !== selected_match.spick_prob"
+                      [ngClass]="{'tqe-positive-prediction': sprob > selected_match.spick_prob, 'tqe-negative-prediction': sprob < selected_match.spick_prob}">
+                      {{sprob*100 | number:'1.1-1'}}%</span>
+                  </td>
+                  <td>
+                    <span>
+                      {{this.selected_match.spick_ER | number:'1.2-2'}} /
+                    </span>
+                    <span *ngIf="sER && sER === selected_match.spick_ER ">-</span>
+                    <span *ngIf="sER && sER !== selected_match.spick_ER"
+                      [ngClass]="{'tqe-positive-prediction': sER > selected_match.spick_ER, 'tqe-negative-prediction': sER < selected_match.spick_ER }">
+                      {{this.sER | number:'1.2-2'}}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="scoreboard-header-left">O/U</td>
+                  <td>
+                    {{ selected_match.OU_line }}
+                  </td>
+                  <td>
+                    <span>
+                      {{ selected_match.total_pick === 'over' ? 'O' : 'U' }} {{ selected_match.t_pred | number:'1.1-1'}}
+                    </span>
+                    /
+                    <span *ngIf="t_pred && t_pred === selected_match.t_pred ">-</span>
+                    <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
+                      [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
+                      {{ t_pick === 'over' ? 'O' : 'U' }}
+                      {{ t_pred | number: '1.1-1'}}
+                    </span>
+                  </td>
+                  <td>
+                    <span>{{selected_match.tpick_prob*100 | number:'1.1-1'}}%</span> /
+                    <span *ngIf="tprob && tprob === selected_match.tpick_prob">-</span>
+                    <span *ngIf="tprob && tprob !== selected_match.tpick_prob"
+                      [ngClass]="{'tqe-positive-prediction': tprob > selected_match.tpick_prob, 'tqe-negative-prediction': tprob < selected_match.tpick_prob}">
+                      {{tprob*100 | number:'1.1-1'}}%</span>
+                  </td>
+                  <td>
+                    <span>
+                      {{this.selected_match.tpick_ER | number:'1.2-2'}} /
+                    </span>
+                    <span *ngIf="tER && tER === selected_match.tpick_ER ">-</span>
+                    <span *ngIf="tER && tER !== selected_match.tpick_ER"
+                      [ngClass]="{'tqe-positive-prediction': tER > selected_match.tpick_ER, 'tqe-negative-prediction': tER < selected_match.tpick_ER }">
+                      {{this.tER | number:'1.2-2'}}
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="scoreboard-header-left">Team</td>
+                  <td></td>
+                  <td>
+                    <span>{{(selected_match.spread_pick === 'away') ? away_team : home_team}}</span>/
+                    <span *ngIf="t_pred && t_pred === selected_match.t_pred">-</span>
+                    <span *ngIf="t_pred && t_pred !== selected_match.t_pred" style="font-weight: 700;"
+                      [class.tqe-positive-prediction]="true">
+                      {{s_pick}}
+                    </span>
+                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <div class="scoreboard-body" *ngIf="!isMobile">
+            <div class="row">
+              <div class="col-md-2 scoreboard-header-left">
+              </div>
+              <div class="col-md-2">
+                <div class="scoreboard-header" style="padding-top: 5%;">Vegas Line</div>
+                <div class="scoreboard-header-helper-text"></div>
+              </div>
+              <div class="col-md-2">
+                <div class="scoreboard-header">Our Pick</div>
+                <div class="scoreboard-header-helper-text">(Original/Adjusted)</div>
+              </div>
+              <div class="col-md-2">
+                <div class="scoreboard-header">Probability</div>
+                <div class="scoreboard-header-helper-text">(Winning)</div>
+              </div>
+              <div class="col-md-2">
+                <div class="scoreboard-header">Expected Return</div>
+                <div class="scoreboard-header-helper-text"></div>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-2 scoreboard-header-left">
+                Spread
+              </div>
+              <div class="col-md-3">
+                <span *ngIf="selected_match.away_spread> 0">+</span>{{ selected_match.away_spread | number:'1.1-1'}}
+              </div>
+              <div class="col-md-3">
+                <span *ngIf="selected_match.s_pred> 0">+</span>{{selected_match.s_pred | number:'1.1-1'}}
+                /
+                <span *ngIf="s_pred && s_pred === selected_match.s_pred">-</span>
+                <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
+                  [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
+                  <span *ngIf="s_pred > 0">+</span>{{s_pred | number:'1.1-1'}}
+                </span>
+              </div>
+              <div class="col-md-3">
+                <span>{{selected_match.spick_prob*100 | number:'1.1-1'}}%</span> /
+                <span *ngIf="sprob && sprob === selected_match.spick_prob">-</span>
+                <span *ngIf="sprob && sprob !== selected_match.spick_prob"
+                  [ngClass]="{'tqe-positive-prediction': sprob > selected_match.spick_prob, 'tqe-negative-prediction': sprob < selected_match.spick_prob}">
+                  {{sprob*100 | number:'1.1-1'}}%</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 scoreboard-header-left">
+                O/U
+              </div>
+              <div class="col-md-3">
+                {{ selected_match.OU_line }}
+              </div>
+              <div class="col-md-3">
+                <span>
+                  {{ selected_match.total_pick === 'over' ? 'O' : 'U' }} {{ selected_match.t_pred | number: '1.1-1'}}
+                </span>
+                /
+                <span *ngIf="t_pred && t_pred === selected_match.t_pred ">-</span>
+                <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
+                  [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
+                  {{ t_pick === 'over' ? 'O' : 'U' }}
+                  {{ t_pred | number: '1.1-1'}}
+                </span>
+              </div>
+              <div class="col-md-3">
+                <span>{{selected_match.tpick_prob*100 | number:'1.1-1'}}%</span> /
+                <span *ngIf="tprob && tprob === selected_match.tpick_prob">-</span>
+                <span *ngIf="tprob && tprob !== selected_match.tpick_prob"
+                  [ngClass]="{'tqe-positive-prediction': tprob > selected_match.tpick_prob, 'tqe-negative-prediction': tprob < selected_match.tpick_prob}">
+                  {{tprob*100 | number:'1.1-1'}}%</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 scoreboard-header-left">
+                Team
+              </div>
+              <div class="col-md-3 hidden-text">
+                .
+              </div>
+              <div class="col-md-3">
+                <span>{{(selected_match.spread_pick === 'away') ? away_team : home_team}}</span>/
+                <span *ngIf="t_pred && t_pred === selected_match.t_pred">-</span>
+                <span *ngIf="t_pred && t_pred !== selected_match.t_pred" style="font-weight: 700;" [class.tqe-positive-prediction]="true">
+                  {{s_pick}}
+                </span>
+              </div>
+              <div class="col-md-3 hidden-text">
+                .
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="player-performance-section" *ngIf="!match_loading"
+        [class.mobile-player-performance-section]="isMobile" [ngStyle]="{
+          'background-image': isMobile ? 'url(' + game_background_mobile_img + ')' : 'none'
+          }">
+        <div class="teams-info" [class.mobile-teams-info]="isMobile">
+          <div class="performance-title-box" *ngIf="!isMobile">
+            <div class="performance-title">Player Performance</div>
+            <div class="right-angled-triangle">Tee</div>
+          </div>
+          <div class="mobile-team-header-section" *ngIf="isMobile">
+            <div class="mobile-team-header" (click)="showTeam('away')" [class.active]="active_team === 'away'">
+              <div class="team-logo-section">
+                <img [src]="away_team_logo" class="team-logo">
+              </div>
+              <div class="team-details-col">
+                <div class="team-name">
+                  {{ away_team }}
+                </div>
+              </div>
+            </div>
+            <div class="mobile-team-header" (click)="showTeam('home')" [class.active]="active_team === 'home'">
+              <div class="team-logo-section">
+                <img [src]="home_team_logo" class="team-logo">
+              </div>
+              <div class="team-details-col">
+                <div class="team-name">
+                  {{ home_team }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="teams-performance-section" [class.mobile-teams-performance-section]="isMobile"
+              *ngIf="viewType === 'Basic' || viewType === 'Professional' && hasUserSubscribedToProfessionalView">
+              <div class="away-team-section" [class.mobile-away-team-section]="isMobile"
+                *ngIf="!isMobile || active_team === 'away'">
+                <div class="row team-header" *ngIf="!isMobile">
+                  <div class="team-logo-section">
+                    <img [src]="away_team_logo" class="team-logo">
+                  </div>
+                  <div class="team-details-col">
+                    <div class="team-type">
+                      Away Team
+                    </div>
+                    <div class="team-name">
+                      {{ away_team_full_name }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="viewType==='Basic'">
+                  <div class="row player-section" *ngFor="let player of selected_players?.away_lineup; let i=index"
+                    [class.mobile-player-section]="isMobile">
+                    <div class="col-4">
+                      <img [src]="player.img" class="player-img" alt="{{player.player_name}}"
+                        (error)="setDefaultImage($event)">
+                    </div>
+                    <div class="col-8">
+                      <div [class.mobile-player-info]="isMobile">
+                        <div class="player-name"> {{ player.player_name }}</div>
+                        <div class="player-position">( {{ isMobile ? player.position :
+                          full_name_for_position(player.position) }} )</div>
+                      </div>
+                      <div class="player-performance-level-bar">
+                        <div class="row">
+                          <div class="col">
+                            <label>
+                              <div class="text"><img src="../../../../assets/images/performance/poor_performance.svg">
+                                &nbsp;<span>Poor</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="0" [checked]="player.perf === 0"
+                                (change)="onPerfChange(player, 0)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                          <div class="col">
+                            <label>
+                              <div class="text"><img
+                                  src="../../../../assets/images/performance/average_performance.svg">
+                                &nbsp;<span>Good</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="50"
+                                [checked]="player.perf === 50" (change)="onPerfChange(player, 50)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                          <div class="col">
+                            <label>
+                              <div class="text"><img src="../../../../assets/images/performance/great_performance.svg">
+                                &nbsp;<span>Great</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="100"
+                                [checked]="player.perf === 100" (change)="onPerfChange(player, 100)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="viewType==='Professional'">
+                  <div class="row player-section" *ngFor="let player of selected_players?.away_lineup; let i=index"
+                    [class.mobile-player-section]="isMobile"
+                    style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div class="player-details-professional-view">
+                      <div>
+                        <img [src]="player.img" class="player-img" alt="{{player.player_name}}"
+                          (error)="setDefaultImage($event)">
+                      </div>
+                      <div>
+                        <div [class.mobile-player-info]="isMobile">
+                          <div class="player-name"> {{ player.player_name }}</div>
+                          <div class="player-position">( {{ isMobile ? player.position :
+                            full_name_for_position(player.position) }} )</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slider-section">
+                      <div class="slider1">
+                        <div>
+                          <label for="slider-1" class="slider-label">{{player.slider1.name}}</label>
+                        </div>
+                        <input type="range" id="slider-1" [min]="player.slider1.min" [max]="player.slider1.max"
+                          [(ngModel)]="player.slider1.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider1'); updateSliderBackground(player);"
+                          [style.background]="player.slider1.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider1.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider1.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider1'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider1.max}}</span>
+                        </div>
+                      </div>
+                      <div class="slider2" style="flex: 1">
+                        <div>
+                          <label for="slider-2" class="slider-label">{{player.slider2.name}}</label>
+                        </div>
+                        <input type="range" id="slider-2" [min]="player.slider2.min" [max]="player.slider2.max"
+                          [(ngModel)]="player.slider2.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider2'); updateSliderBackground(player);"
+                          [style.background]="player.slider2.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider2.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider2.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider2'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider2.max}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="home-team-section" [class.mobile-home-team-section]="isMobile"
+                *ngIf="!isMobile || active_team  === 'home'">
+                <div class="row team-header" *ngIf="!isMobile">
+                  <div class="team-logo-section">
+                    <img [src]="home_team_logo" class="team-logo">
+                  </div>
+                  <div class="team-details-col">
+                    <div class="team-type">
+                      Home Team
+                    </div>
+                    <div class="team-name">
+                      {{ home_team_full_name }}
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="viewType==='Basic'">
+                  <div class="row player-section" *ngFor="let player of selected_players?.home_lineup; let i=index"
+                    [class.mobile-player-section]="isMobile">
+                    <div class="col-4">
+                      <img [src]="player.img" class="player-img" alt="{{player.player_name}}"
+                        (error)="setDefaultImage($event)">
+                    </div>
+                    <div class="col-8">
+                      <div [class.mobile-player-info]="isMobile">
+                        <div class="player-name"> {{ player.player_name }}</div>
+                        <div class="player-position">( {{ isMobile ? player.position :
+                          full_name_for_position(player.position) }} )</div>
+                      </div>
+                      <div class="player-performance-level-bar">
+                        <div class="row">
+                          <div class="col">
+                            <label>
+                              <div class="text"><img src="../../../../assets/images/performance/poor_performance.svg">
+                                &nbsp;<span>Poor</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="0" [checked]="player.perf === 0"
+                                (change)="onPerfChange(player, 0)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                          <div class="col">
+                            <label>
+                              <div class="text"><img
+                                  src="../../../../assets/images/performance/average_performance.svg">
+                                &nbsp;<span>Good</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="50" checked
+                                [checked]="player.perf === 50" (change)="onPerfChange(player, 50)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                          <div class="col">
+                            <label>
+                              <div class="text"><img src="../../../../assets/images/performance/great_performance.svg">
+                                &nbsp;<span>Great</span>
+                              </div>
+                              <input type="radio" name="{{player.player_name}}" value="100"
+                                [checked]="player.perf === 100" (change)="onPerfChange(player, 100)">
+                              <span class="custom-radio"></span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="viewType==='Professional'">
+                  <div class="row player-section" *ngFor="let player of selected_players?.home_lineup; let i=index"
+                    [class.mobile-player-section]="isMobile"
+                    style="display: flex; flex-direction: row; justify-content: space-between;">
+                    <div class="player-details-professional-view">
+                      <div>
+                        <img [src]="player.img" class="player-img" alt="{{player.player_name}}"
+                          (error)="setDefaultImage($event)">
+                      </div>
+                      <div>
+                        <div [class.mobile-player-info]="isMobile">
+                          <div class="player-name"> {{ player.player_name }}</div>
+                          <div class="player-position">( {{ isMobile ? player.position :
+                            full_name_for_position(player.position) }} )</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slider-section">
+                      <div class="slider1">
+                        <div>
+                          <label for="slider-1" class="slider-label">{{player.slider1.name}}</label>
+                        </div>
+                        <input type="range" id="slider-1" [min]="player.slider1.min" [max]="player.slider1.max"
+                          [(ngModel)]="player.slider1.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider1'); updateSliderBackground(player);"
+                          [style.background]="player.slider1.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider1.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider1.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider1'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider1.max}}</span>
+                        </div>
+                      </div>
+                      <div class="slider2" style="flex: 1">
+                        <div>
+                          <label for="slider-2" class="slider-label">{{player.slider2.name}}</label>
+                        </div>
+                        <input type="range" id="slider-2" [min]="player.slider2.min" [max]="player.slider2.max"
+                          [(ngModel)]="player.slider2.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider2'); updateSliderBackground(player);"
+                          [style.background]="player.slider2.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider2.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider2.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider2'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider2.max}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="blur" *ngIf="viewType === 'Professional' && !hasUserSubscribedToProfessionalView">
+              <img [src]="blur_img">
+            </div>
+            <button class="btn subscribeButton"
+              *ngIf="viewType === 'Professional' && !hasUserSubscribedToProfessionalView"
+              (click)="subscribeToProfessionalView()" [class.mobile-subscribeButton]="isMobile">Unlock Professional
+              View</button>
+          </div>
+
+        </div>
+        <div class="performance-selection-section container" [class.mobile-performance-selection-section]="isMobile">
+          <div class="view-type">
+            <div class="view-type-text">Type</div>
+            <div class="performance-display-type">
+              <div class="dropdown" id="dropdown">
+                <button class="btn dropdown-toggle bordered-button" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  {{ viewType }}
+                  <svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1.19194 0.183058C0.947864 -0.0610194 0.552136 -0.0610194 0.308058 0.183058C0.0639806 0.427136 0.0639806 0.822864 0.308058 1.06694L4.05806 4.81694C4.30214 5.06102 4.69786 5.06102 4.94194 4.81694L8.69194 1.06694C8.93602 0.822864 8.93602 0.427136 8.69194 0.183058C8.44786 -0.0610194 8.05214 -0.0610194 7.80806 0.183058L4.5 3.49112L1.19194 0.183058Z"
+                      fill="white" />
+                  </svg>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" (click)="setViewType('Basic')" *ngIf="viewType!=='Basic'">Basic</a></li>
+                  <li><a class="dropdown-item" (click)="setViewType('Professional')"
+                      *ngIf="viewType!=='Professional'">Professional</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="reset-option" type="button">
+            <span type="button" (click)="resetData()">
+              <span class="reset-option-text">Reset&nbsp;&nbsp;</span>
+              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M5.08769 3.12272C6.03703 2.59926 7.13079 2.39853 8.20414 2.55078C9.27749 2.70303 10.2723 3.2 11.0386 3.96681C11.0431 3.97128 11.0476 3.97569 11.0522 3.98002L12.7703 5.625H10.6245C10.2793 5.625 9.99951 5.90482 9.99951 6.25C9.99951 6.59518 10.2793 6.875 10.6245 6.875H14.3745C14.7197 6.875 14.9995 6.59518 14.9995 6.25V2.5C14.9995 2.15482 14.7197 1.875 14.3745 1.875C14.0293 1.875 13.7495 2.15482 13.7495 2.5V4.83197L11.9159 3.07634C10.9589 2.12173 9.71817 1.50302 8.37968 1.31317C7.038 1.12286 5.6708 1.37377 4.48412 2.0281C3.29745 2.68242 2.35558 3.7047 1.80045 4.94089C1.24532 6.17709 1.10701 7.56022 1.40636 8.88186C1.7057 10.2035 2.42649 11.392 3.4601 12.2684C4.49371 13.1447 5.78415 13.6614 7.13695 13.7406C8.48975 13.8197 9.83163 13.457 10.9604 12.7072C12.0891 11.9573 12.9436 10.8609 13.395 9.58321C13.51 9.25774 13.3393 8.90069 13.0139 8.78571C12.6884 8.67072 12.3314 8.84135 12.2164 9.16681C11.8553 10.189 11.1717 11.0661 10.2687 11.666C9.3657 12.2659 8.29219 12.556 7.20995 12.4927C6.12771 12.4294 5.09536 12.016 4.26847 11.315C3.44158 10.6139 2.86495 9.66304 2.62548 8.60573C2.386 7.54842 2.49665 6.44192 2.94075 5.45296C3.38485 4.46401 4.13835 3.64618 5.08769 3.12272Z"
+                  fill="white" />
+              </svg>
+            </span>
           </div>
         </div>
       </div>
-      <hr style="border:1px dashed #eee;">
       <div *ngIf="match_loading" class="layout-container text-center">
         <div class="loadersmall"></div>
       </div>
     </div>
   </div>
+
+</div>

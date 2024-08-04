@@ -24,8 +24,6 @@ class ImageSnippet {
 export class ProfileComponent implements OnInit {
   @ViewChild('tourGuide') tourGuide: ModalDirective;
 
-  selectedFile: ImageSnippet;
-  file: File;
   userData: any = [];
 
   loader = true;
@@ -35,23 +33,25 @@ export class ProfileComponent implements OnInit {
   uploading = false;
 
   serverErrors = '';
-  imageServerErrors = '';
   selectedMemberShipId: number;
   selectedMemberShipName = '';
-  image_size_exceed_error = '';
 
   user_subscription: Subscription;
 
 
-  // where did you know us
-  wheres: string[] = [
-    'I will re-subscribe next season',
-    'Price too expensive',
-    'I need something different',
-    'I need something more',
-    'Other'
-  ];
-  where = '';
+  unsubscribe_reasons = [
+    "Planning to re-subscribe next season",
+    "Subscription cost is too high",
+    "Dissatisfied with the product",
+    "Looking for additional features",
+    "Found a better alternative",
+    "Technical issues with the app",
+    "Customer support was unhelpful",
+    "Content not relevant to my needs",
+    "Not using the service enough",
+    "Other reasons"
+]
+  unsubscribe_reason = '';
   other = '';
 
 
@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
 
   unsubscribe(id: number) {
     const form = {
-      reason: this.where,
+      reason: this.unsubscribe_reason,
       detail: this.other
     };
     console.log(form);
@@ -98,15 +98,9 @@ export class ProfileComponent implements OnInit {
       }
     );
 
-
-
-
     this.user_subscriptionLoader = true;
     this.membershipService.unsubscribeMembershipPackage(id).subscribe(
       (res: any) => {
-
-        // console.log("cancel!!!  ", res.meta.code);
-
         if (res.meta.code === 200) {
           const index = this.userData.memberships_users.findIndex((d: any) => d.id === id);
           if (index > -1) {
@@ -143,80 +137,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  private onSuccess() {
-    this.selectedFile.pending = false;
-    this.selectedFile.status = 'ok';
-    this.selectedFile.src = '';
-  }
-
-  private onError() {
-    this.selectedFile.pending = false;
-    this.selectedFile.status = 'fail';
-    this.uploading = false;
-  }
-
-  processFile(imageInput: any) {
-    this.profile_picture_holder = true;
-    this.file = imageInput.files[0];
-    this.imageServerErrors = '';
-    // console.log(imageInput);
-    const reader = new FileReader();
-    // log / access file size in bytes
-    // console.log(imageInput.files[0].size + ' Bytes');
-
-    // log / access file size in Mb
-    // console.log(imageInput.files[0].size/1024/1024 + ' MB');
-    if (imageInput.files[0].size / 1024 / 1024 > 5) {
-      // console.log('file is bigger than 1MB');
-      this.image_size_exceed_error = 'exceed';
-      this.selectedFile.status = '';
-    } else {
-      reader.addEventListener('load', (e: any) => {
-        this.selectedFile = new ImageSnippet(e.target.result, this.file);
-        this.selectedFile.pending = true;
-        this.selectedFile.status = 'ok';
-        this.image_size_exceed_error = '';
-      });
-    }
-
-
-    reader.readAsDataURL(this.file);
-  }
-
-  uploadPhoto() {
-    this.uploading = true;
-    this.imageServerErrors = '';
-    this.authService.update_profile_image(this.file).subscribe(
-      (res: any) => {
-        console.log(res);
-        if (res.meta.code === 400) {
-          this.profile_picture_holder = false;
-          this.uploading = false;
-          this.imageServerErrors = res.meta.message;
-        } else if (res.meta.code === 200) {
-          this.onSuccess();
-          this.userData.photo = res.result.file_path;
-          this.profile_picture_holder = false;
-          this.uploading = false;
-          this.imageServerErrors = '';
-          this.upload_picture_modal = false;
-
-        }
-
-      },
-      (err) => {
-        this.onError();
-      }
-    );
-  }
-
-  update_profile_picture() {
-    if (!this.upload_picture_modal) {
-      this.upload_picture_modal = true;
-    } else {
-      this.upload_picture_modal = false;
-    }
-  }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {

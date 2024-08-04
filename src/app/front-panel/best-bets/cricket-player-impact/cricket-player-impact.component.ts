@@ -78,8 +78,9 @@ export class CricketPlayerImpactComponent implements OnInit {
    * Redirects the user to the professional view location.
    */
   subscribeToProfessionalView() {
-    window.location.href = environment.professionalViewLocationOnWhop;
+    window.open(environment.tqeLocationOnWhop, '_blank');
   }
+
 
   /**
   * Checks if the user has a subscription to the professional view on Whop.

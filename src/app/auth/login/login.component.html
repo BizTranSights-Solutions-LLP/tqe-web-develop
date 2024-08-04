@@ -1,29 +1,29 @@
-<div class="loggin-screen">
-  <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
-    <div class="form-group">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" class="form-control" placeholder="Enter Username" name="uname" formControlName="username">
-    </div>
-    <div class="form-group">
-      <label for="psw"><b>Password</b></label>
-      <input type="password" class="form-control" placeholder="Enter Password" name="psw" formControlName="password">    
-    </div>
-    <p class="error" *ngIf="(loginForm.get('username').touched && loginForm.get('username').invalid) || (loginForm.get('password').touched && loginForm.get('password').invalid)"> {{ login_error_message }} </p>
-    <p class="error"> {{ server_error_message }} </p>
-    <div class="actionBtn">
-      <button class="actionButton " type="submit" [disabled]="loginForm.invalid || disable_login">Login</button>
-      If you're not registered Click <a class="" routerLink="/register">Here</a>
-      <br>
-      If you forgot your password Click<a class="" routerLink="/forget-password">Here</a>
-      
-    </div>
-    <hr/>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-auto">
-          <a type="button" class="btn btn-primary" [href]="authWithWhop()">Sign In with Whop</a>
-        </div>
+<div class="main-container" [ngStyle]="{
+    'background-image': 'url(' + bg_img + ')'
+}">
+  <div class="login-container container-fluid">
+    <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="uname">Username</label>
+        <input type="text" class="form-control" placeholder="Enter Username" name="uname" formControlName="username">
       </div>
-    </div>
-  </form>
+      <div class="form-group">
+        <label for="psw">Password</label>
+        <input type="password" class="form-control" placeholder="Enter Password" name="psw" formControlName="password">
+      </div>
+      <button class="btn btn-success login-button" type="submit" [disabled]="loginForm.invalid || disable_login">Login</button>
+      <p class="error" *ngIf="(loginForm.get('username').touched && loginForm.get('username').invalid) || (loginForm.get('password').touched && loginForm.get('password').invalid)"> {{ login_error_message }} </p>
+      <p class="error"> {{ server_error_message }} </p>
+      <span class="redirect-links">
+        <a href="#" class="register-now" routerLink="/register">Register Now</a>
+        <a href="#" class="forgot-password" routerLink="/forget-password">Forgot your password?</a>
+      </span>
+      <div class="divider">
+        <hr />
+        <span class="divider-text">or</span>
+        <hr />
+      </div>
+      <a class="btn btn-success whop-button" type="button" [href]="authWithWhop()">Sign In with Whop</a>
+    </form>
+  </div>
 </div>

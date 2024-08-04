@@ -1,180 +1,72 @@
-<div>
-  <div class="container-fluid bg-div mt-3 pb-2 ">
-    <div class="row" style="background-image: url('../../assets/images/experts/image.jpg'); background-size: cover; background-position: center; height: calc(100vh - 80px)">
-      <div class="col-md-3 col-4">
-      <!-- <div class="player-1-img"><img src="../../assets/images/experts/ryan-removebg-preview 1.png" alt="" class="img-fluid "></div> -->
-      </div>
-      <div class="col-md-6 col-4">
-        <div class="line-height">
-          <!-- <p class="crouser-head-line1">MACHINE LEARNING QUANTITATIVE 
- 
-           </p> -->
-           <p class="crouser-head-line2">Quantitative Analytics for Sports</p>
-         </div>
-           <div class="main-div-btn">
-             <!-- <button class="btn-Impact">Player Impact Tool</button> -->
-             <!-- <button (click)="tryItFree()" class="btn-Impact">Trial Now!</button> -->
-             <button routerLink="/login"  class="btn-Impact" style="margin-top: 10px;margin-right: 10px;">Trial Now!</button>
-             <button class="btn-Impact" [routerLink]="loggedIn ? '/tool/nba-player-impact' : '/membership-plan'" style="margin-top: 10px;">
-               Player Impact Tool
-             </button>
-           </div>
-      </div>
-      <div class="col-md-3 col-4">
-        <!-- <div class="player-1-img"><img src="../../assets/images/experts/image 117.png" alt="" class="img-fluid "></div> -->
-      </div>
-    </div>
-  </div>
-  <!-- <div class="container-fluid">
-     <div class="row">
-      <div class="col-md-12 col-12">
-      
-        <div class="mt-5 mb-3"><img src="../../assets/images/experts/image.jpg" alt="" class="img-fluid img-team"></div>
-     
-      </div>
-      
-
-     </div>
-  </div> -->
-</div>
-<!-- <div id="main-call-to-action">
-  <div class="container-fluid">
-    <div class="row flex-nowrap justify-content-between align-items-center introduction">
-      <div class="box-l col-3 pt-1">
-        <img src="../../../assets/images/web-view-2.png" id="phone-img" alt="">
-      </div>
-      <div class="box-c col-6 text-center success-text">
-        <div class="splash-text">
-          <span class = "l-5">65% SUCCESS</span><br>
-          <span class = "l-1">WHEN USING PLAYER IMPACT TOOLS EFFECTIVELY</span><br>
-          <br>
-          <span class="l-6">MACHINE LEARNING</span><br>
-
-          <span class="l-5">QUANTITATIVE ANALYTICS</span><br>
-         <span class="l-3">In </span><span class="l-4">sports analysis</span><br> -->
-          <!-- <span class="l-1">FOR SPORTS ANALYSIS</span><br>
-        </div>
-      </div> -->
-
-
-      <!-- <div class="box-r col-3 d-flex justify-content-center align-items-center all-buttons">
-        <div class="whyTQE">
-             Refer to friends and get coupon      -->
-          <!-- <button (click)="referLink()" class="bTN- bTN_view">Refer Friends!</button>
-
-          <button (click)="showModal()" class="bTN-Ytqe Ytqe-button">
-            <img src="../../../assets/images/ico-tqe.png" alt="">
-            <span>
-              <strong>Why Choose TQE? </strong>Watch the 60 Sec Overview
+<div class="body" [class.mobile]="isMobile">
+    <div class="top-container container-fluid" [ngStyle]="{'background-image': 'url(' + bg_img + ')' }">
+        <div class="info">
+            <p class="header-text">QUANTIFY YOUR BET</p>
+            <br /><br />
+            <span class="info-text">
+                <p>You adjust the player performance,</p>
+                <p>we recalculate the odds.</p>
+                <p>Try it for free today!</p>
+                <br />
+                <a class="btn" type="button" [routerLink]="'/tool/nfl-player-impact'">Player Impact Tool</a>
+                <a class="btn" type="button" [routerLink]="'/tool/best-bets/nfl'">Picks</a>
+                <div *ngIf="isMobile" class="mt-1"><br /></div>
+                <a class="btn" type="button" [routerLink]="'/how-it-works'">HOW TQE Works</a>
             </span>
-          </button>
-          <button (click)="tryItFree()" class="bTN- bTN_view">Start Your Free 7-day Trial Now!</button>
-          <button (click)="nottryItFree()" class="bTN- bTN_view">Subscribe Now!</button>
         </div>
-      </div> -->
-
-
-    <!-- </div>
-  </div>
-</div> -->
-
-<!-- 
-<div id="choose-your-adventure">
-  <div class="container-fluid">
-    <div class="row flex-nowrap justify-content-between align-items-center">
-      <div class="col-3">
-      </div>
-      <div class="col-6" [class.current]="bigTab === 'betting'" (mouseenter)="changeBigTab('betting')">
-        <h2>Sports Betting</h2>
-        <h4>
-          <span>Get Your Picks</span>
-          <br>
-          <span>BUILD YOUR OWN PREDICTIONS*</span>
-        </h4>
-        <br>
-
-      </div>
-      <div class="col-3">
-      </div>
-       <div class="box-r col-6" [class.current]="bigTab === 'fantasy'" (mouseenter)="changeBigTab('fantasy')">
-        <h2>Fantasy Sports</h2>
-        <h4><span>Gain Your Edge</span></h4>
-      </div> -->
-    <!-- </div>
-  </div>
-</div>  -->
-
-<!-- 
-<section *ngIf="bigTab === 'betting'" class="win">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-         <h2>WORLD CLASS<span>BETTING RESULTS</span></h2> -->
-        <!-- <h3>PREDICTION SUCCESS</h3>
-        <br>
-        <ul class="results">
-          <li>
-            <strong>{{this.past_season_prediction*100 | number:'1.1-1'}}<sub>%</sub></strong>
-            In 2013-2019 NFL seasons using the player impact tool
-          </li>
-          <li> -->
-
-            <!-- <strong>{{this.curr_season_prediction*100 | number:'1.1-1'}}<sub>%</sub></strong>
-            In the latest 2020-2021 NFL season, our high-confidence (probability greater than 60%) picks
-          </li> --> 
-          <!-- <li>
-            <strong>66<sub>%</sub></strong>
-            On 2019 NCAA Tournament First Round
-          </li>
-          <li>
-            <strong>59<sub>%</sub></strong>
-            On 2019 NFL Best Bets
-          </li> -->
-        <!-- </ul>
-      </div>
+        <div class="sample-website-img-section">
+            <img [src]="sample_website_img_mobile" *ngIf="isMobile">
+            <img [src]="sample_website_img" *ngIf="!isMobile">
+        </div>
     </div>
-    <div class="row align-items-center"> -->
-      <!-- <div class="col pt-5"> -->
-      <!-- <p class="lead testimonial">"I finally stopped relying on my gut and let the data experts tell me how to bet."
-        <br><small>-Chris B</small></p> -->
-      <!-- </div> -->
-      <!-- <div class="col pt-5">
-        <p class="lead testimonial" style="font-weight: bold">*Utilize TQE’s proprietary patent-pending <a href="https://www.thequantedge.com/nfl-demo" style="color:#33FF57;text-decoration: none;">Player Impact Tools</a> to input your own views on a player’s likely performance and rerun TQE’s algorithms with instant updates on the game predictions!</p>
-        <p >Utilize TQE’s proprietary patent-pending Player Impact Tools to input your own views on a player’s likely performance and rerun TQE’s algorithms with instant updates on the game predictions!</p> -->
-        <!-- <p class="lead testimonial">"Using TQE's tools has helped me figure out which players perform best in different
-          matchups " <br><small>-Jess L</small></p> -->
-      <!-- </div> 
-       <div class="col pt-5"> -->
-      <!-- <p class="lead testimonial">"Booked my ticket to the DraftKings Fantasy Football Championship in Miami! Couldn't
-        have done it without TheQuantEdge" <br><small>-Gareth G</small></p> -->
-      <!-- </div> -->
-    <!-- </div>
-  </div>
-</section>
-<section *ngIf="bigTab === 'fantasy'" id="tool-to-win">
-  <div class="container">
-    <div class="heading">
-      <h2 class="section-heading">
-        <span>All The Tools You Need To Win</span>
-        <strong>
-          30+ TOOLS AT YOUR FINGERTIPS
-        </strong>
-      </h2>
-    </div> -->
-    <!-- <div class="row no-gutters" *ngIf="Tools.length !== 0">
-      <div class="col-lg-3 col-md-4" *ngFor="let data of Tools">
-        <div class="tool-img-holder">
-          <strong>
-            <a [routerLink]="['/membership-plan']">{{data.title}}</a>
-            <span>{{data.short_description}}</span>
-          </strong>
-        </div> -->
-      <!-- </div> -->
-    <!-- </div>
-    <div class="row">
-      <div class="col-6 offset-3 pt-3">
-        <a [routerLink]="['/membership-plan']" class="btn-picks">Start your free 7-day trial now!</a>
-      </div>
+    <div class="container-fluid what-we-offer">
+        <p class="header">WHAT WE OFFER</p>
+        <div class="info-cards-section">
+            <div class="info-card card-1">
+                <div>
+                    <div class="img-section">
+                        <img [src]="info_card_1_img">
+                    </div>
+                </div>
+                <div class="card-text-section">
+                    <p class="card-header">Insightful and Quantified Picks</p>
+                    <p class="card-text">
+                        Successful NFL record since picking
+                        from beginning of legal US sports
+                        betting in 2018
+                    </p>
+                </div>
+            </div>
+            <div class="info-card card-2">
+                <div>
+                    <div class="img-section">
+                        <img [src]="info_card_2_img">
+                    </div>
+                </div>
+                <div class="card-text-section">
+                    <p class="card-header">Insightful and Quantified Picks</p>
+                    <p class="card-text">
+                        Value your player defined
+                        performance in the odds and compare
+                        them to the odds published by the
+                        books
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</section>  -->
+    <div class="carousel-container container-fluid">
+        <div class="carousel">
+            <div class="carousel-track"
+                [ngStyle]="{'transform': transformStyle, 'transition': transitionActive ? 'transform 0.5s ease' : 'none'}"
+                (transitionend)="handleTransitionEnd()">
+                <div class="carousel-slide" *ngFor="let item of sports_images">
+                    <button type="button" [routerLink]="item.link">
+                        <img class="bg" [src]="item.bg" alt="Background Image">
+                        <img class="logo" [src]="item.logo" alt="Logo">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

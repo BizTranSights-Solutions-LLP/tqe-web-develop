@@ -1,78 +1,95 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {SeoService} from '../../../services/seo.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import {BestBetsService} from '../best-bets.service';
-import {DataService} from '../../../services/data.service';
-import {environment} from '../../../../environments/environment';
-import {AuthService} from '../../../services/auth.service';
-import {Subscription} from 'rxjs';
-import {AngularBootstrapToastsService} from 'angular-bootstrap-toasts';
-import {ModalDirective} from 'ngx-bootstrap/modal';
-import {Router} from '@angular/router';
+import { BestBetsService } from '../best-bets.service';
+import { DataService } from '../../../services/data.service';
+import { AuthService } from '../../../services/auth.service';
 import * as moment from 'moment';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'tqe-nba-best-bets',
   templateUrl: './nba-best-bets.component.html',
   styleUrls: ['./nba-best-bets.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 
 export class NbaBestBetsComponent implements OnInit {
-  // @ViewChild('signupModal') signupModal: ModalDirective;
+
+  isMobile: boolean = false;
+  game_logo: string = `../../../../assets/images/nba/nba_logo.png`;
+  game_background_img: string = `../../../../assets/images/picks/NBA_Picks_bg.png`;
+  game_background_mobile_img: string = `../../../../assets/images/picks/NBA_Picks_bg.png`;
+
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private router: Router,
+    private breakpointObserver: BreakpointObserver,
     private plumber: BestBetsService,
-    private toast: AngularBootstrapToastsService
-  ) {
-  }
+  ) { }
 
   games: any[] = [];
-  games_today: any[] = [];
-  loading: boolean = true;
-  isAuthorized: boolean = false;
-  gameDate: string;
-  finalDate: string;
-  sortBy: string = 'rating';
-  sortDir: any = {
-    'rating': true,
-    'time': false
-  };
+  games_by_day: {};
+  loading = true;
+  isAuthorized = false;
 
   ngOnInit() {
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+      this.isMobile = result.matches;
+    });
     this.authorizeUser();
     this.getData();
   }
 
   // === PUBLIC METHODS ====================================================
 
-  public stars(n: number): any[] {
-    return Array(n);
+  public keys(dict: any) {
+    return Object.keys(dict);
   }
 
-  public sortByStartTime() {
-    this.sortBy = 'time';
-    this.games = this.games.sort(function (a, b) {
-      return moment(a.Schedule).valueOf() - moment(b.Schedule).valueOf();
-    });
-    if (this.sortDir[this.sortBy]) {
-      this.games.reverse();
-    }
-
-    this.sortDir[this.sortBy] = !this.sortDir[this.sortBy];
-  }
-
-  public sortByRating() {
+  // TQE Pick
+  public isTQEP(game: any, team: string, stat: string): boolean {
     if (this.isAuthorized) {
-      this.sortBy = 'rating';
-      this.games = this.games.sort((a, b) => parseFloat(b.final_prob.match(/\d\d\.?\d?/)[0]) - parseFloat(a.final_prob.match(/\d\d\.?\d?/)[0]));
-      if (this.sortDir[this.sortBy]) {
-        this.games.reverse();
+      if (stat === 'Money Line') {
+        const improb = game[`${team}_improb`];
+        if (game.ml_pick === team && game.mpick_prob > improb && game.mpick_prob * 100 < 60.0) {
+          return true;
+        }
       }
+      else if (stat === 'Spread Line') {
+        if (game.sp_pick === team && game.spick_prob * 100 < 60.0) {
+          return true;
+        }
+      }
+      else if (stat === 'Total Line') {
+        if (game.ou_pick === team && game.tpick_prob * 100 < 60) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
-      this.sortDir[this.sortBy] = !this.sortDir[this.sortBy];
+  // TQE High Confidence Pick
+  public isTQEHCP(game: any, team: string, stat: string): boolean {
+    if (this.isAuthorized) {
+      if (stat === 'Money Line') {
+        const improb = game[`${team}_improb`];
+        if (game.ml_pick === team && game.mpick_prob > improb && game.mpick_prob * 100 >= 60.0) {
+          return true;
+        }
+      }
+      else if (stat === 'Spread Line') {
+        if (game.sp_pick === team && game.spick_prob * 100 >= 60.0) {
+          return true;
+        }
+      }
+      else if (stat === 'Total Line') {
+        if (game.ou_pick === team && game.tpick_prob * 100 >= 60) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 
@@ -90,97 +107,44 @@ export class NbaBestBetsComponent implements OnInit {
       },
       (err) => {
         this.isAuthorized = false;
-        this.loading = false;
-        this.sortByStartTime();
-      },
-      () => {
-        this.loading = false;
-        // console.log('Auth: ' + this.isAuthorized);
       }
     );
   }
 
-
-  private getFinalDate(games: any[]): string {
-    if (games.length == 0) {
-      return 'null';
+  private processGames =  win => {
+    this.loading = true;
+    for (const i in win) {
+      this.games.push(win[i]);
     }
-    let res = games[0].schedule;
     this.games.forEach(g => {
-      if (moment(g.schedule).isAfter(moment(res), 'day')) {
-        res = g.schedule;
-      }
+      g.local_start_date = moment(g.schedule).format('MMM D, YYYY');
+      g.local_start_time = moment(g.schedule).format('hh:mm A');
+      g.started = (moment(g.schedule) < moment());
+      g.ml_pick = 'moneyline_pick' in g ? g.moneyline_pick : '';
+      g.sp_pick = 'spread_pick' in g ? g.spread_pick : '';
+      g.ou_pick = 'total_pick' in g ? g.total_pick : '';
+      g.home_team_logo = `../../../../assets/images/logos/nba/${g.home_team_abbr}.png`;
+      g.away_team_logo = `../../../../assets/images/logos/nba/${g.away_team_abbr}.png`;
+      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
+      g.mpick_prob = g.m_prob;
+      g.spick_prob = g.s_prob;
+      g.tpick_prob = g.t_prob;
     });
-    return res;
-  }
+    this.loading = false;
+  };
 
   private getData() {
     this.games = [];
-    this.games_today = [];
-    this.gameDate = moment().format('dddd, MMMM Do, YYYY');
-
-
-    // console.log('localStorage.getItem(\'data\'): ' + localStorage.getItem('data'));
-
-
+    this.games_by_day = {};
     if (localStorage.getItem('data')) {
       this.plumber.getNbaTable().subscribe(
-        win => {
-          for (let i in win) {
-            this.games.push(win[i]);
-          }
-          this.games.forEach(g => {
-            g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');
-            g.started = (moment(g.schedule) < moment());
-            //g.show_ml_pick = g['ML Expected Return'] > 0.05;
-            g.ml_pick = g.moneyline_pick;
-            g.sp_pick = g.spread_pick;
-            g.ou_pick = g.total_pick;
-            // if (moment(g.schedule).isSame(moment(), 'day')) {
-            //if (moment(g.schedule).isSame(moment(), 'week')) { //TODO Remove this if for only this week data
-              this.games_today.push(g);
-            //}
-          });
-        },
-        fail => {
-        },
-        () => {
-          // Pop today's games
-          this.games = this.games.filter(game => !moment(game.schedule).isSame(moment(), 'day'));
-          // Get latest date
-          this.finalDate = this.getFinalDate(this.games);
-          this.finalDate = moment(this.finalDate).format('dddd, MMMM Do, YYYY');
-          // this.loading = false;
-        },
+        this.processGames
       );
-    }
-    else {
+    } else {
       this.plumber.getNbaTablePublic().subscribe(
-        win => {
-          for (let i in win) {
-            this.games.push(win[i]);
-          }
-          this.games.forEach(g => {
-            g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');
-            g.started = (moment(g.schedule) < moment());
-            //g.show_ml_pick = g['ML Expected Return'] > 0.05;
-            // if (moment(g.schedule).isSame(moment(), 'day')) {
-            if (moment(g.schedule).isSame(moment(), 'week')) {
-              this.games_today.push(g);
-            }
-          });
-        },
-        fail => {
-        },
-        () => {
-          // Pop today's games
-          this.games = this.games.filter(game => !moment(game.schedule).isSame(moment(), 'day'));
-          // Get latest date
-          this.finalDate = this.getFinalDate(this.games);
-          this.finalDate = moment(this.finalDate).format('dddd, MMMM Do, YYYY');
-        },
+        this.processGames
       );
     }
   }
-
 }

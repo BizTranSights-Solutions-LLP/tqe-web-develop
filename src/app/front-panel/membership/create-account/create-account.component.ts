@@ -180,7 +180,8 @@ export class CreateAccountComponent implements OnInit,AfterViewInit {
           async (res:any) => {
             if(res.meta.code === 200) {
               let response:any = await this.authService.login(formdata).toPromise();
-
+              console.log(response);
+              console.log(formdata);
               if(response.meta.code === 200) {
                 localStorage.setItem('data', JSON.stringify(response.result));
                 this.authService.logginEvent.emit(true);
@@ -229,7 +230,6 @@ export class CreateAccountComponent implements OnInit,AfterViewInit {
       } else {
         this.frontErrorEmail = 'Your Email not matched';
       }
-
     }
   }
 

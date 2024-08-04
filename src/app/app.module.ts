@@ -150,6 +150,8 @@ import {AngularBootstrapToastsModule} from 'angular-bootstrap-toasts';
 
 // whop
 import { WhopLoginComponent } from './auth/whop-login/whop-login.component';
+import { SiteSidebarComponent } from './_layouts/site-sidebar/site-sidebar.component';
+import { CricketPlayerImpactComponent } from './front-panel/best-bets/cricket-player-impact/cricket-player-impact.component';
 
 const routes: Routes = [
 
@@ -236,6 +238,7 @@ const routes: Routes = [
       {path: 'tool/all-pick-history', component: AllPicksHistoryComponent},
       {path: 'tool/nba-player-impact', component: NbaPlayerImpactComponent},
       {path: 'tool/nfl-player-impact', component: NflPlayerImpactComponent},
+      {path: 'tool/cricket-player-impact', component: CricketPlayerImpactComponent},
       {path: 'tool/:title', component: ToolDetailComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'edit-profile', component: EditComponent},
@@ -388,8 +391,9 @@ const routes: Routes = [
     IfNcaabComponent,
     IfNcaafComponent,
     IfNhlComponent,
-    WhopLoginComponent
-
+    WhopLoginComponent,
+    SiteSidebarComponent,
+    CricketPlayerImpactComponent,
   ],
   imports: [
     // Import font-aws

@@ -1,176 +1,136 @@
-<div class="page-title">
-  <div class="container">
-    <div class="row align-items-center ">
-      <div class="col">
-        <h1>Your Profile</h1>
-      </div>
-      <div class="col-auto">
-        <a [routerLink]="['/edit-profile']"  class="page-title-anchor">Edit Profile</a>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="loading" *ngIf="loader">
   <img src="../../../../assets/images/loading.svg" class="img-fluid" alt="loading">
 </div>
 <strong *ngIf="serverErrors" class="error">{{serverErrors}}</strong>
 
 <div class="user_info" *ngIf="userData.length != 0">
-  <div class="container section-box">
-      <div class="profile">
-        <div class="row">
-          <div class="col-auto">
-            <div class="profile-photo">
-              <button class="upload_photo" (click)="update_profile_picture()"><i class="fa fa-camera"></i> Upload Photo</button>
-              <div *ngIf="userData.photo" [ngStyle]="{'background-image': 'url(&quot;' + userData.photo + '&quot;)'}" ></div>
-              <!-- <img src="{{userData.photo}}" alt="{{userData.first_name}}" *ngIf="userData.photo"> -->
-              <div class="loading" *ngIf="uploading || !userData.photo"></div>
+  <div class="container">
+    <div class="header mb-5">
+      <h2>Your Profile</h2>
+    </div>
+    <div class="profile mb-5">
+      <div class="row">
+        <div class="col">
+          <div class="profile-header">
+            <span>
+              <button class="btn btn-success" [routerLink]="['/edit-profile']">Edit Profile</button>
+            </span>
+          </div>
+          <hr />
+          <div class="profile-info">
+            <div class="labels">
+              <span>First Name</span>
+              <span>Last Name</span>
+              <span>User Name</span>
+              <span>Email</span>
+            </div>
+            <div class="data">
+              <span>{{userData.first_name}}</span>
+              <span>{{userData.last_name}}</span>
+              <span>{{userData.username}}</span>
+              <span>{{userData.email}}</span>
             </div>
           </div>
-          <div class="col">
-            <div class="profile-info">
 
-              <h1 class="profile-title"> {{userData.first_name}} {{userData.last_name}}</h1>
-              <h2 class="profile-position"></h2></div>
-            <ul class="profile-list">
-                <li class="clearfix">
-                    <strong class="title">User Name</strong>
-                    <span class="cont">{{userData.username}}</span>
-                </li>
-                <li class="clearfix">
-                    <strong class="title">E-mail</strong>
-                    <span class="cont">{{userData.email}}</span>
-                </li>
-            </ul>
-          </div>
         </div>
       </div>
-      <div class="memberships">
-        <div class="row">
-          <div class="col-md-12">
-            <strong style="display: block;text-align:center;" *ngIf="userData.memberships_users.length === 0">You have no membership</strong>
-            <div class="table-membership">
-              <table class="table" *ngIf="userData.memberships_users.length > 0">
-                <thead>
-                  <tr>
-                    <th>No. </th>
-                    <th>Package Name</th>
-                    <th>membership period</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let pack of userData.memberships_users; let i = index">
-                    <td>{{i + 1}}</td>
-                    <td>{{pack.membership_name}}</td>
-                    <td>{{pack.message}}</td>
-                    <td>
-                      <button type="button" class="btn del-btn" (click)="showModal(pack.id, pack.membership_name)">Cancel Subscription</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <!--  coupon list  -->
+    </div>
     <div class="memberships">
       <div class="row">
-        <div class="col-md-12">
-          <strong style="display: block;text-align:center;" *ngIf="userData.coupons.length < 1">You have no
-            coupon</strong>
+        <div class="col-12">
+          <strong *ngIf="userData.memberships_users.length === 0">
+            <hr />
+            No Membership associated with your accountat the moment
+          </strong>
           <div class="table-membership">
-            <table class="table" *ngIf="userData.coupons.length > 0">
+            <table class="table" *ngIf="userData.memberships_users.length > 0">
               <thead>
-              <tr>
-                <th>No.</th>
-                <th>Coupon Type</th>
-                <th>Coupon Code</th>
-              </tr>
+                <tr>
+                  <th>No. </th>
+                  <th>Package Name</th>
+                  <th>Membership Period</th>
+                  <th>Action</th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let pack of userData.coupons; let i = index">
-                <td>{{i + 1}}</td>
-                <td>{{pack.coupon_type}}</td>
-                <td>{{pack.coupon_code}}</td>
-              </tr>
+                <tr *ngFor="let pack of userData.memberships_users; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{pack.membership_name}}</td>
+                  <td>{{pack.message}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger"
+                      (click)="showModal(pack.id, pack.membership_name)">Cancel
+                      Subscription</button>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-    </div>
 
-
-</div>
-
-
-
-
-<!-- popup of cancellation -->
-<div class="theme-modal modal fade" bsModal #tourGuide="bs-modal">
-  <div class="modal-dialog modal-dialog-centered modal-md">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <h1>Are you sure to Unsubscribe <span>"{{ selectedMemberShipName }}"? </span>
-        </h1>
-        Please Select the cancellation reasons:<br/>
-        <select [(ngModel)]="where">
-          <option value="">Please select</option>
-          <option *ngFor="let item of wheres" [value]='item'>{{item}}</option>
-        </select>
-        <br/>
-        <input style="width:183px;" [(ngModel)]="other"
-               *ngIf="where === 'I need something different' || where === 'I need something more' || where === 'Other' "
-               type="text" placeholder="Please specify" required>
-
-        <!-- unsubscribe button -->
-        <br/>
-        <br/>
-        <button class="btn del-btn"
-                (click)="unsubscribe(selectedMemberShipId)"
-                [disabled]="where ==='' || (where ==='Other'&& other ==='') || (where ==='I need something different'&& other ==='') || (where ==='I need something more'&& other ==='')"
-                *ngIf="!user_subscriptionLoader">
-          Unsubscribe!
-        </button>
-
-
-        <button class="btn btn-default" *ngIf="!user_subscriptionLoader" (click)="hideModal()">Cancel</button>
+    <!--  coupon list  -->
+    <div class="memberships mb-5">
+      <div class="row">
+        <div class="col-md-12">
+          <strong *ngIf="userData.coupons.length < 1">
+            There are no coupons associated with your account at the moment
+          </strong>
+          <div class="table-membership">
+            <table class="table" *ngIf="userData.coupons.length > 0">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Coupon Type</th>
+                  <th>Coupon Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pack of userData.coupons; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{pack.coupon_type}}</td>
+                  <td>{{pack.coupon_code}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- image upload -->
-<div class="overlay" *ngIf="upload_picture_modal">
-  <div class="modal-dialog modal-dialog-centered modal-md">
+<!-- popup of cancellation -->
+<div class="theme-modal modal fade" bsModal #tourGuide="bs-modal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <button class="btnClose" (click)="update_profile_picture()" *ngIf="!uploading"><i class="fa fa-close"></i>
-      </button>
       <div class="modal-body text-center">
-        <label class="image-upload-container btn btn-bwm">
-          <span><i class="fa fa-image"></i> Select Image</span>
-          <input #imageInput type="file" accept='image/*' (change)="processFile(imageInput)"/>
-        </label>
-        <div *ngIf="profile_picture_holder" class="img-preview-container">
-          <div class="img-preview" [ngClass]="{'error': selectedFile?.status === 'fail'}"
-               *ngIf="selectedFile?.status === 'ok'"
-               [ngStyle]="{'background-image': 'url(' + selectedFile?.src + ')'}"></div>
+        <h6>Are you sure you want to unsubscribe from 
+          <strong>{{ selectedMemberShipName }}?</strong>
+        </h6>
+        Please Select the cancellation reasons:<br />
+        <select [(ngModel)]="unsubscribe_reason">
+          <option value="">Please select</option>
+          <option *ngFor="let item of unsubscribe_reasons" [value]='item'>{{item}}</option>
+        </select>
+        <br />
+        <input style="width:183px;" [(ngModel)]="other"
+          *ngIf="unsubscribe_reason === 'I need something different' || unsubscribe_reason === 'I need something more' || unsubscribe_reason === 'Other' "
+          type="text" placeholder="Please specify" required>
 
-          <div class="loading" *ngIf="uploading"></div>
+        <!-- unsubscribe button -->
+        <br />
+        <br />
+        <button class="btn btn-danger mr-3" (click)="unsubscribe(selectedMemberShipId)"
+          [disabled]="unsubscribe_reason ==='' || (unsubscribe_reason ==='Other'&& other ==='') || (unsubscribe_reason ==='I need something different'&& other ==='') || (unsubscribe_reason ==='I need something more'&& other ==='')"
+          *ngIf="!user_subscriptionLoader">
+          Unsubscribe!
+        </button>
 
-          <div *ngIf="selectedFile?.status === 'ok'" class="alert alert-success">Image Successfully Selected!</div>
-          <div *ngIf="selectedFile?.status === 'fail'" class="alert alert-danger">Image Upload Failed Try Again!</div>
-          <div *ngIf="image_size_exceed_error === 'exceed'" class="alert alert-danger">File is bigger than 5MB</div>
-          <button (click)="uploadPhoto()" class="btnUpload" [disabled]="selectedFile?.status != 'ok'"
-                  *ngIf="!uploading">Upload Photo
-          </button>
-        </div>
-        <div *ngIf="imageServerErrors" class="alert alert-danger">{{imageServerErrors}}</div>
+
+        <button class="btn btn-primary" *ngIf="!user_subscriptionLoader" (click)="hideModal()">Cancel</button>
       </div>
     </div>
   </div>

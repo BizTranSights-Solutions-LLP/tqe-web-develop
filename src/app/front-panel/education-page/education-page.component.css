@@ -1,46 +1,126 @@
-.aboutUs {
-    overflow: hidden;
-    padding: 50px 0;
-    font-size: 15px;
-    line-height: 1.5
+.header {
+  margin-top: 5em;
 }
-.aboutUs h2 {
-    font-size: 21px;
-    margin: 0 0 10px;
-    padding-right: 60px;
+
+.header h2 {
+  margin-left: 20%;
 }
-.aboutUs p {
-    margin: 0 0 20px;
+
+.education-page {
+  font-size: 14px;
+  line-height: 30px;
+  font-weight: lighter;
+  font-family: 'Chakra Petch', sans-serif;
+  color: white;
+  width: 60%;
+  margin: 2em auto 0 auto;
 }
+
 img {
-    vertical-align: middle;
-    border-style: none;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  width: 100%;
+  height: auto;
+  margin-bottom: 5em;
 }
-.points-spread {
-    width: 90%;
+
+p {
+  text-align: justify;
+  margin-bottom: 1em;
 }
-@media(min-width: 200px) and (max-width: 650px) {
-    .points-spread {
-        width: 100%;
-    }
-    .formula {
-        width: 85%;
-        /* height: 0.7%; */
-        /* height: 50%; */
-    }
+
+h2,
+h4,
+h5,
+h6,
+th {
+  font-weight: normal;
+  line-height: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+h2,
+h4 {
+  color: #13A211;
+}
+
+h5,
+h6,
+th,
+b {
+  color: #E8CA30;
+}
+
+h6 {
+  margin-top: 0.75em;
+}
+
+.formula {
+  font-size: 1.2em;
+  text-align: center;
+  margin: 1em 0;
+}
+
+.fraction {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.fraction .top {
+  display: block;
+}
+
+.fraction .bottom {
+  display: block;
+  border-top: 1px solid;
 }
 
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
+  width: 70%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+td {
+  color: white;
+}
+
+table.table-bordered,
+table.table-bordered tbody {
+  border: 1px solid rgb(61, 61, 61);
+  border-collapse: collapse;
+}
+
+table.table-bordered tr,
+table.table-bordered th,
+table.table-bordered td {
+  border: 1px solid rgb(61, 61, 61);
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .education-page {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h2 {
+    margin-left: 5%;
+  }
+
+  .education-page {
+    width: 95%;
+    margin: auto;
+  }
+
+  table {
     width: 100%;
   }
-  
-  td, th {
-    border: 2px solid #0e0e0e;
-    text-align: left;
-    padding: 8px;
+
+  img {
+    width: 150px;
   }
+
+  .formula {
+    font-size: 1em;
+  }
+}

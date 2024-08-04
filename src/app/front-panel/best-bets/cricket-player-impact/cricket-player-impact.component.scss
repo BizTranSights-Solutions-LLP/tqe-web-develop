@@ -10,13 +10,16 @@
   }
   
   .main-container {
-    background-size: cover;
-    background-position: center;
     position: relative;
     height: auto;
     color: white;
     font-style: normal;
     padding-bottom: 10%;
+    background-blend-mode: overlay;
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
   }
   
   .main-container::before {

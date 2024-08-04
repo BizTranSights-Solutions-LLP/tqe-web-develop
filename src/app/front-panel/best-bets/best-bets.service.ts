@@ -21,6 +21,36 @@ export class BestBetsService {
     return this.http.get(url);
   }
 
+  getCricketTable(league: string) {
+    let url;
+    switch (league) {
+      case 'IPL':
+        url = environment.base_url + 'getIPL';
+        url = 'assets/cricket_IPL_list.json'
+        break;
+      case 'T20i':
+        url = environment.base_url + 'getT20i';
+        url = 'assets/cricket_T20i_list.json'
+        break;
+      case 'T20 Blast':
+        url = environment.base_url + 'getT20_Blast';
+        url = 'assets/cricket_T20 Blast_list.json'
+        break;
+
+      default:
+        url = environment.base_url + 'getIPL';
+        url = 'assets/cricket_IPL_list.json'
+        break;
+    }
+    let header = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      // 'Authorization': localStorage.getItem('data') ? `Bearer ${JSON.parse(localStorage.getItem('data'))['jwt_token']}` : ''
+    });
+    return this.http.get(url, {headers: header});
+  }
+
   getSoccerTable(league: string) {
     let url;
     switch (league) {
@@ -337,6 +367,22 @@ export class BestBetsService {
     });
     // return this.http.get(url, {headers: header});
     return this.http.get('assets/nfl_lineup.json', {headers: header});
+  }
+
+  getCricketPlayerImpactData(league) {
+    let url = environment.base_url + 'getCricketPlayerImpactData';
+    let header = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      // 'Authorization': localStorage.getItem('data') ? `Bearer ${JSON.parse(localStorage.getItem('data'))['jwt_token']}` : ''
+    });
+    // return this.http.get(url, {headers: header});
+    var file = 'T20i.json';
+    if(league == 'T20 Blast') {
+      file = 'T20 Blast.json';
+    }
+    return this.http.get('assets/cricket/lineups/' + file, {headers: header});
   }
 
 

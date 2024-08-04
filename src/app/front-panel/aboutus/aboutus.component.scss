@@ -1,20 +1,96 @@
-.aboutUs {
-    .media {
-        margin:3.0em;
-        img {
-            width:150px;
-            border-radius: 50%;
-        }
-        h5 {
-            line-height:1.5em;
-            margin-bottom: 0.75em;
-        }
-        p {
-            margin-bottom: 1.5em;
-        }
-    }
+.header {
+  margin-top: 5em;
 }
 
+.header h2 {
+  margin-left: 20%;
+}
 
+.aboutUs {
+  font-size: 14px;
+  line-height: 30px;
+  font-weight: lighter;
+  font-family: 'Chakra Petch', sans-serif;
+  color: white;
+  width: 60%;
+  margin: 5em auto 0 auto;
+}
 
+p {
+  text-align: justify;
+}
 
+.media {
+  display: flex;
+  margin: 3em 0;
+}
+
+.media img {
+  width: 10em;
+  border-radius: 50%;
+  margin-right: 4em;
+}
+
+.media-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.media h5 {
+  line-height: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+.media p {
+  margin-bottom: 1.5em;
+}
+
+hr {
+  border: 1px solid white;
+}
+
+h2,
+h4,
+h5 {
+  font-weight: normal;
+  line-height: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+h2,
+h4 {
+  color: #13A211;
+}
+
+h5 {
+  color: #E8CA30;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .aboutUs {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header h2 {
+    margin-left: 5%;
+  }
+
+  .aboutUs {
+    width: 95%;
+    margin: auto;
+  }
+
+  .media {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .media img {
+    margin-bottom: 2em;
+    width: 100%;
+    max-width: 7em;
+  }
+}

@@ -1,115 +1,23 @@
-<!-- Footer -->
-<footer>
-  <div class="footer-nav">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <ul class="f-nav">
-            <li>
-              <a tabindex="-1" routerLink="/how-it-works">How TQE Works</a>
-            </li>
-            <li>
-              <a tabindex="-1" routerLink="/terms-and-condition"
-                >Terms Of Service</a
-              >
-            </li>
-            <li>
-              <a tabindex="-1" routerLink="/privacy-policy">Privacy Policy</a>
-            </li>
-            <li><a tabindex="-1" routerLink="/faqs">FAQs</a></li>
-          </ul>
-        </div>
+<div class="container-fluid" [class.mobile]="isMobile">
+  <div class="links">
+    <span><a routerLink="/how-it-works">How TQE Works</a></span>
+    <span><a routerLink="/terms-and-condition">Terms Of Service</a></span>
+    <span><a routerLink="/privacy-policy">Privacy Policy</a></span>
+    <span><a routerLink="/faqs">FAQs</a></span>
+  </div>
+  <div class="company-info">
+    <div class="logo-and-tag">
+      <div>
+        <img src="./../assets/images/tqe_logos/site_header_logo.svg" alt="Logo">
+      </div>
+      <div>
+        <span>The leader in quantitative analytics to help you win</span>
       </div>
     </div>
-  </div>
-  <div class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="footer-widget col-md-3 col-sm-6">
-          <aside id="g5plus_logo-6" class="widget widget-logo">
-            <a tabindex="-1" href="https://www.thequantedge.com">
-              <img
-                class="widget-logo"
-                src="../../../assets/images/tqe_logo_black.png"
-                alt="TQE"
-              />
-            </a>
-          </aside>
-          <aside id="text-13" class="widget widget_text">
-            <div class="textwidget">
-              <aside id="text-3" class="widget widget_text">
-                <div class="textwidget">
-                  <p>The leader in quantitative analytics to help you win</p>
-                </div>
-              </aside>
-            </div>
-          </aside>
-          <!-- <aside
-            id="g5plus_social_profile-7"
-            class="widget widget-social-profile"
-          >
-            <div class="social-profiles">
-              <a
-                tabindex="-1"
-                title="Facebook"
-                href="https://www.facebook.com/TheQuantEdge/"
-                target="_blank"
-                ><i class="fa fa-facebook"></i
-              ></a>
-              <a
-                tabindex="-1"
-                title="Twitter"
-                href="https://twitter.com/TheQuantEdge"
-                target="_blank"
-                ><i class="fa fa-twitter"></i
-              ></a>
-              <a
-                tabindex="-1"
-                title="Instagram"
-                href="https://www.instagram.com/thequantedge/"
-                target="_blank"
-                ><i class="fa fa-instagram"></i
-              ></a>
-              <div class="clearfix"></div>
-            </div>
-          </aside> -->
-        </div>
-        <div class="footer-widget col-md-6 col-sm-12">
-          <aside id="text-14" class="widget-bg widget widget_text">
-            <h4 class="widget-title"><span>Contact Us</span></h4>
-            <div class="textwidget">
-              <ul class="footer-get-in-touch">
-                <li class="address-text "><p>10 Time Square, Suite 6170, New York, NY, 10018</p></li>
-                <li>
-                  <a tabindex="-1" href="mailto:info@thequantedge.com"
-                    ><span class="address-text">info@thequantedge.com</span>  </a
-                  >
-                </li>
-              </ul>
-            </div>
-          </aside>
-        </div>
-
-        <!--  
-        <div class="footer-widget col-md-3 col-sm-6">
-          <aside id="text-17" class="widget-bg widget widget_text">
-            <h4 class="widget-title"><span>Commentary</span></h4>
-            <div class="textwidget">
-              <ul class="footer-get-in-touch">
-                <li><a tabindex="-1" routerLink="/articles/all">Articles</a></li>
-                <li><a tabindex="-1" routerLink="/tools-list/nfl">NFL Fantasy</a></li>
-                <li><a tabindex="-2" routerLink="/podcasts">Podcasts</a></li>
-               <li><a tabindex="-1" routerLink="/tools-list/nba">NBA Fantasy</a></li>
-                <li><a tabindex="-3" routerLink="/tqe-videos">Videos</a></li>
-               <li><a tabindex="-1" routerLink="/tools-list/mlb">MLB Fantasy</a></li>
-               </ul>
-
-
-            </div>
-          </aside>
-        </div> 
-
-      --></div>
+    <div class="contact-us">
+      <h6>Contact Us</h6>
+      <span>10 Time Square, Suite 6170 New York, NY, 10018</span>
+      <a href="mailto:info@thequantedge.com" class="mail">info@thequantedge.com</a>
     </div>
   </div>
-</footer>
+</div>

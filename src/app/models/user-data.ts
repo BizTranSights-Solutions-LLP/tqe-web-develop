@@ -9,5 +9,7 @@ export interface UserData {
     user_id: Number,
     verified: any,
     jwt_token: string,
-    is_whop_user: boolean
+    is_whop_user: boolean,
+    whop_user_access_token: string,
+    user_view: string,
 }

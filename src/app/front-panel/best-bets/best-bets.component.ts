@@ -12,7 +12,7 @@ import * as moment from 'moment';
   selector: 'app-best-bets',
   templateUrl: './best-bets.component.html',
   styleUrls: ['./best-bets.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 
 export class BestBetsComponent implements OnInit {

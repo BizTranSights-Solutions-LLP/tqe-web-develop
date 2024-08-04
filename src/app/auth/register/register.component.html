@@ -1,159 +1,125 @@
-<div class="page-title">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col">
-        <h1>Register <span> | Create Your Account</span></h1>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="intForm">
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="register-form">
-          <strong class="formTitle">Account Information</strong>
-          <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="register()">
-            <div class="row">
-
-
-              <div class="col">
-
-
-                <div class="form-group">
-                  <label for="fname"><b>First Name</b></label>
-                  <div class="form-control">
+<div class="main-container" [ngStyle]="{
+  'background-image': 'url(' + bg_img + ')'
+}">
+  <div class="intForm mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="register-form">
+            <h5>Account Information</h5>
+            <form autocomplete="off" [formGroup]="registerForm" (ngSubmit)="register()">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="fname"><b>First Name</b></label>
                     <input type="text" placeholder="Enter First Name" name="name" formControlName="first_name">
                     <p class="error"
-                       *ngIf="registerForm.controls['first_name'].touched && registerForm.controls['first_name'].hasError('required')">
+                      *ngIf="registerForm.controls['first_name'].touched && registerForm.controls['first_name'].hasError('required')">
                       This field is required</p>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="lname"><b>Last Name</b></label>
-                  <div class="form-control">
+                  <div class="form-group">
+                    <label for="lname"><b>Last Name</b></label>
                     <input type="text" placeholder="Enter Last Name" name="name" formControlName="last_name">
                     <p class="error"
-                       *ngIf="registerForm.controls['last_name'].touched && registerForm.controls['last_name'].hasError('required')">
+                      *ngIf="registerForm.controls['last_name'].touched && registerForm.controls['last_name'].hasError('required')">
                       This field is required</p>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="uname"><b>Username</b></label>
-                  <div class="form-control">
+                  <div class="form-group">
+                    <label for="uname"><b>Username</b></label>
                     <input type="text" placeholder="Enter Username" name="uname" formControlName="username">
                     <p class="error"
-                       *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].hasError('required')">
+                      *ngIf="registerForm.controls['username'].touched && registerForm.controls['username'].hasError('required')">
                       This field is required</p>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="email"><b>Email</b></label>
-                  <div class="form-control">
+                  <div class="form-group">
+                    <label for="email"><b>Email</b></label>
                     <input type="email" placeholder="Enter Email" name="email" formControlName="email">
                     <p class="error"
-                       *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('required')">
+                      *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('required')">
                       This field is required</p>
                     <p class="error"
-                       *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('pattern')">
+                      *ngIf="registerForm.controls['email'].touched && registerForm.controls['email'].hasError('pattern')">
                       Invalid Email</p>
                     <p class="error" *ngIf="registerForm.controls['email'].hasError('special_char_found')"> Invalid
                       Email</p>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="psw"><b>Confirm Email</b></label>
-                  <div class="form-control">
+                  <div class="form-group">
+                    <label for="psw"><b>Confirm Email</b></label>
                     <input type="email" placeholder="Your Confirm Email" name="confirmEmail"
-                           formControlName="confirmEmail">
+                      formControlName="confirmEmail">
                     <p class="error"
-                       *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('required')">
+                      *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('required')">
                       This field is required</p>
                     <p class="error"
-                       *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('pattern')">
+                      *ngIf="registerForm.controls['confirmEmail'].touched && registerForm.controls['confirmEmail'].hasError('pattern')">
                       Invalid Email</p>
                     <p class="error" *ngIf="registerForm.controls['confirmEmail'].hasError('special_char_found')">
                       Invalid Email</p>
                     <p class="error" *ngIf="frontErrorEmail != ''"> {{ frontErrorEmail }} </p>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="psw"><b>Password</b></label>
-                  <div class="form-control">
+                  <div class="form-group">
+                    <label for="psw"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="psw" formControlName="password">
                     <p class="error"
-                       *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('required')">
+                      *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('required')">
                       This field is required</p>
                     <p class="error"
-                       *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('minlength')">
+                      *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].hasError('minlength')">
                       Password length should be greater than 5</p>
                   </div>
-                </div>
 
-
-                <!--     where do you know us?            -->
-                <div class="form-group">
-                  <label for="where"><b>From where did you know us?</b></label>
-                  <br/>
-                  <select [(ngModel)]="where" formControlName="where">
-                    <option value="">Please select</option>
-                    <option *ngFor="let item of wheres" [value]='item'>{{item}}</option>
-                  </select>
-
-                  <input *ngIf="where === 'Other'" type="text" placeholder="Please specify" name="other_where"
-                         formControlName="other">
-
-                </div>
-
-                <!--     referral           -->
-                <div class="dynamic-wrapper" [formGroup]="feeForm">
                   <div class="form-group">
-                    <br/>
-                    <label><b>Referral friends for coupons!</b></label>
-                    <br/>
-                    <div class="plusIcon">
-                      <i class="fa fa-plus" (click)="addFeeItem()"><span>Add Referral Email</span></i>
-                    </div>
+                    <label for="where">How did you hear about us?</label>
+                    <select [(ngModel)]="where" formControlName="where">
+                      <option value="">Please select</option>
+                      <option *ngFor="let item of wheres" [value]='item'>{{item}}</option>
+                    </select>
+                    <input class="mt-2" *ngIf="where === 'Other'" type="text" placeholder="Please specify"
+                      name="other_where" formControlName="other">
+                  </div>
 
-                    <div formArrayName="feeArray">
-                      <div *ngFor="let arrayItem of feeArray.controls;let i=index">
-                        <div formGroupName="{{i}}">
-                          <dynamic-email (deleteFeeItem)="removeFeeItem()"
-                                         [group]="feeForm.controls.feeArray.controls[i]"></dynamic-email>
+                  <div class="dynamic-wrapper" [formGroup]="feeForm">
+                    <div class="form-group">
+                      <label><b>Refer friends for coupons!</b></label>
+                      <div class="plusIcon">
+                        <i class="fa fa-plus" (click)="addFeeItem()"><span>&nbsp;Add Referral Email</span></i>
+                      </div>
+
+                      <div formArrayName="feeArray">
+                        <div *ngFor="let arrayItem of feeArray.controls;let i=index">
+                          <div formGroupName="{{i}}">
+                            <dynamic-email (deleteFeeItem)="removeFeeItem()"
+                              [group]="feeForm.controls.feeArray.controls[i]"></dynamic-email>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
               </div>
-            </div>
-
-
-            <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
-            <p *ngIf="serverResponse">{{ serverResponse }}</p>
-            <div *ngIf="disable_register" class="loading"></div>
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                  <button class="actionButton" type="submit" [disabled]="registerForm.invalid || disable_register">
-                    Create Account & Continue
-                  </button>
+              <p class="alert alert-danger serverErr" *ngIf="server_error_message"> {{ server_error_message }} </p>
+              <p *ngIf="serverResponse">{{ serverResponse }}</p>
+              <div *ngIf="disable_register" class="loading"></div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <button class="btn btn-success actionButton" type="submit"
+                      [disabled]="registerForm.invalid || disable_register">
+                      Create Account & Continue
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
 
-
-          <p class="login">Already have an account? <a href="javascript:void(0);" (click)="showOverlay()"> Sign In</a>
-          </p>
+            <p class="login mb-5">
+              <a routerLink="/login">Already have an account? &nbsp; Sign In</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>

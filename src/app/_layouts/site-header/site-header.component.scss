@@ -1,152 +1,109 @@
-
-
-#masthead-top {
-  
-  background-color: white;
-}
-.width-cont{
-  width: 100%;
-}
-.super-main-div{
-  display: flex;
-  justify-content: flex-end;
-}
-.logo-tqe{
-  padding: 8px;
-}
-.resp-logo{
-  height: 3.7rem;
-  width: 5.8rem;
-}
-#main-nav {
-  width: 60%;
-  // margin-left: 32rem;
-  .navbar {
-    .nav {
-      width:100%;
-      .nav-item.dropdown {
-        // &.show{
-        //   // background: lighten(#343a40, 5%);
-        //   background-color: black;
-        // }
-        >a {
-          font-size:16px;
-          color:black;
-          font-weight:bold;
-          text-align:center;
-        }
-        @media (min-width: 210px) and (max-width: 420px) {
-          // >a {
-          //   font-size:16px;
-          //   color:white;
-          //   font-weight:bold;
-          //   text-align:left;
-          // }
-         
-          
-        }
-        .dropdown-menu {
-          &.show {
-            width: 100%;
-            // background: lighten(#343a40, 5%);
-            background-color: white;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-          }
-          .dropdown-item {
-            color:black;
-            font-size:14px;
-            line-height: 24px;
-            &:hover {
-              color:#343a40;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.overlay {
-  padding-top: 0px;
-  margin-top: 0px;
+.navbar {
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #000000;
+  border-bottom: 1px solid #999999;
+  height: 5em;
+  color: white;
+  font-family: 'Chakra Petch', sans-serif;
+  text-align: center;
   position: fixed;
   top: 0;
-  background: #000;
-  height: 100%;
+  left: 0;
   width: 100%;
-  z-index: 99;
-  opacity: .5;
+  z-index: 1000;
 }
 
-@media only screen and (max-width:767px) {
-  .tryFree { display: none; }
-  .loggin-screen .form-check { padding: 27px 0; }
-  .select-tools .dropdown-menu {
-    left:  30px !important;
-    top: 15px !important;
-  }
-  .dropdown-menu::after {
-    right: auto;
-    left: 10px;
-  }
-}
-@media only screen and (max-width:500px) {
-  .loggin-screen {
-    max-width: 292px;
-    margin: 0 auto;
-  }
-  .loggin-screen .form-check { padding: 10px 0; }
-}
-@media only screen and (max-width:400px) {
-  .btn {
-    width: 60px;
-    height: 30px;
-  }
+.navbar-brand img {
+  height: 1.5em;
+  width: 3.5em;
+  margin-top: 0.3em;
+  margin-left: 1.5em;
 }
 
-.btn-outline-light{
-  border-radius: 1rem;
-  padding-left: 0.8rem;
-  padding-right: 1rem;
-  background-color: #000;
+.login-btn {
+  width: 6em;
 }
-.drop-title{
+
+.profile-btn img {
+  height: 24px;
+  width: 24px;
+}
+
+.nav-item {
+  margin: 0 2em;
+}
+
+.navbar-nav {
+  margin: 0 auto;
+}
+
+.navbar-nav .dropdown-toggle::after {
+  display: none;
+}
+
+.nav-item .nav-link {
   color: white;
 }
-.btn.btn-sm.btn-outline-light:hover {
-  background-color: transparent;
-  border: 1px solid black;
-  color: black;
+
+.nav-item.active .nav-link {
+  color: #18CB16;
 }
-// My Media Query
-@media (min-width: 210px) and (max-width: 420px) {
-  .resp-nav{
+
+.nav-item:hover .nav-link {
+  color: #18CB16;
+  background-color: #000000;
+}
+
+.navbar .dropdown-menu {
+  background-color: #000000;
+}
+
+.navbar .dropdown-item {
+  color: white;
+  background-color: #000000;
+  padding: 0.6em 1em;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: black;
+  color: #18CB16;
+}
+
+.name-text {
+  display: inline-block;
+  font-family: 'Smooch Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+@media (min-width: 992px) {
+  .nav-items {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
- .super-main-div{
-  margin-left: -20rem;
- }
- .nav-lgn-btn{
-  margin-left: -12rem;
- }
- .logo-tqe{
-  padding: 0px;
-}
-.btn-outline-light{
-  border-radius: 1rem;
-  padding-left: 0.8rem;
-  padding-right: 1rem;
-  background-color: #000;
-  // width: 8rem;
-}
-.name-btn{
-   width: 8rem;
+  .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
-.aft-log-btn{
-  margin-left: 5rem;
-}
-
+@media (max-width: 992px) {
+  #navbarNav {
+    background-color: #000000;
+    padding-bottom: 2em;
+  }
+  .dropdown-menu {
+    text-align: center;
+  }
+  .profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 }

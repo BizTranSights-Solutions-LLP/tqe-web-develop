@@ -13,6 +13,7 @@ import { CfBestBetsComponent } from './cf/cf-best-bets.component';
 import { CbBestBetsComponent } from './cb/cb-best-bets.component';
 import { NhlBestBetsComponent } from './nhl/nhl-best-bets.component';
 import { TodaysBestBetsComponent } from './todays/todays-best-bets.component';
+import { CricketBestBetsComponent } from './cricket/cricket-best-bets.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TodaysBestBetsComponent } from './todays/todays-best-bets.component';
     BestBetsComponent,
     NhlBestBetsComponent,
     TodaysBestBetsComponent,
+    CricketBestBetsComponent
   ],
   imports: [
     CommonModule,

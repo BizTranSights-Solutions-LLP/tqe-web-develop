@@ -14,9 +14,12 @@
     color: white;
     font-style: normal;
     padding-bottom: 10%;
-    background-size: cover;
-    background-position: center;
     min-height: 100vh;
+    background-blend-mode: overlay;
+    background-repeat: repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
   }
   
   .main-container::before {

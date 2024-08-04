@@ -10,6 +10,7 @@ import { CfBestBetsComponent } from './cf/cf-best-bets.component';
 import { CbBestBetsComponent } from './cb/cb-best-bets.component';
 import { NhlBestBetsComponent } from './nhl/nhl-best-bets.component';
 import { TodaysBestBetsComponent } from './todays/todays-best-bets.component';
+import { CricketBestBetsComponent } from './cricket/cricket-best-bets.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'nfl', component: NflBestBetsComponent },
       { path: 'nba', component: NbaBestBetsComponent },
+      { path: 'cricket', component: CricketBestBetsComponent },
       { path: 'mlb', component: MlbBestBetsComponent },
       { path: 'soccer', component: SoccerBestBetsComponent },
       { path: 'cf', component: CfBestBetsComponent },

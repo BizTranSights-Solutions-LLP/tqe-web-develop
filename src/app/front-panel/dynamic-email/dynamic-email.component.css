@@ -1,0 +1,13 @@
+input {
+    padding: 0.5em 1em;
+    border: 2px solid #333;
+    background-color: transparent;
+    color: beige;
+    border-radius: 5px;
+  }
+  
+  input:focus {
+    outline: none;
+    box-shadow: none;
+    border: 2px solid #727272;
+  }

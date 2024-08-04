@@ -24,6 +24,8 @@ export class MembershipComponent implements OnInit, OnDestroy {
   @ViewChild('autoShownModal') autoShownModal: ModalDirective;
   isModalShown = false;
 
+  background_img: string = `../../../../assets/images/nfl/nfl_background.png`;
+
   seasonPasses: any = {};
   monthlyPasses: any = {};
 

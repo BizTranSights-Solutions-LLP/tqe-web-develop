@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit,OnDestroy {
 
+  bg_img = `../../../../assets/images/home_page/login_bg.jpg`
   login_error_message:string = 'All highlighted fields are required';
   server_error_message:string = '';
 
@@ -51,7 +52,6 @@ export class LoginComponent implements OnInit,OnDestroy {
 
       this.login_subscription = this.authService.login(formdata).subscribe(
         (res: LoginResponse) => {
-          console.log(res);
           this.disable_login = false;
           if(res.meta.code === 200) {
             res.result.is_whop_user = false;

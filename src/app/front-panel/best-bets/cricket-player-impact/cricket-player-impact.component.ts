@@ -81,12 +81,12 @@ export class CricketPlayerImpactComponent implements OnInit {
     window.open(environment.tqeLocationOnWhop, '_blank');
   }
 
-
   /**
   * Checks if the user has a subscription to the professional view on Whop.
   * @param accessToken - The access token for authenticating with the Whop API.
+  * @param type - The view type to set.
   */
-  checkUserWhopSubscription(accessToken: string) {
+  checkUserWhopSubscription(accessToken: string, type: string) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`,
     });
@@ -95,7 +95,12 @@ export class CricketPlayerImpactComponent implements OnInit {
         for (let membership of response.data) {
           if (membership.product_id == environment.professionalViewProductIDOnWhop) {
             this.hasUserSubscribedToProfessionalView = true;
+            this.viewType = type;
+            this.resetData();
           }
+        }
+        if (this.viewType == 'Basic') {
+          this.subscribeToProfessionalView();
         }
       },
       (error) => {
@@ -112,12 +117,18 @@ export class CricketPlayerImpactComponent implements OnInit {
     if (type === 'Professional') {
       const userData = this.authService.getUserDetail();
       if (userData && 'whop_user_access_token' in userData) {
-        this.checkUserWhopSubscription(userData.whop_user_access_token);
+        this.checkUserWhopSubscription(userData.whop_user_access_token, type);
+      }
+      else {
+        this.subscribeToProfessionalView();
       }
     }
-    this.viewType = type;
-    this.resetData();
+    else {
+      this.viewType = type;
+      this.resetData();
+    }
   }
+
 
   /**
    * Sort games by start time.

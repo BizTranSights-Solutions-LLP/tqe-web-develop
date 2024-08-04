@@ -99,6 +99,9 @@ export class NbaPlayerImpactComponent implements OnInit {
             this.resetData();
           }
         }
+        if (this.viewType == 'Basic') {
+          this.subscribeToProfessionalView();
+        }
       },
       (error) => {
         console.error('Unable to check User Membership Details...', error);
@@ -125,7 +128,6 @@ export class NbaPlayerImpactComponent implements OnInit {
       this.resetData();
     }
   }
-
 
   /**
    * Sort games by start time.

@@ -220,7 +220,6 @@ export class NbaPlayerImpactComponent implements OnInit {
     this.t_pick = this.selected_match.total_pick;
     this.m_pick = (this.selected_match.moneyline_pick === 'away') ? this.away_team : this.home_team;
     this.sprob = this.selected_match.spick_prob;
-    console.log(this.selected_match.spick_ER);
     this.sER = this.selected_match.spick_ER;
     this.tprob = this.selected_match.tpick_prob;
     this.tER = this.selected_match.tpick_ER;
@@ -314,8 +313,6 @@ export class NbaPlayerImpactComponent implements OnInit {
     const teams = match.split(" ", 3);
     this.away_team = teams[0];
     this.home_team = teams[2];
-    this.away_team_logo = `../../../../assets/images/logos/nba/${this.away_team}.png`;
-    this.home_team_logo = `../../../../assets/images/logos/nba/${this.home_team}.png`;
 
     const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team);
     if (selectedGame) {
@@ -333,6 +330,8 @@ export class NbaPlayerImpactComponent implements OnInit {
   private setTeamFullNames() {
     this.home_team_full_name = (this.selected_match.home_team_first_name + ' ' + this.selected_match.home_team_last_name).trim();
     this.away_team_full_name = (this.selected_match.away_team_first_name + ' ' + this.selected_match.away_team_last_name).trim();
+    this.away_team_logo = `../../../../assets/images/logos/nba/${this.away_team}.png`;
+    this.home_team_logo = `../../../../assets/images/logos/nba/${this.home_team}.png`;
   }
 
   /**
@@ -362,17 +361,17 @@ export class NbaPlayerImpactComponent implements OnInit {
     this.selected_players = this.getPlayers(this.selected_teams);
     this.resetPlayerData(this.selected_players.away_lineup);
     this.resetPlayerData(this.selected_players.home_lineup);
-    this.setPlayerImages(this.selected_players.away_lineup);
-    this.setPlayerImages(this.selected_players.home_lineup);
+    this.setPlayerImages(this.away_team_full_name, this.selected_players.away_lineup);
+    this.setPlayerImages(this.home_team_full_name, this.selected_players.home_lineup);
   }
 
   /**
    * Set player images for the given lineup.
    * @param lineup - The lineup to set images for.
    */
-  private setPlayerImages(lineup: any[]) {
+  private setPlayerImages(team: string, lineup: any[]) {
     lineup.forEach(player => {
-      player.img = `../../../../assets/images/headshots/nba/${player.player_name}.png`;
+      player.img = `../../../../assets/images/headshots/nba/${team}/${player.player_name}.png`;
     });
   }
 
@@ -440,7 +439,6 @@ export class NbaPlayerImpactComponent implements OnInit {
           g.spick_ER = g.sER;
           g.mpick_ER = g.mER;
           g.tpick_ER = g.tER;
-          console.log(g);
           if (g.week === this.gameWeek) {
             this.games_today.push(g);
             this.teams.push(`${g.away_team_abbr} - ${g.home_team_abbr}`);

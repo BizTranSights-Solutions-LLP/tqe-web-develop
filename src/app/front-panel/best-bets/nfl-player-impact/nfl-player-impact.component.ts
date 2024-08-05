@@ -506,8 +506,6 @@ export class NflPlayerImpactComponent implements OnInit {
     const teams = match.split(" ", 3);
     this.away_team = teams[0];
     this.home_team = teams[2];
-    this.away_team_logo = `../../../../assets/images/logos/nfl/teams/${this.away_team}.svg`;
-    this.home_team_logo = `../../../../assets/images/logos/nfl/teams/${this.home_team}.svg`;
 
     const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team);
     this.match_loading = false;
@@ -520,6 +518,8 @@ export class NflPlayerImpactComponent implements OnInit {
   private setTeamFullNames() {
     this.home_team_full_name = (this.selected_match.home_team_first_name + ' ' + this.selected_match.home_team_last_name).trim();
     this.away_team_full_name = (this.selected_match.away_team_first_name + ' ' + this.selected_match.away_team_last_name).trim();
+    this.away_team_logo = `../../../../assets/images/logos/nfl/${this.away_team_full_name}.png`;
+    this.home_team_logo = `../../../../assets/images/logos/nfl/${this.home_team_full_name}.png`;
   }
 
   /**
@@ -561,7 +561,7 @@ export class NflPlayerImpactComponent implements OnInit {
    */
   private setPlayerImages(team, lineup) {
     lineup.forEach(player => {
-      player.img = `../../../../assets/images/headshots/nfl/${team}/${player.position}/${player.player_name}.jpg`;
+      player.img = `../../../../assets/images/headshots/nfl/${team}/${player.position}/${player.player_name}.png`;
     });
   }
 

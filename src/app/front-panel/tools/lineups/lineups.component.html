@@ -88,11 +88,11 @@
                           <tag-input 
                             class="brs-pos_1"
                             name="pos"
-                            [onTextChangeDebounce]="0"
+                            (onTextChangeDebounce)="0"
                             [ngModel]="buildRulesStack.pos"
                             [inputClass]="'brs-pos'"
                             [maxItems]='3' 
-                            [onlyFromAutocomplete]="true"
+                            (onlyFromAutocomplete)="true"
                             [placeholder]="'Type to add Pos.'"
                             [secondaryPlaceholder]="'Type to add Pos.'">
                             <tag-input-dropdown 
@@ -113,11 +113,11 @@
                           <tag-input
                             class="brs-oppos_pos_1"
                             name="oppos_pos" 
-                            [onTextChangeDebounce]="0"
+                            (onTextChangeDebounce)="0"
                             [ngModel]="buildRulesStack.oppos_pos"
                             [inputClass]="'brs-oppos_pos'"
                             [maxItems]='2' 
-                            [onlyFromAutocomplete]="true"
+                            (onlyFromAutocomplete)="true"
                             [placeholder]="'Type to add Pos.'"
                             [secondaryPlaceholder]="'Type to add Pos.'">
                             <tag-input-dropdown 

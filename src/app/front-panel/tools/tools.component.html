@@ -167,10 +167,10 @@
                                         <tag-input
                                           class="stack_name_{{stack.id}}"
                                           name="stack_name"
-                                          [onTextChangeDebounce]="0"
+                                          (onTextChangeDebounce)="0"
                                           [ngModel]="stack.player"
                                           [maxItems]='1'
-                                          [onlyFromAutocomplete]="true"
+                                          (onlyFromAutocomplete)="true"
                                           [placeholder]="'Type to add player'"
                                           [secondaryPlaceholder]="'Type to add player'">
 
@@ -196,11 +196,11 @@
                                         <tag-input
                                           class="brs-pos_{{stack.id}}"
                                           name="pos"
-                                          [onTextChangeDebounce]="0"
+                                          (onTextChangeDebounce)="0"
                                           [ngModel]="stack.pos"
                                           [inputClass]="'brs-pos'"
                                           [maxItems]='3'
-                                          [onlyFromAutocomplete]="true"
+                                          (onlyFromAutocomplete)="true"
                                           [placeholder]="'Type to add Pos.'"
                                           [secondaryPlaceholder]="'Type to add Pos.'">
                                           <tag-input-dropdown
@@ -223,11 +223,11 @@
                                         <tag-input
                                           class="brs-oppos_pos_{{stack.id}}"
                                           name="oppos_pos"
-                                          [onTextChangeDebounce]="0"
+                                          (onTextChangeDebounce)="0"
                                           [ngModel]="stack.oppos_pos"
                                           [inputClass]="'brs-oppos_pos'"
                                           [maxItems]='2'
-                                          [onlyFromAutocomplete]="true"
+                                          (onlyFromAutocomplete)="true"
                                           [placeholder]="'Type to add Pos.'"
                                           [secondaryPlaceholder]="'Type to add Pos.'">
                                           <tag-input-dropdown
@@ -330,12 +330,12 @@
                           <div class="s_add_player">
                             <div *ngIf="playersList.length > 0">
                               <tag-input
-                                [onTextChangeDebounce]="0"
+                                (onTextChangeDebounce)="0"
                                 [ngModel]="g.selected_players"
                                 (onAdd)="updateGroupPlayers($event,'add',g.name)"
                                 (onRemove)="updateGroupPlayers($event,'remove',g.name)"
                                 [maxItems]='3'
-                                [onlyFromAutocomplete]="true"
+                                (onlyFromAutocomplete)="true"
                                 [placeholder]="'Type to add player'"
                                 [secondaryPlaceholder]="'Type to add player'">
 

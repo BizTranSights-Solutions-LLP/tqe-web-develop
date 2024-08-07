@@ -1,5 +1,5 @@
 <div class="body" [class.mobile-body]="isMobile">
-  <div class="main-container" *ngIf="!auth_loading" [ngStyle]="{
+  <div class="main-container" [ngStyle]="{
   'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
 }">
     <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day)">
@@ -249,7 +249,7 @@
     <div *ngIf="loading" class="pt-5">
       <div class="loadersmall"></div>
     </div>
-    <div class="container-fluid" *ngIf="!loading && (games_by_day).length === 0">
+    <div class="container-fluid" *ngIf="!loading && (keys(games_by_day)).length === 0">
       <div class="main-header">
         <div class="game-header">
           <div class="logo-section">

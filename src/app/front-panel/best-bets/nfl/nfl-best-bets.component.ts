@@ -123,8 +123,10 @@ export class NflBestBetsComponent implements OnInit {
       g.ml_pick = 'moneyline_pick' in g ? g.moneyline_pick : '';
       g.sp_pick = 'spread_pick' in g ? g.spread_pick : '';
       g.ou_pick = 'total_pick' in g ? g.total_pick : '';
-      g.home_team_logo = `../../../../assets/images/logos/nfl/teams/${g.home_team_abbr}.svg`;
-      g.away_team_logo = `../../../../assets/images/logos/nfl/teams/${g.away_team_abbr}.svg`;
+      g.home_team_full_name = (g.home_team_first_name + ' ' + g.home_team_last_name).trim();
+      g.away_team_full_name = (g.away_team_first_name + ' ' + g.away_team_last_name).trim();
+      g.away_team_logo = `../../../../assets/images/logos/nfl/${g.away_team_full_name}.png`;
+      g.home_team_logo = `../../../../assets/images/logos/nfl/${g.home_team_full_name}.png`;
       if (g.week !== 'Invalid') (this.games_by_week[g.week] = this.games_by_week[g.week] || []).push(g);
     });
     this.loading = false;

@@ -1,241 +1,145 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { SeoService } from '../../../services/seo.service';
-
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BestBetsService } from '../best-bets.service';
 import { DataService } from '../../../services/data.service';
-import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
-import { Subscription } from 'rxjs';
-import { AngularBootstrapToastsService } from 'angular-bootstrap-toasts';
-import { ModalDirective } from 'ngx-bootstrap/modal';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'tqe-soccer-best-bets-export',
+  selector: 'tqe-soccer-best-bets',
   templateUrl: './soccer-best-bets.component.html',
   styleUrls: ['./soccer-best-bets.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 
 export class SoccerBestBetsExportComponent implements OnInit {
-  // @ViewChild('signupModal') signupModal: ModalDirective;
+
+  isMobile: boolean = false;
+  game_logo: string = `../../../../assets/images/home_page/soccer_logo.svg`;
+  game_background_img: string = `../../../../assets/images/picks/Soccer_Picks_bg.png`;
+  game_background_mobile_img: string = `../../../../assets/images/picks/Soccer_Picks_bg.png`;
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private router: Router,
+    private breakpointObserver: BreakpointObserver,
     private plumber: BestBetsService,
-    private toast: AngularBootstrapToastsService
   ) { }
 
   games: any[] = [];
-  games_today: any[] = [];
-  summary: any[]    = [];
-  loading: boolean  = true;
-  isAuthorized: boolean = false;
-  gameDate: string;
-  finalDate: string;
-  sortBy: string = 'rating';
-  sortDir: any = {
-    'rating': true,
-    'time': false
-  };
-  league: string;
+  games_by_day: {};
+  loading = true;
+  isAuthorized = false;
+  selected_league: string;
+  all_leagues: string[] = [
+    "EPL",
+    "LA-LIGA",
+    "SerieA",
+    "Bundesliga",
+    "Ligue1",
+    // "Super-Lig",
+    // "UEFA-Champ",
+    "MLS"
+  ];
 
   ngOnInit() {
-    //this.authorizeUser();
-    this.league = "EPL"
+    this.authorizeUser();
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+      this.isMobile = result.matches;
+    });
+    this.selected_league = this.all_leagues[0];
+    this.getData();
   }
 
   // === PUBLIC METHODS ====================================================
 
-  public decToAmOdds(d: number): string{
-    let res : number;
-    if(d > 2) {
-      res = 100*(d-1)
-      return '+'+ res.toFixed();
+
+  public keys(dict: any) {
+    return Object.keys(dict);
+  }
+
+  // TQE Pick
+  public isTQEP(game: any, team: string): boolean {
+    if (this.isAuthorized && game[`ml_pick_${team}`] && game[`m_${team}_prob`] > game[`m_${team}_improb`] && game[`m_${team}_prob`] * 100 < 60.0) {
+      return true;
     }
-    else{
-      res = -100/(d-1);
+    return false;
+  }
+
+  // TQE High Confidence Pick
+  public isTQEHCP(game: any, team: string): boolean {
+    if (this.isAuthorized && game[`ml_pick_${team}`] && game[`m_${team}_prob`] > game[`m_${team}_improb`] && game[`m_${team}_prob`] * 100 >= 60.0) {
+      return true;
+    }
+    return false;
+  }
+
+
+  public decToAmOdds(d: number): string {
+    let res: number;
+    if (d > 2) {
+      res = 100 * (d - 1)
+      return '+' + res.toFixed();
+    }
+    else {
+      res = -100 / (d - 1);
       return '' + res.toFixed();
     }
   }
 
-  public stars(n: number): any[] {
-    return Array(n);
-  }
-
-  public sortByStartTime() {
-    this.sortBy = 'time';
-    this.games = this.games.sort(function(a, b){
-      return moment(a.Schedule).valueOf() - moment(b.Schedule).valueOf();
-    });
-    if (this.sortDir[this.sortBy]) {
-      this.games.reverse();
+  onClickLeague(league) {
+    if (this.all_leagues.includes(league)) {
+      this.selected_league = league;
+      this.getData();
     }
-
-    this.sortDir[this.sortBy] = !this.sortDir[this.sortBy];
-  }
-
-  public sortByRating() {
-    if (this.isAuthorized) {
-      this.sortBy = 'rating';
-      this.games = this.games.sort((a,b) => parseFloat(b.final_prob.match(/\d\d\.?\d?/)[0]) - parseFloat(a.final_prob.match(/\d\d\.?\d?/)[0]));
-      if (this.sortDir[this.sortBy]) {
-        this.games.reverse();
-      }
-
-      this.sortDir[this.sortBy] = !this.sortDir[this.sortBy];
-    }
-  }
-
-  onClickEPL() {
-    this.league = "EPL";
-    this.getData();
-  }
-
-  onClickLaLiga() {
-    this.league = "LA-LIGA";
-    this.getData();
-  }
-
-  onClickSerieA() {
-    this.league = "SerieA";
-    this.getData();
-  }
-
-  onClickBundesliga() {
-    this.league = "Bundesliga";
-    this.getData();
-  }
-
-  onClickLigue1() {
-    this.league = "Ligue1";
-    this.getData();
   }
 
   // === PRIVATE METHODS ===================================================
 
-  // Authorize partner
-  // e.g.  window.parent.window.postMessage({"key":"eyJtZXNzYWdlIjoiSldUIFJ1b", "data":"anything"}, 'https://staging.thequantumedge.com')
-  @HostListener('window:message', ['$event'])
-  onMessage(e) {
-    let whitelist =                                       // set allowed origins e.g. https://www.rotoballer.com
-    [
-    "https://dev.rotoballer.com",
-    "https://www.rotoballer.com"
-    ];
-    if (whitelist.indexOf(e.origin) === -1) {
-      return false;
-    }
-    if (e.data.key == "eyJtZXNzYWdlIjoiSldUIFJ1b") {
-      this.loading = false;
-      this.isAuthorized = true;
-      this.getData();
-      console.log("access granted");
-    }
-  }
-
   private authorizeUser() {
     let isLoggedIn: any = this.authService.isUserLoggedIn();
-    let tool: string = "nba-dk-optimizer"
+    let tool: string = 'nba-dk-optimizer';
 
     this.dataService.get_tool(tool).subscribe(
       (res: any) => {
-        this.isAuthorized = (res.meta.code === 200);
+        if (res.result.membership_plan === '') {
+          this.isAuthorized = (res.meta.code === 200);
+        }
       },
       (err) => {
         this.isAuthorized = false;
-        this.loading = false;
-        this.sortByStartTime();
       },
-      ()  => {
-        this.loading = false;
-      }
     );
   }
 
-  private toastErrorMsg(title, msg) {
-    this.toast.showSimpleToast({
-      text: msg,
-      title: title,
-      iconClass: "fas fa-exclamation-triangle",
-      titleClass: "bg-danger text-white",
-      closeButtonClass: "text-white",
-      toastClass: "border-danger",
-      duration: 5000,
-      bodyClass: "",
-      toolbarClass: "",
+  private processGames = win => {
+    this.loading = true;
+    for (const i in win) {
+      this.games.push(win[i]);
+    }
+    this.games.forEach(g => {
+      g.local_start_date = moment(g.EST_schedule).format('MMM D, YYYY');
+      g.local_start_time = moment(g.EST_schedule).format('hh:mm A');
+      g.started = (moment(g.EST_schedule) < moment());
+      g.ml_pick_h = (g['m_tqe_pick'] == "home");
+      g.ml_pick_t = (g['m_tqe_pick'] == "tie");
+      g.ml_pick_a = (g['m_tqe_pick'] == "away");
+      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      if (g.day !== 'Invalid date') if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
     });
+    this.loading = false;
   };
-
-  private toastInfoMsg(title, msg) {
-    this.toast.showSimpleToast({
-      text: msg,
-      title: title,
-      iconClass: "fas fa-info-circle",
-      titleClass: "bg-info text-white",
-      closeButtonClass: "text-white",
-      toastClass: "border-info",
-      duration: 5000,
-      bodyClass: "",
-      toolbarClass: "",
-    });
-  };
-
-  private getFinalDate(games: any[]): string{
-    if(games.length == 0)
-      return "null";
-    let res = games[0].date;
-    this.games.forEach( g => {
-      if(moment(g.date).isAfter(moment(res),'day'))
-        res = g.date;
-    })
-    return res;
-  }
 
   private getData() {
     this.games = [];
-    this.games_today = [];
-    this.gameDate = moment().format('dddd, MMMM Do, YYYY');
-    this.plumber.getSoccerTable(this.league).subscribe(
-      win => {
-        for(let i in win) 
-          this.games.push(win[i]);
-        this.games.forEach( g => {
-          g.started = g.date == 'TOMORROW';
-          g.local_start_time = moment(g.date).format('MMM D YYYY, HH:mm');
-          if(g.started == false)
-            g.started = (moment(g.date) < moment());
-          g.ml_pick_h = g['ml_H_return'] > 0;
-          g.ml_pick_d = g['ml_D_return'] > 0;
-          g.ml_pick_a = g['ml_A_return'] > 0;
-          g.sp_pick_h = g['sprd_H_dmnt_return'] > 0;
-          g.sp_pick_a = g['sprd_A_dmnt_return'] > 0;
-          g.ou_pick_o = g['OU_over_dmnt_return'] > 0;
-          g.ou_pick_u = g['OU_under_dmnt_return'] > 0;
-          g.ml_H_odds = this.decToAmOdds(g.ml_H_odds);
-          g.ml_D_odds = this.decToAmOdds(g.ml_D_odds);
-          g.ml_A_odds = this.decToAmOdds(g.ml_A_odds);
-          g.sprd_H_dmnt_odds = this.decToAmOdds(g.sprd_H_dmnt_odds);
-          g.sprd_A_dmnt_odds = this.decToAmOdds(g.sprd_A_dmnt_odds);
-          g.OU_over_dmnt_odds = this.decToAmOdds(g.OU_over_dmnt_odds);
-          g.OU_under_dmnt_odds = this.decToAmOdds(g.OU_under_dmnt_odds);
-          if(moment(g.date).isSame(moment(),'day')){
-            this.games_today.push(g);
-          }
-         });
-
-      },
-     fail => {console.log("failed")},
-     () => {
-       // Pop today's games
-       this.games = this.games.filter(game => !moment(game.date).isSame(moment(),'day'));
-       // Get latest date
-       this.finalDate = this.getFinalDate(this.games);
-       this.finalDate = moment(this.finalDate).format('dddd, MMMM Do, YYYY');
-       // this.loading = false;
-     },
-   );
+    this.games_by_day = {};
+    if (localStorage.getItem('data')) {
+      this.plumber.getSoccerTable(this.selected_league).subscribe(
+        this.processGames
+      );
+    } else {
+      this.plumber.getSoccerTablePublic(this.selected_league).subscribe(
+        this.processGames
+      );
+    }
   }
 }

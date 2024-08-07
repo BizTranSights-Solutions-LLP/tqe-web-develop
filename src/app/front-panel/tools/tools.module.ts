@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ToolsRoutingModule } from './tools-routing.module';
@@ -36,6 +36,7 @@ import { SharedModule } from '../../shared/shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ToolsModule { }

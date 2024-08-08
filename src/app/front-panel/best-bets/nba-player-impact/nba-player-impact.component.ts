@@ -120,7 +120,8 @@ export class NbaPlayerImpactComponent implements OnInit {
         this.checkUserWhopSubscription(userData.whop_user_access_token, type);
       }
       else {
-        this.subscribeToProfessionalView();
+        this.viewType = type;
+        this.resetData();
       }
     }
     else {

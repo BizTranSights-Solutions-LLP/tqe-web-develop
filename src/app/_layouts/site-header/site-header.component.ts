@@ -57,6 +57,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
       subNav: [
         { label: 'NFL Player Impact', loggedInURL: '/tool/nfl-player-impact', loggedOutURL: '/membership-plan' },
         { label: 'NBA Player Impact', loggedInURL: '/tool/nba-player-impact', loggedOutURL: '/membership-plan' },
+        { label: 'NCAAF Player Impact', loggedInURL: '/tool/cf-player-impact', loggedOutURL: '/membership-plan' },
         // { label: 'Cricket Player Impact', loggedInURL: '/tool/cricket-player-impact', loggedOutURL: '/membership-plan' },
         // BP Change comment out 2 lines below 202200206
         // {label: 'NFL Demo', loggedInURL: '/nfl-demo', loggedOutURL: '/nfl-demo'},

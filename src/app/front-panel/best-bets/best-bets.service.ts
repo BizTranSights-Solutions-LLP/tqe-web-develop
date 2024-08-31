@@ -385,6 +385,18 @@ export class BestBetsService {
     return this.http.get('assets/cricket/lineups/' + file, {headers: header});
   }
 
+  getCfPlayerImpactData() {
+    let url = environment.base_url + 'getCfPlayerImpactData';
+    let header = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      // 'Authorization': localStorage.getItem('data') ? `Bearer ${JSON.parse(localStorage.getItem('data'))['jwt_token']}` : ''
+    });
+    // return this.http.get(url, {headers: header});
+    return this.http.get('assets/ncaaf_lineup.json', {headers: header});
+  }
+
 
   getNbaPlayerImpactMeta() {
     let url = environment.base_url + 'getNbaPlayerImpactMeta';

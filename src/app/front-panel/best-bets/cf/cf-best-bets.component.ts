@@ -140,8 +140,8 @@ export class CfBestBetsComponent implements OnInit {
       g.over_odds = g.t_o_odds;
       g.under_odds = g.t_u_odds;
       g.tpick_prob = g.t_o_prob;
-      g.away_team_last_name = g.away_team_last_name.split(" and ")[0];
-      g.home_team_last_name = g.home_team_last_name.split(" and ")[0];
+      // g.away_team_last_name = g.away_team_last_name.split(" and ")[0];
+      // g.home_team_last_name = g.home_team_last_name.split(" and ")[0];
     });
     this.loading = false;
   };

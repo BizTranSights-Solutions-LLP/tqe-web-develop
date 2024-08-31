@@ -9,16 +9,16 @@ import { environment } from 'src/environments/environment';
 declare var require: any;
 
 @Component({
-  selector: 'tqe-nfl-player-impact',
-  templateUrl: './nfl-player-impact.component.html',
-  styleUrls: ['./nfl-player-impact.component.scss']
+  selector: 'tqe-cf-player-impact',
+  templateUrl: './cf-player-impact.component.html',
+  styleUrls: ['./cf-player-impact.component.scss']
 })
-export class NflPlayerImpactComponent implements OnInit {
+export class CfPlayerImpactComponent implements OnInit {
   isMobile: boolean = false;
-  game_logo: string = `../../../../assets/images/nfl/nfl_logo.png`;
+  game_logo: string = `../../../../assets/images/cf/cf_logo.svg`;
   blur_img: string = `../../../../assets/images/nfl/blur_background.png`;
-  game_background_img: string = `../../../../assets/images/nfl/nfl_background.png`;
-  game_background_mobile_img: string = `../../../../assets/images/nfl/nfl_background_mobile.png`;
+  game_background_img: string = `../../../../assets/images/cf/cf_background.png`;
+  game_background_mobile_img: string = `../../../../assets/images/cf/cf_background_mobile.png`;
   defaultImageURL: string = "../../../../assets/images/Default.png";
   away_team_logo: string = "";
   home_team_logo: string = "";
@@ -434,7 +434,6 @@ export class NflPlayerImpactComponent implements OnInit {
     if (this.spillOverYards) {
       if(slider === 'slider1') {
         let reducedYards = Math.round((diff1 / ratio));
-        console.log(diff1, ratio, (diff1/ratio), reducedYards);
         player.slider2.value = Math.min(Math.max(player[`${y2}Yards`] - reducedYards, player.slider2.min), player.slider2.max);
       }
       else {
@@ -520,9 +519,9 @@ export class NflPlayerImpactComponent implements OnInit {
    * @returns The corresponding game object.
    */
   private getGame(match: string) {
-    const teams = match.split(" ", 3);
-    this.away_team = teams[0];
-    this.home_team = teams[2];
+    const teams = match.split("-", 3);
+    this.away_team = teams[0].trim();
+    this.home_team = teams[1].trim();
 
     const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team);
     this.match_loading = false;
@@ -533,10 +532,10 @@ export class NflPlayerImpactComponent implements OnInit {
    * Set full names for home and away teams.
    */
   private setTeamFullNames() {
-    this.home_team_full_name = (this.selected_match.home_team_first_name + ' ' + this.selected_match.home_team_last_name).trim();
-    this.away_team_full_name = (this.selected_match.away_team_first_name + ' ' + this.selected_match.away_team_last_name).trim();
-    this.away_team_logo = `../../../../assets/images/logos/nfl/${this.away_team_full_name}.png`;
-    this.home_team_logo = `../../../../assets/images/logos/nfl/${this.home_team_full_name}.png`;
+    this.home_team_full_name = this.selected_match.home_team_full_name;
+    this.away_team_full_name = this.selected_match.away_team_full_name;
+    this.away_team_logo = `../../../../assets/images/logos/cf/${this.away_team_full_name}.png`;
+    this.home_team_logo = `../../../../assets/images/logos/cf/${this.home_team_full_name}.png`;
   }
 
   /**
@@ -545,9 +544,9 @@ export class NflPlayerImpactComponent implements OnInit {
    * @returns The player data for the home and away teams.
    */
   private getPlayers(match: string) {
-    const teams = match.split(" ", 3);
-    const away_team = teams[0];
-    const home_team = teams[2];
+    const teams = match.split("-", 3);
+    const away_team = teams[0].trim();
+    const home_team = teams[1].trim();
 
     const awayTeamData = this.matches.find(m => m.team_name === away_team);
     const homeTeamData = this.matches.find(m => m.team_name === home_team);
@@ -568,8 +567,8 @@ export class NflPlayerImpactComponent implements OnInit {
     this.getCurrentGamePlayerStats();
     this.resetPlayerData(this.selected_players.away_lineup);
     this.resetPlayerData(this.selected_players.home_lineup);
-    this.setPlayerImages(this.away_team_full_name, this.selected_players.away_lineup);
-    this.setPlayerImages(this.home_team_full_name, this.selected_players.home_lineup);
+    this.setPlayerImages(this.away_team, this.selected_players.away_lineup);
+    this.setPlayerImages(this.home_team, this.selected_players.home_lineup);
   }
 
   /**
@@ -578,7 +577,7 @@ export class NflPlayerImpactComponent implements OnInit {
    */
   private setPlayerImages(team, lineup) {
     lineup.forEach(player => {
-      player.img = `../../../../assets/images/headshots/nfl/${team}/${player.position}/${player.player_name}.png`;
+      player.img = `../../../../assets/images/headshots/cf/${team}/${player.position}/${player.player_name}.png`;
     });
   }
 
@@ -651,18 +650,34 @@ export class NflPlayerImpactComponent implements OnInit {
    * Fetch NFL data and initialize component state.
    */
   private getGameData() {
-    this.plumber.getNflTable().subscribe(
+    this.plumber.getcfTable().subscribe(
       (win: any[]) => {
         this.games = win;
         this.gameWeek = this.games[0].week;
         this.games.forEach(g => {
+          g.schedule = g.EST_schedule;
           g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');
           g.started = moment(g.schedule).isBefore(moment());
           g.ml_pick = g.ml_pick;
           g.sp_pick = g.spread_pick;
           g.ou_pick = g.total_pick;
-          g.s_pred = (Math.ceil((Number(g.spred)) * 1e1) / 1e1);
-          g.t_pred = (Math.ceil((Number(g.tpred)) * 1e1) / 1e1);
+          g.s_pred = (Math.ceil((Number(g.s_a_pred)) * 1e1) / 1e1);
+          g.t_pred = (Math.ceil((Number(g.t_pred)) * 1e1) / 1e1);
+          g.spread_pick = g.s_tqe_pick;
+          g.moneyline_pick = g.m_tqe_pick;
+          g.total_pick = g.t_tqe_pick;
+          g.away_spread = g.s_a_line;
+          g.OU_line = g.t_line;
+          g.spick_prob = g.s_tqe_prob;
+          g.tpick_prob = g.t_tqe_prob;
+          g.spick_ER = g.s_tqe_er;
+          g.tpick_ER = g.t_tqe_er;
+          g.away_odds = g.s_a_odds;
+          g.home_odds = g.s_h_odds;
+          g.away_money = g.m_a_odds;
+          g.home_money = g.m_h_odds;
+          g.over_odds = g.t_o_odds;
+          g.under_odds = g.t_u_odds;
           if (g.week === this.gameWeek) {
             this.games_today.push(g);
             this.teams.push(`${g.away_team_abbr} - ${g.home_team_abbr}`);
@@ -679,7 +694,7 @@ export class NflPlayerImpactComponent implements OnInit {
       },
       () => { },
       () => {
-        this.plumber.getNflPlayerImpactData().subscribe(
+        this.plumber.getCfPlayerImpactData().subscribe(
           (res: any[]) => {
             this.matches = res;
             this.playerDataResolver();

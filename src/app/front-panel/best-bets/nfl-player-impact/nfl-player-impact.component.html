@@ -551,7 +551,7 @@
                             <label>
                               <div class="text"><img
                                   src="../../../../assets/images/performance/average_performance.svg">
-                                &nbsp;<span>Good</span>
+                                &nbsp;<span>Average</span>
                               </div>
                               <input type="radio" name="{{player.player_name}}" value="50"
                                 [checked]="player.perf === 50" (change)="onPerfChange(player, 50)">
@@ -673,7 +673,7 @@
                             <label>
                               <div class="text"><img
                                   src="../../../../assets/images/performance/average_performance.svg">
-                                &nbsp;<span>Good</span>
+                                &nbsp;<span>Average</span>
                               </div>
                               <input type="radio" name="{{player.player_name}}" value="50" checked
                                 [checked]="player.perf === 50" (change)="onPerfChange(player, 50)">
@@ -794,6 +794,12 @@
               </svg>
             </span>
           </div>
+          <!-- <div class="spill-over-yards form-check mt-4">
+            <input class="form-check-input" type="checkbox" id="spillOverYards" [(ngModel)]="spillOverYards">
+            <label class="form-check-label" for="spillOverYards">
+              Spill Over Yards
+            </label>
+          </div> -->
         </div>
       </div>
       <div *ngIf="match_loading" class="layout-container text-center">
@@ -801,5 +807,4 @@
       </div>
     </div>
   </div>
-
 </div>

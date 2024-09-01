@@ -94,7 +94,7 @@ export class MlbBestBetsComponent implements OnInit {
 
   // === PRIVATE METHODS ===================================================
 
-  private authorizeUser() {
+  protected authorizeUser() {
     let isLoggedIn: any = this.authService.isUserLoggedIn();
     let tool: string = 'nba-dk-optimizer';
 

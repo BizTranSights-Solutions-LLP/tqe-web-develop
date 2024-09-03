@@ -11,7 +11,7 @@ export class AllPlayerExportImpactComponent implements OnInit {
 
   isAuthorized = false;
   sport = 'NBA';
-  sports = ['NBA', 'NFL', 'MLB', 'SOCCER'];
+  sports = ['NBA', 'NFL', 'NCAAF', 'MLB', 'SOCCER'];
 
   ngOnInit() {
     this.setSport(this.sport);
@@ -27,7 +27,6 @@ export class AllPlayerExportImpactComponent implements OnInit {
     ];
     this.isAuthorized = whitelist.includes(e.origin) && e.data.key === 'eyJtZXNzYWdlIjoiSldUIFJ1b';
     console.log(this.isAuthorized ? 'access granted' : 'not in whitelist');
-    this.isAuthorized = true;
   }
 
   setSport(sport: string) {

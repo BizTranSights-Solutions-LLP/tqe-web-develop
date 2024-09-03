@@ -66,11 +66,11 @@ export class CfPlayerImpactComponent implements OnInit {
   }
 
   constructor(
-    private authService: AuthService,
-    private dataService: DataService,
-    private plumber: BestBetsService,
-    private breakpointObserver: BreakpointObserver,
-    private http: HttpClient,
+    protected authService: AuthService,
+    protected dataService: DataService,
+    protected plumber: BestBetsService,
+    protected breakpointObserver: BreakpointObserver,
+    protected http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -167,14 +167,14 @@ export class CfPlayerImpactComponent implements OnInit {
    * @param time - The time to format.
    * @returns Formatted time string.
    */
-  private formatTime(time: any) {
+  protected formatTime(time: any) {
     return moment(time).format('MMM DD, YYYY hh:mm A');
   }
 
   /**
    * Authorize user to access the tool.
    */
-  private authorizeUser() {
+  protected authorizeUser() {
     const isLoggedIn = this.authService.isUserLoggedIn();
     if (isLoggedIn) {
       this.dataService.get_tool("nba-dk-optimizer").subscribe(
@@ -193,7 +193,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Handle unauthorized access.
    */
-  private handleUnauthorized() {
+  protected handleUnauthorized() {
     this.isAuthorized = false;
     this.auth_loading = false;
     this.sortByStartTime();
@@ -214,7 +214,7 @@ export class CfPlayerImpactComponent implements OnInit {
    * Reset player data for the given lineup.
    * @param lineup - The lineup to reset.
    */
-  private resetPlayerData(lineup: any[]) {
+  protected resetPlayerData(lineup: any[]) {
     lineup.forEach(player => {
       player.perf = 50;
       player.profPerfV1 = 50;
@@ -326,7 +326,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Update match data based on the selected match.
    */
-  private updateMatchData() {
+  protected updateMatchData() {
     this.s_pred = this.selected_match.s_pred;
     this.t_pred = this.selected_match.t_pred;
     this.s_pick = (this.selected_match.spread_pick === 'away') ? this.away_team : this.home_team;
@@ -394,18 +394,18 @@ export class CfPlayerImpactComponent implements OnInit {
     this.active_team = team;
   }
 
-  private roundToNearest(num: number, nearNumber: number): number {
+  protected roundToNearest(num: number, nearNumber: number): number {
     return Math.ceil(num / nearNumber) * nearNumber;
   }
 
-  private onPerfChange(player: any, value: number) {
+  protected onPerfChange(player: any, value: number) {
     player.perf = value;
     this.stPredResolver();
     this.pickResolver();
     this.updateProbER();
   }
 
-  private onProfessionalPerfChange(player: any, slider: string) {
+  protected onProfessionalPerfChange(player: any, slider: string) {
 
     
     let ratio = 1;
@@ -461,7 +461,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Calculate s_pred and t_pred based on player performance.
    */
-  private stPredResolver(isProfView = false) {
+  protected stPredResolver(isProfView = false) {
     this.s_pred = this.selected_match.s_pred;
     this.t_pred = this.selected_match.t_pred;
 
@@ -474,7 +474,7 @@ export class CfPlayerImpactComponent implements OnInit {
    * @param lineup - The lineup of players.
    * @param isAway - Whether the lineup is for the away team.
    */
-  private adjustPredictions(lineup: any[], isAway: boolean, isProfView: boolean) {
+  protected adjustPredictions(lineup: any[], isAway: boolean, isProfView: boolean) {
 
     lineup.forEach((player, i) => {
       if (player.perf < 50) {
@@ -507,7 +507,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Resolve picks based on s_pred and t_pred.
    */
-  private pickResolver() {
+  protected pickResolver() {
     this.s_pick = (this.s_pred > this.selected_match.away_spread) ? this.home_team : this.away_team;
     this.t_pick = (this.t_pred > this.selected_match.OU_line) ? 'over' : 'under';
     this.m_pick = (this.s_pred > 0) ? this.home_team : this.away_team;
@@ -518,7 +518,7 @@ export class CfPlayerImpactComponent implements OnInit {
    * @param match - The selected teams.
    * @returns The corresponding game object.
    */
-  private getGame(match: string) {
+  protected getGame(match: string) {
     const teams = match.split("-", 3);
     this.away_team = teams[0].trim();
     this.home_team = teams[1].trim();
@@ -531,7 +531,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Set full names for home and away teams.
    */
-  private setTeamFullNames() {
+  protected setTeamFullNames() {
     this.home_team_full_name = this.selected_match.home_team_full_name;
     this.away_team_full_name = this.selected_match.away_team_full_name;
     this.away_team_logo = `../../../../assets/images/logos/cf/${this.away_team_full_name}.png`;
@@ -543,7 +543,7 @@ export class CfPlayerImpactComponent implements OnInit {
    * @param match - The selected match.
    * @returns The player data for the home and away teams.
    */
-  private getPlayers(match: string) {
+  protected getPlayers(match: string) {
     const teams = match.split("-", 3);
     const away_team = teams[0].trim();
     const home_team = teams[1].trim();
@@ -562,7 +562,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Resolve player data for the selected match.
    */
-  private playerDataResolver() {
+  protected playerDataResolver() {
     this.selected_players = this.getPlayers(this.selected_teams);
     this.getCurrentGamePlayerStats();
     this.resetPlayerData(this.selected_players.away_lineup);
@@ -575,7 +575,7 @@ export class CfPlayerImpactComponent implements OnInit {
    * Set player images for the given lineup.
    * @param lineup - The lineup to set images for.
    */
-  private setPlayerImages(team, lineup) {
+  protected setPlayerImages(team, lineup) {
     lineup.forEach(player => {
       player.img = `../../../../assets/images/headshots/cf/${team}/${player.position}/${player.player_name}.png`;
     });
@@ -598,7 +598,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Update probabilities and expected returns for picks.
    */
-  private updateProbER() {
+  protected updateProbER() {
     const R = require("j6");
     const sodds = (this.selected_match.spread_pick === "away") ? +this.selected_match.away_odds : +this.selected_match.home_odds;
     const modds = (this.selected_match.moneyline_pick === "away") ? +this.selected_match.away_money : +this.selected_match.home_money;
@@ -629,7 +629,7 @@ export class CfPlayerImpactComponent implements OnInit {
   }
 
 
-  private getCurrentGamePlayerStats() {
+  protected getCurrentGamePlayerStats() {
     ['away', 'home'].forEach(team => {
       this.selected_players[`${team}_lineup`].forEach(player => {
           player.passingYards = Math.round(player.passingYards) || (this.defaultAvgs[player.position] ? this.defaultAvgs[player.position][0] : 0);
@@ -649,7 +649,7 @@ export class CfPlayerImpactComponent implements OnInit {
   /**
    * Fetch NFL data and initialize component state.
    */
-  private getGameData() {
+  protected getGameData() {
     this.plumber.getcfTable().subscribe(
       (win: any[]) => {
         this.games = win;

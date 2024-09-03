@@ -24,7 +24,6 @@ export class IfreamPicksComponent implements OnInit {
     ];
     this.isAuthorized = whitelist.includes(e.origin) && e.data.key === 'eyJtZXNzYWdlIjoiSldUIFJ1b';
     console.log(this.isAuthorized ? 'access granted' : 'not in whitelist');
-    this.isAuthorized = true;
   }
 
   setSport(sport: string) {

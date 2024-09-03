@@ -326,7 +326,6 @@ export class BestBetsService {
 
   getNbaPlayerImpactData() {
     let url = environment.base_url + 'getNbaPlayerImpactData';
-    console.log(JSON.parse(localStorage.getItem('data'))['jwt_token']);
     let header = new HttpHeaders({
       'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
       'Pragma': 'no-cache',

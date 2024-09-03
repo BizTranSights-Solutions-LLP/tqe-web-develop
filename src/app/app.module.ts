@@ -100,6 +100,7 @@ import {MatSliderModule} from '@angular/material/slider';
 
 // Exported iFrame
 import {SoccerBestBetsExportComponent} from './front-panel/best-bets/soccer/soccer-best-bets-export.component';
+import {CfPlayerExportImpactComponent} from './front-panel/best-bets/cf-player-impact/cf-player-impact-export.component';
 import {NbaPlayerExportImpactComponent} from './front-panel/best-bets/nba-player-impact/nba-player-impact-export.component';
 import {MlbPlayerExportImpactComponent} from './front-panel/best-bets/mlb-player-impact/mlb-player-impact-export.component';
 
@@ -366,6 +367,7 @@ const routes: Routes = [
     // Exported iFrame
     AllPlayerExportImpactComponent,
     SoccerBestBetsExportComponent,
+    CfPlayerExportImpactComponent,
     NbaPlayerExportImpactComponent,
     MlbPlayerExportImpactComponent,
     NflPlayerExportImpactComponent,

@@ -117,6 +117,7 @@ export class NflBestBetsComponent implements OnInit {
       this.games.push(win[i]);
     }
     this.games.forEach(g => {
+      g.week = `NFL Week ${parseInt(g.week.split(' ')[2]) % 52 || 52}`;
       g.local_start_date = moment(g.schedule).format('MMM D, YYYY');
       g.local_start_time = moment(g.schedule).format('hh:mm A');
       g.started = (moment(g.schedule) < moment());

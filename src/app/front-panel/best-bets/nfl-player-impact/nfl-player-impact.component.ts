@@ -654,6 +654,9 @@ export class NflPlayerImpactComponent implements OnInit {
     this.plumber.getNflTable().subscribe(
       (win: any[]) => {
         this.games = win;
+        this.games.forEach(game => {
+          game.week = `NFL Week ${parseInt(game.week.split(' ')[2]) % 52 || 52}`;
+        });
         this.gameWeek = this.games[0].week;
         this.games.forEach(g => {
           g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');

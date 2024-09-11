@@ -15,15 +15,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class SoccerBestBetsComponent implements OnInit {
 
   isMobile: boolean = false;
-  game_logo: string = `../../../../assets/images/home_page/soccer_logo.svg`;
   game_background_img: string = `../../../../assets/images/picks/Soccer_Picks_bg.png`;
   game_background_mobile_img: string = `../../../../assets/images/picks/Soccer_Picks_bg.png`;
-  constructor(
-    private authService: AuthService,
-    private dataService: DataService,
-    private breakpointObserver: BreakpointObserver,
-    private plumber: BestBetsService,
-  ) { }
 
   games: any[] = [];
   games_by_day: {};
@@ -40,6 +33,23 @@ export class SoccerBestBetsComponent implements OnInit {
     // "UEFA-Champ",
     "MLS"
   ];
+
+  game_logos = {
+    "EPL": `../../../../assets/images/soccer/EPL.svg`,
+    "LA-LIGA": `../../../../assets/images/soccer/LaLiga.png`,
+    "SerieA": `../../../../assets/images/soccer/SerieA.png`,
+    "Bundesliga": `../../../../assets/images/soccer/Bundesliga.png`,
+    "Ligue1": `../../../../assets/images/soccer/Ligue1.png`,
+    "MLS": `../../../../assets/images/soccer/MLS.png`,
+  }
+
+  game_logo: string = this.game_logos[this.all_leagues[0]];
+  constructor(
+    private authService: AuthService,
+    private dataService: DataService,
+    private breakpointObserver: BreakpointObserver,
+    private plumber: BestBetsService,
+  ) { }
 
   ngOnInit() {
     this.authorizeUser();
@@ -90,6 +100,7 @@ export class SoccerBestBetsComponent implements OnInit {
     if (this.all_leagues.includes(league)) {
       this.selected_league = league;
       this.getData();
+      this.game_logo = this.game_logos[this.selected_league];
     }
   }
 

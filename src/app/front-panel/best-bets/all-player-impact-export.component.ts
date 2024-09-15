@@ -10,8 +10,8 @@ export class AllPlayerExportImpactComponent implements OnInit {
 
 
   isAuthorized = false;
-  sport = 'NBA';
-  sports = ['NBA', 'NFL', 'NCAAF', 'MLB', 'SOCCER'];
+  sport = 'NFL';
+  sports = ['NFL', 'NBA', 'NCAAF', 'MLB', 'SOCCER'];
 
   ngOnInit() {
     this.setSport(this.sport);
@@ -30,7 +30,7 @@ export class AllPlayerExportImpactComponent implements OnInit {
     // this.isAuthorized = whitelist.includes(e.origin) && e.data.key == 'eyJtZXNzYWdlIjoiSldUIFJ1b';
     // There's some issue with iframe origin checking. Disabling key matching temporarily
     this.isAuthorized = whitelist.includes(e.origin);
-    console.log(this.isAuthorized ? 'access granted' : 'not in whitelist');
+    console.log(this.isAuthorized ? 'access granted for ' + e.origin : e.origin + 'not in whitelist');
   }
 
   setSport(sport: string) {

@@ -42,7 +42,7 @@ export class TodaysBestBetsComponent implements OnInit {
           this.loading = false;
           this.games.forEach( g => {
             g.local_start_time = moment(g.Schedule).format('MMMM Do YYYY, h:mm a');
-            g.started = (moment(g.Schedule) < moment());
+            g.started = moment(g.schedule).isSame(moment(), 'day') && moment(g.schedule).isBefore(moment());
           });
        },
       fail => { },

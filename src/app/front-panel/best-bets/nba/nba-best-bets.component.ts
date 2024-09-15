@@ -119,7 +119,7 @@ export class NbaBestBetsComponent implements OnInit {
     this.games.forEach(g => {
       g.local_start_date = moment(g.schedule).format('MMM D, YYYY');
       g.local_start_time = moment(g.schedule).format('hh:mm A');
-      g.started = (moment(g.schedule) < moment());
+      g.started = moment(g.schedule).isSame(moment(), 'day') && moment(g.schedule).isBefore(moment());
       g.ml_pick = 'moneyline_pick' in g ? g.moneyline_pick : '';
       g.sp_pick = 'spread_pick' in g ? g.spread_pick : '';
       g.ou_pick = 'total_pick' in g ? g.total_pick : '';

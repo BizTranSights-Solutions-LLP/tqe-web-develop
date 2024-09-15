@@ -148,7 +148,7 @@ export class NflBestBetsInternalComponent implements OnInit {
           this.games.push(win[i]);
         this.games.forEach(g => {
           g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');
-          g.started = (moment(g.schedule) < moment());
+          g.started = moment(g.schedule).isSame(moment(), 'day') && moment(g.schedule).isBefore(moment());
           g.ml_pick = g.moneyline_pick;
           g.sp_pick = g.spread_pick;
           g.ou_pick = g.total_pick;

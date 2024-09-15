@@ -130,7 +130,7 @@ export class SoccerBestBetsComponent implements OnInit {
     this.games.forEach(g => {
       g.local_start_date = moment(g.EST_schedule).format('MMM D, YYYY');
       g.local_start_time = moment(g.EST_schedule).format('hh:mm A');
-      g.started = (moment(g.EST_schedule) < moment());
+      g.started = moment(g.EST_schedule).isSame(moment(), 'day') && moment(g.EST_schedule).isBefore(moment());
       g.ml_pick_h = (g['m_tqe_pick'] == "home");
       g.ml_pick_t = (g['m_tqe_pick'] == "tie");
       g.ml_pick_a = (g['m_tqe_pick'] == "away");

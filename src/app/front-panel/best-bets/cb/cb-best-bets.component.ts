@@ -127,7 +127,7 @@ export class CbBestBetsComponent implements OnInit {
       let awayTeamParts = awayTeam.split("-");
       g.away_team_first_name = awayTeamParts.slice(0, -1).join(" ");
       g.away_team_last_name = awayTeamParts[awayTeamParts.length - 1];
-      g.started = (moment(g.EST_schedule) < moment());
+      g.started = moment(g.EST_schedule).isSame(moment(), 'day') && moment(g.EST_schedule).isBefore(moment());
       g.ml_pick = 'm_tqe_pick' in g ? g.m_tqe_pick : '';
       g.sp_pick = 's_tqe_pick' in g ? g.s_tqe_pick : '';
       g.ou_pick = 't_tqe_pick' in g ? g.t_tqe_pick : '';

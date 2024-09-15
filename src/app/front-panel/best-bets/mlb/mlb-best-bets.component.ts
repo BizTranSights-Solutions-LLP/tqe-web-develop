@@ -116,8 +116,8 @@ export class MlbBestBetsComponent implements OnInit {
       this.games.push(win[i]);
     }
     this.games.forEach(g => {
-      g.local_start_date = moment(g.schedule).format('MMM D, YYYY');
-      g.local_start_time = moment(g.schedule).format('hh:mm A');
+      g.local_start_date = moment(g.EST_schedule).format('MMM D, YYYY');
+      g.local_start_time = moment(g.EST_schedule).format('hh:mm A');
       let [_, homeTeam, awayTeam] = g.name.split("_");
       let homeTeamParts = homeTeam.split("-");
       g.home_team_first_name = homeTeamParts.slice(0, -1).join(" ");
@@ -127,7 +127,7 @@ export class MlbBestBetsComponent implements OnInit {
       g.away_team_first_name = awayTeamParts.slice(0, -1).join(" ");
       g.away_team_last_name = awayTeamParts[awayTeamParts.length - 1];
 
-      g.started = (moment(g.schedule) < moment());
+      g.started = moment(g.EST_schedule).isSame(moment(), 'day') && moment(g.EST_schedule).isBefore(moment());
       g.ml_pick = 'm_tqe_pick' in g ? g.m_tqe_pick : '';
       g.sp_pick = 's_tqe_pick' in g ? g.s_tqe_pick : '';
       g.ou_pick = 't_tqe_pick' in g ? g.t_tqe_pick : '';

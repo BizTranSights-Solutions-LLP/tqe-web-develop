@@ -315,7 +315,7 @@ export class NbaPlayerImpactComponent implements OnInit {
     this.away_team = teams[0];
     this.home_team = teams[2];
 
-    const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team);
+    const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team && game.home_team_abbr === this.home_team);
     if (selectedGame) {
       selectedGame.spick_prob = selectedGame.s_prob;
       selectedGame.mpick_prob = selectedGame.m_prob;

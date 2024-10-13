@@ -96,6 +96,31 @@
   .game-body {
     margin-top: 3em;
   }
+
+  .upgrade-banner {
+    background-color: #99999980;
+    padding: 1.5em 2.5em;
+    margin: 2em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    .upgrade-text {
+      max-width: 60%;
+      .top-line {
+        color: #E36794;
+        margin-bottom: 0.75em;
+      }
+    }
+  
+    .upgrade-button {
+      .btn {
+        background-color: #18CB16;
+        color: white;
+        box-shadow: 1px 1px 8px 3px #FFEA0080;
+      }
+    }
+  }
   
   .right-angled-triangle {
     margin-left: -0.1em;

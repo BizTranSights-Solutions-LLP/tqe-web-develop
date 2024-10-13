@@ -286,6 +286,10 @@
   visibility: hidden;
 }
 
+.blurred-text {
+  filter: blur(1.5px);
+}
+
 .player-performance-section {
   display: flex;
   flex-direction: row;

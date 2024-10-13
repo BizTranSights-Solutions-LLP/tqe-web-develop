@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit,OnDestroy {
         (res: LoginResponse) => {
           this.disable_login = false;
           if(res.meta.code === 200) {
+            console.log(res);
             res.result.is_whop_user = false;
             localStorage.setItem('data', JSON.stringify(res.result));
             this.authService.logginEvent.emit(true);

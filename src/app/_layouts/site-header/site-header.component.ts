@@ -64,13 +64,12 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
         // {label: 'NBA Demo', loggedInURL: '/nba-demo', loggedOutURL: '/nba-demo'},
       ]
     },
-    // {
-    //   label: 'How to Use',
-    // },
+    {
+      label: 'How TQE Works',
+    },
     {
       label: 'About Us',
       subNav: [
-        { label: 'How TQE Works', loggedInURL: '/how-it-works', loggedOutURL: '/how-it-works' },
         { label: 'Meet the Team', loggedInURL: '/meet-the-team', loggedOutURL: '/meet-the-team' },
         { label: 'Betting 101', loggedInURL: '/education-page', loggedOutURL: '/education-page' },
         { label: 'TQE Tools Tutorial', loggedInURL: '/TQE-Tools-Info', loggedOutURL: '/TQE-Tools-Info' }
@@ -131,6 +130,12 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
       const currentUrl = this.router.url;
       if (currentNav.label === "Home") {
         if (currentUrl === "/" || currentUrl === "/landing/all") {
+          return true;
+        }
+        return false;
+      }
+      else if (currentNav.label === "How TQE Works") {
+        if (currentUrl === "/how-it-works") {
           return true;
         }
         return false;

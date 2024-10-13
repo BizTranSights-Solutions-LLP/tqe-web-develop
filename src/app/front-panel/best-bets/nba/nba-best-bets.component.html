@@ -2,7 +2,7 @@
   <div class="main-container" [ngStyle]="{
   'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
 }">
-    <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day)">
+    <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day); let i = index">
       <div class="game-header">
         <div class="logo-section">
           <img class="game-logo" [src]="game_logo">
@@ -12,6 +12,15 @@
         </div>
       </div>
       <div class="game-body">
+       <div class="upgrade-banner" *ngIf="!isAuthorized && i===0">
+          <div class="upgrade-text">
+            <div class="top-line">More information is limited to TQE Members only</div>
+            <div class="bottom-line">Upgrade your plan right now to unlock the full potential of TQE for a better bet!</div>
+          </div>
+          <div class="upgrade-button"> 
+            <button class="btn" (click)="redirectToWhop('Professional')">Try for Free Now!</button>
+          </div>
+        </div>
         <div class="table-top">
           <div class="table-heading-section">
             <div class="table-heading-text">Our Picks</div>
@@ -111,9 +120,9 @@
                       </span>
                     </div>
                     <div *ngIf="!isAuthorized">
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">+130</span>
                       <span>{{ game.away_money }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">70.3%</span>
                     </div>
                   </td>
                   <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Spread Line')"
@@ -135,7 +144,7 @@
                     <div *ngIf="!isAuthorized">
                       <span>{{ game.away_spread }}</span>
                       <span>{{ game.away_odds }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">67%</span>
                     </div>
                   </td>
                   <td class="totalline" [class.TQEHCP]="isTQEHCP(game, 'over', 'Total Line')"
@@ -157,7 +166,7 @@
                     <div *ngIf="!isAuthorized">
                       <span>O {{ game.OU_line }}</span>
                       <span>{{ game.over_odds }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">71%</span>
                     </div>
                   </td>
                 </tr>
@@ -192,9 +201,9 @@
                       </span>
                     </div>
                     <div *ngIf="!isAuthorized">
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">+130</span>
                       <span>{{ game.home_money }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">29.7%</span>
                     </div>
                   </td>
                   <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Spread Line')"
@@ -216,7 +225,7 @@
                     <div *ngIf="!isAuthorized">
                       <span>{{ game.home_spread }}</span>
                       <span>{{ game.home_odds }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">33%</span>
                     </div>
                   </td>
                   <td class="totalline" [class.TQEHCP]="isTQEHCP(game, 'under', 'Total Line')"
@@ -238,7 +247,7 @@
                     <div *ngIf="!isAuthorized">
                       <span>U {{ game.OU_line }}</span>
                       <span>{{ game.under_odds }}</span>
-                      <span class="hidden-text">NA</span>
+                      <span class="blurred-text">29%</span>
                     </div>
                   </td>
                 </tr>

@@ -13,12 +13,12 @@ export class LandingComponent implements OnInit {
 
   bgImages = [
     "../../assets/images/home_page/background.svg",
-    "../../assets/images/home_page/top_bg_images/nfl.jpg",
     "../../assets/images/home_page/top_bg_images/nba.jpg",
     "../../assets/images/home_page/top_bg_images/cricket.jpg",
     "../../assets/images/home_page/top_bg_images/nhl.jpg",
     "../../assets/images/home_page/top_bg_images/soccer.jpg",
     "../../assets/images/home_page/top_bg_images/golf.jpg",
+    "../../assets/images/home_page/top_bg_images/cricket.jpg",
   ];
   currentImageIndex: number = 0;
   bgImgIntervalId: any;
@@ -103,14 +103,14 @@ export class LandingComponent implements OnInit {
       if (this.currentIndex >= this.sports_images.length/2) {
         this.currentIndex = 0;
       }
-      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 5}%)`;
+      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 3}%)`;
     }, 4000);
   }
 
   handleTransitionEnd() {
     if (!this.transitionActive) {
       this.transitionActive = true;
-      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 5}%)`;
+      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 3}%)`;
     }
   }
 }

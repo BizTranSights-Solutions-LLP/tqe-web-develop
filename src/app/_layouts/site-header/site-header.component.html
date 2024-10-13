@@ -13,10 +13,12 @@
         <ng-container *ngFor="let nav of navigationLinks">
           <li class="nav-item dropdown" [class.active]="isDropdownActive(nav)">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false" [routerLink]="nav.label === 'Home' ? '/' : null"
-              (click)="nav.label === 'Home' ? closeNavbar(): ''">
+              aria-haspopup="true" aria-expanded="false"
+              [routerLink]="nav.label === 'Home' ? '/' : nav.label === 'How TQE Works' ? '/how-it-works' : null"
+              (click)="nav.label === 'Home' ? closeNavbar() : nav.label === 'How TQE Works' ? closeNavbar() : ''">
               {{nav.label}}
             </a>
+
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" *ngIf="nav.subNav">
               <ng-container *ngFor="let link of nav.subNav">
                 <a *ngIf="!loggedIn" class="dropdown-item" [routerLink]="[link.loggedOutURL]"

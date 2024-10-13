@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +9,17 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class HomeComponent implements OnInit {
   bg_img: string = '../../assets/images/home_page/background.svg';
+  check_circle: string = '../../assets/images/home_page/check-circle.svg';
+  popular_plan: string = '../../assets/images/home_page/popular-plan.svg';
 
   bgImages = [
     "../../assets/images/home_page/background.svg",
-    "../../assets/images/home_page/top_bg_images/nfl.jpg",
     "../../assets/images/home_page/top_bg_images/nba.jpg",
     "../../assets/images/home_page/top_bg_images/cricket.jpg",
     "../../assets/images/home_page/top_bg_images/nhl.jpg",
     "../../assets/images/home_page/top_bg_images/soccer.jpg",
     "../../assets/images/home_page/top_bg_images/golf.jpg",
+    "../../assets/images/home_page/top_bg_images/cricket.jpg",
   ];
   currentImageIndex: number = 0;
   bgImgIntervalId: any;
@@ -101,14 +104,33 @@ export class HomeComponent implements OnInit {
       if (this.currentIndex >= this.sports_images.length/2) {
         this.currentIndex = 0;
       }
-      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 5}%)`;
+      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 3}%)`;
     }, 4000);
   }
 
   handleTransitionEnd() {
     if (!this.transitionActive) {
       this.transitionActive = true;
-      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 5}%)`;
+      this.transformStyle = `translateX(-${(this.currentIndex * 100) / 3}%)`;
+    }
+  }
+
+  redirectToWhop(subscriptionType) {
+    var redirectionLink = ""
+    if (subscriptionType === "Basic") {
+      redirectionLink = environment.tqeBasicViewAnnualPlan;
+    }
+    else if (subscriptionType === "Professional") {
+      redirectionLink = environment.tqeProfessionViewAnnualPlan;
+    }
+    else if (subscriptionType === "Free") {
+      redirectionLink = environment.tqeProfessionViewAnnualPlan;
+    }
+    else {
+      alert("Unknown Subscription Type");
+    }
+    if (confirm("The Quant Edge uses Whop for subscription payments. Click OK to be redirected to Whop, or Cancel to stay on this page.")) {
+      window.open(redirectionLink, "_blank");
     }
   }
 }

@@ -1,23 +1,16 @@
 <div class="container-fluid" [class.mobile]="isMobile">
-  <div class="links">
-    <span><a routerLink="/how-it-works">How TQE Works</a></span>
-    <span><a routerLink="/terms-and-condition">Terms Of Service</a></span>
-    <span><a routerLink="/privacy-policy">Privacy Policy</a></span>
-    <span><a routerLink="/faqs">FAQs</a></span>
-  </div>
-  <div class="company-info">
-    <div class="logo-and-tag">
-      <div>
-        <img src="./../assets/images/tqe_logos/site_header_logo.svg" alt="Logo">
-      </div>
-      <div>
-        <span>The leader in quantitative analytics to help you win</span>
-      </div>
+  <div class="footer">
+    <div class="links">
+      <span><a routerLink="/terms-and-condition">Terms Of Service</a></span>
+      <span><a routerLink="/privacy-policy">Privacy Policy</a></span>
+      <span><a routerLink="/faqs">FAQs</a></span>
     </div>
     <div class="contact-us">
-      <h6>Contact Us</h6>
-      <span>10 Time Square, Suite 6170 New York, NY, 10018</span>
-      <a href="mailto:info@thequantedge.com" class="mail">info@thequantedge.com</a>
+      <div class="contact-us-header">Contact Us</div>
+      <div class="mb-3"><img [src]="location_icon" class="pr-2">10 Time Square, Suite 6170 New York, NY, 10018</div>
+      <div><img [src]="mail_icon" class="pr-2"><a href="mailto:info@thequantedge.com">info@thequantedge.com</a></div>
     </div>
+    <hr class="grey-line">
+    <div class="copyright">&copy; 2024 The Quant Edge Inc. All rights reserved.</div>
   </div>
 </div>

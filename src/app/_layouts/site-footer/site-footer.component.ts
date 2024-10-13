@@ -9,6 +9,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class SiteFooterComponent implements OnInit {
 
   isMobile: boolean = false;
+  location_icon: string = '../../assets/images/site-footer/location.svg';
+  mail_icon: string = '../../assets/images/site-footer/mail.svg';
 
   constructor(
     private breakpointObserver: BreakpointObserver,

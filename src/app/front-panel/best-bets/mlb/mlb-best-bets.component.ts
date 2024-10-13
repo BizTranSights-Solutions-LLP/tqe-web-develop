@@ -92,6 +92,10 @@ export class MlbBestBetsComponent implements OnInit {
     }
   }
 
+  public redirectToWhop(subscriptionType) {
+    this.authService.redirectToWhop(subscriptionType);
+  }
+
   // === PRIVATE METHODS ===================================================
 
   protected authorizeUser() {

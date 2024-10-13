@@ -20,6 +20,15 @@
         </div>
       </div>
       <div class="game-body">
+       <div class="upgrade-banner" *ngIf="!isAuthorized && i===0">
+          <div class="upgrade-text">
+            <div class="top-line">More information is limited to TQE Members only</div>
+            <div class="bottom-line">Upgrade your plan right now to unlock the full potential of TQE for a better bet!</div>
+          </div>
+          <div class="upgrade-button"> 
+             <button class="btn" (click)="redirectToWhop('Professional')">Try for Free Now!</button>
+          </div>
+        </div>
         <div class="table-top">
           <div class="table-heading-section">
             <div class="table-heading-text">Our Picks</div>

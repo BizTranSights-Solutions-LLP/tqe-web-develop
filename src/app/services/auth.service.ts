@@ -47,6 +47,17 @@ export class AuthService {
     return this.http.post(this.BASE_URL + 'subscriber/signup', data);
   }
 
+  test(data) {
+    this.http.post(this.BASE_URL + 'test', {}).subscribe(
+      (response) => {
+        console.log('Response:', response);
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+  }
+
   updateAffiliate(data) {
     return this.http.post(this.BASE_URL + 'affiliate/save_detail', data);
   }
@@ -114,5 +125,24 @@ export class AuthService {
     //   ...data
     // }
     return this.http.post(this.BASE_URL + 'user/update_profile_image', formData);
+  }
+
+  redirectToWhop(subscriptionType) {
+    var redirectionLink = ""
+    if (subscriptionType === "Basic") {
+      redirectionLink = environment.tqeBasicViewAnnualPlan;
+    }
+    else if (subscriptionType === "Professional") {
+      redirectionLink = environment.tqeProfessionViewAnnualPlan;
+    }
+    else if (subscriptionType === "Free") {
+      redirectionLink = environment.tqeProfessionViewAnnualPlan;
+    }
+    else {
+      alert("Unknown Subscription Type");
+    }
+    if (confirm("The Quant Edge uses Whop for subscription payments. Click OK to be redirected to Whop, or Cancel to stay on this page.")) {
+      window.open(redirectionLink, "_blank");
+    }
   }
 }

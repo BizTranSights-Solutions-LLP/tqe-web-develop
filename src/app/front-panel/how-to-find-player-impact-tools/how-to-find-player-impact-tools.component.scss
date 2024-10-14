@@ -1,0 +1,33 @@
+body {
+    font-family: 'Chakra Petch', sans-serif;
+    width: 100vw;
+    background-color: #111416;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h4 {
+    color: #E8CA30;
+    margin-bottom: 2em;
+    font-weight: normal;
+    line-height: 1.5em;
+}
+
+iframe {
+    width: 60vw;
+    height: 80vh;
+    overflow: auto;
+    border: none;
+}
+
+body.mobile {
+    padding: 5% 0;
+
+    iframe {
+        width: 90vw;
+        height: 45vh;
+    }
+}

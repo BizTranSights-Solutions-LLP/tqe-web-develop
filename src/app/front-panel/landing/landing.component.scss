@@ -285,6 +285,16 @@
   opacity: 1;
 }
 
+@media (min-width: 2560px) {
+  .top-container {
+    height: 55vh;
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(100% / 5);
+    position: relative;
+  }
+}
 
 @media (max-width: 1440px) {
   .top-container {

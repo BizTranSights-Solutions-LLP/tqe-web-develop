@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { BestBetsService } from '../best-bets.service';
 import { DataService } from '../../../services/data.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from '../../../services/auth.service';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
@@ -61,10 +62,20 @@ export class NbaPlayerImpactComponent implements OnInit {
     protected plumber: BestBetsService,
     protected breakpointObserver: BreakpointObserver,
     protected http: HttpClient,
+    protected sanitizer: DomSanitizer
   ) { }
+
+  layout_explanation_pdf: SafeResourceUrl;
+  player_performance_change_pdf: SafeResourceUrl;
+
+  sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
 
   ngOnInit() {
     this.authorizeUser();
+    this.layout_explanation_pdf = this.sanitizeUrl('../../assets/images/how-tqe-works/how-to-understand-player-impact-tool-layout.pdf');
+    this.player_performance_change_pdf = this.sanitizeUrl('../../assets/images/how-tqe-works/how-to-change-player-performance-in-player-impact-tool.pdf');
     this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
       this.isMobile = result.matches;
     });

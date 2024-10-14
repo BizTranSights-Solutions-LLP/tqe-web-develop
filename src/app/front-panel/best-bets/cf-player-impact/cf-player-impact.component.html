@@ -9,7 +9,7 @@
         <strong style="display: block;"> You're not authorized for this. </strong><br>
         Click Here to <strong><a style="color: #0c0f11;text-decoration: underline;" [routerLink]="['/login']">Log
             In</a></strong> or <strong><a style="color: #0c0f11;text-decoration: underline;" href="javascript:void(0);"
-            [routerLink]="['/membership-plan']">Sign Up</a></strong>
+              (click)="subscribeToProfessionalView()">Sign Up through whop</a></strong>
       </div>
     </div>
   </div>
@@ -95,6 +95,7 @@
               <div class="scoreboard-title">Score Board</div>
               <div class="right-angled-triangle">Tee</div>
             </div>
+            <span class="modal-button one" data-toggle="modal" data-target="#layout-explanation-modal"><i class="fas fa-info-circle"></i>&nbsp;Understand the Player Impact Tool Layout</span>
             <div class="scoreboard-legend-text">
               <div>
                 <span class="green-circle"></span>
@@ -106,6 +107,7 @@
               </div>
             </div>
           </div>
+          <span class="modal-button one" [class.mobile]="isMobile" *ngIf="isMobile" data-toggle="modal" data-target="#layout-explanation-modal"><i class="fas fa-info-circle"></i>&nbsp;Understand the Player Impact Tool Layout</span>
           <div class="scoreboard-body" [class.mobile-scoreboard-body]="isMobile" *ngIf="isMobile">
             <div class="scoreboard-header-left-info">
               <div class="scoreboard-header">
@@ -482,6 +484,7 @@
             <div class="performance-title">Player Performance</div>
             <div class="right-angled-triangle">Tee</div>
           </div>
+          <span class="modal-button two" [class.mobile]="isMobile" data-toggle="modal" data-target="#player-performance-change-modal"><i class="fas fa-info-circle"></i>&nbsp;Understand the impact of changing the Player Performance</span>
           <div class="mobile-team-header-section" *ngIf="isMobile">
             <div class="mobile-team-header" (click)="showTeam('away')" [class.active]="active_team === 'away'">
               <div class="team-logo-section">
@@ -808,4 +811,45 @@
     </div>
   </div>
 
+</div>
+
+<!-- Modal Structure for Player Impact Tool Layout Explanation -->
+<div class="modal fade" id="layout-explanation-modal" tabindex="-1" role="dialog" aria-labelledby="Layout Explanation" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Layout Explanation">Understanding the Player Impact Tool Layout</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" [src]="layout_explanation_pdf" frameborder="0"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Structure for Player Performance Change Explanation -->
+<div class="modal fade" id="player-performance-change-modal" tabindex="-1" role="dialog" aria-labelledby="Player Performance Change Explanation" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" [class.mobile]="isMobile">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Player Performance Change Explanation">How does modifying Player Performance affect the Spread, Totals, and Probability in the Player Impact Tool?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" [src]="player_performance_change_pdf" frameborder="0"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

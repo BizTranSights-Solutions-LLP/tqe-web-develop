@@ -9,6 +9,7 @@
 .top-container {
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   position: relative;
   height: 580px;
   width: 100vw;
@@ -285,6 +286,16 @@
   opacity: 1;
 }
 
+@media (min-width: 2560px) {
+  .top-container {
+    height: 50vh;
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(100% / 5);
+    position: relative;
+  }
+}
 
 @media (max-width: 1440px) {
   .top-container {

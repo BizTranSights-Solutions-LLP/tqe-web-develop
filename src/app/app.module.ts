@@ -154,6 +154,9 @@ import { WhopLoginComponent } from './auth/whop-login/whop-login.component';
 import { SiteSidebarComponent } from './_layouts/site-sidebar/site-sidebar.component';
 import { CricketPlayerImpactComponent } from './front-panel/best-bets/cricket-player-impact/cricket-player-impact.component';
 import { CfPlayerImpactComponent } from './front-panel/best-bets/cf-player-impact/cf-player-impact.component';
+import { HowToFindPlayerImpactToolsComponent } from './front-panel/how-to-find-player-impact-tools/how-to-find-player-impact-tools.component';
+import { HowToUsePlayerPerformanceComponent } from './front-panel/how-to-use-player-performance/how-to-use-player-performance.component';
+import { HowToUnderstandPlayerImpactToolLayoutComponent } from './front-panel/how-to-understand-player-impact-tool-layout/how-to-understand-player-impact-tool-layout.component';
 
 const routes: Routes = [
 
@@ -256,6 +259,9 @@ const routes: Routes = [
       // { path: 'picks-history', component: PicksHistoryComponent},
       {path: 'betting-101', component: Betting101Component},
       {path: 'how-it-works', component: HowItWorksComponent},
+      {path: 'how-to-find-player-impact-tool', component: HowToFindPlayerImpactToolsComponent},
+      {path: 'understand-player-impact-tool-layout', component: HowToUnderstandPlayerImpactToolLayoutComponent},
+      {path: 'use-player-performance', component: HowToUsePlayerPerformanceComponent},
       {path: 'education-page', component: EducationPageComponent},
       {path: 'TQE-Tools-Info', component: TqeToolsEduComponent},
       // internal paths:
@@ -399,6 +405,9 @@ const routes: Routes = [
     SiteSidebarComponent,
     CricketPlayerImpactComponent,
     CfPlayerImpactComponent,
+    HowToFindPlayerImpactToolsComponent,
+    HowToUsePlayerPerformanceComponent,
+    HowToUnderstandPlayerImpactToolLayoutComponent,
   ],
   imports: [
     // Import font-aws

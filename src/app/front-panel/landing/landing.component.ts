@@ -71,7 +71,7 @@ export class LandingComponent implements OnInit {
     this.sports_images = this.sports_images.concat(this.sports_images);
     this.startAutoSlide();
 
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
 

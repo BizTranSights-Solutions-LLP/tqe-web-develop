@@ -12,7 +12,7 @@
 .listing_articles {padding: 0 0 50px;}
 .listing_articles h3.article-heading {
   color: #000;
-  font-size: 16px;
+  font-size: clamp(4px, 2vw, 16px);
   font-weight: 900;
   line-height: 19px;
   margin: 0 0 0 -15px;
@@ -92,7 +92,7 @@ owl-carousel /deep/ .owl-theme .owl-nav [class*='owl-'] {
     background: #fff;
     text-align: center;
     color: #161924;
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     text-decoration: none;
     right: -5px;
     left: auto;

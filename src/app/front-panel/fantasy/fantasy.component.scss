@@ -159,7 +159,7 @@
   border-radius: 4px;
   background-image: linear-gradient(0deg, #e5faff 0%, #ffffff 100%);
   color: #000000;
-  font-size: 16px;
+  font-size: clamp(4px, 2vw, 16px);
   font-weight: 500;
   line-height: 50px;
   height: 50px;
@@ -192,7 +192,7 @@ owl-carousel /deep/ .owl-theme .owl-nav [class*='owl-'] {
   background: #fff;
   text-align: center;
   color: #161924;
-  font-size: 16px;
+  font-size: clamp(4px, 2vw, 16px);
   text-decoration: none;
   right: -5px;
   left: auto;

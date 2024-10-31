@@ -33,7 +33,7 @@ export class MlbBestBetsComponent implements OnInit {
   isAuthorized = false;
 
   ngOnInit() {
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.authorizeUser();
@@ -135,7 +135,7 @@ export class MlbBestBetsComponent implements OnInit {
       g.ml_pick = 'm_tqe_pick' in g ? g.m_tqe_pick : '';
       g.sp_pick = 's_tqe_pick' in g ? g.s_tqe_pick : '';
       g.ou_pick = 't_tqe_pick' in g ? g.t_tqe_pick : '';
-      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      g.day = moment(g.EST_schedule).format('MMMM Do');
       if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
       g.away_improb = g.m_a_improb;
       g.home_improb = g.m_h_improb;
@@ -151,6 +151,8 @@ export class MlbBestBetsComponent implements OnInit {
       g.over_odds = g.t_o_odds;
       g.under_odds = g.t_u_odds;
       g.tpick_prob = g.t_o_prob;
+      g.home_team_logo = `../../../../assets/images/logos/mlb/${g.home_team_abbr}.jpg`;
+      g.away_team_logo = `../../../../assets/images/logos/mlb/${g.away_team_abbr}.jpg`;
     });
     this.loading = false;
   };

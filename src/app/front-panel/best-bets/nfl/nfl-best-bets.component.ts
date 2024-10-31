@@ -34,7 +34,7 @@ export class NflBestBetsComponent implements OnInit {
   isAuthorized = false;
 
   ngOnInit() {
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.authorizeUser();

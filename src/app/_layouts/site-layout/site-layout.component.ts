@@ -88,7 +88,7 @@ export class SiteLayoutComponent implements OnInit {
 
   ngOnInit() {
 
-    this.breakpointObserver.observe([Breakpoints.Handset])
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet])
       .subscribe(result => {
         this.isMobile = result.matches;
       });

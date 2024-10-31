@@ -2,17 +2,13 @@
   <div class="main-container" [ngStyle]="{
   'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
 }">
-    <div class="container-fluid" *ngFor="let gameWeek of keys(games_by_week); let i = index">
-
+    <div class="container-fluid">
       <div class="game-header">
         <div class="logo-section">
           <img class="game-logo" [src]="game_logo">
         </div>
-        <div class="game-week">
-          <span>{{gameWeek}}</span>
-        </div>
       </div>
-      <div class="game-body">
+      <div class="game-body" *ngFor="let gameWeek of keys(games_by_week); let i = index">
         <div class="upgrade-banner" *ngIf="!isAuthorized && i===0">
           <div class="upgrade-text">
             <div class="top-line">More information is limited to TQE Members only</div>
@@ -24,7 +20,7 @@
         </div>
         <div class="table-top">
           <div class="table-heading-section">
-            <div class="table-heading-text">Our Picks</div>
+            <div class="table-heading-text">{{gameWeek}}</div>
             <div class="right-angled-triangle">TT</div>
           </div>
           <div class="table-legend-text">
@@ -38,7 +34,7 @@
             </div>
           </div>
         </div>
-        <div class="table-body">
+        <div class="table-body" *ngIf="!isMobile">
           <table *ngIf="!loading" class="table table-borderless">
             <thead>
               <tr>
@@ -49,14 +45,6 @@
                 <th scope="col">
                   Matchup
                   <div></div>
-                </th>
-                <th scope="col">
-                  Money Line
-                  <div>
-                    <span>Implied Prob</span>
-                    <span>Odds</span>
-                    <span>TQE Prob</span>
-                  </div>
                 </th>
                 <th scope="col">
                   Spread Line
@@ -70,6 +58,14 @@
                   Total Line
                   <div>
                     <span>Over/Under</span>
+                    <span>Odds</span>
+                    <span>TQE Prob</span>
+                  </div>
+                </th>
+                <th scope="col">
+                  Money Line
+                  <div>
+                    <span>Implied Prob</span>
                     <span>Odds</span>
                     <span>TQE Prob</span>
                   </div>
@@ -103,28 +99,6 @@
                       </p>
                       <p class="at-text">at</p>
                     </span>
-                  </td>
-                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Money Line')"
-                    [class.TQEP]="isTQEP(game, 'away', 'Money Line')">
-                    <div *ngIf="isAuthorized">
-                      <span>
-                        {{ game.away_improb*100 | number:'1.1-1' }}%
-                      </span>
-                      <span>
-                        {{ game.away_money }}
-                      </span>
-                      <span *ngIf="game.ml_pick === 'away'">
-                        {{ game.mpick_prob*100 | number:'1.1-1' }}%
-                      </span>
-                      <span *ngIf="game.ml_pick === 'home'">
-                        {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
-                      </span>
-                    </div>
-                    <div *ngIf="!isAuthorized">
-                      <span class="blurred-text">+130</span>
-                      <span>{{ game.away_money }}</span>
-                      <span class="blurred-text">70.3%</span>
-                    </div>
                   </td>
                   <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Spread Line')"
                     [class.TQEP]="isTQEP(game, 'away', 'Spread Line')">
@@ -170,6 +144,28 @@
                       <span class="blurred-text">71%</span>
                     </div>
                   </td>
+                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Money Line')"
+                  [class.TQEP]="isTQEP(game, 'away', 'Money Line')">
+                  <div *ngIf="isAuthorized">
+                    <span>
+                      {{ game.away_improb*100 | number:'1.1-1' }}%
+                    </span>
+                    <span>
+                      {{ game.away_money }}
+                    </span>
+                    <span *ngIf="game.ml_pick === 'away'">
+                      {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                    </span>
+                    <span *ngIf="game.ml_pick === 'home'">
+                      {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                  <div *ngIf="!isAuthorized">
+                    <span class="blurred-text">+130</span>
+                    <span>{{ game.away_money }}</span>
+                    <span class="blurred-text">70.3%</span>
+                  </div>
+                </td>
                 </tr>
                 <tr class="home-team-info">
                   <td class="team-logo">
@@ -184,28 +180,6 @@
                         {{ game.home_team_last_name }}
                       </p>
                     </span>
-                  </td>
-                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Money Line')"
-                    [class.TQEP]="isTQEP(game, 'home', 'Money Line')">
-                    <div *ngIf="isAuthorized">
-                      <span>
-                        {{ game.home_improb*100 | number:'1.1-1' }}%
-                      </span>
-                      <span>
-                        {{ game.home_money }}
-                      </span>
-                      <span *ngIf="game.ml_pick === 'away'">
-                        {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
-                      </span>
-                      <span *ngIf="game.ml_pick === 'home'">
-                        {{ game.mpick_prob*100 | number:'1.1-1' }}%
-                      </span>
-                    </div>
-                    <div *ngIf="!isAuthorized">
-                      <span class="blurred-text">+130</span>
-                      <span>{{ game.home_money }}</span>
-                      <span class="blurred-text">29.7%</span>
-                    </div>
                   </td>
                   <td class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Spread Line')"
                     [class.TQEP]="isTQEP(game, 'home', 'Spread Line')">
@@ -251,7 +225,180 @@
                       <span class="blurred-text">29%</span>
                     </div>
                   </td>
+                  <td class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Money Line')"
+                  [class.TQEP]="isTQEP(game, 'home', 'Money Line')">
+                  <div *ngIf="isAuthorized">
+                    <span>
+                      {{ game.home_improb*100 | number:'1.1-1' }}%
+                    </span>
+                    <span>
+                      {{ game.home_money }}
+                    </span>
+                    <span *ngIf="game.ml_pick === 'away'">
+                      {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                    </span>
+                    <span *ngIf="game.ml_pick === 'home'">
+                      {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                  <div *ngIf="!isAuthorized">
+                    <span class="blurred-text">+130</span>
+                    <span>{{ game.home_money }}</span>
+                    <span class="blurred-text">29.7%</span>
+                  </div>
+                </td>
                 </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+
+
+
+        <!-- Mobile Version -->
+        <div class="table-body" *ngIf="isMobile">
+          <table *ngIf="!loading" class="table table-borderless">
+            <tbody>
+              <ng-container *ngFor="let game of games_by_week[gameWeek]">
+                <tr class="first-row">
+                  <th>Time</th>
+                  <th colspan="3">Matchup</th>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="match-time">
+                    {{game.local_start_date}} <br/>
+                    {{game.local_start_time}}
+                    <span class="started" *ngIf="game.started">
+                      <br/>
+                      Started
+                    </span>
+                  </td>
+                  <td colspan="3">
+                    <span class="team-info">
+                      <span>
+                        <img [src]="game.away_team_logo">
+                      </span>
+                      <span>
+                        <span>
+                          {{ game.away_team_first_name }} {{ game.away_team_last_name }}
+                        </span>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+                <tr style="position: relative; transform: translateY(-25%);">
+                  <td colspan="3">
+                    <span class="team-info">
+                      <span>
+                        <img [src]="game.home_team_logo">
+                      </span>
+                      <span>
+                        <span>
+                          {{ game.home_team_first_name }} {{ game.home_team_last_name }}
+                        </span>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Spread Line</th>
+                  <th class="subheader">Spread</th>
+                  <th class="subheader">Odds</th>
+                  <th class="subheader">Prob</th>
+                </tr>
+                <tr class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Spread Line')"
+                [class.TQEP]="isTQEP(game, 'away', 'Spread Line')">
+                  <td><img [src]="game.away_team_logo"></td>
+                  <td>{{ game.away_spread}}</td>
+                  <td>{{ game.away_odds }}</td>
+                  <td *ngIf="isAuthorized && game.sp_pick === 'away'">
+                    {{ game.spick_prob*100 | number:'1.1-1'}}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.sp_pick === 'home'">
+                    {{ (1 - game.spick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">67%</td>
+                </tr>
+                <tr class="spreadline" [class.TQEHCP]="isTQEHCP(game, 'home', 'Spread Line')"
+                [class.TQEP]="isTQEP(game, 'home', 'Spread Line')">
+                  <td><img [src]="game.home_team_logo"></td>
+                  <td>{{ game.home_spread}}</td>
+                  <td>{{ game.home_odds }}</td>
+                  <td *ngIf="isAuthorized && game.sp_pick === 'away'">
+                    {{ (1 - game.spick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.sp_pick === 'home'">
+                    {{ game.spick_prob*100 | number:'1.1-1'}}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">33%</td>
+                </tr>
+                <tr>
+                  <th>Total Line</th>
+                  <th class="subheader">Over/Under</th>
+                  <th class="subheader">Odds</th>
+                  <th class="subheader">Prob</th>
+                </tr>
+                <tr class="totalline" [class.TQEHCP]="isTQEHCP(game, 'over', 'Total Line')"
+                [class.TQEP]="isTQEP(game, 'over', 'Total Line')" >
+                  <td><img [src]="game.away_team_logo"></td>
+                  <td>O {{ game.OU_line }}</td>
+                  <td>{{ game.over_odds }}</td>
+                  <td *ngIf="isAuthorized && game.ou_pick === 'over'">
+                    {{ game.tpick_prob*100 | number:'1.1-1'}}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.ou_pick === 'under'">
+                    {{ (1 - game.tpick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">71%</td>
+                </tr>
+                <tr class="totalline" [class.TQEHCP]="isTQEHCP(game, 'under', 'Total Line')"
+                [class.TQEP]="isTQEP(game, 'under', 'Total Line')">
+                  <td><img [src]="game.home_team_logo"></td>
+                  <td> U {{ game.OU_line }}</td>
+                  <td>{{ game.under_odds }}</td>
+                  <td *ngIf="isAuthorized && game.ou_pick === 'over'">
+                    {{ (1 - game.tpick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.ou_pick === 'under'">
+                    {{ game.tpick_prob*100 | number:'1.1-1'}}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">29%</td>
+                </tr>
+                <tr>
+                  <th>Money Line</th>
+                  <th class="subheader">Implied Prob</th>
+                  <th class="subheader">Odds</th>
+                  <th class="subheader">Prob</th>
+                </tr>
+                <tr  class="moneyline" [class.TQEHCP]="isTQEHCP(game, 'away', 'Money Line')"
+                [class.TQEP]="isTQEP(game, 'away', 'Money Line')">
+                  <td><img [src]="game.away_team_logo"></td>
+                  <td>{{ game.away_improb*100 | number:'1.1-1' }}%</td>
+                  <td>{{ game.away_money }}</td>
+                  <td *ngIf="isAuthorized && game.ml_pick === 'away'">
+                    {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.ml_pick === 'home'">
+                    {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">70.3%</td>
+                </tr>
+                <tr  class="moneyline last-row" [class.TQEHCP]="isTQEHCP(game, 'home', 'Money Line')"
+                [class.TQEP]="isTQEP(game, 'home', 'Money Line')">
+                  <td><img [src]="game.home_team_logo"></td>
+                  <td> {{ game.home_improb*100 | number:'1.1-1' }}%</td>
+                  <td>{{ game.home_money }}</td>
+                  <td *ngIf="isAuthorized && game.ml_pick === 'away'">
+                    {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
+                  </td>
+                  <td *ngIf="isAuthorized && game.ml_pick === 'home'">
+                    {{ game.mpick_prob*100 | number:'1.1-1' }}%
+                  </td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">29.7%</td>
+                </tr>
+                <br/>
+                <br/>
               </ng-container>
             </tbody>
           </table>

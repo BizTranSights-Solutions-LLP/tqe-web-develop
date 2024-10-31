@@ -42,7 +42,7 @@ export class CricketBestBetsComponent implements OnInit {
 
   ngOnInit() {
     this.authorizeUser();
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.selected_league = this.all_leagues[0];

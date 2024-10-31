@@ -764,7 +764,7 @@
   // mobile css
   @media (min-width: 425px) {
     .mobile-body {
-      font-size: 16px;
+      font-size: clamp(4px, 2vw, 16px);
     }
   }
   

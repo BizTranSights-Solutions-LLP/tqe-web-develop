@@ -136,7 +136,7 @@
                     <span *ngIf="selected_match.away_spread >= 0"> - </span>
                     <span *ngIf="selected_match.away_spread < 0"> + </span>
                   </span>
-                  {{ selected_match.away_spread | number:'1.1-1'}}
+                  {{ abs(selected_match.away_spread) | number:'1.1-1'}}
                 </div>
                 <div>
                   {{ selected_match.OU_line }}

@@ -1,5 +1,5 @@
 .body {
-  font-size: 15px;
+  font-size: clamp(4px, 1vw, 16px);
   /* 1rem = 16px */
   font-family: 'Chakra Petch', sans-serif;
 }
@@ -331,7 +331,7 @@
 }
 
 .blur img {
-  max-width: 100%;
+  max-width: 85vw;
 }
 
 .subscribeButton {
@@ -563,6 +563,7 @@
   height: 1em;
 }
 
+
 .loadersmall {
   border: 5px solid #f3f3f3;
   -webkit-animation: spin 1s linear infinite;
@@ -587,15 +588,21 @@
 
 @media (min-width: 2056px) {
   .container-fluid {
-    width: 60%;
+    width: 70%;
   }
 }
 
+@media (max-width: 2056px) and (min-width: 1440px) {
+  .container-fluid {
+    width: 90%;
+    // margin-left: 5%;
+  }
+}
 
 @media (max-width: 1440px) and (min-width: 1024px) {
   .container-fluid {
-    width: 90%;
-    margin-left: 5%;
+    width: 100%;
+    // margin-left: 5%;
   }
 }
 
@@ -603,7 +610,7 @@
 @media (max-width: 1024px) and (min-width: 768px) {
 
   .body {
-    font-size: 14px;
+    font-size: clamp(4px, 2vw, 8px);
   }
 
   .container-fluid {
@@ -661,12 +668,16 @@
     margin-bottom: 1em;
   }
 
+  .spill-over-yards {
+    margin-left: 3em;
+  }
+
 }
 
 @media (max-width: 768px) and (min-width: 425px) {
 
   .body {
-    font-size: 12px;
+    font-size: clamp(4px, 2vw, 6px);
   }
 
   .container-fluid {
@@ -737,6 +748,10 @@
     padding: 0.45em 1em;
     margin-bottom: 1em;
   }
+
+  .spill-over-yards {
+    margin-left: 3em;
+  }
 }
 
 @media (max-width: 425px) {
@@ -768,22 +783,26 @@
     width: 8em;
     margin-bottom: 0.7em;
   }
+
+  .spill-over-yards {
+    margin-left: 3em;
+  }
 }
 
 // mobile css
 @media (min-width: 425px) {
   .mobile-body {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
   }
 }
 
 .mobile-container-fluid {
   width: 100vw;
   margin: 0;
+  font-size: clamp(10px, 3vw, 16px);
 }
 
 .mobile-matches-display-section {
-  font-size: 1em;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -806,7 +825,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-size: 1em;
 }
 
 .mobile-match-details .custom-select {
@@ -850,6 +868,7 @@
 .mobile-scoreboard {
   margin: auto;
   justify-content: center;
+  font-size: clamp(10px, 3vw, 16px);
 }
 
 .mobile-scoreboard-body {
@@ -871,7 +890,7 @@
 .mobile-scoreboard-body .scoreboard-header {
   padding-top: 0;
   margin-top: -1em;
-  font-size: 1.25em;
+  font-size: 1.2em;
   // color: #13A211;
 }
 
@@ -940,6 +959,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  display: flex;
+  flex-direction: column-reverse;
+  margin-top: 3%;
 }
 
 .mobile-player-performance-section::before {
@@ -964,7 +986,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .mobile-performance-selection-section .view-type {
@@ -992,6 +1014,10 @@
   padding: 0.4em 1em;
 }
 
+.mobile-performance-selection-section .spill-over-yards {
+  margin-left: 3em;
+}
+
 .mobile-team-header-section {
   display: flex;
   flex-direction: row;
@@ -999,13 +1025,15 @@
 
 .mobile-teams-info {
   margin-right: 0;
+  width: 100vw;
 }
 
 .mobile-away-team-section,
 .mobile-home-team-section {
   margin: 0;
   width: 100%;
-  font-size: 12px;
+  display: flex;
+  justify-content: center;
 }
 
 .mobile-team-header {
@@ -1014,7 +1042,7 @@
   justify-content: space-between;
   border: 0;
   width: 90%;
-  margin-right: 5%;
+  padding-right: 5%;
 }
 
 .mobile-team-header .team-logo-section,
@@ -1040,6 +1068,11 @@
 .mobile-player-section {
   border-radius: 0.5em;
   background-color: #00000066;
+  width: 75vw;
+  min-width: 300px;
+  max-width: 500px;
+  margin-left: -2em;
+  font-size: clamp(8px, 2.5vw, 16px);
 }
 
 // .mobile-player-section .player-img {

@@ -33,7 +33,7 @@ export class CfBestBetsComponent implements OnInit {
   isAuthorized = false;
 
   ngOnInit() {
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.authorizeUser();
@@ -127,7 +127,7 @@ export class CfBestBetsComponent implements OnInit {
       g.ml_pick = 'm_tqe_pick' in g ? g.m_tqe_pick : '';
       g.sp_pick = 's_tqe_pick' in g ? g.s_tqe_pick : '';
       g.ou_pick = 't_tqe_pick' in g ? g.t_tqe_pick : '';
-      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      g.day = moment(g.EST_schedule).format('MMMM Do');
       if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
       g.away_improb = g.m_a_improb;
       g.home_improb = g.m_h_improb;
@@ -145,6 +145,8 @@ export class CfBestBetsComponent implements OnInit {
       g.tpick_prob = g.t_o_prob;
       // g.away_team_last_name = g.away_team_last_name.split(" and ")[0];
       // g.home_team_last_name = g.home_team_last_name.split(" and ")[0];
+      g.away_team_logo = `../../../../assets/images/logos/cf/${g.away_team_full_name}.png`;
+      g.home_team_logo = `../../../../assets/images/logos/cf/${g.home_team_full_name}.png`;
     });
     this.loading = false;
   };

@@ -3,16 +3,13 @@
   'background-image': !isMobile ? 'url(' + game_background_img + ')' : 'url(' + game_background_mobile_img + ')'
 }">
     <div class="container-fluid" *ngFor="let gameDay of keys(games_by_day); let i=index;">
-      <div class="main-header">
+      <div class="main-header" *ngIf="i === 0">
         <div class="game-header">
-          <div class="logo-section">
+          <div class="logo-section" >
             <img class="game-logo" [src]="game_logo">
           </div>
-          <div class="game-week">
-            <span>{{gameDay}} Soccer Picks</span>
-          </div>
         </div>
-        <div class="league-info" *ngIf="i === 0">
+        <div class="league-info">
           <div type="button" class="league-headers" *ngFor="let league of all_leagues" (click)="onClickLeague(league)"
             [class.selected]="league === selected_league">
             {{league}}
@@ -31,7 +28,7 @@
         </div>
         <div class="table-top">
           <div class="table-heading-section">
-            <div class="table-heading-text">Our Picks</div>
+            <div class="table-heading-text">{{gameDay}}</div>
             <div class="right-angled-triangle">TT</div>
           </div>
           <div class="table-legend-text">
@@ -45,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="table-body">
+        <div class="table-body" *ngIf="!isMobile">
           <table *ngIf="!loading" class="table table-borderless">
             <thead>
               <tr>
@@ -163,6 +160,86 @@
                   </td>
 
                 </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+
+
+
+
+        <!-- Mobile Version -->
+        <div class="table-body" *ngIf="isMobile">
+          <table *ngIf="!loading" class="table table-borderless">
+            <tbody>
+              <ng-container *ngFor="let game of games_by_day[gameDay]">
+                <tr class="first-row">
+                  <th>Time</th>
+                  <th colspan="3">Matchup</th>
+                </tr>
+                <tr>
+                  <td rowspan="2" class="match-time">
+                    {{game.local_start_date}} <br/>
+                    {{game.local_start_time}}
+                    <span class="started" *ngIf="game.started">
+                      <br/>
+                      Started
+                    </span>
+                  </td>
+                  <td colspan="3">
+                    <span class="team-info">
+                      <span>
+                        <span>
+                          {{ game.a_team }} (Away)
+                        </span>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <span class="team-info">
+                      <span>
+                        <span>
+                          {{ game.h_team }} (Home)
+                        </span>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Money Line</th>
+                  <th class="subheader">Implied Prob</th>
+                  <th class="subheader">Odds</th>
+                  <th class="subheader">Prob</th>
+                </tr>
+                <tr [class.TQEP]="isTQEP(game, 'h')" [class.TQEHCP]="isTQEHCP(game, 'h')">
+                  <td>Home</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">+130</td>
+                  <td *ngIf="isAuthorized">{{ game.m_h_improb*100 | number:'1.1-1' }}%</td>
+                  <td>{{ game.m_h_odds }}</td>
+                  <td *ngIf="isAuthorized">{{ game.m_h_prob*100 | number:'1.1-1' }}%</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">70.3%</td>
+                </tr>
+                <tr [class.TQEP]="isTQEP(game, 't')" [class.TQEHCP]="isTQEHCP(game, 't')">
+                  <td>Draw</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">+130</td>
+                  <td *ngIf="isAuthorized">{{ game.m_t_improb*100 | number:'1.1-1' }}%</td>
+                  <td>{{ game.m_t_odds }}</td>
+                  <td *ngIf="isAuthorized">{{ game.m_t_prob*100 | number:'1.1-1' }}%</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">70.3%</td>
+                </tr>
+                <tr class="moneyline last-row" [class.TQEP]="isTQEP(game, 'a')" [class.TQEHCP]="isTQEHCP(game, 'a')">
+                  <td>Away</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">+130</td>
+                  <td *ngIf="isAuthorized">{{ game.m_a_improb*100 | number:'1.1-1' }}%</td>
+                  <td>{{ game.m_a_odds }}</td>
+                  <td *ngIf="isAuthorized">{{ game.m_a_prob*100 | number:'1.1-1' }}%</td>
+                  <td class="blurred-text" *ngIf="!isAuthorized">70.3%</td>
+                </tr>
+                <br/>
+                <br/>
               </ng-container>
             </tbody>
           </table>

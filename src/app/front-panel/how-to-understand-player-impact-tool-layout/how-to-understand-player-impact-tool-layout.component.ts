@@ -16,7 +16,7 @@ export class HowToUnderstandPlayerImpactToolLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.pdf = this.sanitizeUrl('../../assets/images/how-tqe-works/how-to-understand-player-impact-tool-layout.pdf');
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
   }

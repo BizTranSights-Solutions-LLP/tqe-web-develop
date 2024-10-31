@@ -1,5 +1,5 @@
 .body {
-  font-size: 16px;
+  font-size: clamp(4px, 2vw, 16px);
   line-height: 30px;
   color: white;
   font-family: 'Chakra Petch', sans-serif;
@@ -9,7 +9,6 @@
 .top-container {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
   position: relative;
   height: 580px;
   width: 100vw;
@@ -78,7 +77,6 @@
   background-color: #000000;
   padding: 5em 5em 0 5em;
   text-align: center;
-
   .header {
     font-size: 2.25em;
     font-weight: 700;
@@ -111,15 +109,15 @@
 }
 
 .m-info-card {
-  text-align: left;
   background-color: #111416;
   border: 1px solid #434343;
   align-items: center;
   margin-right: 2em;
   text-align: center;
   padding: 2em 1.5em;
-  height: 40em;
-  width: 25em;
+  padding-bottom: 8em;
+  height: auto;
+  max-width: 25em;
   position: relative;
 
   .popular-plan-img {
@@ -132,6 +130,7 @@
   .card-header {
     font-weight: 600;
     margin-bottom: 0.75em;
+    text-align: center;
 
     .title {
       color: #E8CA30;
@@ -234,6 +233,8 @@
 
     img {
       align-items: center;
+      max-width: 1.5em;
+      max-height: 1.5em;
     }
   }
 }
@@ -288,7 +289,7 @@
 
 @media (min-width: 2560px) {
   .top-container {
-    height: 50vh;
+    height: 55vh;
   }
 
   .carousel-slide {
@@ -298,12 +299,17 @@
 }
 
 @media (max-width: 1440px) {
+  .body {
+    font-size: clamp(4px, 1.75vw, 14px);
+    line-height: 20px;
+  }
   .top-container {
     height: 55vh;
   }
 
   .sample-website-img-section {
-    transform: scale(0.8);
+    transform: scale(0.75);
+    right: -2vw;
     right: 0;
   }
 
@@ -319,13 +325,14 @@
 
   .what-we-offer,
   .membership-plans {
-    width: 90vw;
+    width: 100vw;
   }
+  
 }
 
 @media (max-width: 1024px) {
   .body {
-    font-size: 13px;
+    font-size: clamp(4px, 1.75vw, 13px);
     line-height: 20px;
   }
 
@@ -334,7 +341,8 @@
   }
 
   .sample-website-img-section {
-    transform: scale(0.8);
+    transform: scale(0.75);
+    right: -2vw;
   }
 
   .sample-website-img-section img {
@@ -352,7 +360,7 @@
 
 @media (max-width: 768px) {
   .body {
-    font-size: 10px;
+    font-size: clamp(4px, 1.75vw, 10px);
   }
 
   .top-container {
@@ -361,6 +369,7 @@
 
   .sample-website-img-section {
     transform: scale(0.6);
+    right: -2vw;
   }
 
   .sample-website-img-section img {
@@ -378,7 +387,7 @@
 
 
 .mobile.body {
-  font-size: 12px;
+  font-size: clamp(4px, 1.75vw, 12px);
   line-height: 20px;
 }
 
@@ -397,15 +406,17 @@
 .mobile .info-text {
   font-weight: 400;
   font-size: 1.5em;
-  line-height: 31.2px;
+  line-height: 20px;
 }
 
 .mobile .sample-website-img-section {
-  transform: scale(0.75);
+  transform: scale(0.7);
+  right: -2vw;
 }
 
 .mobile .sample-website-img-section img {
-  transform: translateX(0);
+  transform: translateX(5%);
+  height: 50vh;
 }
 
 
@@ -417,15 +428,18 @@
 .mobile .membership-plans-cards-section {
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   margin: 5em 0 0 0;
 }
 
 .mobile .info-card {
-  max-width: 100vw;
-  width: 75vw;
-  margin: 0;
+  font-size: clamp(4px, 2vw, 16px);
   margin-bottom: 3em;
   flex-direction: column;
+  min-width: 75%;
+  width: 75%;
+  margin: 0 0 8em;
+  height: auto;
 }
 
 .mobile .card-text-section {
@@ -459,6 +473,8 @@
 
 
 .mobile .m-info-card {
-  width: 30em;
-  margin: 0 0 5em;
+  min-width: 75%;
+  width: 75%;
+  margin: 0 0 8em;
+  height: auto;
 }

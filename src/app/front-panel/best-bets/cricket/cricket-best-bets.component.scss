@@ -1,5 +1,5 @@
 .body {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     /* 1rem = 16px */
     font-family: 'Chakra Petch', sans-serif;
   }

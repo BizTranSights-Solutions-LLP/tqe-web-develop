@@ -136,7 +136,7 @@
 .FAQs a.bTN_view {
     color: #fff;
     text-decoration: none;
-    font-size: 16px;	
+    font-size: clamp(4px, 2vw, 16px);	
     font-weight: 600;
     margin-top: 100px;
 }

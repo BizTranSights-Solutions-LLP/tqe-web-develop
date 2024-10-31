@@ -34,7 +34,7 @@ export class NbaBestBetsComponent implements OnInit {
   isAuthorized = false;
 
   ngOnInit() {
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.authorizeUser();
@@ -129,7 +129,7 @@ export class NbaBestBetsComponent implements OnInit {
       g.ou_pick = 'total_pick' in g ? g.total_pick : '';
       g.home_team_logo = `../../../../assets/images/logos/nba/${g.home_team_abbr}.png`;
       g.away_team_logo = `../../../../assets/images/logos/nba/${g.away_team_abbr}.png`;
-      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      g.day = moment(g.EST_schedule).format('MMMM Do');
       if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
       g.mpick_prob = g.m_prob;
       g.spick_prob = g.s_prob;

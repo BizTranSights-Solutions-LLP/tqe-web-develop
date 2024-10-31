@@ -1,5 +1,5 @@
 .navbar {
-  font-size: 16px;
+  font-size: clamp(4px, 3vw, 16px);
   font-weight: 500;
   background-color: #000000;
   border-bottom: 1px solid #999999;
@@ -60,6 +60,7 @@
 }
 
 .navbar .dropdown-item {
+  font-size: clamp(4px, 3vw, 16px);
   color: white;
   background-color: #000000;
   padding: 0.6em 1em;
@@ -73,7 +74,6 @@
 .name-text {
   display: inline-block;
   font-family: 'Smooch Sans', sans-serif;
-  font-size: 20px;
   font-weight: 600;
   line-height: 24px;
   vertical-align: middle;

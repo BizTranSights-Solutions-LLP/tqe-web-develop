@@ -60,7 +60,7 @@ h5 {
 .input-green-btn {
     background-color: #19b219;
     color: #fff;
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
 }
 
 .input-green-btn:hover,
@@ -485,7 +485,7 @@ span.menu-above {
 }
 
 .radio-container span.radio-label {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     font-weight: 500;
     padding-left: 10px;
     cursor: pointer;
@@ -529,7 +529,7 @@ span.menu-above {
     display: inline-block;
     background-color: #fba704;
     color: #fff;
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     padding: 7px 10px;
     border-radius: 3px;
     font-weight: 500;
@@ -547,7 +547,7 @@ span.menu-above {
 }
 
 .sidebar-form-buttons .black-btn {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
 }
 
 .sidebar-form-buttons .btn i {
@@ -1179,7 +1179,7 @@ td.name-with-logo img {
 }
 
 .sidebar-tabs-wrap .nav-tabs li a {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     font-weight: 500;
     background-color: transparent;
     color: #000;

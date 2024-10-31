@@ -53,7 +53,7 @@ export class SoccerBestBetsComponent implements OnInit {
 
   ngOnInit() {
     this.authorizeUser();
-    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
     this.selected_league = this.all_leagues[0];
@@ -138,7 +138,7 @@ export class SoccerBestBetsComponent implements OnInit {
       g.ml_pick_h = (g['m_tqe_pick'] == "home");
       g.ml_pick_t = (g['m_tqe_pick'] == "tie");
       g.ml_pick_a = (g['m_tqe_pick'] == "away");
-      g.day = moment(g.EST_schedule).format('dddd, MMMM Do, YYYY');
+      g.day = moment(g.EST_schedule).format('MMMM Do');
       if (g.day !== 'Invalid date') if (g.day !== 'Invalid date') (this.games_by_day[g.day] = this.games_by_day[g.day] || []).push(g);
     });
     this.loading = false;

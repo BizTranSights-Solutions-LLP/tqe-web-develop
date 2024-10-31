@@ -3,7 +3,7 @@
 }
 
 .user_info {
-    font-size: 16px;
+    font-size: clamp(4px, 2vw, 16px);
     line-height: 30px;
     font-weight: lighter;
     font-family: 'Chakra Petch', sans-serif;

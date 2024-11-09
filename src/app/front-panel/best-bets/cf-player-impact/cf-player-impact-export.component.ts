@@ -13,6 +13,7 @@ export class CfPlayerExportImpactComponent extends CfPlayerImpactComponent {
   authorizeUser() {
     this.isAuthorized = true;
     this.auth_loading = false;
+    this.viewAccessLevel = 'Professional';
     this.getGameData();
   }
 }

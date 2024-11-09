@@ -53,19 +53,19 @@ export class SiteLayoutComponent implements OnInit {
   player_impact_tools_items: any[] = [
     {
       "name": "NFL",
-      "link": "/tool/nfl-player-impact",
+      "link": "/tool/player-impact/nfl",
     },
     {
       "name": "NBA",
-      "link": "/tool/nba-player-impact",
+      "link": "/tool/player-impact/nba",
     },
     {
       "name": "NCAAF",
-      "link": "/tool/cf-player-impact"
+      "link": "/tool/player-impact/cf"
     },
     {
       "name": "Cricket\n(Coming Soon)",
-      // "link": "/tool/cricket-player-impact",
+      // "link": "/tool/player-impact/cricket",
     },
     // {
     //   "name": "Golf",
@@ -111,7 +111,7 @@ export class SiteLayoutComponent implements OnInit {
   }
 
   getNavItemsByUrl(url: string): any[] {
-    if (/tool\/.*-player-impact/.test(url)) {
+    if (/tool\/player-impact/.test(url)) {
       return this.player_impact_tools_items;
     } else if (/tool\/best-bets/.test(url)) {
       return this.picks_items;

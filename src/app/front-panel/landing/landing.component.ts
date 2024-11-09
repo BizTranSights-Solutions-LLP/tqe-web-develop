@@ -1,5 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MembershipService } from 'src/app/services/membership.service';
 
 declare const fbq: any;
 
@@ -10,7 +13,9 @@ declare const fbq: any;
 })
 export class LandingComponent implements OnInit {
   bg_img: string = '../../assets/images/home_page/background.svg';
-
+  check_circle: string = '../../assets/images/home_page/check-circle.svg';
+  popular_plan: string = '../../assets/images/home_page/popular-plan.svg';
+  
   bgImages = [
     "../../assets/images/home_page/background.svg",
     "../../assets/images/home_page/top_bg_images/nba.jpg",
@@ -64,10 +69,20 @@ export class LandingComponent implements OnInit {
   intervalId: any;
   transitionActive: boolean = true;
   isMobile: boolean = false;
+  viewAccessLevel: string = 'No_Access';
+  is_whop_user: boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private route: ActivatedRoute,
+    private membershipService: MembershipService,
+  ) {}
 
   ngOnInit() {
+    let accessLevelAndUserType = this.route.snapshot.data['accessLevelAndUserType'];
+    this.viewAccessLevel = accessLevelAndUserType['viewAccessLevel'];
+    console.log(this.viewAccessLevel);
+    this.is_whop_user = accessLevelAndUserType['isWhopUser'];
     this.sports_images = this.sports_images.concat(this.sports_images);
     this.startAutoSlide();
 
@@ -77,6 +92,17 @@ export class LandingComponent implements OnInit {
 
     this.startImageCycling();
 
+  }
+
+  ngAfterViewInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        const element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
   }
 
   private startImageCycling() {
@@ -112,5 +138,9 @@ export class LandingComponent implements OnInit {
       this.transitionActive = true;
       this.transformStyle = `translateX(-${(this.currentIndex * 100) / 3}%)`;
     }
+  }
+
+  subscribe(subscriptionType, recurringPeriod) {
+    this.membershipService.subscribe(subscriptionType, recurringPeriod);
   }
 }

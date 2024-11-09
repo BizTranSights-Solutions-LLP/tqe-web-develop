@@ -1,4 +1,6 @@
 import {Injectable, EventEmitter} from '@angular/core';
+import { Router } from '@angular/router';
+
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
@@ -31,7 +33,10 @@ export class AuthService {
 
   updateUserName = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {
   }
 
   // save where user us know from
@@ -145,4 +150,17 @@ export class AuthService {
       window.open(redirectionLink, "_blank");
     }
   }
+
+  public redirectToMembershipPlans(subscriptionType) {
+    let membershipPlansRoute = ""
+    const data = this.getUserDetail();
+    if (data && data.auth_code) {
+      if( data.is_whop_user) {
+        this.redirectToWhop(subscriptionType);
+      }
+      membershipPlansRoute = "/landing/all"
+    }
+    this.router.navigate([membershipPlansRoute], {fragment: 'membership-plans'});
+  }
+
 }

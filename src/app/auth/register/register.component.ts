@@ -166,8 +166,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register() {
     const form = this.registerForm;
     const rform = this.feeForm;
-    console.log(form.value.email);
-    console.log(rform);
 
     if (this.feeForm.valid) {
       // create a json request

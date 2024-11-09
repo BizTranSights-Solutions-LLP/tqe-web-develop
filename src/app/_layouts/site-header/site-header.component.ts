@@ -60,19 +60,19 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
         // Either to login or signup through Whop
 
 
-        // { label: 'NFL Player Impact', loggedInURL: '/tool/nfl-player-impact', loggedOutURL: '/membership-plan' },
-        // { label: 'NBA Player Impact', loggedInURL: '/tool/nba-player-impact', loggedOutURL: '/membership-plan' },
-        // { label: 'NCAAF Player Impact', loggedInURL: '/tool/cf-player-impact', loggedOutURL: '/membership-plan' },
-        // { label: 'Cricket Player Impact', loggedInURL: '/tool/cricket-player-impact', loggedOutURL: '/membership-plan' },
+        // { label: 'NFL Player Impact', loggedInURL: '/tool/player-impact/nfl', loggedOutURL: '/membership-plan' },
+        // { label: 'NBA Player Impact', loggedInURL: '/tool/player-impact/nba', loggedOutURL: '/membership-plan' },
+        // { label: 'NCAAF Player Impact', loggedInURL: '/tool/player-impact/cf', loggedOutURL: '/membership-plan' },
+        // { label: 'Cricket Player Impact', loggedInURL: '/tool/player-impact/cricket', loggedOutURL: '/membership-plan' },
         // BP Change comment out 2 lines below 202200206
         // {label: 'NFL Demo', loggedInURL: '/nfl-demo', loggedOutURL: '/nfl-demo'},
         // {label: 'NBA Demo', loggedInURL: '/nba-demo', loggedOutURL: '/nba-demo'},
 
 
 
-        { label: 'NFL Player Impact', loggedInURL: '/tool/nfl-player-impact', loggedOutURL: '/tool/nfl-player-impact' },
-        { label: 'NBA Player Impact', loggedInURL: '/tool/nba-player-impact', loggedOutURL: '/tool/nba-player-impact' },
-        { label: 'NCAAF Player Impact', loggedInURL: '/tool/cf-player-impact', loggedOutURL: '/tool/cf-player-impact' },
+        { label: 'NFL Player Impact', loggedInURL: '/tool/player-impact/nfl', loggedOutURL: '/tool/player-impact/nfl' },
+        { label: 'NBA Player Impact', loggedInURL: '/tool/player-impact/nba', loggedOutURL: '/tool/player-impact/nba' },
+        { label: 'NCAAF Player Impact', loggedInURL: '/tool/player-impact/cf', loggedOutURL: '/tool/player-impact/cf' },
 
       ]
     },

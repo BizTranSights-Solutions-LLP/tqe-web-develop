@@ -10,7 +10,7 @@
                 <br />
                 <p>Try it for free today!</p>
                 <br />
-                <a class="btn" type="button" [routerLink]="'/tool/nfl-player-impact'">Player Impact Tools</a>
+                <a class="btn" type="button" [routerLink]="'/tool/player-impact/nfl'">Player Impact Tools</a>
                 <a class="btn" type="button" [routerLink]="'/tool/best-bets/nfl'">Picks</a>
             </span>
         </div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="card-text-section">
-                    <p class="card-header">Calculate Data Based On Player's Performance</p>
+                    <p class="card-header">See how your view affects the odds</p>
                     <p class="card-text">
                         Value your player defined
                         performance in the odds and compare
@@ -48,9 +48,138 @@
                     <p class="card-header">Insightful and Quantified Picks</p>
                     <p class="card-text">
                         Successful NFL record since picking
-                        from beginning of legal United States sports
+                        from beginning of legal US sports
                         betting in 2018
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid membership-plans" id="membership-plans" *ngIf="!is_whop_user && viewAccessLevel !== 'Professional'">
+        <p class="header">MEMBERSHIP PLANS</p>
+        <div class="membership-plans-cards-section">
+            <div class="m-info-card m-card-1" *ngIf="viewAccessLevel === 'No_Access'">
+                <div class="card-text-section">
+                    <div class="card-header">
+                        <p class="title">7-Days Free Trial</p>
+                        <p class="price pb-2">$0</p>
+                        <hr>
+                    </div>
+                    <div class="card-text">
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Full access to the Picks Tool</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Access to Player Impact Tool, both basic and professional versions</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">All sports: NFL, NBA, NCAAF, NCAAB, MLB, Global Soccer, and NHL</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">To sum up, everything Free for a week and $39.99 per month thereafter</div>                                
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn" (click)="subscribe('Professional', 'Trial')">Get Started</button>
+                </div>
+            </div>
+            <div class="m-info-card m-card-2" *ngIf="viewAccessLevel !== 'Basic'">
+                <div class="card-text-section">
+                    <div class="card-header">
+                        <p class="title">Basic Edition</p>
+                        <div class="price-section">
+                            <div class="recurrence-period">
+                                Monthly
+                            </div>
+                            <div class="price">$29.99</div>
+                            <div class="per"> /month</div>
+                        </div>
+                        <hr/>
+                        <div class="savings">
+                            <span class="savings-text">44% Saving</span>
+                            <span class="right-angled-triangle"></span>
+                        </div>
+                        <div class="price-section">
+                            <div class="recurrence-period">
+                                Yearly
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="price">$199.99</div>
+                            <div class="per"> /year</div>
+                        </div>
+                        <hr/>
+                    </div>
+                    <div class="card-text">
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Full access to the Picks Tool</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Player Impact Tool basic version</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">All sports: NFL, NBA, NCAAF, NCAAB, MLB, Global Soccer, and NHL</div>                                
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn mb-4" (click)="subscribe('Basic', 'Annual')">Get Started with Annual &nbsp; Plan</button>
+                    <button class="btn" (click)="subscribe('Basic', 'Month')">Get Started with Monthly Plan</button>
+                </div>
+            </div>
+            <div class="m-info-card m-card-3">
+                <img class="popular-plan-img" [src]="popular_plan">
+                <div class="card-text-section">
+                    <div class="card-header">
+                        <p class="title">Professional Edition</p>
+                        <div class="price-section">
+                            <div class="recurrence-period">
+                                Monthly
+                            </div>
+                            <div class="price">$39.99</div>
+                            <div class="per"> /month</div>
+                        </div>
+                        <hr/>
+                        <div class="savings">
+                            <span class="savings-text">50% Saving</span>
+                            <span class="right-angled-triangle"></span>
+                        </div>
+                        <div class="price-section">
+                            <div class="recurrence-period">
+                                Yearly
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="price">$239.99</div>
+                            <div class="per"> /year</div>
+                        </div>
+                        <hr/>
+                    </div>
+                    <div class="card-text">
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Full access to the Picks Tool</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">Access to Player Impact Tool, both basic and professional versions</div>                                
+                        </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">All sports: NFL, NBA, NCAAF, NCAAB, MLB, Global Soccer, and NHL</div>                                
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn mb-4" (click)="subscribe('Professional', 'Annual')">Get Started with Annual &nbsp; Plan</button>
+                    <button class="btn" (click)="subscribe('Professional', 'Month')">Get Started with Monthly Plan</button>
+
                 </div>
             </div>
         </div>
@@ -65,7 +194,7 @@
                         <img class="bg" [src]="item.bg" alt="Background Image">
                         <img class="logo" [src]="item.logo" alt="Logo">
                     </button>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

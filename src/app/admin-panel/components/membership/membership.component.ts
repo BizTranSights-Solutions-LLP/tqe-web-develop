@@ -129,7 +129,6 @@ export class MembershipComponent implements OnInit, OnDestroy {
       this.findMembershipByIdSub = this.membershipService.find_membership_by_id(membershipData).subscribe(
         (response) => {
 
-          console.log(response) 
           if(response.meta.code === 200 ){             
             this.setMembershipFormFields(response.result);
             

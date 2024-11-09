@@ -104,8 +104,8 @@ export class SoccerBestBetsExportComponent implements OnInit {
     }
   }
 
-  public redirectToWhop(subscriptionType) {
-    this.authService.redirectToWhop(subscriptionType);
+  public redirectToMembershipPlans(subscriptionType) {
+    this.authService.redirectToMembershipPlans(subscriptionType);
   }
 
   // === PRIVATE METHODS ===================================================

@@ -97,12 +97,9 @@ export class WhopLoginComponent implements OnInit {
     const url = 'https://api.whop.com/v5/me';
     this.http.get(url, { headers }).subscribe(
       (response: any) => {
-        console.log(response);
-        console.log(accessToken);
         this.login_subscription = this.authService.login(environment.whopUserLoginData).subscribe(
           (res: LoginResponse) => {
             if (res.meta.code === 200) {
-              console.log(res);
               res.result.first_name = response.username;
               res.result.is_whop_user = true;
               res.result.whop_user_access_token = accessToken;

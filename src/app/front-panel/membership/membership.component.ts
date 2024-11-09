@@ -112,8 +112,10 @@ export class MembershipComponent implements OnInit, OnDestroy {
     );
 
     try {
+      console.log('Hey');
       this.loading = true;
       let data: any = await this.membershipService.get_membership_plans().toPromise();
+      console.log(data);
       this.loading = false;
       this.monthlyPasses = data.result.monthly_passes;
       this.seasonPasses = data.result.season_passes;
@@ -220,13 +222,13 @@ export class MembershipComponent implements OnInit, OnDestroy {
     }
 
     localStorage.setItem('selected-plan', JSON.stringify(this.membershipService.selectedMembershipPlan));
+    console.log(this.membershipService.selectedMembershipPlan);
+    // let redirect_url = this.authService.isUserLoggedIn() ? 'billing-information' : 'create-account';
+    // if (this.router.url.includes('try-it-free')) {
+    //   redirect_url = 'try-it-free/' + redirect_url;
+    // }
 
-    let redirect_url = this.authService.isUserLoggedIn() ? 'billing-information' : 'create-account';
-    if (this.router.url.includes('try-it-free')) {
-      redirect_url = 'try-it-free/' + redirect_url;
-    }
-
-    this.router.navigate([redirect_url]);
+    // this.router.navigate([redirect_url]);
 
 
     // this.membershipService.fake_subscribe_membership().subscribe(

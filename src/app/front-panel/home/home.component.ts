@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { environment } from 'src/environments/environment';
+import { MembershipService } from 'src/app/services/membership.service';
 
 @Component({
   selector: 'app-home',
@@ -66,7 +67,11 @@ export class HomeComponent implements OnInit {
   transitionActive: boolean = true;
   isMobile: boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private membershipService: MembershipService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.sports_images = this.sports_images.concat(this.sports_images);
@@ -78,6 +83,17 @@ export class HomeComponent implements OnInit {
 
     this.startImageCycling();
 
+  }
+
+  ngAfterViewInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        const element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
   }
 
   private startImageCycling() {
@@ -115,22 +131,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  redirectToWhop(subscriptionType) {
-    var redirectionLink = ""
-    if (subscriptionType === "Basic") {
-      redirectionLink = environment.tqeBasicViewAnnualPlan;
-    }
-    else if (subscriptionType === "Professional") {
-      redirectionLink = environment.tqeProfessionViewAnnualPlan;
-    }
-    else if (subscriptionType === "Free") {
-      redirectionLink = environment.tqeProfessionViewAnnualPlan;
-    }
-    else {
-      alert("Unknown Subscription Type");
-    }
-    if (confirm("The Quant Edge uses Whop for subscription payments. Click OK to be redirected to Whop, or Cancel to stay on this page.")) {
-      window.open(redirectionLink, "_blank");
-    }
+  subscribe(subscriptionType, recurringPeriod) {
+    this.membershipService.subscribe(subscriptionType, recurringPeriod);
   }
 }

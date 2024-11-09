@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { BestBetsService } from '../best-bets.service';
 import { DataService } from '../../../services/data.service';
@@ -15,6 +16,8 @@ declare var require: any;
   styleUrls: ['./nfl-player-impact.component.scss']
 })
 export class NflPlayerImpactComponent implements OnInit {
+  viewAccessLevel:  string = 'No_Access';
+  is_whop_user: boolean = false;
   isMobile: boolean = false;
   game_logo: string = `../../../../assets/images/nfl/nfl_logo.png`;
   blur_img: string = `../../../../assets/images/nfl/blur_background.png`;
@@ -54,7 +57,6 @@ export class NflPlayerImpactComponent implements OnInit {
   sortBy: string = 'rating';
   sortDir: any = { 'rating': true, 'time': false };
   viewType: string = "Basic";
-  hasUserSubscribedToProfessionalView: boolean = true;
   playerStats: any[] = [];
 
   spillOverYards: boolean = false;
@@ -72,7 +74,8 @@ export class NflPlayerImpactComponent implements OnInit {
     protected plumber: BestBetsService,
     protected breakpointObserver: BreakpointObserver,
     protected http: HttpClient,
-    protected sanitizer: DomSanitizer
+    protected sanitizer: DomSanitizer,
+    protected route: ActivatedRoute,
   ) { }
 
   layout_explanation_pdf: SafeResourceUrl;
@@ -100,35 +103,12 @@ export class NflPlayerImpactComponent implements OnInit {
    * Redirects the user to the professional view location.
    */
   subscribeToProfessionalView() {
-    window.open(environment.tqeLocationOnWhop, '_blank');
-  }
-
-  /**
-  * Checks if the user has a subscription to the professional view on Whop.
-  * @param accessToken - The access token for authenticating with the Whop API.
-  * @param type - The view type to set.
-  */
-  checkUserWhopSubscription(accessToken: string, type: string) {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${accessToken}`,
-    });
-    this.http.get('https://api.whop.com/api/v5/me/memberships', { headers }).subscribe(
-      (response: any) => {
-        for (let membership of response.data) {
-          if (membership.product_id == environment.professionalViewProductIDOnWhop) {
-            this.hasUserSubscribedToProfessionalView = true;
-            this.viewType = type;
-            this.resetData();
-          }
-        }
-        if (this.viewType == 'Basic') {
-          this.subscribeToProfessionalView();
-        }
-      },
-      (error) => {
-        console.error('Unable to check User Membership Details...', error);
-      }
-    );
+    if (this.is_whop_user) {
+      window.open(environment.tqeLocationOnWhop, '_blank');
+    }
+    else {
+      this.authService.redirectToMembershipPlans('Professional');
+    }
   }
 
   /**
@@ -136,20 +116,8 @@ export class NflPlayerImpactComponent implements OnInit {
   * @param type - The view type to set.
   */
   setViewType(type: string) {
-    if (type === 'Professional') {
-      const userData = this.authService.getUserDetail();
-      if (userData && 'whop_user_access_token' in userData) {
-        this.checkUserWhopSubscription(userData.whop_user_access_token, type);
-      }
-      else {
-        this.viewType = type;
-        this.resetData();
-      }
-    }
-    else {
-      this.viewType = type;
-      this.resetData();
-    }
+    this.viewType = type;
+    this.resetData();
   }
 
   /**
@@ -185,29 +153,19 @@ export class NflPlayerImpactComponent implements OnInit {
   /**
    * Authorize user to access the tool.
    */
-  protected authorizeUser() {
-    const isLoggedIn = this.authService.isUserLoggedIn();
-    if (isLoggedIn) {
-      this.dataService.get_tool("nba-dk-optimizer").subscribe(
-        (res: any) => {
-          this.isAuthorized = (res.meta.code === 200);
-          this.auth_loading = false;
-          this.getGameData();
-        },
-        () => this.handleUnauthorized()
-      );
-    } else {
-      this.handleUnauthorized();
+  protected authorizeUser() {    
+    let accessLevelAndUserType = this.route.snapshot.data['accessLevelAndUserType'];
+    this.viewAccessLevel = accessLevelAndUserType['viewAccessLevel'];
+    this.is_whop_user = accessLevelAndUserType['isWhopUser'];
+    if (this.viewAccessLevel === 'Basic' || this.viewAccessLevel === 'Professional') {
+      this.isAuthorized = true;
+      this.viewType = this.viewAccessLevel;
+      this.getGameData();
     }
-  }
-
-  /**
-   * Handle unauthorized access.
-   */
-  protected handleUnauthorized() {
-    this.isAuthorized = false;
+    else {
+      this.isAuthorized = false;
+    }
     this.auth_loading = false;
-    this.sortByStartTime();
   }
 
   /**
@@ -445,7 +403,7 @@ export class NflPlayerImpactComponent implements OnInit {
     if (this.spillOverYards) {
       if(slider === 'slider1') {
         let reducedYards = Math.round((diff1 / ratio));
-        console.log(diff1, ratio, (diff1/ratio), reducedYards);
+        // console.log(diff1, ratio, (diff1/ratio), reducedYards);
         player.slider2.value = Math.min(Math.max(player[`${y2}Yards`] - reducedYards, player.slider2.min), player.slider2.max);
       }
       else {

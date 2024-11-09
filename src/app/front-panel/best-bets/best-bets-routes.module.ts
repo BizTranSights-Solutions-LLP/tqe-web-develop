@@ -11,11 +11,13 @@ import { CbBestBetsComponent } from './cb/cb-best-bets.component';
 import { NhlBestBetsComponent } from './nhl/nhl-best-bets.component';
 import { TodaysBestBetsComponent } from './todays/todays-best-bets.component';
 import { CricketBestBetsComponent } from './cricket/cricket-best-bets.component';
+import { PicksAccessResolver } from 'src/app/resolvers/picks-access-resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: BestBetsComponent,
+    resolve: { isAuthorized: PicksAccessResolver },
     children: [
       { path: 'nfl', component: NflBestBetsComponent },
       { path: 'nba', component: NbaBestBetsComponent },

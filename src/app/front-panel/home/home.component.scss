@@ -115,10 +115,12 @@
   margin-right: 2em;
   text-align: center;
   padding: 2em 1.5em;
-  padding-bottom: 8em;
+  padding-bottom: 12em;
   height: auto;
   max-width: 25em;
+  min-width: 15em;
   position: relative;
+  font-size: clamp(10px, 1vw, 16px);
 
   .popular-plan-img {
     position: absolute;
@@ -155,7 +157,7 @@
     }
 
     .price {
-      font-size: 1.7em;
+      font-size: clamp(10px, 1.75vw, 32px);
       margin-bottom: 10px;
     }
 
@@ -190,14 +192,19 @@
   .card-footer {
     text-align: center;
     position: absolute;
-    left: 50%;
-    transform: translate(-50%);
+    width: 92%;
+    margin: 0;
     bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     .btn {
       border: 1px solid #18CB16;
       background-color: black;
       font-weight: 500;
+      width: auto;
     }
   }
 }
@@ -477,4 +484,8 @@
   width: 75%;
   margin: 0 0 8em;
   height: auto;
+
+  .price {
+    font-size: 24px;
+  }
 }

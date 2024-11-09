@@ -309,7 +309,6 @@ export class CricketPlayerImpactComponent implements OnInit {
       }
     });
     
-    console.log(lineup);
   }
 
   /**
@@ -479,11 +478,7 @@ export class CricketPlayerImpactComponent implements OnInit {
     const teams = match.split(" ", 3);
     const away_team = teams[0];
     const home_team = teams[2];
-    console.log(this.matches);
-    console.log(teams);
-
     const playersData = Object.values(this.matches).find(m => m.away_team_abbr === away_team && m.home_team_abbr === home_team);
-    console.log(playersData);
     return {
       away_team: away_team,
       away_lineup: playersData ? playersData.away_lineup : [],
@@ -497,7 +492,6 @@ export class CricketPlayerImpactComponent implements OnInit {
    */
   private playerDataResolver() {
     this.selected_players = this.getPlayers(this.selected_teams);
-    console.log(this.selected_players);
     this.resetPlayerData(this.selected_players.away_lineup);
     this.resetPlayerData(this.selected_players.home_lineup);
     this.setPlayerImages(this.selected_players.away_lineup);
@@ -565,7 +559,6 @@ export class CricketPlayerImpactComponent implements OnInit {
   private getGameData() {
     this.plumber.getCricketTable(this.league).subscribe(
       (win: any) => {
-        console.log(win);
         if (typeof win === 'object' && win !== null) {
           this.games = Object.values(win);
           if (this.games.length > 0) {
@@ -604,7 +597,6 @@ export class CricketPlayerImpactComponent implements OnInit {
       () => {
         this.plumber.getCricketPlayerImpactData(this.league).subscribe(
           (res: any[]) => {
-            console.log(res);
             this.matches = res;
             this.playerDataResolver();
             this.resetData();

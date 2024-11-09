@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid membership-plans">
+    <div class="container-fluid membership-plans" id="membership-plans">
         <p class="header">MEMBERSHIP PLANS</p>
         <div class="membership-plans-cards-section">
             <div class="m-info-card m-card-1">
@@ -77,10 +77,14 @@
                             <div class="point-img"><img [src]="check_circle"></div>
                             <div class="point-text">All sports: NFL, NBA, NCAAF, NCAAB, MLB, Global Soccer, and NHL</div>                                
                         </div>
+                        <div class="point">
+                            <div class="point-img"><img [src]="check_circle"></div>
+                            <div class="point-text">To sum up, everything Free for a week and $39.99 per month thereafter</div>                                
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn" (click)="redirectToWhop('Free')">Get Started</button>
+                    <button class="btn" (click)="subscribe('Professional', 'Trial')">Get Started</button>
                 </div>
             </div>
             <div class="m-info-card m-card-2">
@@ -104,8 +108,8 @@
                                 Yearly
                                 &nbsp;&nbsp;
                             </div>
-                            <div class="price">$16.66</div>
-                            <div class="per"> /month</div>
+                            <div class="price">$199.99</div>
+                            <div class="per"> /year</div>
                         </div>
                         <hr/>
                     </div>
@@ -125,7 +129,8 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn" (click)="redirectToWhop('Basic')">Get Started</button>
+                    <button class="btn mb-4" (click)="subscribe('Basic', 'Annual')">Get Started with Annual &nbsp; Plan</button>
+                    <button class="btn" (click)="subscribe('Basic', 'Month')">Get Started with Monthly Plan</button>
                 </div>
             </div>
             <div class="m-info-card m-card-3">
@@ -150,8 +155,8 @@
                                 Yearly
                                 &nbsp;&nbsp;
                             </div>
-                            <div class="price">$19.99</div>
-                            <div class="per"> /month</div>
+                            <div class="price">$239.99</div>
+                            <div class="per"> /year</div>
                         </div>
                         <hr/>
                     </div>
@@ -171,7 +176,9 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn" (click)="redirectToWhop('Professional')">Get Started</button>
+                    <button class="btn mb-4" (click)="subscribe('Professional', 'Annual')">Get Started with Annual &nbsp; Plan</button>
+                    <button class="btn" (click)="subscribe('Professional', 'Month')">Get Started with Monthly Plan</button>
+
                 </div>
             </div>
         </div>

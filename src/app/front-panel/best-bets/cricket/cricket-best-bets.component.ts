@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { BestBetsService } from '../best-bets.service';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
@@ -23,6 +25,7 @@ export class CricketBestBetsComponent implements OnInit {
     private dataService: DataService,
     private breakpointObserver: BreakpointObserver,
     private plumber: BestBetsService,
+    private route: ActivatedRoute,
   ) { }
 
   games: any[] = [];
@@ -92,26 +95,14 @@ export class CricketBestBetsComponent implements OnInit {
     }
   }
 
-  public redirectToWhop(subscriptionType) {
-    this.authService.redirectToWhop(subscriptionType);
+  public redirectToMembershipPlans(subscriptionType) {
+    this.authService.redirectToMembershipPlans(subscriptionType);
   }
 
   // === PRIVATE METHODS ===================================================
 
   protected authorizeUser() {
-    let isLoggedIn: any = this.authService.isUserLoggedIn();
-    let tool: string = 'nba-dk-optimizer';
-
-    this.dataService.get_tool(tool).subscribe(
-      (res: any) => {
-        if (res.result.membership_plan === '') {
-          this.isAuthorized = (res.meta.code === 200);
-        }
-      },
-      (err) => {
-        this.isAuthorized = false;
-      },
-    );
+    this.isAuthorized = this.route.snapshot.parent && this.route.snapshot.parent.data['isAuthorized'];
   }
 
   private processGames = win => {

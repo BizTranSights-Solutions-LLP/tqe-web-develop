@@ -157,6 +157,8 @@ import { CfPlayerImpactComponent } from './front-panel/best-bets/cf-player-impac
 import { HowToFindPlayerImpactToolsComponent } from './front-panel/how-to-find-player-impact-tools/how-to-find-player-impact-tools.component';
 import { HowToUsePlayerPerformanceComponent } from './front-panel/how-to-use-player-performance/how-to-use-player-performance.component';
 import { HowToUnderstandPlayerImpactToolLayoutComponent } from './front-panel/how-to-understand-player-impact-tool-layout/how-to-understand-player-impact-tool-layout.component';
+import { PicksAccessResolver } from './resolvers/picks-access-resolver';
+import { ImpactToolsAccessResolver } from './resolvers/impact-tools-access-resolver';
 
 const routes: Routes = [
 
@@ -201,7 +203,8 @@ const routes: Routes = [
         path: 'landing',
         loadChildren: './front-panel/landing/landing.module#LandingModule',
         pathMatch: 'prefix',
-        canLoad: [AuthGuardService]
+        canLoad: [AuthGuardService],
+        resolve: {accessLevelAndUserType: ImpactToolsAccessResolver},
       },
       {path: 'sportsbook-promos', component: SportsbookComponent},
       {path: 'dfs-promos', component: DfspromoComponent},
@@ -241,10 +244,22 @@ const routes: Routes = [
       },
       // New Betting Result Tools:
       {path: 'tool/all-pick-history', component: AllPicksHistoryComponent},
-      {path: 'tool/nba-player-impact', component: NbaPlayerImpactComponent},
-      {path: 'tool/nfl-player-impact', component: NflPlayerImpactComponent},
-      {path: 'tool/cricket-player-impact', component: CricketPlayerImpactComponent},
-      {path: 'tool/cf-player-impact', component: CfPlayerImpactComponent},
+
+      {
+        path: 'tool/player-impact',
+        resolve: { accessLevelAndUserType: ImpactToolsAccessResolver },
+        children: [
+          { path: 'nba', component: NbaPlayerImpactComponent },
+          { path: 'nfl', component: NflPlayerImpactComponent },
+          { path: 'cricket', component: CricketPlayerImpactComponent },
+          { path: 'cf', component: CfPlayerImpactComponent }
+        ]
+      },
+
+      // {path: 'tool/nba-player-impact', component: NbaPlayerImpactComponent, resolve: {accessLevelAndUserType: ImpactToolsAccessResolver}},
+      // {path: 'tool/player-impact/nfl', component: NflPlayerImpactComponent, resolve: {accessLevelAndUserType: ImpactToolsAccessResolver}},
+      // {path: 'tool/cricket-player-impact', component: CricketPlayerImpactComponent, resolve: {accessLevelAndUserType: ImpactToolsAccessResolver}},
+      // {path: 'tool/cf-player-impact', component: CfPlayerImpactComponent, resolve: {accessLevelAndUserType: ImpactToolsAccessResolver}},
       {path: 'tool/:title', component: ToolDetailComponent},
       {path: 'profile', component: ProfileComponent},
       {path: 'edit-profile', component: EditComponent},

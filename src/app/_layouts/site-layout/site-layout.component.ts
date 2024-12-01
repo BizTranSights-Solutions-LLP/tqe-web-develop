@@ -64,6 +64,10 @@ export class SiteLayoutComponent implements OnInit {
       "link": "/tool/player-impact/cf"
     },
     {
+      "name": "NCAAB",
+      "link": "/tool/player-impact/cb"
+    },
+    {
       "name": "Cricket\n(Coming Soon)",
       // "link": "/tool/player-impact/cricket",
     },

@@ -11,17 +11,17 @@ import { environment } from 'src/environments/environment';
 declare var require: any;
 
 @Component({
-  selector: 'tqe-nba-player-impact',
-  templateUrl: './nba-player-impact.component.html',
-  styleUrls: ['./nba-player-impact.component.scss']
+  selector: 'tqe-cb-player-impact',
+  templateUrl: './cb-player-impact.component.html',
+  styleUrls: ['./cb-player-impact.component.scss']
 })
-export class NbaPlayerImpactComponent implements OnInit {
+export class CbPlayerImpactComponent implements OnInit {
   viewAccessLevel:  string = 'No_Access';
   is_whop_user: boolean = false;
   isMobile: boolean = false;
-  game_logo: string = `../../../../assets/images/nba/nba_logo.png`;
+  game_logo: string = `../../../../assets/images/cb/cb_logo.svg`;
   blur_img: string = `../../../../assets/images/nfl/blur_background.png`;
-  game_background_img: string = `../../../../assets/images/nba/nba_background.png`;
+  game_background_img: string = `../../../../assets/images/cb/cb_background.png`;
   game_background_mobile_img: string = `../../../../assets/images/nba/nba_background_mobile.png`;
   defaultImageURL: string = "../../../../assets/images/Default.png";
   away_team_logo: string = "";
@@ -280,29 +280,26 @@ export class NbaPlayerImpactComponent implements OnInit {
    * @param match - The selected teams.
    * @returns The corresponding game object.
    */
-  protected getGame(match: string) {
-    const teams = match.split(" ", 3);
-    this.away_team = teams[0];
-    this.home_team = teams[2];
 
-    const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team && game.home_team_abbr === this.home_team);
-    if (selectedGame) {
-      selectedGame.spick_prob = selectedGame.s_prob;
-      selectedGame.mpick_prob = selectedGame.m_prob;
-      selectedGame.tpick_prob = selectedGame.t_prob;
-    }
+  protected getGame(match: string) {
+    const teams = match.split("-", 3);
+    this.away_team = teams[0].trim();
+    this.home_team = teams[1].trim();
+
+    const selectedGame = this.games_today.find(game => game.away_team_abbr === this.away_team);
     this.match_loading = false;
     return selectedGame || null;
   }
+
 
   /**
    * Set full names for home and away teams.
    */
   protected setTeamFullNames() {
-    this.home_team_full_name = (this.selected_match.home_team_first_name + ' ' + this.selected_match.home_team_last_name).trim();
-    this.away_team_full_name = (this.selected_match.away_team_first_name + ' ' + this.selected_match.away_team_last_name).trim();
-    this.away_team_logo = `../../../../assets/images/logos/nba/${this.away_team}.png`;
-    this.home_team_logo = `../../../../assets/images/logos/nba/${this.home_team}.png`;
+    this.home_team_full_name = this.selected_match.h_team;
+    this.away_team_full_name = this.selected_match.a_team;
+    this.away_team_logo = `../../../../assets/images/logos/cb/${this.selected_match.away_team_abbr}.png`;
+    this.home_team_logo = `../../../../assets/images/logos/cb/${this.selected_match.home_team_abbr}.png`;
   }
 
   /**
@@ -311,17 +308,18 @@ export class NbaPlayerImpactComponent implements OnInit {
    * @returns The player data for the home and away teams.
    */
   protected getPlayers(match: string) {
-    const teams = match.split(" ", 3);
-    const away_team = teams[0];
-    const home_team = teams[2];
+    const teams = match.split("-", 3);
+    const away_team = teams[0].trim();
+    const home_team = teams[1].trim();
 
-    const playersData = this.matches.find(m => m.away_team === away_team && m.home_team === home_team);
+    const awayTeamData = this.matches.find(m => m.team_name === away_team);
+    const homeTeamData = this.matches.find(m => m.team_name === home_team);
 
     return {
       away_team: away_team,
-      away_lineup: playersData ? playersData.away_lineup : [],
+      away_lineup: awayTeamData ? awayTeamData.lineup : [],
       home_team: home_team,
-      home_lineup: playersData ? playersData.home_lineup : []
+      home_lineup: homeTeamData ? homeTeamData.lineup : []
     };
   }
 
@@ -332,8 +330,8 @@ export class NbaPlayerImpactComponent implements OnInit {
     this.selected_players = this.getPlayers(this.selected_teams);
     this.resetPlayerData(this.selected_players.away_lineup);
     this.resetPlayerData(this.selected_players.home_lineup);
-    this.setPlayerImages(this.away_team_full_name, this.selected_players.away_lineup);
-    this.setPlayerImages(this.home_team_full_name, this.selected_players.home_lineup);
+    this.setPlayerImages(this.selected_match.away_team_abbr, this.selected_players.away_lineup);
+    this.setPlayerImages(this.selected_match.home_team_abbr, this.selected_players.home_lineup);
   }
 
   /**
@@ -342,7 +340,7 @@ export class NbaPlayerImpactComponent implements OnInit {
    */
   protected setPlayerImages(team: string, lineup: any[]) {
     lineup.forEach(player => {
-      player.img = `../../../../assets/images/headshots/nba/${team}/${player.player_name}.png`;
+      player.img = `../../../../assets/images/headshots/cb/${team}/${player.position}/${player.player_name}.png`;
     });
   }
 
@@ -395,21 +393,34 @@ export class NbaPlayerImpactComponent implements OnInit {
    * Fetch NBA data and initialize component state.
    */
   protected getGameData() {
-    this.plumber.getNbaTable().subscribe(
+    this.plumber.getcbTable().subscribe(
       (win: any[]) => {
         this.games = win;
         this.gameWeek = this.games[0].week;
         this.games.forEach(g => {
+          g.schedule = g.EST_schedule;
           g.local_start_time = moment(g.schedule).format('MMM D YYYY, HH:mm');
           g.started = moment(g.schedule).isBefore(moment());
-          g.ml_pick = g.moneyline_pick;
+          g.ml_pick = g.ml_pick;
           g.sp_pick = g.spread_pick;
           g.ou_pick = g.total_pick;
-          g.s_pred = g.s_pred;
-          g.t_pred = g.t_pred;
-          g.spick_ER = g.sER;
-          g.mpick_ER = g.mER;
-          g.tpick_ER = g.tER;
+          g.s_pred = (Math.ceil((Number(g.s_a_pred)) * 1e1) / 1e1);
+          g.t_pred = (Math.ceil((Number(g.t_pred)) * 1e1) / 1e1);
+          g.spread_pick = g.s_tqe_pick;
+          g.moneyline_pick = g.m_tqe_pick;
+          g.total_pick = g.t_tqe_pick;
+          g.away_spread = g.s_a_line;
+          g.OU_line = g.t_line;
+          g.spick_prob = g.s_tqe_prob;
+          g.tpick_prob = g.t_tqe_prob;
+          g.spick_ER = g.s_tqe_er;
+          g.tpick_ER = g.t_tqe_er;
+          g.away_odds = g.s_a_odds;
+          g.home_odds = g.s_h_odds;
+          g.away_money = g.m_a_odds;
+          g.home_money = g.m_h_odds;
+          g.over_odds = g.t_o_odds;
+          g.under_odds = g.t_u_odds;
           if (g.week === this.gameWeek) {
             this.games_today.push(g);
             this.teams.push(`${g.away_team_abbr} - ${g.home_team_abbr}`);
@@ -426,11 +437,10 @@ export class NbaPlayerImpactComponent implements OnInit {
       },
       () => { },
       () => {
-        this.plumber.getNbaPlayerImpactData().subscribe(
+        this.plumber.getCbPlayerImpactData().subscribe(
           (res: any[]) => {
             this.matches = res;
             this.playerDataResolver();
-            this.resetData();
           },
           () => { },
         );

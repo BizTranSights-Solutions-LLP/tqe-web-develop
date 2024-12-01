@@ -390,10 +390,18 @@ export class BestBetsService {
       'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
       'Pragma': 'no-cache',
       'Expires': '0',
-      // 'Authorization': localStorage.getItem('data') ? `Bearer ${JSON.parse(localStorage.getItem('data'))['jwt_token']}` : ''
     });
-    // return this.http.get(url, {headers: header});
     return this.http.get('assets/ncaaf_lineup.json', {headers: header});
+  }
+
+  getCbPlayerImpactData() {
+    let url = environment.base_url + 'getCbPlayerImpactData';
+    let header = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    });
+    return this.http.get('assets/ncaab_lineup.json', {headers: header});
   }
 
 

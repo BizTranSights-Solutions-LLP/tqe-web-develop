@@ -101,6 +101,7 @@ import {MatSliderModule} from '@angular/material/slider';
 // Exported iFrame
 import {SoccerBestBetsExportComponent} from './front-panel/best-bets/soccer/soccer-best-bets-export.component';
 import {CfPlayerExportImpactComponent} from './front-panel/best-bets/cf-player-impact/cf-player-impact-export.component';
+import {CbPlayerExportImpactComponent} from './front-panel/best-bets/cb-player-impact/cb-player-impact-export.component';
 import {NbaPlayerExportImpactComponent} from './front-panel/best-bets/nba-player-impact/nba-player-impact-export.component';
 import {MlbPlayerExportImpactComponent} from './front-panel/best-bets/mlb-player-impact/mlb-player-impact-export.component';
 
@@ -159,6 +160,7 @@ import { HowToUsePlayerPerformanceComponent } from './front-panel/how-to-use-pla
 import { HowToUnderstandPlayerImpactToolLayoutComponent } from './front-panel/how-to-understand-player-impact-tool-layout/how-to-understand-player-impact-tool-layout.component';
 import { PicksAccessResolver } from './resolvers/picks-access-resolver';
 import { ImpactToolsAccessResolver } from './resolvers/impact-tools-access-resolver';
+import { CbPlayerImpactComponent } from './front-panel/best-bets/cb-player-impact/cb-player-impact.component';
 
 const routes: Routes = [
 
@@ -252,7 +254,8 @@ const routes: Routes = [
           { path: 'nba', component: NbaPlayerImpactComponent },
           { path: 'nfl', component: NflPlayerImpactComponent },
           { path: 'cricket', component: CricketPlayerImpactComponent },
-          { path: 'cf', component: CfPlayerImpactComponent }
+          { path: 'cf', component: CfPlayerImpactComponent },
+          { path: 'cb', component: CbPlayerImpactComponent }
         ]
       },
 
@@ -389,6 +392,7 @@ const routes: Routes = [
     AllPlayerExportImpactComponent,
     SoccerBestBetsExportComponent,
     CfPlayerExportImpactComponent,
+    CbPlayerExportImpactComponent,
     NbaPlayerExportImpactComponent,
     MlbPlayerExportImpactComponent,
     NflPlayerExportImpactComponent,
@@ -423,6 +427,7 @@ const routes: Routes = [
     HowToFindPlayerImpactToolsComponent,
     HowToUsePlayerPerformanceComponent,
     HowToUnderstandPlayerImpactToolLayoutComponent,
+    CbPlayerImpactComponent,
   ],
   imports: [
     // Import font-aws

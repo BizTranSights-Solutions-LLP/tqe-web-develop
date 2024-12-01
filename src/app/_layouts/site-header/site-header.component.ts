@@ -73,6 +73,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
         { label: 'NFL Player Impact', loggedInURL: '/tool/player-impact/nfl', loggedOutURL: '/tool/player-impact/nfl' },
         { label: 'NBA Player Impact', loggedInURL: '/tool/player-impact/nba', loggedOutURL: '/tool/player-impact/nba' },
         { label: 'NCAAF Player Impact', loggedInURL: '/tool/player-impact/cf', loggedOutURL: '/tool/player-impact/cf' },
+        { label: 'NCAAB Player Impact', loggedInURL: '/tool/player-impact/cb', loggedOutURL: '/tool/player-impact/cb' },
 
       ]
     },

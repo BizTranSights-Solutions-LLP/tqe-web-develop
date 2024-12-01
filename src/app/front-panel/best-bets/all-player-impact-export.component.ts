@@ -11,7 +11,7 @@ export class AllPlayerExportImpactComponent implements OnInit {
 
   isAuthorized = false;
   sport = 'NFL';
-  sports = ['NFL', 'NBA', 'NCAAF', 'MLB', 'SOCCER'];
+  sports = ['NFL', 'NBA', 'NCAAF', 'NCAAB', 'MLB', 'SOCCER'];
 
   ngOnInit() {
     this.setSport(this.sport);

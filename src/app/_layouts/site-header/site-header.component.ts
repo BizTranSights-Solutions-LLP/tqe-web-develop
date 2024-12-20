@@ -80,7 +80,7 @@ export class SiteHeaderComponent implements OnInit, OnDestroy {
     {
       label: 'How TQE Works',
       subNav: [
-        { label: 'Find The Player Impact Tool', loggedInURL: '/how-to-find-player-impact-tool', loggedOutURL: '/how-to-find-player-impact-tool' },
+        { label: 'Understand the Picks Tool', loggedInURL: '/understand-picks-tool', loggedOutURL: '/understand-picks-tool' },
         { label: 'Understand the Player Impact Tool Layout', loggedInURL: '/understand-player-impact-tool-layout', loggedOutURL: '/understand-player-impact-tool-layout' },
         { label: 'Changing the Player Performance', loggedInURL: '/use-player-performance', loggedOutURL: '/use-player-performance' },
         { label: 'How The Math Works', loggedInURL: '/how-it-works', loggedOutURL: '/how-it-works' },

@@ -4,19 +4,20 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'app-how-to-find-player-impact-tool',
-  templateUrl: './how-to-find-player-impact-tools.component.html',
-  styleUrls: ['./how-to-find-player-impact-tools.component.scss']
+  selector: 'app-how-to-use-picks-tools',
+  templateUrl: './how-to-use-picks-tools.component.html',
+  styleUrls: ['./how-to-use-picks-tools.component.scss']
 })
-export class HowToFindPlayerImpactToolsComponent implements OnInit {
+export class HowToUsePicksToolsComponent implements OnInit {
 
   pdf: SafeResourceUrl;
   isMobile: boolean = false;
 
+
   constructor(private sanitizer: DomSanitizer, protected breakpointObserver: BreakpointObserver,) { }
 
   ngOnInit() {
-    this.pdf = this.sanitizeUrl('../../assets/images/how-tqe-works/how-to-find-player-impact-tool.pdf');
+    this.pdf = this.sanitizeUrl('../../assets/images/how-tqe-works/how-to-change-player-performance-in-player-impact-tool.pdf');
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });

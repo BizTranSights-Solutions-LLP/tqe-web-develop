@@ -1,10 +1,19 @@
-<body>
+<body [class]="isMobile ? 'mobile' : ''">
   <div class="header">
     <h4>How does modifying Player Performance affect the Spread, Totals, and Probability in the Player Impact Tool?</h4>
   </div>
   <div class="how-it-works">
-    <div>
-      <iframe [src]="pdf"></iframe>
+    <div class="video-container">
+      <iframe 
+          src="https://www.youtube.com/embed/F-HE6yRdhJQ?si=PYS-1uxrUCOlbiHT" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+      </iframe>
+    </div>
+    <div class="pdf-container">
+      <iframe [src]="pdf" frameborder="0" scrolling="yes" allowfullscreen></iframe>
     </div>
   </div>
 </body>

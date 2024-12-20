@@ -803,7 +803,7 @@
 
 <!-- Modal Structure for Player Impact Tool Layout Explanation -->
 <div class="modal fade" id="layout-explanation-modal" tabindex="-1" role="dialog" aria-labelledby="Layout Explanation" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document" [class.mobile]="isMobile">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="Layout Explanation">Understanding the Player Impact Tool Layout</h5>
@@ -812,7 +812,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <iframe id="modalIframe" [src]="layout_explanation_pdf" frameborder="0"></iframe>
+        <iframe 
+          id="modalIframe"
+          src="https://www.youtube.com/embed/d2MKkkEO_S8?si=ertmQeFypSDqNb3S" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+      </iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -833,7 +840,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <iframe id="modalIframe" [src]="player_performance_change_pdf" frameborder="0"></iframe>
+        <iframe
+        id="modalIframe"
+          src="https://www.youtube.com/embed/F-HE6yRdhJQ?si=PYS-1uxrUCOlbiHT" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+      </iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

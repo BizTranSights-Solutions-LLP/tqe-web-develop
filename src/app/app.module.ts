@@ -161,6 +161,7 @@ import { HowToUnderstandPlayerImpactToolLayoutComponent } from './front-panel/ho
 import { PicksAccessResolver } from './resolvers/picks-access-resolver';
 import { ImpactToolsAccessResolver } from './resolvers/impact-tools-access-resolver';
 import { CbPlayerImpactComponent } from './front-panel/best-bets/cb-player-impact/cb-player-impact.component';
+import { HowToUsePicksToolsComponent } from './front-panel/how-to-use-picks-tools/how-to-use-picks-tools.component';
 
 const routes: Routes = [
 
@@ -278,6 +279,7 @@ const routes: Routes = [
       {path: 'betting-101', component: Betting101Component},
       {path: 'how-it-works', component: HowItWorksComponent},
       {path: 'how-to-find-player-impact-tool', component: HowToFindPlayerImpactToolsComponent},
+      {path: 'understand-picks-tool', component: HowToUsePicksToolsComponent},
       {path: 'understand-player-impact-tool-layout', component: HowToUnderstandPlayerImpactToolLayoutComponent},
       {path: 'use-player-performance', component: HowToUsePlayerPerformanceComponent},
       {path: 'education-page', component: EducationPageComponent},
@@ -428,6 +430,7 @@ const routes: Routes = [
     HowToUsePlayerPerformanceComponent,
     HowToUnderstandPlayerImpactToolLayoutComponent,
     CbPlayerImpactComponent,
+    HowToUsePicksToolsComponent,
   ],
   imports: [
     // Import font-aws

@@ -394,7 +394,7 @@ export class BestBetsService {
     return this.http.get('assets/ncaaf_lineup.json', {headers: header});
   }
 
-  getCbPlayerImpactData() {
+   getCbPlayerImpactData() {
     let url = environment.base_url + 'getCbPlayerImpactData';
     let header = new HttpHeaders({
       'Cache-Control':  'no-cache, no-store, must-revalidate, post- check=0, pre-check=0',

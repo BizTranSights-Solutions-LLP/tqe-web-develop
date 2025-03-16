@@ -1105,11 +1105,12 @@
 .slider-section {
   flex: 1;
   width: 20em;
-
+  margin: 0.75em 0;
 }
 
 .slider1,
-.slider2 {
+.slider2,
+.slider3 {
   text-align: left;
   color: white;
   font-family: 'Smooch Sans', sans-serif;
@@ -1120,7 +1121,7 @@
   margin: 0;
 }
 
-.slider1 {
+.slider1, .slider2 {
   margin-bottom: 1em;
 }
 

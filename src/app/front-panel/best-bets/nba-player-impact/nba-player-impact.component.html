@@ -626,6 +626,23 @@
                           <span>{{player.slider2.max}}</span>
                         </div>
                       </div>
+                      <div class="slider3" style="flex: 1">
+                        <div>
+                          <label for="slider-3" class="slider-label">{{player.slider3.name}}</label>
+                        </div>
+                        <input type="range" id="slider-3" [min]="player.slider3.min" [max]="player.slider3.max"
+                          [(ngModel)]="player.slider3.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider3'); updateSliderBackground(player);"
+                          [style.background]="player.slider3.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider3.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider3.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider3'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider3.max}}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -744,6 +761,23 @@
                           <span>{{player.slider2.max}}</span>
                         </div>
                       </div>
+                      <div class="slider3" style="flex: 1">
+                        <div>
+                          <label for="slider-3" class="slider-label">{{player.slider3.name}}</label>
+                        </div>
+                        <input type="range" id="slider-3" [min]="player.slider3.min" [max]="player.slider3.max"
+                          [(ngModel)]="player.slider3.value" class="slider"
+                          (input)="onProfessionalPerfChange(player, 'slider3'); updateSliderBackground(player);"
+                          [style.background]="player.slider3.sliderBackground" />
+                        <div class="range-labels">
+                          <span>{{player.slider3.min}}</span>
+                          <span class="slider-input-container">
+                            <input type="number" [(ngModel)]="player.slider3.value" class="slider-input"
+                            (input)="onProfessionalPerfChange(player, 'slider3'); updateSliderBackground(player);">
+                          </span>
+                          <span>{{player.slider3.max}}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -775,8 +809,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li><a class="dropdown-item" (click)="setViewType('Basic')" *ngIf="viewType!=='Basic'">Basic</a></li>
-                  <li><a class="dropdown-item"
-                      *ngIf="viewType!=='Professional'">Professional<br/> (Coming Soon)</a></li>
+                  <li><a class="dropdown-item" (click)="setViewType('Professional')" *ngIf="viewType!=='Professional'" >Professional</a></li>
                 </ul>
               </div>
             </div>

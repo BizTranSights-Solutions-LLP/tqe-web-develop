@@ -58,6 +58,11 @@ export class CbPlayerImpactComponent implements OnInit {
   sortDir: any = { 'rating': true, 'time': false };
   viewType: string = "Basic";
 
+  GLOBAL_MAX_POINTS: number = 15;
+  GLOBAL_MAX_ASSISTS: number = 7;
+  GLOBAL_MAX_REBOUNDS: number = 6;
+
+
   constructor(
     protected authService: AuthService,
     protected dataService: DataService,
@@ -82,6 +87,7 @@ export class CbPlayerImpactComponent implements OnInit {
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet]).subscribe(result => {
       this.isMobile = result.matches;
     });
+    this.setViewType(this.viewType);
   }
 
   abs(val: number) {
@@ -148,8 +154,7 @@ export class CbPlayerImpactComponent implements OnInit {
     this.is_whop_user = accessLevelAndUserType['isWhopUser'];
     if (this.viewAccessLevel === 'Basic' || this.viewAccessLevel === 'Professional') {
       this.isAuthorized = true;
-      // Hardcoding viewType for NBA, NCAAB to basic as we dont have Professional View for these sports yet
-      this.viewType = 'Basic';
+      this.viewType = this.viewAccessLevel;
       this.getGameData();
     }
     else {
@@ -173,17 +178,67 @@ export class CbPlayerImpactComponent implements OnInit {
    */
   protected resetPlayerData(lineup: any[]) {
     lineup.forEach(player => {
-      player.perf = 50;
-      player.passingYard = 275;
-      player.rushingYard = 275;
-      player.passingYardSliderBackground = 'linear-gradient(to right, #18CB16 50%, #999999 50%)';
-      player.rushingYardSliderBackground = 'linear-gradient(to right, #18CB16 50%, #999999 50%)';
+      // Slider 1 - Points
+      const slider1Value = Math.ceil(player.current_stats.points);
+      const slider1Min = Math.ceil(player.current_stats.min_points);
+      const slider1Max = Math.max(Math.ceil(player.current_stats.max_points), this.GLOBAL_MAX_POINTS);
+      const slider1Percent = Math.min(100, Math.max(0, ((slider1Value - slider1Min) / (slider1Max - slider1Min)) * 100)); 
+      player.initialPerfV1 =  slider1Percent, 
+      player.initialValue1 = slider1Value;
+
+      player.slider1 = {
+        name: 'Points',
+        value: slider1Value,
+        min: slider1Min,
+        max: slider1Max,
+        sliderBackground: `linear-gradient(to right, #18CB16 ${slider1Percent}%, #999999 ${slider1Percent}%)`
+      };
+  
+      // Slider 2 - Assists
+      const slider2Value = Math.ceil(player.current_stats.assists);
+      const slider2Min = Math.ceil(player.current_stats.min_assists);
+      const slider2Max = Math.max(Math.ceil(player.current_stats.max_assists), this.GLOBAL_MAX_ASSISTS);
+      const slider2Percent = Math.min(100, Math.max(0, ((slider2Value - slider2Min) / (slider2Max - slider2Min)) * 100));  
+      player.initialPerfV2 =  slider2Percent,
+      player.initialValue2 = slider2Value;
+
+      player.slider2 = {
+        name: 'Assists',
+        value: slider2Value,
+        min: slider2Min,
+        max: slider2Max,
+        sliderBackground: `linear-gradient(to right, #18CB16 ${slider2Percent}%, #999999 ${slider2Percent}%)`
+      };
+
+      // Slider 3 - Assists
+      const slider3Value = Math.ceil(player.current_stats.rebounds);
+      const slider3Min = Math.ceil(player.current_stats.min_rebounds);
+      const slider3Max = Math.max(Math.ceil(player.current_stats.max_rebounds), this.GLOBAL_MAX_REBOUNDS);
+      const slider3Percent = Math.min(100, Math.max(0, ((slider3Value - slider3Min) / (slider3Max - slider3Min)) * 100));  
+      player.initialPerfV3 =  slider3Percent,
+      player.initialValue3 = slider3Value;
+
+      player.slider3 = {
+        name: 'Rebounds',
+        value: slider3Value,
+        min: slider3Min,
+        max: slider3Max,
+        sliderBackground: `linear-gradient(to right, #18CB16 ${slider3Percent}%, #999999 ${slider3Percent}%)`
+      };
+      player.initialPerf = player.initialPerfV1 * (3/6) + player.initialPerfV2 * (2/6) + player.initialPerfV3 * (1/6);
+      if (this.viewType === 'Professional') {
+        player.perf = player.initialPerf;
+      }
+      else {
+        player.perf = 50;
+      }
+      
     });
   }
 
   /**
-   * Update match data based on the selected match.
-   */
+  * Update match data based on the selected match.
+  */
   protected updateMatchData() {
     this.s_pred = this.selected_match.s_pred;
     this.t_pred = this.selected_match.t_pred;
@@ -212,11 +267,31 @@ export class CbPlayerImpactComponent implements OnInit {
   }
 
   /**
+  * Get full name for a given position abbreviation.
+  * @param pos - The position abbreviation.
+  * @returns The full name of the position.
+  */
+  full_name_for_position(pos: string): string {
+    const positions: { [key: string]: string } = {
+        "PG": "Point Guard",
+        "SG": "Shooting Guard",
+        "SF": "Small Forward",
+        "PF": "Power Forward",
+        "C": "Center"
+    };
+    return positions[pos] || "Unknown Position";
+  }
+
+  /**
    * Show the selected team.
    * @param team - The team to show.
    */
   showTeam(team: string) {
     this.active_team = team;
+  }
+
+  protected roundToNearest(num: number, nearNumber: number): number {
+    return Math.ceil(num / nearNumber) * nearNumber;
   }
 
   protected onPerfChange(player: any, value: number) {
@@ -226,15 +301,39 @@ export class CbPlayerImpactComponent implements OnInit {
     this.updateProbER();
   }
 
+  protected onProfessionalPerfChange(player: any, slider: string) {
+
+    let v1impact = 3/6;
+    let v2impact = 2/6;
+    let v3impact = 1/6;
+
+    player.slider1.value = Math.min(player.slider1.value, player.slider1.max);
+    player.slider2.value = Math.min(player.slider2.value, player.slider2.max);
+
+    let diff1 = player.slider1.value - player.initialValue1;
+    let diff2 = player.slider2.value - player.initialValue2;
+    let diff3 = player.slider3.value - player.initialValue3;
+
+    player.perfV1 = player.initialPerfV1 + (((diff1) / (player.slider1.max - player.slider1.min)) * 100);
+    player.perfV2 = player.initialPerfV2 + (((diff2) / (player.slider2.max - player.slider2.min)) * 100);
+    player.perfV3 = player.initialPerfV3 + (((diff3) / (player.slider3.max - player.slider3.min)) * 100);
+
+    player.perf = player.perfV1 * v1impact + player.perfV2 * v2impact + player.perfV3 * v3impact;
+
+    this.stPredResolver(true);
+    this.pickResolver();
+    this.updateProbER();
+  }
+
   /**
    * Calculate s_pred and t_pred based on player performance.
    */
-  protected stPredResolver() {
+  protected stPredResolver(isProfView = false) {
     this.s_pred = this.selected_match.s_pred;
     this.t_pred = this.selected_match.t_pred;
 
-    this.adjustPredictions(this.selected_players.away_lineup, true);
-    this.adjustPredictions(this.selected_players.home_lineup, false);
+    this.adjustPredictions(this.selected_players.away_lineup, true, isProfView);
+    this.adjustPredictions(this.selected_players.home_lineup, false, isProfView);
   }
 
   /**
@@ -242,10 +341,18 @@ export class CbPlayerImpactComponent implements OnInit {
    * @param lineup - The lineup of players.
    * @param isAway - Whether the lineup is for the away team.
    */
-  protected adjustPredictions(lineup: any[], isAway: boolean) {
+  protected adjustPredictions(lineup: any[], isAway: boolean, isProfView: boolean) {
+
     lineup.forEach((player, i) => {
-      const number = +player.pminus;
-      if (player.perf === 0) {
+      let bound_value = 50;
+      if (isProfView) {
+        bound_value = player.initialPerf;
+      }
+      if (player.perf < bound_value) {
+        let number = +player.pminus * 0.3;
+        if (isProfView) {
+          number *= (bound_value - player.perf) / bound_value;
+        }
         if (isAway) {
           this.s_pred += number;
           this.t_pred -= number;
@@ -253,8 +360,11 @@ export class CbPlayerImpactComponent implements OnInit {
           this.s_pred -= number;
           this.t_pred -= number;
         }
-      } else if (player.perf === 100) {
-        const number = +player.pplus;
+      } else if (player.perf > bound_value) {
+        let number = +player.pplus * 0.3;
+        if (isProfView) { 
+          number *= ((player.perf - bound_value) / bound_value)
+        }
         if (isAway) {
           this.s_pred -= number;
           this.t_pred += number;
@@ -350,10 +460,12 @@ export class CbPlayerImpactComponent implements OnInit {
    * @param sliderType - The type of slider (passing or rushing).
    * @param player_index - The index of the player in the lineup.
    */
-  updateSliderBackground(team: string, sliderType: string, player_index: number): void {
-    const player = team === "away" ? this.selected_players.away_lineup[player_index] : this.selected_players.home_lineup[player_index];
-    const value = (player[`${sliderType}Yard`] - 50) / (500 - 50) * 100;
-    player[`${sliderType}YardSliderBackground`] = `linear-gradient(to right, #18CB16 ${value}%, #999999 ${value}%)`;
+  updateSliderBackground(player): void {
+    ['slider1', 'slider2', 'slider3'].forEach(sliderType => {
+      const slider = player[`${sliderType}`];
+      const slider_percentage = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+      player[`${sliderType}`].sliderBackground = `linear-gradient(to right, #18CB16 ${slider_percentage}%, #999999 ${slider_percentage}%)`;
+    })
   }
 
   /**
@@ -371,7 +483,10 @@ export class CbPlayerImpactComponent implements OnInit {
     const tdodds = (todds > 0) ? (todds + 100) / 100 : (-100 + todds) / todds;
     const oppmdodds = (oppmodds > 0) ? (oppmodds + 100) / 100 : (-100 + oppmodds) / oppmodds;
 
-    this.sprob = (this.selected_match.spread_pick == "away") ? R.pnorm((this.selected_match.away_spread - this.s_pred) / 10) : R.pnorm((this.s_pred - this.selected_match.away_spread) / 10)
+    this.sprob = ((this.selected_match.spread_pick == "away") ? R.pnorm((this.selected_match.away_spread - this.s_pred) / 10) : R.pnorm((this.s_pred - this.selected_match.away_spread) / 10))
+    if (this.sprob > 1) {
+      this.sprob = 1;
+    }
     this.sER = sdodds * this.sprob - 1;
     this.mprob = R.pnorm(Math.abs(this.s_pred - 0) / 20);
     this.mER = mdodds * this.mprob - 1;
@@ -386,6 +501,9 @@ export class CbPlayerImpactComponent implements OnInit {
     }
 
     this.tprob = (this.selected_match.total_pick == "over") ? R.pnorm((this.t_pred - this.selected_match.OU_line) / 10) : R.pnorm((this.selected_match.OU_line - this.t_pred) / 10)
+    if (this.tprob > 1) {
+      this.tprob = 1;
+    }
     this.tER = tdodds * this.tprob - 1;
   }
 
@@ -441,6 +559,7 @@ export class CbPlayerImpactComponent implements OnInit {
           (res: any[]) => {
             this.matches = res;
             this.playerDataResolver();
+            this.resetData();
           },
           () => { },
         );

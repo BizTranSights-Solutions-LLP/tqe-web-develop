@@ -152,11 +152,8 @@
                     <span>
                       {{ game.away_money }}
                     </span>
-                    <span *ngIf="game.ml_pick === 'away'">
+                    <span>
                       {{ game.mpick_prob*100 | number:'1.1-1' }}%
-                    </span>
-                    <span *ngIf="game.ml_pick === 'home'">
-                      {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
                     </span>
                   </div>
                   <div *ngIf="!isAuthorized">
@@ -230,11 +227,8 @@
                     <span>
                       {{ game.home_money }}
                     </span>
-                    <span *ngIf="game.ml_pick === 'away'">
+                    <span>
                       {{ (1 - game.mpick_prob ) *100 | number:'1.1-1' }}%
-                    </span>
-                    <span *ngIf="game.ml_pick === 'home'">
-                      {{ game.mpick_prob*100 | number:'1.1-1' }}%
                     </span>
                   </div>
                   <div *ngIf="!isAuthorized">

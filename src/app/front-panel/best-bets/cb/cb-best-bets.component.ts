@@ -53,8 +53,12 @@ export class CbBestBetsComponent implements OnInit {
   public isTQEP(game: any, team: string, stat: string): boolean {
     if (this.isAuthorized) {
       if (stat === 'Money Line') {
+        let prob = game.mpick_prob;
+        if (team === 'home') {
+          prob = 1 - game.mpick_prob;
+        }
         const improb = game[`${team}_improb`];
-        if (game.ml_pick === team && game.mpick_prob > improb && game.mpick_prob * 100 < 60.0) {
+        if (game.ml_pick === team && prob > improb && prob * 100 < 60.0) {
           return true;
         }
       }
@@ -76,8 +80,12 @@ export class CbBestBetsComponent implements OnInit {
   public isTQEHCP(game: any, team: string, stat: string): boolean {
     if (this.isAuthorized) {
       if (stat === 'Money Line') {
+        let prob = game.mpick_prob;
+        if (team === 'home') {
+          prob = 1 - game.mpick_prob;
+        }
         const improb = game[`${team}_improb`];
-        if (game.ml_pick === team && game.mpick_prob > improb && game.mpick_prob * 100 >= 60.0) {
+        if (game.ml_pick === team && prob > improb && prob * 100 >= 60.0) {
           return true;
         }
       }

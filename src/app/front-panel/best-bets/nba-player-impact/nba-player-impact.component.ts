@@ -31,7 +31,9 @@ export class NbaPlayerImpactComponent implements OnInit {
   selected_match: any;
   selected_players: any;
   s_pred: number;
+  s_pred_fd: number;
   t_pred: number;
+  t_pred_fd: number;
   s_pick: string;
   t_pick: string;
   m_pick: string;
@@ -374,6 +376,8 @@ export class NbaPlayerImpactComponent implements OnInit {
         }
       }
     });
+    this.s_pred_fd = this.selected_match.s_pred + (this.s_pred - this.selected_match.s_pred) * 2.1
+    this.t_pred_fd = this.selected_match.t_pred + (this.t_pred - this.selected_match.t_pred) * 3.1
   }
 
   /**

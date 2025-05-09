@@ -166,14 +166,14 @@
                     <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
                       [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
                       <span *ngIf="selected_match.spread_pick === 'away'">
-                        <span *ngIf="s_pred >= 0"> + </span>
-                        <span *ngIf="s_pred < 0"> - </span>
+                        <span *ngIf="s_pred_fd >= 0"> + </span>
+                        <span *ngIf="s_pred_fd < 0"> - </span>
                       </span>
                       <span *ngIf="selected_match.spread_pick === 'home'">
-                        <span *ngIf="s_pred >= 0"> - </span>
-                        <span *ngIf="s_pred < 0"> + </span>
+                        <span *ngIf="s_pred_fd >= 0"> - </span>
+                        <span *ngIf="s_pred_fd < 0"> + </span>
                       </span>
-                      {{abs(s_pred) | number:'1.1-1'}}
+                      {{abs(s_pred_fd) | number:'1.1-1'}}
                     </span>
                   </div>
                   <div>
@@ -185,7 +185,7 @@
                     <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
                       [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
                       {{ t_pick === 'over' ? 'O' : 'U' }}
-                      {{ t_pred | number: '1.1-1'}}
+                      {{ t_pred_fd | number: '1.1-1'}}
                     </span>
                   </div>
                   <div>
@@ -302,14 +302,14 @@
                       <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
                         [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
                         <span *ngIf="selected_match.spread_pick === 'away'">
-                          <span *ngIf="s_pred >= 0"> + </span>
-                          <span *ngIf="s_pred < 0"> - </span>
+                          <span *ngIf="s_pred_fd >= 0"> + </span>
+                          <span *ngIf="s_pred_fd < 0"> - </span>
                         </span>
                         <span *ngIf="selected_match.spread_pick === 'home'">
-                          <span *ngIf="s_pred >= 0"> - </span>
-                          <span *ngIf="s_pred < 0"> + </span>
+                          <span *ngIf="s_pred_fd >= 0"> - </span>
+                          <span *ngIf="s_pred_fd < 0"> + </span>
                         </span>
-                        {{abs(s_pred) | number:'1.1-1'}}
+                        {{abs(s_pred_fd) | number:'1.1-1'}}
                       </span>
                     </td>
                     <td>
@@ -344,7 +344,7 @@
                       <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
                         [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
                         {{ t_pick === 'over' ? 'O' : 'U' }}
-                        {{ t_pred | number: '1.1-1'}}
+                        {{ t_pred_fd | number: '1.1-1'}}
                       </span>
                     </td>
                     <td>
@@ -382,98 +382,6 @@
                 </tbody>
               </table>
             </div>
-            <!-- <div class="scoreboard-body" *ngIf="!isMobile">
-              <div class="row">
-                <div class="col-md-2 scoreboard-header-left">
-                </div>
-                <div class="col-md-2">
-                  <div class="scoreboard-header" style="padding-top: 5%;">Vegas Line</div>
-                  <div class="scoreboard-header-helper-text"></div>
-                </div>
-                <div class="col-md-2">
-                  <div class="scoreboard-header">Our Pick</div>
-                  <div class="scoreboard-header-helper-text">(Original/Adjusted)</div>
-                </div>
-                <div class="col-md-2">
-                  <div class="scoreboard-header">Probability</div>
-                  <div class="scoreboard-header-helper-text">(Winning)</div>
-                </div>
-                <div class="col-md-2">
-                  <div class="scoreboard-header">Expected Return</div>
-                  <div class="scoreboard-header-helper-text"></div>
-                </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="col-md-2 scoreboard-header-left">
-                  Spread
-                </div>
-                <div class="col-md-3">
-                  <span *ngIf="selected_match.away_spread> 0">+</span>{{ selected_match.away_spread | number:'1.1-1'}}
-                </div>
-                <div class="col-md-3">
-                  <span *ngIf="selected_match.s_pred> 0">+</span>{{selected_match.s_pred | number:'1.1-1'}}
-                  /
-                  <span *ngIf="s_pred && s_pred === selected_match.s_pred">-</span>
-                  <span *ngIf="s_pred && s_pred !== selected_match.s_pred"
-                    [ngClass]="{'tqe-positive-prediction': s_pred > selected_match.s_pred, 'tqe-negative-prediction': s_pred < selected_match.s_pred}">
-                    <span *ngIf="s_pred > 0">+</span>{{s_pred | number:'1.1-1'}}
-                  </span>
-                </div>
-                <div class="col-md-3">
-                  <span>{{selected_match.spick_prob*100 | number:'1.1-1'}}%</span> /
-                  <span *ngIf="sprob && sprob === selected_match.spick_prob">-</span>
-                  <span *ngIf="sprob && sprob !== selected_match.spick_prob"
-                    [ngClass]="{'tqe-positive-prediction': sprob > selected_match.spick_prob, 'tqe-negative-prediction': sprob < selected_match.spick_prob}">
-                    {{sprob*100 | number:'1.1-1'}}%</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2 scoreboard-header-left">
-                  O/U
-                </div>
-                <div class="col-md-3">
-                  {{ selected_match.OU_line }}
-                </div>
-                <div class="col-md-3">
-                  <span>
-                    {{ selected_match.total_pick === 'over' ? 'O' : 'U' }} {{ selected_match.t_pred | number: '1.1-1'}}
-                  </span>
-                  /
-                  <span *ngIf="t_pred && t_pred === selected_match.t_pred ">-</span>
-                  <span *ngIf="t_pred && t_pred !== selected_match.t_pred"
-                    [ngClass]="{'tqe-positive-prediction': t_pred >selected_match.t_pred, 'tqe-negative-prediction': t_pred < selected_match.t_pred}">
-                    {{ t_pick === 'over' ? 'O' : 'U' }}
-                    {{ t_pred | number: '1.1-1'}}
-                  </span>
-                </div>
-                <div class="col-md-3">
-                  <span>{{selected_match.tpick_prob*100 | number:'1.1-1'}}%</span> /
-                  <span *ngIf="tprob && tprob === selected_match.tpick_prob">-</span>
-                  <span *ngIf="tprob && tprob !== selected_match.tpick_prob"
-                    [ngClass]="{'tqe-positive-prediction': tprob > selected_match.tpick_prob, 'tqe-negative-prediction': tprob < selected_match.tpick_prob}">
-                    {{tprob*100 | number:'1.1-1'}}%</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2 scoreboard-header-left">
-                  Team
-                </div>
-                <div class="col-md-3 hidden-text">
-                  .
-                </div>
-                <div class="col-md-3">
-                  <span>{{(selected_match.spread_pick === 'away') ? away_team : home_team}}</span>/
-                  <span *ngIf="t_pred && t_pred === selected_match.t_pred">-</span>
-                  <span *ngIf="t_pred && t_pred !== selected_match.t_pred" style="font-weight: 700;" [class.tqe-positive-prediction]="true">
-                    {{s_pick}}
-                  </span>
-                </div>
-                <div class="col-md-3 hidden-text">
-                  .
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>

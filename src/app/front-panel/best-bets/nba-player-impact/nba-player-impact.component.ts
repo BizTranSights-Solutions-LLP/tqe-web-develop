@@ -504,7 +504,7 @@ export class NbaPlayerImpactComponent implements OnInit {
       this.mER = oppmER;
     }
 
-    this.tprob = (this.selected_match.total_pick == "over") ? R.pnorm((this.t_pred - this.selected_match.OU_line) / 10) : R.pnorm((this.selected_match.OU_line - this.t_pred) / 10)
+    this.tprob = this.selected_match.tpick_prob - 0.5 + ((this.selected_match.total_pick == "over") ? R.pnorm((this.t_pred - this.selected_match.OU_line) / 10) : R.pnorm((this.selected_match.OU_line - this.t_pred) / 10))
     if (this.tprob > 1) {
       this.tprob = 1;
     }

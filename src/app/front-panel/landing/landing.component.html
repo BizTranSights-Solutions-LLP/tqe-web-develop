@@ -1,18 +1,19 @@
 <div class="body" [class.mobile]="isMobile">
     <div class="top-container container-fluid" [ngStyle]="{'background-image': 'url(' + bg_img + ')' }">
-        <div class="info">
+        <div class="info blur-overlay">
             <p class="header-text">QUANTIFY YOUR BET</p>
-            <br /><br />
+            <br />
             <span class="info-text">
-                <p>TQE offers Picks and Player Impact</p>
-                <p>Tools for you to get the most precise</p>
-                <p>bet and odds in multiple sports</p>
-                <br />
-                <p>Try it for free today!</p>
+                <p>Try our Player Impact and our Picks</p>
                 <br />
                 <a class="btn" type="button" [routerLink]="'/tool/player-impact/nfl'">Player Impact Tools</a>
+                <br *ngIf="isMobile">
+                <br *ngIf="isMobile">
                 <a class="btn" type="button" [routerLink]="'/tool/best-bets/nfl'">Picks</a>
             </span>
+        </div>
+        <div class="understanding-tool">
+            <span class="help-button"> <a type="button" [routerLink]="'/understand-player-impact-tool-layout'"><i class="fas fa-info-circle"></i>&nbsp;Understand the Player Impact Tool</a></span>
         </div>
         <div class="sample-website-img-section">
             <img [src]="sample_website_img_mobile" *ngIf="isMobile">

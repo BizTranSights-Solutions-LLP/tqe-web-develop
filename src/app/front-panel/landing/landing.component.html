@@ -12,10 +12,15 @@
                 <a class="btn" type="button" [routerLink]="'/tool/best-bets/nfl'">Picks</a>
             </span>
         </div>
-        <div class="understanding-tool">
-            <span class="help-button"> <a type="button" [routerLink]="'/understand-player-impact-tool-layout'"><i class="fas fa-info-circle"></i>&nbsp;Understand the Player Impact Tool</a></span>
-        </div>
         <div class="sample-website-img-section">
+            <div class="understanding-tool blur-overlay">
+                <span class="help-button">
+                <a type="button" [routerLink]="'/use-player-performance'" style="color: white;">
+                    <i class="fas fa-info-circle"></i>&nbsp;WATCH NOW: How the Player Impact Works!
+                </a>
+                 </span>
+            </div>
+
             <img [src]="sample_website_img_mobile" *ngIf="isMobile">
             <img [src]="sample_website_img" *ngIf="!isMobile">
         </div>

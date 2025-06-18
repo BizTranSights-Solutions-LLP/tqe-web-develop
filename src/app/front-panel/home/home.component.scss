@@ -78,27 +78,26 @@
 
 .understanding-tool {
   position: absolute;
-  bottom: 62vh;
-  right: 20vw;
-  z-index: 2;
-}
-
-@keyframes flash {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  top: -4em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
 }
 
 .help-button {
-  animation: flash 3s infinite;
-  color: #E36794;
   margin-top: -1em;
   cursor: pointer;
   font-weight: 600;
 }
 
 .help-button a {
+  font-size: 2em;
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .sample-website-img-section {
@@ -461,7 +460,7 @@
 }
 
 .mobile .blur-overlay {
-  padding: 2rem 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .mobile .info {
@@ -483,10 +482,8 @@
 // }
 
 .mobile .understanding-tool {
-  position: absolute;
-  bottom: 47vh;
-  right: 10vw;
-  z-index: 2;
+  top: -8em;
+  // background-color: red;
 }
 
 .mobile .sample-website-img-section {
